@@ -691,6 +691,18 @@ ul.talks .slides-link:hover { background: var(--blue); color: #fff; }
   line-height: 1.6;
 }
 
+/* Closing sign-off on the Misc page: quiet, serif italic in muted gray. */
+.misc-signoff {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.3rem;
+  line-height: 1.6;
+  text-align: center;
+  color: var(--ink-muted);
+  margin: 2.5rem auto 1rem;
+  max-width: 38em;
+}
+
 .back-link {
   font-size: 1rem;
   margin: 1.5rem 0 .75rem;
