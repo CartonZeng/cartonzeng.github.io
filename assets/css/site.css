@@ -1,0 +1,797 @@
+/* ==========================================================================
+   Zhichao "Carton" Zeng — academic site
+   Palette: OSU scarlet + warm gray (a red/gray identity), replacing the
+   earlier CV navy blue.
+   ========================================================================== */
+
+:root {
+  --blue: #ba0c2f;
+  --blue-muted: #8f0a1f;
+  --blue-soft: #f6e3e5;
+  --blue-softer: #faf0f1;
+
+  --ink: #1c1f24;
+  --ink-muted: #55606e;
+  --ink-faint: #969aa2;
+  --rule: #e8dcdd;
+  --bg: #ffffff;
+
+  --serif: "Charter", "Bitstream Charter", "Sitka Text", Cambria, Georgia, "Times New Roman", serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, "Cascadia Mono", Consolas, monospace;
+
+  /* Content column caps, in rem so they track the root font size below.
+     The layout is fully fluid beneath these caps; they only stop text lines
+     from growing unreadably long on big monitors. Widen or narrow the whole
+     site by editing these two values. */
+  --measure: 62rem;   /* ~1302px at the 21px root size */
+  --wide: 90rem;      /* ~1890px */
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+/* Root font size: every rem-based size on the site scales from this one
+   number, so "make everything bigger" is a one-line change. 131.25% = 21px
+   (was 18px; bumped +3px / "3号" on request). */
+html { font-size: 131.25%; -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scrollbar-gutter: stable; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: calc(1rem + 2px); /* body text +2 on top of the root size */
+  line-height: 1.65;
+}
+
+/* Anchor targets must clear the sticky header. */
+:target { scroll-margin-top: 5.5rem; }
+
+h1, h2, h3, h4 {
+  font-family: var(--serif);
+  color: var(--blue);
+  line-height: 1.25;
+  font-weight: 600;
+}
+
+/* Page titles: light filled box + dark blue text, distinct from the
+   paper-section bars (those are translucent blue with white text). */
+h1 {
+  font-size: 3.15rem;
+  display: inline-block;
+  max-width: 100%;
+  color: var(--blue);
+  background: var(--blue-softer);
+  border: 1px solid var(--blue-soft);
+  border-left: 6px solid var(--blue);
+  padding: .45rem 1.15rem .5rem 1rem;
+  border-radius: 4px;
+  margin: 0 0 1.15rem;
+}
+h2 { font-size: 1.75rem; margin: 3rem 0 1rem; }
+h3 { font-size: 1.3rem; margin: 0 0 .35rem; color: var(--ink); }
+
+.zh-name { font-weight: 500; margin-left: .35rem; }
+
+a { color: var(--blue-muted); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+a:hover { color: var(--blue); }
+
+p { margin: 0 0 1rem; }
+
+hr.rule { border: 0; border-top: 1px solid var(--rule); margin: 3rem 0; }
+
+/* --------------------------------------------------------------- layout -- */
+
+.wrap { max-width: var(--measure); margin: 0 auto; padding: 0 1.25rem; }
+.wrap-wide { max-width: var(--wide); margin: 0 auto; padding: 0 1.25rem; }
+
+main { padding: 2.5rem 0 4rem; }
+
+/* ------------------------------------------------------------ site nav -- */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--blue);
+  border-bottom: 1px solid var(--blue-muted);
+}
+
+.site-header .wrap-wide {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  padding-top: .8rem;
+  padding-bottom: .8rem;
+}
+
+.brand {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #ffffff;
+  text-decoration: none;
+  letter-spacing: .01em;
+  white-space: nowrap;
+}
+
+.site-nav { display: flex; gap: 1.3rem; flex-wrap: wrap; }
+
+.site-nav a {
+  font-size: 1.2rem;
+  color: #e8dcdd;
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent;
+}
+
+.site-nav a:hover { color: #ffffff; }
+.site-nav a[aria-current="page"] { color: #ffffff; border-bottom-color: #ffffff; }
+
+/* --------------------------------------------------------------- hero --- */
+
+.hero { display: grid; grid-template-columns: 1fr 320px; gap: 3rem; align-items: start; }
+
+.hero-lede {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  line-height: 1.6;
+  margin: 1.1rem 0 1rem;
+}
+
+/* Larger home-page body text with extra breathing room between paragraphs. */
+.hero p:not(.hero-lede) {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+/* Prominent home-page links into the rest of the site. */
+.cta-row { display: flex; flex-wrap: wrap; gap: 1rem; margin: 2.25rem 0 .5rem; }
+
+.cta-row a {
+  font-family: var(--serif);
+  font-size: calc(1.35rem + 9px); /* home page section links; +5 then +4 */
+  font-weight: 600;
+  color: var(--blue);
+  text-decoration: none;
+  padding: .7rem 1.5rem;
+  border: 1.5px solid var(--blue-soft);
+  border-radius: 6px;
+  background: var(--blue-softer);
+}
+
+.cta-row a:hover { border-color: var(--blue-muted); background: var(--blue-soft); }
+
+.portrait {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 4px;
+  background: var(--blue-softer);
+  border: 1px solid var(--rule);
+}
+
+/* ---------------------------------------------------------------- news -- */
+
+.news { list-style: none; padding: 0; margin: 0; }
+
+.news li {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  gap: 1rem;
+  padding: .7rem 0;
+  border-top: 1px solid var(--rule);
+}
+
+.news li:last-child { border-bottom: 1px solid var(--rule); }
+.news time { color: var(--ink-faint); font-size: .88rem; padding-top: .15rem; }
+
+/* ------------------------------------------------------------- contact -- */
+
+.contact-email {
+  font-family: var(--serif);
+  font-size: 1.45rem;
+  margin: 0 0 1.5rem;
+}
+
+.contact-email a { text-decoration: none; }
+.contact-email a:hover { text-decoration: underline; }
+
+.profile-links { display: flex; flex-wrap: wrap; gap: .75rem; list-style: none; padding: 0; margin: 0; }
+
+.profile-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  font-size: 1rem;
+  padding: .5rem 1rem;
+  border: 1px solid var(--blue-soft);
+  border-radius: 999px;
+  background: var(--blue-softer);
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.profile-links a:hover { border-color: var(--blue-muted); background: var(--blue-soft); }
+.profile-links svg { width: 26px; height: 26px; flex: none; }
+
+/* ------------------------------------------------------------- roadmap -- */
+
+.roadmap-figure { margin: 2rem 0 1rem; }
+
+/* Cap near the site's wide column so the corridor between left and right
+   boxes has room for edge labels. */
+.roadmap-svg {
+  width: 100%;
+  max-width: 90rem;
+  height: auto;
+  display: block;
+}
+
+.rm-node rect {
+  fill: #ffffff;
+  stroke: var(--blue-muted);
+  stroke-width: 1.5;
+  transition: fill .15s ease, stroke-width .15s ease;
+}
+
+.rm-node--forthcoming rect { fill: var(--blue-softer); stroke-dasharray: 5 3; }
+
+/* Dashed "side-question" node (open/exploratory, not a link). */
+.rm-node--dashed rect {
+  fill: #ffffff;
+  stroke: var(--ink-faint);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 5;
+}
+.rm-node--dashed text { font-family: var(--sans); fill: var(--ink-muted); font-weight: 500; }
+
+/*
+  IMPORTANT: do NOT set font-size in CSS px on these SVG texts.
+  The SVG uses width:100% + viewBox, so <rect> coordinates scale with the
+  page while CSS-px font-size stays fixed on screen. That made every previous
+  "shrink the boxes / enlarge the text" pass look like it did nothing (or
+  worse: boxes grew, text stayed tiny). Font sizes live as SVG attributes
+  in user units so they scale with the geometry.
+*/
+.rm-node text { font-family: var(--sans); fill: var(--ink); font-weight: 600; }
+.rm-node .rm-meta { font-weight: 400; fill: #1a56db; letter-spacing: .02em; }
+.rm-node .rm-blurb { font-weight: 400; fill: var(--ink-muted); }
+.rm-node { cursor: pointer; }
+.rm-node:hover rect { fill: var(--blue-soft); stroke-width: 2.5; }
+.rm-node:focus-visible rect { outline: 2px solid var(--blue); outline-offset: 3px; }
+
+.rm-edge { fill: none; stroke: var(--ink-faint); stroke-width: 2.6; }
+.rm-edge--dashed { stroke-dasharray: 6 5; }
+.rm-edge-label { font-family: var(--mono); fill: var(--blue-muted); }
+
+.roadmap-legend {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  font-size: 1rem;
+  color: var(--ink-muted);
+  margin-top: .5rem;
+}
+
+.roadmap-legend span { display: inline-flex; align-items: center; gap: .45rem; }
+
+.legend-swatch { width: 22px; height: 12px; border: 1.5px solid var(--blue-muted); border-radius: 2px; background: #fff; }
+.legend-swatch--ongoing { border-style: dashed; }
+
+/* Narrow screens: the diagram is too dense to read, so swap in a linear
+   version carrying the same links and the same connector labels. */
+.roadmap-list { display: none; list-style: none; padding: 0; margin: 2rem 0; counter-reset: rm; }
+
+.roadmap-list li { position: relative; padding: 0 0 0 1.75rem; margin-bottom: 1.4rem; border-left: 2px solid var(--blue-soft); padding-bottom: .3rem; }
+.roadmap-list li::before {
+  content: "";
+  position: absolute;
+  left: -7px; top: .45rem;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--blue-muted);
+}
+.roadmap-list li.is-forthcoming::before { background: var(--blue-soft); }
+.roadmap-list a { font-weight: 600; text-decoration: none; }
+.roadmap-list .rm-list-meta { display: block; font-size: .85rem; color: #1a56db; }
+.roadmap-list .rm-list-step { display: inline-block; font-family: var(--mono); font-size: 1rem; color: var(--blue-muted); background: var(--blue-softer); padding: .15rem .5rem; border-radius: 3px; margin-bottom: .25rem; }
+.roadmap-list .rm-plus { font-size: 1.35em; font-weight: 700; color: var(--blue); }
+
+/* --------------------------------------------------------------- paper -- */
+
+.paper { padding-top: 1rem; margin-bottom: 3.5rem; }
+
+/* Title spans the full wide column so its colored bar lines up with the
+   figure row; meta and prose stay on a readable, wider-than-before column. */
+.paper h3 { max-width: 100%; }
+.paper .paper-meta,
+.paper > p,
+.paper .paper-points,
+.paper-link-back { max-width: 80rem; }
+
+.paper h3 {
+  font-family: var(--serif);
+  font-size: 1.75rem;
+  color: #fff;
+  background: rgba(186, 12, 47, 0.7);  /* scarlet at ~70% */
+  padding: .65rem 1rem;
+  border-radius: 4px;
+  margin: 0 0 .7rem;
+}
+.paper h3 a { color: inherit; text-decoration: none; }
+.paper h3 a:hover { text-decoration: underline; }
+
+.paper-meta { font-size: 1.05rem; color: var(--ink-muted); margin: 0 0 1.1rem; }
+.paper-meta strong { color: var(--ink); }
+
+/* Lead-in sentence that links this paper back into the roadmap thread.
+   Larger than body, still clearly below the section title (1.75rem). */
+.paper-lede { font-weight: 600; color: var(--blue); margin-bottom: .7rem; font-size: 1.28rem; line-height: 1.45; }
+
+/* Research-page opening: a short conversational paragraph (larger than the
+   section body below); longer asides live in hover/focus cards on highlighted
+   terms. */
+.research-intro { max-width: 82rem; margin: 0 0 1.6rem; overflow: visible; font-size: 1.28rem; line-height: 1.6; }
+.research-intro p { margin: 0; }
+
+/* Closing pointer to the publications page, styled as a callout. */
+.research-outro {
+  max-width: 80rem;
+  font-size: 1.15rem;
+  background: var(--blue-softer);
+  border: 1px solid var(--blue-soft);
+  border-left: 4px solid var(--blue);
+  border-radius: 4px;
+  padding: .8rem 1.1rem;
+  margin: 1.5rem 0 0;
+}
+
+/* Fluorescent highlighter for key phrases in the research intro. */
+.hl {
+  background: #fde68a;
+  padding: .08em .18em;
+  border-radius: 3px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.term {
+  position: relative;
+  color: var(--blue);
+  font-weight: 600;
+  border-bottom: 1.5px dotted var(--blue-muted);
+  cursor: help;
+}
+
+/* Hover cards: warm paper tone + amber accent so they read as "notes",
+   distinct from the site's blue prose. */
+.term-tip {
+  position: absolute;
+  left: 0;
+  top: calc(100% + .5rem);
+  z-index: 30;
+  width: max-content;
+  max-width: min(30rem, 88vw);
+  padding: .85rem 1rem;
+  background: #fdfaf3;
+  color: var(--ink);
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.55;
+  border: 1px solid #eadfc8;
+  border-left: 4px solid #c9852b;
+  border-radius: 4px;
+  box-shadow: 0 10px 28px rgba(28, 31, 36, .14);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(.2rem);
+  transition: opacity .14s ease, transform .14s ease, visibility .14s ease;
+}
+
+.term-tip--wide { max-width: min(38rem, 88vw); }
+
+/* Q&A-style tooltip (dark matter). */
+.term-tip--qa { max-width: min(32rem, 88vw); }
+
+.term-tip-title {
+  display: block;
+  font-family: var(--sans);
+  font-size: .78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: #a3671b;
+  margin-bottom: .45rem;
+}
+
+.qa-q {
+  display: block;
+  font-family: var(--serif);
+  font-size: 1.04rem;
+  font-weight: 600;
+  color: var(--blue);
+  margin-top: .65rem;
+}
+
+.qa-a {
+  display: block;
+  font-family: var(--sans);
+  font-size: 1rem;
+  color: var(--ink);
+  margin-top: .2rem;
+}
+
+.qa-a em { font-style: italic; color: var(--ink-muted); }
+
+/* Bulleted list inside a tooltip (e.g. the "small-scale anomalies" rundown).
+   Uses display:list-item on spans so it stays valid inside the inline .term-tip. */
+.tip-list {
+  display: block;
+  margin: .25rem 0 0;
+  padding: 0 0 0 1.15rem;
+}
+.tip-item {
+  display: list-item;
+  margin-bottom: .5rem;
+  font-family: var(--sans);
+  font-size: .98rem;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.tip-item:last-child { margin-bottom: 0; }
+.tip-item strong {
+  font-family: var(--serif);
+  font-weight: 600;
+  color: var(--blue);
+}
+
+.term:hover .term-tip,
+.term:focus .term-tip,
+.term:focus-within .term-tip {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.term:focus { outline: 2px solid var(--blue-muted); outline-offset: 2px; }
+
+/* Paper takeaways: short sentences, one result per bullet. */
+.paper-points { margin: 0 0 1.1rem; padding-left: 1.4rem; }
+.paper-points li { margin-bottom: .55rem; line-height: 1.55; }
+.paper-points li:last-child { margin-bottom: 0; }
+
+/* Two figures sit side by side by default; a block with three figures gets
+   an explicit three-column row whose column widths give the middle figure a
+   smaller footprint and the first figure a slightly larger one. */
+.paper-figs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3px; margin: 0 0 1.1rem; }
+.paper-figs.figs-3 { grid-template-columns: 1.05fr .85fr 1fr; }
+
+/* 2310 block: fig. 1 widened +5% (1.05×1.05), fig. 3 narrowed −5% (1×0.95). */
+.paper-figs.figs-3.figs-3--2310 { grid-template-columns: 1.1025fr .85fr .95fr; }
+
+/* BH block: shrink fig. 1 & 3, enlarge the literature-review fig. 2. */
+.paper-figs.figs-3.figs-3--bh { grid-template-columns: .9fr 1.25fr .9fr; }
+
+.paper-figs figure { margin: 0; }
+
+.paper-figs img {
+  width: 100%;
+  display: block;
+  border-radius: 3px;
+  background: var(--blue-softer);
+  cursor: zoom-in;
+}
+
+/* 2412 block: two figures scaled down with room between them. Each figure is
+   sized independently so the two (different aspect ratios) line up. */
+.paper-figs.figs-2--2412 { gap: 2.5rem; }
+.paper-figs.figs-2--2412 img { display: block; margin-inline: auto; }
+.paper-figs.figs-2--2412 figure:first-child img { width: 75%; }
+.paper-figs.figs-2--2412 figure:last-child img { width: 70%; }
+
+/* Prominent source link under a figure row (e.g. the full tidal-track catalog).
+   Styled as a distinct green badge so it reads as a "more data" link rather
+   than a plain text link. */
+.paper-figs-source {
+  margin: 0 0 1.1rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+.paper-figs-source a {
+  display: inline-block;
+  color: #1e6e56;
+  background: #eaf4ef;
+  border: 1px solid #c4e0d2;
+  border-radius: 4px;
+  padding: .35rem .7rem;
+  text-decoration: none;
+}
+.paper-figs-source a:hover { background: #dceae2; color: #14503f; text-decoration: underline; }
+
+/* Figure number tag under each image, colored to match the in-text references. */
+.fig-tag {
+  display: block;
+  text-align: center;
+  margin-top: .45rem;
+  font-size: .92rem;
+  font-weight: 600;
+}
+
+.paper-link-back { font-size: .85rem; }
+
+/* Standalone full-figure page (e.g. the 2412 tidal-track catalog). */
+.tracks-figure { margin: 1.5rem 0 1rem; }
+.tracks-figure img {
+  width: 100%;
+  max-width: 62rem;
+  display: block;
+  border-radius: 3px;
+  background: var(--blue-softer);
+  border: 1px solid var(--rule);
+  cursor: zoom-in;
+}
+.tracks-figure figcaption {
+  max-width: 62rem;
+  font-size: .85rem;
+  color: var(--ink-muted);
+  margin-top: .55rem;
+  text-align: center;
+}
+
+/* In-text references to the figure row (left / middle / right), color-coded
+   so a reader can jump from a takeaway bullet to the matching figure. */
+.fig-ref {
+  font-weight: 600;
+  font-size: .95em;
+  white-space: nowrap;
+  border-radius: 3px;
+  padding: .04rem .42rem;
+}
+.fig-ref-left   { color: var(--blue);       background: var(--blue-soft); }
+.fig-ref-middle { color: #7a4f00;            background: #faf0d7; }
+.fig-ref-right  { color: #5b3e8a;            background: #efeaf7; }
+
+/* ------------------------------------------------------------- wordcloud */
+
+.wordcloud {
+  margin: 0 0 2.5rem;
+  padding: 1rem;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: var(--blue-softer);
+}
+
+.wordcloud img, .wordcloud svg { width: 100%; height: auto; display: block; }
+.wordcloud figcaption { font-size: .82rem; color: var(--ink-muted); margin-top: .6rem; text-align: center; }
+
+/* ------------------------------------------------------- publications --- */
+
+.pub-group-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.pub-group-head h2 { margin-bottom: .35rem; }
+.pub-count { font-size: .85rem; color: var(--ink-muted); }
+
+/* Month/year stamp used on Publications and CV. */
+.page-updated {
+  font-size: .92rem;
+  color: var(--ink-muted);
+  margin: .15rem 0 1.25rem;
+}
+
+ol.pubs { padding-left: 1.6rem; margin: 0; }
+
+ol.pubs li { margin-bottom: 1.2rem; line-height: 1.55; }
+ol.pubs .pub-title { font-weight: 600; text-decoration: none; }
+ol.pubs .pub-title:hover { text-decoration: underline; }
+ol.pubs .pub-authors { color: var(--ink-muted); }
+ol.pubs .pub-authors strong { color: var(--ink); }
+ol.pubs .pub-venue { color: var(--ink-muted); }
+ol.pubs .pub-tag {
+  font-size: .74rem;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--blue-muted);
+  background: var(--blue-softer);
+  border: 1px solid var(--blue-soft);
+  border-radius: 3px;
+  padding: .05rem .4rem;
+  white-space: nowrap;
+}
+
+/* The record I treat as the reference gets visual priority over the others. */
+.pub-source-primary {
+  font-weight: 600;
+  background: var(--blue-softer);
+  border: 1px solid var(--blue-soft);
+  border-radius: 4px;
+  padding: .1rem .5rem;
+  text-decoration: none;
+}
+.pub-source-primary:hover { border-color: var(--blue-muted); }
+
+/* ------------------------------------------------------------- talks ---- */
+
+.talk-group { margin-bottom: 2.5rem; }
+.talk-group h3 {
+  font-family: var(--serif);
+  color: #5b3e8a;
+  font-size: 1.3rem;
+  margin-bottom: .75rem;
+  background: rgba(91, 62, 138, 0.10);
+  padding: .5rem .8rem;
+  border-radius: 4px;
+}
+
+ul.talks { list-style: none; padding: 0; margin: 0; }
+
+ul.talks li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: .5rem 1.25rem;
+  padding: .55rem 0;
+  border-top: 1px solid var(--rule);
+  align-items: baseline;
+}
+
+ul.talks li:last-child { border-bottom: 1px solid var(--rule); }
+ul.talks .talk-kind { font-size: .78rem; text-transform: uppercase; letter-spacing: .05em; color: var(--blue-muted); }
+ul.talks .talk-date { color: var(--ink-faint); font-size: .88rem; white-space: nowrap; }
+ul.talks .slides-link {
+  display: inline-block;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--blue);
+  background: var(--blue-soft);
+  border: 1.5px solid var(--blue-muted);
+  border-radius: 5px;
+  padding: .18rem .7rem;
+  margin: .45rem .5rem 0 0;
+  text-decoration: none;
+}
+ul.talks .slides-link:hover { background: var(--blue); color: #fff; }
+
+/* ---------------------------------------------------------------- cv ---- */
+
+.cv-actions { display: flex; gap: .75rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+
+.btn {
+  display: inline-block;
+  padding: .5rem 1.1rem;
+  border-radius: 4px;
+  background: var(--blue);
+  color: #fff;
+  text-decoration: none;
+  font-size: .92rem;
+}
+
+.btn:hover { background: var(--blue-muted); color: #fff; }
+.btn--ghost { background: transparent; color: var(--blue); border: 1px solid var(--blue-soft); }
+.btn--ghost:hover { background: var(--blue-softer); color: var(--blue); }
+
+.pdf-frame { width: 100%; height: 85vh; min-height: 520px; border: 1px solid var(--rule); border-radius: 4px; }
+
+/* --------------------------------------------------------------- misc --- */
+
+.misc-lede {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin: 1rem 0 2rem;
+}
+
+/* Slightly larger, serif body paragraphs on the Misc page. */
+.misc-note {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  line-height: 1.6;
+}
+
+.back-link {
+  font-size: 1rem;
+  margin: 1.5rem 0 .75rem;
+}
+
+.back-link a { color: var(--ink-muted); text-decoration: none; }
+
+.back-link a:hover { color: var(--blue); }
+
+/* ------------------------------------------------------------- footer --- */
+
+.site-footer {
+  border-top: 1px solid var(--rule);
+  padding: 1.75rem 0;
+  font-size: .88rem;
+  color: var(--ink-muted);
+  background: var(--blue-softer);
+}
+
+.site-footer .wrap-wide { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+
+/* ---------------------------------------------------------- responsive -- */
+
+@media (max-width: 1100px) {
+  /* The three-figure row is only legible on wide columns; below this width
+     let the figures wrap naturally. */
+  .paper-figs,
+  .paper-figs.figs-3 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+}
+
+@media (max-width: 760px) {
+  html { font-size: 118.75%; }  /* ~19px on phones; tracks the +3px bump */
+  h1 { font-size: 2.35rem; }
+  .hero { grid-template-columns: 1fr; gap: 1.5rem; }
+  .portrait { max-width: 200px; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .stats { gap: 1.5rem; }
+  .news li { grid-template-columns: 1fr; gap: .1rem; }
+  .roadmap-figure { display: none; }
+  .roadmap-list { display: block; }
+  .paper-figs,
+  .paper-figs.figs-3 { grid-template-columns: 1fr; }
+  ul.talks li { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}
+
+/* ------------------------------------------------------ figure lightbox -- */
+
+.fig-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: .75rem;
+  padding: 2.5rem 1.25rem 1.5rem;
+  background: rgba(12, 16, 24, .82);
+  backdrop-filter: blur(4px);
+  cursor: zoom-out;
+  overflow: auto;
+}
+
+.fig-lightbox[hidden] { display: none !important; }
+
+.fig-lightbox-img {
+  /* Sized in JS to naturalWidth/Height × 1.2; scroll if larger than the viewport. */
+  width: auto;
+  height: auto;
+  max-width: none;
+  max-height: none;
+  border-radius: 3px;
+  background: #fff;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, .45);
+  cursor: default;
+}
+
+.fig-lightbox-close {
+  position: absolute;
+  top: .7rem;
+  right: 1rem;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: .25rem .5rem;
+}
+
+.fig-lightbox-close:hover { color: #e8dcdd; }
+
+.fig-lightbox-hint {
+  margin: 0;
+  font-size: .82rem;
+  color: rgba(255, 255, 255, .7);
+}
+
+body.fig-lightbox-open { overflow: hidden; }

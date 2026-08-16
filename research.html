@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Research &middot; Z. Carton Zeng</title>
+<meta name="description" content="A single research thread on self-interacting dark matter: from the evolution of an individual subhalo to dwarf galaxies, satellite populations, and central black holes.">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap-wide">
+    <a class="brand" href="index.html">Z. Carton Zeng</a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="research.html" aria-current="page">Research</a>
+      <a href="publications.html">Publications</a>
+      <a href="talks.html">Talks &amp; Slides</a>
+      <a href="cv.html">CV</a>
+      <a href="misc.html">Misc</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap-wide">
+    <h1>Research</h1>
+    <div class="research-intro">
+      <p>
+        My research in recent years focuses on
+        <span class="hl">probing the nature of
+        <span class="term" tabindex="0" aria-describedby="tip-dm">dark matter<span class="term-tip term-tip--qa" id="tip-dm" role="tooltip">
+          <span class="term-tip-title">dark matter q&amp;a</span>
+          <span class="qa-q">Q: what is dark matter?</span>
+          <span class="qa-a">A: short answer &mdash; we don&rsquo;t know. It&rsquo;s a hypothetical form of matter physicists invoke to explain observations that are otherwise very hard to explain: galaxy rotation curves, gravitational lensing, the CMB, the Bullet Cluster, and large-scale structure. It &ldquo;should&rdquo; not interact electromagnetically (hence invisible, or &ldquo;dark&rdquo;), and we have no direct evidence of it interacting with ordinary matter.</span>
+          <span class="qa-q">Q: then why do we need it?</span>
+          <span class="qa-a">A: because it explains a wide range of observations. Even if it&rsquo;s &ldquo;just&rdquo; a model, it&rsquo;s a good, useful model &mdash; and even if dark matter isn&rsquo;t literally &ldquo;matter&rdquo;, something equivalent must exist to explain those observations. Physics is all about models. <em>&ldquo;All models are wrong. Some are useful.&rdquo;</em></span>
+        </span></span></span>
+        &mdash; deploying <span class="hl">computer simulations</span> to predict how DM is distributed in the Universe, distributions that can leave observational imprints. Specifically, I work mainly on a group of DM models &mdash; <span class="hl">self-interacting dark matter (<span class="term" tabindex="0" aria-describedby="tip-sidm">SIDM<span class="term-tip term-tip--wide" id="tip-sidm" role="tooltip">
+          <span class="term-tip-title">sidm q&amp;a</span>
+          <span class="qa-q">Q: what is SIDM?</span>
+          <span class="qa-a">A: whereas CDM is collisionless and only interacts gravitationally, SIDM adds particle-physics scatterings, characterized by their strength (the cross section), plus extra degrees of freedom &mdash; some models include energy dissipation or transitions between excitation states during a scattering event.</span>
+          <span class="qa-q">Q: why does SIDM feel like just adding a degree of freedom to CDM, so physicists can fine-tune and force-fit the observations? It sounds like an ugly manipulation!</span>
+          <span class="qa-a">A: you&rsquo;re not wrong. But I&rsquo;d frame it differently: assuming DM is completely collisionless is actually the stronger assumption &mdash; every form of ordinary matter interacts (that&rsquo;s how we observe it). It&rsquo;s more natural to put some placeholder self-interaction in there, and then try to constrain its strength.</span>
+        </span></span>)</span>, a hot candidate in recent years for resolving a series of small-scale observational anomalies not easily accommodated by standard cold dark matter (CDM). In particular, I mostly use
+        <span class="hl"><span class="term" tabindex="0" aria-describedby="tip-ideal">idealized/controlled/isolated/staged simulations<span class="term-tip term-tip--wide" id="tip-ideal" role="tooltip">I.e., not a full cosmological simulation box, but one or a few main halos and their subhalos. The unique advantage is good/scalable resolution at reasonable computational cost, together with clean physics (i.e., you can separate the physics you want to study from complicated environmental effects) &mdash; at the cost of &ldquo;idealized assumptions&rdquo; (hopefully not too significant at the present stage), such as spherical symmetry in initializing halos, and isolation from the cosmic environment (yes, this is a double-edged sword).</span></span></span>
+        to study the evolution of SIDM (sub)halos, in the context of <span class="hl">SIDM core-formation to core-collapse</span>.
+      </p>
+      <p>
+        The overarching goal of this thread is to establish a landscape-type understanding of how SIDM
+        small-scale structure evolves: how far SIDM can quantitatively accommodate the recent
+        <span class="hl"><span class="term" tabindex="0" aria-describedby="tip-anom">small-scale anomalies<span class="term-tip term-tip--wide" id="tip-anom" role="tooltip">
+          <span class="term-tip-title">small-scale anomalies</span>
+          <span class="tip-list">
+            <span class="tip-item"><strong>Diversity problem of dwarf galaxies</strong></span>
+            <span class="tip-item"><strong>Ultra-compact dark perturbers to strong lenses</strong> via gravitational imaging of the lensed Einstein ring</span>
+            <span class="tip-item"><strong>Excess galaxy&ndash;galaxy lensing signals</strong></span>
+            <span class="tip-item"><strong>Ultra-compact dark perturbers to stellar streams</strong></span>
+            <span class="tip-item"><strong>High-redshift massive black holes (&ldquo;little red dots&rdquo;)</strong></span>
+          </span>
+        </span></span></span>, and ultimately which region of
+        <span class="hl">SIDM parameter space</span> these observations together favor.
+      </p>
+    </div>
+
+    <!--
+      Confirmed node mapping (2026-08):
+        1  a single SIDM (sub)halo              -> 2110.00259  (life story)
+        2  a population of SIDM subhalos        -> 2310.09910  (till the core collapses)
+           edge 1→2: +merger history to make a population
+        3  stellar response to core, …
+                                              -> 2412.14621  (dwarf / tidal-track)
+           edge 1→3: +star particles to establish a tidal-evolution track type of study
+        5  SIDM–BH formation                  -> 2608.xxxxx  (feeding the void)
+        4  SIDM & possible LG past pericenter -> 2604.08647  (bypassed; separate block)
+      -->
+
+    <figure class="roadmap-figure">
+      <!--
+        Font sizes are SVG attributes (user units), NOT CSS px — see site.css
+        note on .rm-node text. Right column starts at x=700 so the long edge
+        labels sit entirely in the corridor and never cross a box border.
+      -->
+      <svg class="roadmap-svg" viewBox="0 0 1320 540" role="img"
+           aria-label="Diagram of the SIDM research thread and a related Local Group project.">
+        <g transform="scale(0.85)">
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
+                  markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#969aa2"></path>
+          </marker>
+        </defs>
+
+        <!--
+          Right column at x=820 leaves a ~500-unit corridor for edge labels.
+          Long labels: line 1 above the arrow, line 2 below. The + stays large.
+          Font sizes are SVG user units (scale with the diagram).
+        -->
+        <!-- Stem exits the right edge of box 1, then fans into 3 branches. -->
+        <path class="rm-edge" d="M 292 258 L 360 258"></path>
+        <path class="rm-edge" d="M 360 258 L 360 58 L 810 58" marker-end="url(#arrow)"></path>
+        <path class="rm-edge" d="M 360 258 L 810 258" marker-end="url(#arrow)"></path>
+        <path class="rm-edge" d="M 360 258 L 360 402 L 810 402" marker-end="url(#arrow)"></path>
+
+        <!-- Top link: above / below the branch at y=58 -->
+        <text class="rm-edge-label" x="380" y="48" text-anchor="start">
+          <tspan font-size="32" font-weight="700" fill="#ba0c2f">+</tspan><tspan font-size="20" dx="6">merger history to make</tspan>
+        </text>
+        <text class="rm-edge-label" x="412" y="76" text-anchor="start" font-size="20">a population</text>
+
+        <!-- Middle link: above / below the branch at y=258 -->
+        <text class="rm-edge-label" x="380" y="248" text-anchor="start">
+          <tspan font-size="32" font-weight="700" fill="#ba0c2f">+</tspan><tspan font-size="20" dx="6">star particles,</tspan>
+        </text>
+        <text class="rm-edge-label" x="412" y="276" text-anchor="start" font-size="20">tidal evolutionary tracks</text>
+
+        <!-- Bottom link: short enough for one line above the branch at y=390 -->
+        <text class="rm-edge-label" x="380" y="380" text-anchor="start">
+          <tspan font-size="32" font-weight="700" fill="#ba0c2f">+</tspan><tspan font-size="20" dx="6">post-core-collapse BH</tspan>
+        </text>
+
+        <!-- Dashed side-question forking upward from the "star particles" main line. -->
+        <path class="rm-edge rm-edge--dashed" d="M 500 258 L 500 158 L 605 158" marker-end="url(#arrow)"></path>
+        <text class="rm-edge-label" x="508" y="208" text-anchor="start">
+          <tspan font-size="24" font-weight="700" fill="#ba0c2f">+</tspan><tspan font-size="18" dx="4">tagging method</tspan>
+        </text>
+        <g class="rm-node--dashed">
+          <rect x="605" y="118" width="330" height="80" rx="12"></rect>
+          <text x="770" y="144" text-anchor="middle" font-size="20">tagging DM particles as stars:</text>
+          <text x="770" y="170" text-anchor="middle" font-size="20">does it work for SIDM?</text>
+        </g>
+
+        <!-- 1 -->
+        <a class="rm-node" href="#life-story-2022">
+          <rect x="16" y="216" width="276" height="84" rx="12"></rect>
+          <text x="154" y="244" text-anchor="middle" font-size="24">Evolution:</text>
+          <text x="154" y="270" text-anchor="middle" font-size="24">a single SIDM (sub)halo</text>
+          <text class="rm-meta" x="154" y="290" text-anchor="middle" font-size="16">arXiv:2110.00259</text>
+        </a>
+
+        <!-- 2 -->
+        <a class="rm-node" href="#tidal-tracks-2025">
+          <rect x="820" y="16" width="380" height="84" rx="12"></rect>
+          <text x="1010" y="44" text-anchor="middle" font-size="24">Evolution:</text>
+          <text x="1010" y="70" text-anchor="middle" font-size="24">a population of SIDM subhalos</text>
+          <text class="rm-meta" x="1010" y="90" text-anchor="middle" font-size="16">arXiv:2310.09910</text>
+        </a>
+
+        <!-- 3 -->
+        <a class="rm-node" href="#dwarf-diversity-2025">
+          <rect x="820" y="216" width="480" height="84" rx="12"></rect>
+          <text x="1060" y="244" text-anchor="middle" font-size="24">Evolution:</text>
+          <text x="1060" y="270" text-anchor="middle" font-size="24">stellar response to SIDM</text>
+          <text class="rm-meta" x="1060" y="290" text-anchor="middle" font-size="16">arXiv:2412.14621</text>
+        </a>
+
+        <!-- 5 -->
+        <a class="rm-node" href="#black-hole-forthcoming">
+          <rect x="820" y="360" width="480" height="84" rx="12"></rect>
+          <text x="1060" y="388" text-anchor="middle" font-size="24">Co-evolution:</text>
+          <text x="1060" y="414" text-anchor="middle" font-size="24">halo and SIDM-seeded black hole</text>
+          <text class="rm-meta" x="1060" y="434" text-anchor="middle" font-size="16">arXiv:2608.xxxxx</text>
+        </a>
+
+        <!-- 4 -->
+        <a class="rm-node" href="#bypassed-core-2026">
+          <rect x="16" y="480" width="520" height="48" rx="12"></rect>
+          <text x="276" y="501" text-anchor="middle" font-size="22">SIDM &amp; possible Local Group past pericenter</text>
+          <text class="rm-meta" x="276" y="520" text-anchor="middle" font-size="16">arXiv:2604.08647</text>
+        </a>
+        </g>
+      </svg>
+      <figcaption class="roadmap-legend">
+        <span><i class="legend-swatch"></i> finished</span>
+        <span><i class="legend-swatch legend-swatch--ongoing"></i> ongoing</span>
+      </figcaption>
+    </figure>
+
+    <!-- Linear version for narrow screens. -->
+    <ol class="roadmap-list">
+      <li>
+        <a href="#life-story-2022">Evolution: a single SIDM (sub)halo</a>
+        <span class="rm-list-meta">arXiv:2110.00259</span>
+      </li>
+      <li>
+        <span class="rm-list-step"><span class="rm-plus">+</span> merger history to make a population</span><br>
+        <a href="#tidal-tracks-2025">Evolution: a population of SIDM subhalos</a>
+        <span class="rm-list-meta">arXiv:2310.09910</span>
+      </li>
+      <li>
+        <span class="rm-list-step"><span class="rm-plus">+</span> star particles, tidal evolutionary tracks</span><br>
+        <a href="#dwarf-diversity-2025">Evolution: stellar response to SIDM</a>
+        <span class="rm-list-meta">arXiv:2412.14621</span>
+      </li>
+      <li>
+        <span class="rm-list-step"><span class="rm-plus">+</span> post-core-collapse BH</span><br>
+        <a href="#black-hole-forthcoming">Co-evolution: halo and SIDM-seeded black hole</a>
+        <span class="rm-list-meta">arXiv:2608.xxxxx</span>
+      </li>
+      <li>
+        <a href="#bypassed-core-2026">SIDM &amp; possible Local Group past pericenter</a>
+        <span class="rm-list-meta">arXiv:2604.08647</span>
+      </li>
+    </ol>
+
+    <hr class="rule">
+  </div>
+
+  <div class="wrap-wide">
+
+    <article class="paper" id="life-story-2022">
+      <h3><a href="https://arxiv.org/abs/2110.00259">Core-collapse, evaporation and tidal effects:
+        the life story of a self-interacting dark matter subhalo</a></h3>
+      <p class="paper-meta">
+        <strong>Z. C. Zeng</strong>, A. Peter, X. Du, et al. &middot;
+        MNRAS, 2022 &middot; <a href="https://arxiv.org/abs/2110.00259">arXiv:2110.00259</a>
+      </p>
+      <div class="paper-figs figs-3">
+        <figure>
+          <img src="assets/img/papers/life-story-1.jpg" alt="The hybrid framework: an analytic SIDM host halo (including its evaporation effect) surrounding an N-body subhalo.">
+          <figcaption class="fig-tag fig-ref-left">fig.&nbsp;1</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/img/papers/life-story-2.jpg" alt="Subhalo central-density evolution: internal heat outflow versus evaporation and tidal heating decide whether core collapse proceeds.">
+          <figcaption class="fig-tag fig-ref-middle">fig.&nbsp;2</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/img/papers/life-story-3.jpg" alt="Critical concentration for core collapse in a Hubble time: subhalos sit well above isolated halos, so constant-cross-section models rarely collapse.">
+          <figcaption class="fig-tag fig-ref-right">fig.&nbsp;3</figcaption>
+        </figure>
+      </div>
+      <p class="paper-lede">
+        The starting point of the thread: how one SIDM subhalo evolves under the combined action
+        of gravothermal core collapse, evaporation against the host halo, and tidal effects &mdash;
+        and whether, or never, it core-collapses.
+      </p>
+      <ul class="paper-points">
+        <li>
+          Built a <span class="hl">hybrid semi-analytic + N-body framework</span> that speeds up SIDM subhalo
+          simulations in the core-collapse regime &mdash; the host is modeled as an analytic
+          SIDM distribution, including its evaporation effect on the subhalo.
+        </li>
+        <li>
+          Coupling to the host can <span class="hl">accelerate, delay or even disrupt core
+          collapse</span>: evaporation and tidal heating act as heating terms that counter it,
+          while internal heat outflow is a cooling term that drives it.
+          <span class="fig-ref fig-ref-left">fig.&nbsp;1</span>
+        </li>
+        <li>
+          The tidal field alone plays a complex role &mdash; sometimes accelerating core collapse,
+          sometimes decelerating it &mdash; because tidal heating and tidal stripping work against each other.
+          <span class="fig-ref fig-ref-middle">fig.&nbsp;2</span>
+        </li>
+        <li>
+          Derived the critical (minimum) concentration for core collapse within a Hubble time for
+          isolated halos vs subhalos. For a constant cross section it is 2&ndash;3&times; higher than
+          typical cosmological values &mdash; constant-&sigma; models are therefore very unlikely to
+          produce core-collapsed substructure.
+          <span class="fig-ref fig-ref-right">fig.&nbsp;3</span>
+        </li>
+      </ul>
+    </article>
+
+    <article class="paper" id="tidal-tracks-2025">
+      <h3><a href="https://arxiv.org/abs/2310.09910">Till the core collapses: the evolution and
+        properties of self-interacting dark matter subhalos</a></h3>
+      <p class="paper-meta">
+        <strong>Z. C. Zeng</strong>, A. Peter, X. Du, et al. &middot;
+        Phys. Rev. D, 2025 &middot; <a href="https://arxiv.org/abs/2310.09910">arXiv:2310.09910</a>
+      </p>
+      <div class="paper-figs figs-3 figs-3--2310">
+        <figure>
+          <img src="assets/img/papers/tidal-tracks-1.jpg" alt="Fraction of core-collapsed subhalos versus velocity-dependent cross-section model.">
+          <figcaption class="fig-tag fig-ref-left">fig.&nbsp;1</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/img/papers/tidal-tracks-2.jpg" alt="Inner-mass distribution of subhalos, broadened when a velocity-dependent cross section drives core collapse.">
+          <figcaption class="fig-tag fig-ref-middle">fig.&nbsp;2</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/img/papers/tidal-tracks-3.jpg" alt="Subhalo central slope predictions compared with HST substructure-lensing inferences.">
+          <figcaption class="fig-tag fig-ref-right">fig.&nbsp;3</figcaption>
+        </figure>
+      </div>
+      <p class="paper-lede">
+        From one subhalo to a realistic population &mdash; how often, and on what mass scales, does
+        core collapse actually happen?
+      </p>
+      <ul class="paper-points">
+        <li>
+          Built a <span class="hl">&ldquo;hierarchical&rdquo; simulation framework</span> that follows a realistic population of
+          SIDM subhalos drawn from merger trees &mdash; subhalos are grouped into smaller sub-simulations by
+          their mass at infall, each with hierarchical particle resolution.
+        </li>
+        <li>
+          At the population level, a significant fraction (&gt;10%) of subhalos can core-collapse
+          with certain <span class="hl">velocity-dependent SIDM</span> cross sections.
+          <span class="fig-ref fig-ref-left">fig.&nbsp;1</span>
+        </li>
+        <li>
+          A typical velocity-dependent cross section (violet line in
+          <span class="fig-ref fig-ref-middle">fig.&nbsp;2</span>) that drives substantial core
+          collapse <span class="hl">also broadens the diversity</span> of subhalo inner masses &mdash; not shifting all
+          halos to the compact side, but diversifying them.
+        </li>
+        <li>
+          The two velocity-dependent models with significant core collapse match recent HST
+          substructure-lensing inferences of ultra-high subhalo central slopes.
+          <span class="fig-ref fig-ref-right">fig.&nbsp;3</span>
+        </li>
+        <li>
+          For substructure lensing: the 1-point function is only sensitive to core collapse in massive
+          subhalos &mdash; the column density of small, compact subhalos is outweighed by large, diffuse ones &mdash;
+          while the 2-point correlation function can distinguish core collapse at different halo-mass scales.
+        </li>
+      </ul>
+    </article>
+
+    <article class="paper" id="dwarf-diversity-2025">
+      <h3><a href="https://arxiv.org/abs/2412.14621">Diversity and universality: evolution of dwarf
+        galaxies with self-interacting dark matter</a></h3>
+      <p class="paper-meta">
+        <strong>Z. C. Zeng</strong>, A. Peter, X. Du, et al. &middot;
+        Phys. Rev. D, 2025 &middot; <a href="https://arxiv.org/abs/2412.14621">arXiv:2412.14621</a>
+      </p>
+      <div class="paper-figs figs-2--2412">
+        <figure>
+          <img src="assets/img/papers/dwarf-diversity-1.jpg" alt="Tidal evolution tracks of selected representative dwarf satellites: half-light radius, stellar velocity dispersion, and mass-to-light ratio.">
+          <figcaption class="fig-tag fig-ref-left">fig.&nbsp;1</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/img/papers/dwarf-diversity-2.jpg" alt="Evolution of selected field and satellite SIDM dwarfs in the stellar mass versus size plane, compared with observed Local Group and field dwarfs.">
+          <figcaption class="fig-tag fig-ref-right">fig.&nbsp;2</figcaption>
+        </figure>
+      </div>
+      <p class="paper-figs-source">
+        <a href="dwarf-diversity-tracks.html">Full data behind fig.&nbsp;1 &mdash; every simulated dwarf satellite, all SIDM models and orbits &rarr;</a>
+      </p>
+      <p class="paper-lede">
+        Populate the (sub)halo with stellar particles, trace how the stars respond to SIDM physics
+        and host&ndash;subhalo interactions, and build &ldquo;tidal tracks&rdquo; that anchor stellar
+        evolution to dark-matter-only metrics.
+      </p>
+      <ul class="paper-points">
+        <li>
+          SIDM satellites do follow a common pattern &mdash; <span class="hl">&ldquo;tidal tracks&rdquo;</span> &mdash; using
+          the inner dark-matter mass as the anchor of their evolution.
+          <span class="fig-ref fig-ref-left">fig.&nbsp;1</span>
+        </li>
+        <li>
+          The actual <span class="hl">diversity of SIDM satellites&rsquo; stellar components</span> is much larger than in CDM
+          &mdash; especially in the core-collapse context &mdash; confirming, for the first time, the
+          diversity predicted from dark-matter-only simulations, now with real stars.
+        </li>
+        <li>
+          In the stellar-size&ndash;stellar-mass plane, the diffuse side of dwarfs is easily matched,
+          but ultra-compact dwarfs (UCDs) in clusters remain about an order of magnitude more compact
+          &mdash; a qualitative comparison only, since our simulations sit at the galaxy-group scale,
+          not the cluster scale where UCDs live.
+          <span class="fig-ref fig-ref-right">fig.&nbsp;2</span>
+        </li>
+      </ul>
+    </article>
+
+    <article class="paper" id="black-hole-forthcoming">
+      <h3><a href="https://arxiv.org/abs/2608.xxxxx">Feeding the Void: co-evolution of the
+        SIDM-seeded black hole and the dark halo after core-collapse</a></h3>
+      <p class="paper-meta">
+        <strong>Z. C. Zeng</strong>, A. Peter, L. Strigari, et al. &middot;
+        2026 &middot; <a href="https://arxiv.org/abs/2608.xxxxx">arXiv:2608.xxxxx</a>
+      </p>
+      <div class="paper-figs figs-3 figs-3--bh">
+        <figure>
+          <img src="assets/img/papers/black-hole-1.jpg" alt="Black-hole mass growth under the multi-round core-collapse and continuous-accretion schemes, bracketing a final mass of roughly 5 to 12 percent of the halo.">
+          <figcaption class="fig-tag fig-ref-left">fig.&nbsp;1</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/img/papers/black-hole-2.jpg" alt="Literature overview of SIDM-seeded black-hole mass scales, from relativistic seeds through SMFP cores to halo-scale accretion.">
+          <figcaption class="fig-tag fig-ref-middle">fig.&nbsp;2</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/img/papers/black-hole-3.jpg" alt="Projected 2D enclosed mass after multi-round accretion, compared with NFW, SIDM-core, and Vegetti et al. 2026.">
+          <figcaption class="fig-tag fig-ref-right">fig.&nbsp;3</figcaption>
+        </figure>
+      </div>
+      <p class="paper-lede">
+        What happens after SIDM core-collapse seeds a black hole? How does the black hole keep
+        growing, and how does the host halo evolve in response?
+      </p>
+      <ul class="paper-points">
+        <li>
+          Built <span class="hl">an N-body framework (DM-only) that brackets post-collapse
+          dark-matter accretion</span> with two complementary schemes &mdash; multi-round core-collapse (lower bound) and
+          continuous accretion (upper bound).
+          <span class="fig-ref fig-ref-left">fig.&nbsp;1</span>
+        </li>
+        <li>
+          The BH mass-growth trajectory flattens on a &sim;2&nbsp;Gyr timescale, reaching <span class="hl">5%&ndash;12%
+          of the halo mass</span> &mdash; extending beyond the &sim;1% single-episode SMFP estimates.
+          <span class="fig-ref fig-ref-left">fig.&nbsp;1</span>
+        </li>
+        <li>
+          A comprehensive review and comparison with contemporary studies of SIDM-seeded black holes.
+          <span class="fig-ref fig-ref-middle">fig.&nbsp;2</span>
+        </li>
+        <li>
+          Sustained accretion drives a <span class="hl">&ldquo;gravothermal supply chain&rdquo;</span>: the outer halo feeds
+          the core, which feeds the black hole, severely depleting the inner density
+          (&lsim;2&thinsp;<i>r</i><sub>s</sub>).
+        </li>
+        <li>
+          The resulting halo profile qualitatively resembles a very recent lensing anomaly:
+          Vegetti et al. 2026 report a &sim;10<sup>6</sup>&thinsp;M<sub>&odot;</sub> perturber in
+          JVAS B1938+666, whose 2D projected mass is best fit by <span class="hl">an unresolved central point mass
+          plus a shallow, extended disk</span>.
+          <span class="fig-ref fig-ref-right">fig.&nbsp;3</span>
+        </li>
+      </ul>
+    </article>
+
+    <article class="paper" id="bypassed-core-2026">
+      <h3><a href="https://arxiv.org/abs/2604.08647">Bypassed core formation in Milky Way-mass SIDM halos:
+        implications for the Local Group past-pericenter scenario</a></h3>
+      <p class="paper-meta">
+        <strong>Z. C. Zeng</strong>, O. Hartl, L. Strigari, et al. &middot;
+        submitted to Phys. Rev. D, 2026 &middot;
+        <a href="https://arxiv.org/abs/2604.08647">arXiv:2604.08647</a>
+      </p>
+      <div class="paper-figs figs-3">
+        <figure>
+          <img src="assets/img/papers/bypassed-core-1.jpg" alt="Bypassed core formation: the Milky Way-mass halo's central density rises monotonically, independent of cross section.">
+          <figcaption class="fig-tag fig-ref-left">fig.&nbsp;1</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/img/papers/bypassed-core-2.jpg" alt="Dependence of the bypassed core-formation behavior on the stellar-halo-mass ratio.">
+          <figcaption class="fig-tag fig-ref-middle">fig.&nbsp;2</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/img/papers/bypassed-core-3.jpg" alt="Past-pericenter response: the disk/bulge versus the diffuse stellar halo.">
+          <figcaption class="fig-tag fig-ref-right">fig.&nbsp;3</figcaption>
+        </figure>
+      </div>
+      <p class="paper-lede">
+        A study of Milky Way&ndash;mass systems, in isolation and within the Local Group &mdash; with
+        a specific focus on a possible past pericenter.
+      </p>
+      <ul class="paper-points">
+        <li>
+          Milky Way&ndash;mass galaxies can <span class="hl">bypass the SIDM core-formation</span> phase and enter core
+          collapse directly &mdash; a behavior that appears independent of the cross section.
+          <span class="fig-ref fig-ref-left">fig.&nbsp;1</span>
+        </li>
+        <li>
+          This bypassing is sensitive to the stellar-halo-mass ratio: the higher the stellar mass
+          fraction, the more likely it happens &mdash; and the Milky Way&ndash;mass scale is where the
+          SMHM relation peaks.
+          <span class="fig-ref fig-ref-middle">fig.&nbsp;2</span>
+        </li>
+        <li>
+          In the past-pericenter scenario, the disk/bulge is insensitive to pericenters above
+          &sim;10 kpc but sensitive to the SIDM cross section; the diffuse stellar halo is the
+          opposite &mdash; insensitive to the SIDM model but sensitive to pericenters below &sim;100 kpc.
+          <span class="fig-ref fig-ref-right">fig.&nbsp;3</span>
+        </li>
+      </ul>
+    </article>
+
+    <hr class="rule">
+
+    <p class="research-outro">
+      Other work &mdash; papers led by students I mentor and collaborative work &mdash; is
+      listed in full on the <a href="publications.html">publications page &rarr;</a>
+    </p>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap-wide">
+    <span>Z. Carton Zeng &middot; Texas A&amp;M University</span>
+    <span><a href="mailto:zczeng@tamu.edu">zczeng@tamu.edu</a></span>
+  </div>
+</footer>
+
+<script src="assets/js/fig-zoom.js" defer></script>
+</body>
+</html>
