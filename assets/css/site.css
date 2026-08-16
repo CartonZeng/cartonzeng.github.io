@@ -700,7 +700,7 @@ ul.talks .slides-link:hover { background: var(--blue); color: #fff; }
   text-align: center;
   color: var(--ink-muted);
   margin: 2.5rem auto 1rem;
-  max-width: 38em;
+  max-width: 52em;
 }
 
 .back-link {
