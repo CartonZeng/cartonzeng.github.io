@@ -1,5 +1,7 @@
 # Academic site — Z. Carton Zeng
 
+**Live site: <https://cartonzeng.github.io/>**
+
 Static site, no build step. Every page is plain HTML that can be opened directly
 in a browser or served from any static host.
 
