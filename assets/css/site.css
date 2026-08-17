@@ -751,8 +751,25 @@ ul.talks .slides-link:hover { background: var(--blue); color: #fff; }
 }
 
 /* Section heading that doubles as a link (the joke archive entry). */
-h2 a { color: inherit; text-decoration: none; }
-h2 a:hover { color: var(--blue); text-decoration: underline; }
+h2 a { color: inherit; text-decoration: underline; }
+h2 a:hover { color: var(--blue); }
+
+/* Small gray italic hint next to a linked heading. */
+/* Linked section heading with a margin-note style hint (the joke archive
+   entry). The hint sits in the left margin, outside the content column. */
+.jokes-title { position: relative; }
+
+.jokes-hint {
+  position: absolute;
+  right: 100%;
+  margin-right: .9rem;
+  font-family: var(--sans);
+  font-style: italic;
+  font-size: .85rem;
+  font-weight: 400;
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
 
 .back-link {
   font-size: 1rem;
@@ -797,6 +814,15 @@ h2 a:hover { color: var(--blue); text-decoration: underline; }
   .paper-figs,
   .paper-figs.figs-3 { grid-template-columns: 1fr; }
   ul.talks li { grid-template-columns: 1fr; }
+}
+
+/* Narrower viewports: the content column reaches the viewport edges, so the
+   margin-note hint would overflow the screen. Pull it back inline. */
+@media (max-width: 80rem) {
+  .jokes-hint {
+    position: static;
+    margin-right: .6rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
