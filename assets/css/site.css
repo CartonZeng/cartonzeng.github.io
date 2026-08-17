@@ -166,11 +166,11 @@ main { padding: 2.5rem 0 4rem; }
 
 .portrait {
   width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
+  height: auto;
   border-radius: 4px;
   background: var(--blue-softer);
   border: 1px solid var(--rule);
+  margin-top: 1.25rem;
 }
 
 /* ---------------------------------------------------------------- news -- */
