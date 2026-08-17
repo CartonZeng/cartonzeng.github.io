@@ -1,6 +1,11 @@
 /* Populate publication / citation metrics live from the INSPIRE-HEP API.
-   Fetches every paper attributed to this author, then sums citations overall
-   and for first-author papers. Values land in elements with data-metric="…". */
+   Fetches every paper attributed to this author, then computes:
+     - papers            total paper count
+     - citations         total citation count
+     - first-author-papers   number of first-authored papers
+     - first-author      citations to first-authored papers
+   Values land in elements with data-metric="…" inside any container marked
+   data-metrics. Runs once per page and fills every matching container. */
 (function () {
   var AUTHOR_ID = "1713307";
   var SIZE = 250;
@@ -30,33 +35,38 @@
   }
 
   ready(function () {
-    var root = document.getElementById("inspire-metrics");
-    if (!root) return;
+    var roots = Array.prototype.slice.call(document.querySelectorAll("[data-metrics]"));
+    if (!roots.length) return;
 
-    function set(key, value) {
-      var el = root.querySelector('[data-metric="' + key + '"]');
-      if (el) el.textContent = value.toLocaleString("en-US");
+    function setAll(key, value) {
+      roots.forEach(function (root) {
+        var el = root.querySelector('[data-metric="' + key + '"]');
+        if (el) el.textContent = value.toLocaleString("en-US");
+      });
     }
 
     fetchAll(API_URL)
       .then(function (hits) {
         var papers = hits.length;
         var citations = 0;
-        var firstAuthor = 0;
+        var firstAuthorPapers = 0;
+        var firstAuthorCitations = 0;
         hits.forEach(function (h) {
           var m = h.metadata || {};
           citations += m.citation_count || 0;
           if (m.first_author && String(m.first_author.recid) === AUTHOR_ID) {
-            firstAuthor += m.citation_count || 0;
+            firstAuthorPapers += 1;
+            firstAuthorCitations += m.citation_count || 0;
           }
         });
-        set("papers", papers);
-        set("citations", citations);
-        set("first-author", firstAuthor);
-        root.classList.add("is-loaded");
+        setAll("papers", papers);
+        setAll("citations", citations);
+        setAll("first-author-papers", firstAuthorPapers);
+        setAll("first-author", firstAuthorCitations);
+        roots.forEach(function (r) { r.classList.add("is-loaded"); });
       })
       .catch(function () {
-        root.classList.add("is-error");
+        roots.forEach(function (r) { r.classList.add("is-error"); });
       });
   });
 })();

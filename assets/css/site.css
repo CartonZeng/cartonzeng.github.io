@@ -260,6 +260,9 @@ main { padding: 2.5rem 0 4rem; }
    but de-emphasise the block so it never looks broken. */
 .metrics.is-error .metric-value { color: var(--ink-faint); }
 
+/* Inline live metrics sentence on the Publications page. */
+.pub-live.is-error { opacity: .55; }
+
 
 /* ------------------------------------------------------------- roadmap -- */
 
