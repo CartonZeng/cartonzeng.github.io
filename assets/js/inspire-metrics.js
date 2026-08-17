@@ -11,7 +11,7 @@
   var SIZE = 250;
   var API_URL =
     "https://inspirehep.net/api/literature?q=a%20Zhichao.Zeng.1&size=" + SIZE +
-    "&fields=citation_count,first_author";
+    "&fields=citation_count,first_author,document_type";
 
   function fetchAll(url, acc) {
     acc = acc || [];
@@ -47,11 +47,15 @@
 
     fetchAll(API_URL)
       .then(function (hits) {
-        var papers = hits.length;
+        // Exclude theses and other non-paper records (INSPIRE lists a thesis).
+        var papers = hits.filter(function (h) {
+          var types = (h.metadata && h.metadata.document_type) || [];
+          return types.indexOf("thesis") === -1;
+        });
         var citations = 0;
         var firstAuthorPapers = 0;
         var firstAuthorCitations = 0;
-        hits.forEach(function (h) {
+        papers.forEach(function (h) {
           var m = h.metadata || {};
           citations += m.citation_count || 0;
           if (m.first_author && String(m.first_author.recid) === AUTHOR_ID) {
@@ -59,7 +63,7 @@
             firstAuthorCitations += m.citation_count || 0;
           }
         });
-        setAll("papers", papers);
+        setAll("papers", papers.length);
         setAll("citations", citations);
         setAll("first-author-papers", firstAuthorPapers);
         setAll("first-author", firstAuthorCitations);
