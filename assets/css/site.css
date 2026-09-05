@@ -278,9 +278,9 @@ main { padding: 2.5rem 0 4rem; }
 }
 
 .rm-node rect {
-  fill: #ffffff;
+  fill: #f8e3e7;
   stroke: var(--blue-muted);
-  stroke-width: 1.5;
+  stroke-width: 2.5;
   transition: fill .15s ease, stroke-width .15s ease;
 }
 
@@ -288,12 +288,23 @@ main { padding: 2.5rem 0 4rem; }
 
 /* Dashed "side-question" node (open/exploratory, not a link). */
 .rm-node--dashed rect {
-  fill: #ffffff;
-  stroke: var(--ink-faint);
-  stroke-width: 1.5;
+  fill: #f8e3e7;
+  stroke: var(--blue-muted);
+  stroke-width: 2.5;
   stroke-dasharray: 6 5;
 }
 .rm-node--dashed text { font-family: var(--sans); fill: var(--ink-muted); font-weight: 500; }
+
+/* Future / planned node: borderless card with a soft tinted fill.
+   Default fill (pink) = dm(+stars); +hydro nodes get a low-alpha cyan. */
+.rm-node--future rect {
+  fill: #f8e3e7;
+  stroke: none;
+}
+.rm-node--future.rm-node--hydro rect {
+  fill: rgba(0, 188, 212, 0.15);
+}
+.rm-node--future text { font-family: var(--sans); fill: var(--ink-muted); font-weight: 500; }
 
 /*
   IMPORTANT: do NOT set font-size in CSS px on these SVG texts.
@@ -307,7 +318,7 @@ main { padding: 2.5rem 0 4rem; }
 .rm-node .rm-meta { font-weight: 400; fill: #1a56db; letter-spacing: .02em; }
 .rm-node .rm-blurb { font-weight: 400; fill: var(--ink-muted); }
 .rm-node { cursor: pointer; }
-.rm-node:hover rect { fill: var(--blue-soft); stroke-width: 2.5; }
+.rm-node:hover rect { fill: var(--blue-soft); stroke-width: 3.5; }
 .rm-node:focus-visible rect { outline: 2px solid var(--blue); outline-offset: 3px; }
 
 .rm-edge { fill: none; stroke: var(--ink-faint); stroke-width: 2.6; }
@@ -316,17 +327,27 @@ main { padding: 2.5rem 0 4rem; }
 
 .roadmap-legend {
   display: flex;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-  font-size: 1rem;
+  flex-direction: column;
+  gap: .6rem;
+  font-size: 1.15rem;
   color: var(--ink-muted);
   margin-top: .5rem;
+}
+
+.roadmap-legend__row {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 .roadmap-legend span { display: inline-flex; align-items: center; gap: .45rem; }
 
 .legend-swatch { width: 22px; height: 12px; border: 1.5px solid var(--blue-muted); border-radius: 2px; background: #fff; }
 .legend-swatch--ongoing { border-style: dashed; }
+.legend-swatch--future { border: none; background: #e6e6e9; }
+.legend-swatch--hydro { border: none; background: rgba(0, 188, 212, 0.15); }
+.legend-swatch--dmstars { border: none; background: #f8e3e7; }
 
 /* Narrow screens: the diagram is too dense to read, so swap in a linear
    version carrying the same links and the same connector labels. */
@@ -343,10 +364,34 @@ main { padding: 2.5rem 0 4rem; }
   border: 2px solid var(--blue-muted);
 }
 .roadmap-list li.is-forthcoming::before { background: var(--blue-soft); }
+.roadmap-list li.is-future::before { background: #f8e3e7; border: none; }
+.roadmap-list li.is-hydro::before { background: rgba(0, 188, 212, 0.15); border: none; }
 .roadmap-list a { font-weight: 600; text-decoration: none; }
 .roadmap-list .rm-list-meta { display: block; font-size: .85rem; color: #1a56db; }
 .roadmap-list .rm-list-step { display: inline-block; font-family: var(--mono); font-size: 1rem; color: var(--blue-muted); background: var(--blue-softer); padding: .15rem .5rem; border-radius: 3px; margin-bottom: .25rem; }
 .roadmap-list .rm-plus { font-size: 1.35em; font-weight: 700; color: var(--blue); }
+
+/* Scroll wrapper around the SVG: transparent on desktop, a scrollable static
+   preview on narrow screens. */
+.roadmap-scroll { overflow: visible; }
+
+/* "Enlarge" button that opens the roadmap in a full-screen lightbox. */
+.roadmap-zoom {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  margin-top: .75rem;
+  padding: .45rem .85rem;
+  font: inherit;
+  font-size: 1.15rem;
+  color: var(--blue);
+  background: var(--blue-softer);
+  border: 1px solid var(--blue-soft);
+  border-radius: 6px;
+  cursor: pointer;
+}
+.roadmap-zoom:hover { background: var(--blue-soft); }
+.roadmap-zoom:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
 
 /* --------------------------------------------------------------- paper -- */
 
@@ -825,7 +870,22 @@ h2 a:hover { color: var(--blue); }
   .contact-grid { grid-template-columns: 1fr; }
   .stats { gap: 1.5rem; }
   .news li { grid-template-columns: 1fr; gap: .1rem; }
-  .roadmap-figure { display: none; }
+  /* Roadmap: show a static, scrollable preview at a readable size instead of
+     hiding it; node links are disabled so a tap opens the lightbox. */
+  .roadmap-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    background: #fff;
+    border: 1px solid var(--blue-soft);
+    border-radius: 8px;
+    padding: .5rem;
+  }
+  .roadmap-scroll .roadmap-svg {
+    width: 1000px;
+    max-width: none;
+    height: auto;
+    pointer-events: none;
+  }
   .roadmap-list { display: block; }
   .paper-figs,
   .paper-figs.figs-3 { grid-template-columns: 1fr; }
@@ -900,3 +960,15 @@ h2 a:hover { color: var(--blue); }
 }
 
 body.fig-lightbox-open { overflow: hidden; }
+
+/* Roadmap lightbox variant: left-aligned so a wide SVG can scroll without
+   clipping its left edge. */
+.roadmap-lightbox { align-items: flex-start; }
+.fig-lightbox-svg-wrap { display: block; }
+.fig-lightbox-svg-wrap .roadmap-svg {
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, .45);
+}
+/* The lightbox is a viewer: don't let the cloned node links navigate. */
+.fig-lightbox-svg-wrap a { pointer-events: none; }
