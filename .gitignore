@@ -5,3 +5,9 @@ __pycache__/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Personal / private job-search & CV working files (never push)
+.cursor/
+main.tex
+postdoc_proposal_2023____3_page.pdf
+大陆高校匹配清单.txt
