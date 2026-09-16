@@ -313,7 +313,7 @@ main { padding: 2.5rem 0 4rem; }
 .rm-node--stripe rect { fill: url(#rm-stripe-pink); }
 .rm-node--stripe.rm-node--hydro rect { fill: url(#rm-stripe-cyan); }
 /* Dotted envelope around the staged-goal / observational-probes column. */
-.rm-envelope { fill: none; stroke: #9aa0a8; stroke-width: 3.5; stroke-dasharray: 2 6; stroke-linecap: round; }
+.rm-envelope { fill: none !important; stroke: #9aa0a8; stroke-width: 3.5; stroke-dasharray: 2 6; stroke-linecap: round; }
 .rm-envelope-label { fill: #7a8088; font-weight: 600; }
 .rm-section-label { fill: #7a8088; font-weight: 600; }
 
