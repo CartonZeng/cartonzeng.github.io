@@ -66,6 +66,7 @@
     <!--
       Confirmed node mapping (2026-08, extended 2026-09); vertical order:
         1  a single SIDM (sub)halo              -> 2110.00259  (life story)
+           (future) elastic vs dissipative SIDM in core-collapse  (above 2110)
         3  stellar response to core, …          -> 2412.14621  (dwarf / tidal-track)   TOP branch
            edge 1→3: +star particles to establish a tidal-evolution track type of study
            (dashed, forks down from the top branch): tagging method side-question
@@ -74,9 +75,9 @@
         5  SIDM–BH formation                  -> 2608.xxxxx  (feeding the void)
         4  SIDM & possible LG past pericenter -> 2604.08647  (bypassed; separate block)
         (dashed)  Can core-collapse halt itself with v-dependent models?  (below 2110)
-        (future)  +hydro -> gas dynamics, star formation & feedback during core collapse,
-                  and (parallel) smallest halos hosting galaxies in CDM vs core-collapse SIDM
-        (future)  landscape study of SIDM stellar tidal tracks,
+        (ongoing/prioritize, dashed)  +hydro -> gas dynamics, star formation & feedback
+                  during core collapse
+        (future)  parameter space scan: stellar tidal tracks in SIDM,
                   fed by both tagging and the tidal-track box
         (future)  quantified prediction of SIDM satellites' diversity in MW/clusters,
                   fed by the population study and the landscape tidal-track node
@@ -98,10 +99,11 @@
         Four branches fan out of box 1 (top, middle, bottom, +hydro). The
         top branch (star particles, 2412) forks down to the tagging
         side-question; tagging and the tidal-track box both feed the
-        "landscape study" future node, which plus the population-study box
+        "parameter space scan: stellar tidal tracks" future node, which plus the population-study box
         (second branch, 2310) feeds the "quantified prediction" node.
-        The +hydro branch runs to a star-formation/feedback node and, in
-        parallel, a "smallest halos hosting galaxies" node. From the
+        The +hydro branch runs to a star-formation/feedback node (dashed =
+        ongoing/prioritize) that drops down to merge with the LG +hydro line.
+        From the
         population box (2310, second branch) a diagonal runs down-right and
         from the post-collapse-BH box (2608, bottom branch) a diagonal runs
         up-right; the two merge into a single "dwarf AGN/BH abundance"
@@ -114,194 +116,248 @@
         cyan fill = full hydro.
       -->
       <div class="roadmap-scroll">
-      <svg class="roadmap-svg" viewBox="0 0 1400 840" role="img"
-           aria-label="Diagram of the SIDM research thread, including future hydro and tidal-track landscape studies, and a related Local Group project.">
-        <g transform="scale(0.85)">
+                                    <svg class="roadmap-svg" viewBox="0 0 1860 880" role="img"
+           aria-label="Diagram of the SIDM research thread, including ongoing hydro and tidal-track parameter-space scans, and a related Local Group project.">
         <defs>
           <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
                   markerWidth="8" markerHeight="8" orient="auto-start-reverse">
             <path d="M 0 0 L 10 5 L 0 10 z" fill="#969aa2"></path>
           </marker>
+          <pattern id="rm-stripe-pink" width="12" height="12" patternUnits="userSpaceOnUse">
+            <rect width="6" height="12" fill="#f8e3e7"></rect>
+          </pattern>
+          <pattern id="rm-stripe-cyan" width="12" height="12" patternUnits="userSpaceOnUse">
+            <rect width="6" height="12" fill="rgba(0, 188, 212, 0.15)"></rect>
+          </pattern>
         </defs>
 
-        <!-- Stem exits the right edge of box 1, then fans into 4 branches. -->
-        <path class="rm-edge" d="M 316 286 L 380 286"></path>
-        <path class="rm-edge" d="M 380 286 L 380 84 L 800 84" marker-end="url(#arrow)"></path>
-        <path class="rm-edge" d="M 380 286 L 800 286" marker-end="url(#arrow)"></path>
-        <path class="rm-edge" d="M 380 286 L 380 436 L 800 436" marker-end="url(#arrow)"></path>
-        <path class="rm-edge" d="M 380 286 L 380 594 L 800 594" marker-end="url(#arrow)"></path>
+        <!-- section annotation: this 2110 thread deals with one major halo -->
+        <text class="rm-section-label" x="156" y="58" text-anchor="middle" font-size="32">one major halo</text>
 
-        <!-- Top link: above / below the branch at y=84 (tidal-track / 2412) -->
-        <text class="rm-edge-label" x="395" y="74" text-anchor="start">
-          <tspan font-size="26" font-weight="700" fill="#ba0c2f">+</tspan><tspan font-size="17" dx="6">star particles,</tspan>
-        </text>
-        <text class="rm-edge-label" x="425" y="102" text-anchor="start" font-size="17">tidal evolutionary tracks</text>
-
-        <!-- Middle link: above / below the branch at y=286 (population / 2310) -->
-        <text class="rm-edge-label" x="395" y="276" text-anchor="start">
-          <tspan font-size="26" font-weight="700" fill="#ba0c2f">+</tspan><tspan font-size="17" dx="6">merger history to make</tspan>
-        </text>
-        <text class="rm-edge-label" x="425" y="304" text-anchor="start" font-size="17">a population</text>
-
-        <!-- Bottom link: one line above the branch at y=436 -->
-        <text class="rm-edge-label" x="395" y="426" text-anchor="start">
-          <tspan font-size="26" font-weight="700" fill="#ba0c2f">+</tspan><tspan font-size="17" dx="6">post-core-collapse BH</tspan>
-        </text>
-
-        <!-- Hydro link: one line above the branch at y=594 -->
-        <text class="rm-edge-label" x="395" y="584" text-anchor="start">
-          <tspan font-size="26" font-weight="700" fill="#ba0c2f">+</tspan><tspan font-size="17" dx="6">hydro</tspan>
-        </text>
-
-        <!-- Dashed side-question forking downward from the top "star particles" line (2412). -->
-        <path class="rm-edge" d="M 700 84 L 700 150" marker-end="url(#arrow)"></path>
-        <text class="rm-edge-label" x="712" y="136" text-anchor="start">
-          <tspan font-size="22" font-weight="700" fill="#ba0c2f">+</tspan><tspan font-size="16" dx="4">tagging method</tspan>
-        </text>
-        <g class="rm-node--dashed">
-          <rect x="555" y="150" width="290" height="92" rx="12"></rect>
-          <text x="700" y="172" text-anchor="middle" font-size="18">tagging DM particles as stars:</text>
-          <text x="700" y="196" text-anchor="middle" font-size="18">does it work for SIDM?</text>
-          <text x="700" y="220" text-anchor="middle" font-size="18">a better tagging method?</text>
+        <!-- elastic vs dissipative SIDM question hanging above box 1
+             (nudged down to clear the larger section label) -->
+        <path class="rm-edge" d="M 156 300 L 156 192" marker-end="url(#arrow)"></path>
+        <g class="rm-node--future">
+          <rect x="16" y="112" width="280" height="80" rx="12"></rect>
+          <text x="156" y="144" text-anchor="middle" font-size="27">elastic vs dissipative</text>
+          <text x="156" y="176" text-anchor="middle" font-size="27">SIDM in core-collapse</text>
         </g>
-
-        <!-- Connectors into the future nodes (solid). -->
-        <path class="rm-edge" d="M 845 196 L 1300 196 L 1300 118" marker-end="url(#arrow)"></path>
-        <path class="rm-edge" d="M 1190 84 L 1240 84" marker-end="url(#arrow)"></path>
-        <path class="rm-edge" d="M 1190 286 L 1240 286" marker-end="url(#arrow)"></path>
-        <path class="rm-edge" d="M 1430 118 L 1430 252" marker-end="url(#arrow)"></path>
-        <path class="rm-edge" d="M 1190 594 L 1240 594" marker-end="url(#arrow)"></path>
-
-        <!-- Population study (2310) fans down-right; post-collapse-BH box (2608)
-             fans up-right; both merge into the dwarf AGN/BH abundance node. -->
-        <path class="rm-edge" d="M 1190 312 L 1240 356" marker-end="url(#arrow)"></path>
-        <path class="rm-edge" d="M 1190 405 L 1240 390" marker-end="url(#arrow)"></path>
-        <!-- The 2608 BH box also extends straight right into a strong-lens prediction node. -->
-        <path class="rm-edge" d="M 1190 460 L 1240 460" marker-end="url(#arrow)"></path>
 
         <!-- 1 -->
         <a class="rm-node" href="#life-story-2022">
-          <rect x="16" y="250" width="300" height="72" rx="12"></rect>
-          <text x="166" y="274" text-anchor="middle" font-size="20">Evolution:</text>
-          <text x="166" y="296" text-anchor="middle" font-size="20">a single SIDM (sub)halo</text>
-          <text class="rm-meta" x="166" y="314" text-anchor="middle" font-size="14">arXiv:2110.00259</text>
+          <rect x="16" y="300" width="280" height="96" rx="12"></rect>
+          <text x="156" y="332" text-anchor="middle" font-size="27">Evolution: a single</text>
+          <text x="156" y="364" text-anchor="middle" font-size="27">SIDM (sub)halo</text>
+          <text class="rm-meta" x="156" y="388" text-anchor="middle" font-size="15">arXiv:2110.00259</text>
         </a>
 
         <!-- Dashed side-question below the single-subhalo block. -->
-        <path class="rm-edge" d="M 166 322 L 166 408" marker-end="url(#arrow)"></path>
+        <path class="rm-edge" d="M 156 396 L 156 428" marker-end="url(#arrow)"></path>
         <g class="rm-node--dashed">
-          <rect x="16" y="408" width="300" height="68" rx="12"></rect>
-          <text x="166" y="434" text-anchor="middle" font-size="18">Can core-collapse halt itself</text>
-          <text x="166" y="458" text-anchor="middle" font-size="18">with v-dependent models?</text>
+          <rect x="16" y="428" width="280" height="108" rx="12"></rect>
+          <text x="156" y="460" text-anchor="middle" font-size="27">Can core-collapse</text>
+          <text x="156" y="492" text-anchor="middle" font-size="27">halt itself with</text>
+          <text x="156" y="524" text-anchor="middle" font-size="27">v-dependent models?</text>
         </g>
 
-        <!-- 3 (now the top branch): stellar dynamical response to SIDM core & core-collapse -->
+        <!-- Stem exits the right edge of box 1, then fans into 4 branches. -->
+        <path class="rm-edge" d="M 296 348 L 320 348"></path>
+        <path class="rm-edge" d="M 320 348 L 320 100 L 660 100" marker-end="url(#arrow)"></path>
+        <path class="rm-edge" d="M 320 348 L 660 348" marker-end="url(#arrow)"></path>
+        <path class="rm-edge" d="M 320 348 L 320 478 L 660 478" marker-end="url(#arrow)"></path>
+        <path class="rm-edge" d="M 320 348 L 320 616 L 660 616" marker-end="url(#arrow)"></path>
+
+        <!-- Top link: above / below the branch at y=100 (tidal-track / 2412) -->
+        <text class="rm-edge-label" x="336" y="88" text-anchor="start">
+          <tspan font-size="30" font-weight="700" fill="#ba0c2f">+</tspan><tspan font-size="20" dx="6">star particles,</tspan>
+        </text>
+        <text class="rm-edge-label" x="346" y="118" text-anchor="start" font-size="20">tidal evolutionary tracks</text>
+
+        <!-- Middle link: above / below the branch at y=348 (population / 2310) -->
+        <text class="rm-edge-label" x="336" y="338" text-anchor="start">
+          <tspan font-size="30" font-weight="700" fill="#ba0c2f">+</tspan><tspan font-size="20" dx="6">merger history to make</tspan>
+        </text>
+        <text class="rm-edge-label" x="346" y="361" text-anchor="start" font-size="20">a population</text>
+
+        <!-- Bottom link: one line above the branch at y=478 -->
+        <text class="rm-edge-label" x="336" y="468" text-anchor="start">
+          <tspan font-size="30" font-weight="700" fill="#ba0c2f">+</tspan><tspan font-size="20" dx="6">post-core-collapse BH</tspan>
+        </text>
+
+        <!-- Hydro link: one line above the branch at y=616 -->
+        <text class="rm-edge-label" x="336" y="606" text-anchor="start">
+          <tspan font-size="34" font-weight="700" fill="#ba0c2f">+</tspan><tspan font-size="22" dx="6">hydro</tspan>
+        </text>
+
+        <!-- Dashed side-question forking downward from the top "star particles" line (2412). -->
+        <path class="rm-edge" d="M 636 100 L 636 176" marker-end="url(#arrow)"></path>
+        <text class="rm-edge-label" x="628" y="168" text-anchor="end">
+          <tspan font-size="22" font-weight="700" fill="#ba0c2f">+</tspan><tspan font-size="16" dx="4">tagging method</tspan>
+        </text>
+        <g class="rm-node--dashed">
+          <rect x="340" y="176" width="320" height="96" rx="12"></rect>
+          <text x="500" y="206" text-anchor="middle" font-size="22">tagging DM particles as stars:</text>
+          <text x="500" y="234" text-anchor="middle" font-size="22">does it work for SIDM?</text>
+          <text x="500" y="262" text-anchor="middle" font-size="22">a better tagging method?</text>
+        </g>
+
+        <!-- 3 (top branch): stellar dynamical response  3 title lines at font 27 -->
         <a class="rm-node" href="#dwarf-diversity-2025">
-          <rect x="800" y="48" width="390" height="72" rx="12"></rect>
-          <text x="995" y="72" text-anchor="middle" font-size="20">stellar dynamical response to SIDM</text>
-          <text x="995" y="94" text-anchor="middle" font-size="20">core and core-collapse</text>
-          <text class="rm-meta" x="995" y="112" text-anchor="middle" font-size="14">arXiv:2412.14621</text>
+          <rect x="660" y="40" width="340" height="120" rx="12"></rect>
+          <text x="830" y="72" text-anchor="middle" font-size="27">stellar dynamical</text>
+          <text x="830" y="104" text-anchor="middle" font-size="27">response to SIDM core</text>
+          <text x="830" y="136" text-anchor="middle" font-size="27">&amp; core-collapse</text>
+          <text class="rm-meta" x="830" y="156" text-anchor="middle" font-size="15">arXiv:2412.14621</text>
         </a>
 
-        <!-- 2 (now the second branch): a population of SIDM subhalos -->
+        <!-- 2 (second branch): a population of SIDM subhalos -->
         <a class="rm-node" href="#tidal-tracks-2025">
-          <rect x="800" y="250" width="390" height="72" rx="12"></rect>
-          <text x="995" y="274" text-anchor="middle" font-size="20">Evolution:</text>
-          <text x="995" y="296" text-anchor="middle" font-size="20">a population of SIDM subhalos</text>
-          <text class="rm-meta" x="995" y="314" text-anchor="middle" font-size="14">arXiv:2310.09910</text>
+          <rect x="660" y="300" width="340" height="96" rx="12"></rect>
+          <text x="830" y="332" text-anchor="middle" font-size="27">Evolution: a population</text>
+          <text x="830" y="364" text-anchor="middle" font-size="27">of SIDM subhalos</text>
+          <text class="rm-meta" x="830" y="388" text-anchor="middle" font-size="15">arXiv:2310.09910</text>
         </a>
 
         <!-- 5 -->
         <a class="rm-node" href="#black-hole-forthcoming">
-          <rect x="800" y="400" width="390" height="72" rx="12"></rect>
-          <text x="995" y="424" text-anchor="middle" font-size="20">post-core-collapse co-evolution:</text>
-          <text x="995" y="446" text-anchor="middle" font-size="20">halo and SIDM-seeded black hole</text>
-          <text class="rm-meta" x="995" y="464" text-anchor="middle" font-size="14">arXiv:2608.xxxxx</text>
+          <rect x="660" y="418" width="340" height="120" rx="12"></rect>
+          <text x="830" y="450" text-anchor="middle" font-size="27">post-core-collapse</text>
+          <text x="830" y="482" text-anchor="middle" font-size="27">co-evolution: halo and</text>
+          <text x="830" y="514" text-anchor="middle" font-size="27">SIDM-seeded black hole</text>
+          <text class="rm-meta" x="830" y="534" text-anchor="middle" font-size="15">arXiv:2608.xxxxx</text>
         </a>
 
-        <!-- future: +hydro -->
+        <!-- ongoing/prioritize: +hydro (dashed) -->
+        <g class="rm-node--dashed rm-node--hydro">
+          <rect x="660" y="562" width="340" height="108" rx="12"></rect>
+          <text x="830" y="594" text-anchor="middle" font-size="27">gas dynamics,</text>
+          <text x="830" y="626" text-anchor="middle" font-size="27">star formation &amp; feedback</text>
+          <text x="830" y="658" text-anchor="middle" font-size="27">during core collapse</text>
+        </g>
+
+        <!-- intermediate: parameter-space scan of tidal tracks  3 lines at font 27 -->
+        <g class="rm-node--future rm-node--stripe">
+          <rect x="1080" y="52" width="300" height="96" rx="12"></rect>
+          <text x="1230" y="84" text-anchor="middle" font-size="27">parameter space scan:</text>
+          <text x="1230" y="116" text-anchor="middle" font-size="27">stellar tidal tracks</text>
+          <text x="1230" y="148" text-anchor="middle" font-size="27">in SIDM</text>
+        </g>
+
+        <!-- intermediate: parameter-space scan bridging 2608 and the dwarf AGN/BH node -->
+        <g class="rm-node--future rm-node--stripe">
+          <rect x="1080" y="442" width="300" height="72" rx="12"></rect>
+          <text x="1230" y="472" text-anchor="middle" font-size="27">parameter space scan:</text>
+          <text x="1230" y="504" text-anchor="middle" font-size="27">final <tspan font-style="italic">M</tspan><tspan baseline-shift="sub" font-size="15">BH</tspan> vs initial <tspan font-style="italic">M</tspan><tspan baseline-shift="sub" font-size="15">halo</tspan></text>
+        </g>
+
+        <!-- Connectors into the intermediate scans and the staged-goal column. -->
+        <!-- 2412 -> tidal scan: off-center landing on scan left edge (yH100) -->
+        <path class="rm-edge" d="M 1000 100 L 1080 100" marker-end="url(#arrow)"></path>
+        <path class="rm-edge" d="M 660 224 L 1230 224 L 1230 148" marker-end="url(#arrow)"></path>
+        <!-- tidal scan + 2310 merge into quantified (landing mid-left of quantified) -->
+        <path class="rm-edge" d="M 1380 100 L 1410 100 L 1410 208 L 1470 208" marker-end="url(#arrow)"></path>
+        <path class="rm-edge" d="M 1000 348 L 1410 348 L 1410 208"></path>
+        <!-- 2310 lower exit -> dwarf AGN -->
+        <path class="rm-edge" d="M 1000 372 L 1420 372 L 1470 372" marker-end="url(#arrow)"></path>
+        <!-- 2608 -> M_halo scan -->
+        <path class="rm-edge" d="M 1000 478 L 1080 478" marker-end="url(#arrow)"></path>
+        <!-- M_halo scan forks: right to strong-lens, up to dwarf merge -->
+        <path class="rm-edge" d="M 1380 478 L 1420 478"></path>
+        <path class="rm-edge" d="M 1420 478 L 1470 478" marker-end="url(#arrow)"></path>
+        <path class="rm-edge" d="M 1420 478 L 1420 372"></path>
+        <!-- gas dynamics -> smallest (off-center on smallest left edge) -->
+        <path class="rm-edge" d="M 1000 616 L 1470 616" marker-end="url(#arrow)"></path>
+
+        <!-- staged goal / observational probes envelope (rightmost column) -->
+        <rect class="rm-envelope" x="1440" y="160" width="400" height="510" rx="16"></rect>
+        <text class="rm-envelope-label" x="1640" y="98" text-anchor="middle" font-size="34">staged goal</text>
+        <text class="rm-envelope-label" x="1640" y="138" text-anchor="middle" font-size="34">observational probes</text>
+
+        <!-- future: quantified prediction of satellite diversity -->
+        <g class="rm-node--future">
+          <rect x="1470" y="172" width="350" height="108" rx="12"></rect>
+          <text x="1645" y="204" text-anchor="middle" font-size="27">quantified prediction of</text>
+          <text x="1645" y="236" text-anchor="middle" font-size="27">SIDM satellites&rsquo; diversity</text>
+          <text x="1645" y="268" text-anchor="middle" font-size="27">in MW/clusters</text>
+        </g>
+
+        <!-- future: dwarf AGN/BH abundance -->
+        <g class="rm-node--future">
+          <rect x="1470" y="318" width="350" height="108" rx="12"></rect>
+          <text x="1645" y="350" text-anchor="middle" font-size="27">dwarf AGN/BH abundance</text>
+          <text x="1645" y="382" text-anchor="middle" font-size="27">prediction given</text>
+          <text x="1645" y="414" text-anchor="middle" font-size="27">SIDM models</text>
+        </g>
+
+        <!-- future: strong-lens predictions -->
+        <g class="rm-node--future">
+          <rect x="1470" y="442" width="350" height="72" rx="12"></rect>
+          <text x="1645" y="472" text-anchor="middle" font-size="27">strong-lens predictions with</text>
+          <text x="1645" y="504" text-anchor="middle" font-size="27">SIDM + seeded BH</text>
+        </g>
+
+        <!-- future: smallest halos hosting galaxies  3 lines at font 27 -->
         <g class="rm-node--future rm-node--hydro">
-          <rect x="800" y="560" width="390" height="68" rx="12"></rect>
-          <text x="995" y="584" text-anchor="middle" font-size="20">gas dynamics, star formation &amp; feedback</text>
-          <text x="995" y="608" text-anchor="middle" font-size="20">during core collapse</text>
+          <rect x="1470" y="568" width="350" height="96" rx="12"></rect>
+          <text x="1645" y="600" text-anchor="middle" font-size="27">smallest halos hosting</text>
+          <text x="1645" y="632" text-anchor="middle" font-size="27">galaxies in CDM vs</text>
+          <text x="1645" y="664" text-anchor="middle" font-size="27">core-collapse SIDM</text>
         </g>
 
-        <!-- future: +hydro (parallel follow-on) -->
-        <g class="rm-node--future rm-node--hydro">
-          <rect x="1240" y="560" width="380" height="68" rx="12"></rect>
-          <text x="1430" y="584" text-anchor="middle" font-size="20">smallest halos hosting galaxies</text>
-          <text x="1430" y="608" text-anchor="middle" font-size="20">in CDM vs core-collapse SIDM</text>
-        </g>
-
-        <!-- future: landscape study of tidal tracks (fed by the tidal-track box + tagging) -->
-        <g class="rm-node--future">
-          <rect x="1240" y="50" width="380" height="68" rx="12"></rect>
-          <text x="1430" y="74" text-anchor="middle" font-size="20">a landscape study of</text>
-          <text x="1430" y="98" text-anchor="middle" font-size="20">SIDM stellar tidal tracks</text>
-        </g>
-
-        <!-- future: quantified prediction of satellite diversity (fed by population + landscape) -->
-        <g class="rm-node--future">
-          <rect x="1240" y="252" width="380" height="68" rx="12"></rect>
-          <text x="1430" y="276" text-anchor="middle" font-size="20">quantified prediction of SIDM</text>
-          <text x="1430" y="300" text-anchor="middle" font-size="20">satellites&rsquo; diversity in MW/clusters</text>
-        </g>
-
-        <!-- future: dwarf AGN/BH abundance (merge of population study + post-collapse BH) -->
-        <g class="rm-node--future">
-          <rect x="1240" y="342" width="380" height="68" rx="12"></rect>
-          <text x="1430" y="366" text-anchor="middle" font-size="20">dwarf AGN/BH abundance prediction</text>
-          <text x="1430" y="390" text-anchor="middle" font-size="20">given SIDM models</text>
-        </g>
-
-        <!-- future: strong-lens predictions from the SIDM-seeded BH -->
-        <g class="rm-node--future">
-          <rect x="1240" y="426" width="380" height="68" rx="12"></rect>
-          <text x="1430" y="450" text-anchor="middle" font-size="20">strong-lens predictions with</text>
-          <text x="1430" y="474" text-anchor="middle" font-size="20">SIDM + seeded BH</text>
-        </g>
+        <!-- section annotation: the LG pericenter scenario involves two major halos -->
+        <text class="rm-section-label" x="246" y="698" text-anchor="middle" font-size="32">two major halos</text>
 
         <!-- 4 -->
         <a class="rm-node" href="#bypassed-core-2026">
-          <rect x="16" y="702" width="520" height="52" rx="12"></rect>
-          <text x="276" y="724" text-anchor="middle" font-size="19">SIDM &amp; possible Local Group past pericenter</text>
-          <text class="rm-meta" x="276" y="744" text-anchor="middle" font-size="14">arXiv:2604.08647</text>
+          <rect x="16" y="722" width="460" height="96" rx="12"></rect>
+          <text x="246" y="754" text-anchor="middle" font-size="27">SIDM &amp; possible Local Group</text>
+          <text x="246" y="786" text-anchor="middle" font-size="27">past pericenter</text>
+          <text class="rm-meta" x="246" y="810" text-anchor="middle" font-size="15">arXiv:2604.08647</text>
         </a>
 
-        <!-- +hydro line runs right from LG pericenter, then forks up/down
-             into two stacked future branches. -->
-        <path class="rm-edge" d="M 536 728 L 700 728"></path>
-        <path class="rm-edge" d="M 700 728 L 700 674 L 800 674" marker-end="url(#arrow)"></path>
-        <path class="rm-edge" d="M 700 728 L 700 782 L 800 782" marker-end="url(#arrow)"></path>
-        <text class="rm-edge-label" x="542" y="720" text-anchor="start">
-          <tspan font-size="22" font-weight="700" fill="#ba0c2f">+</tspan><tspan font-size="15" dx="4">hydro</tspan>
+        <!-- +hydro line: gas-dynamics node drops down, merges with the LG
+             pericenter line, then forks up/down into two stacked branches. -->
+        <path class="rm-edge" d="M 830 670 L 830 770"></path>
+        <path class="rm-edge" d="M 476 770 L 830 770"></path>
+        <path class="rm-edge" d="M 830 770 L 1010 770"></path>
+        <path class="rm-edge" d="M 1010 770 L 1010 660 L 1080 660" marker-end="url(#arrow)"></path>
+        <path class="rm-edge" d="M 1010 770 L 1010 790 L 1080 790" marker-end="url(#arrow)"></path>
+        <text class="rm-edge-label" x="490" y="762" text-anchor="start">
+          <tspan font-size="34" font-weight="700" fill="#ba0c2f">+</tspan><tspan font-size="22" dx="6">hydro</tspan>
         </text>
 
         <!-- future: gas collision imprints in SIDM + LG past pericenter (upper) -->
-        <g class="rm-node--future rm-node--hydro">
-          <rect x="800" y="640" width="390" height="68" rx="12"></rect>
-          <text x="995" y="664" text-anchor="middle" font-size="20">gas collision imprints in SIDM</text>
-          <text x="995" y="688" text-anchor="middle" font-size="20">+ LG past pericenter scenario</text>
+        <g class="rm-node--future rm-node--hydro rm-node--stripe">
+          <rect x="1080" y="612" width="300" height="108" rx="12"></rect>
+          <text x="1230" y="644" text-anchor="middle" font-size="27">gas collision imprints</text>
+          <text x="1230" y="676" text-anchor="middle" font-size="27">in SIDM + LG past</text>
+          <text x="1230" y="708" text-anchor="middle" font-size="27">pericenter scenario</text>
         </g>
 
         <!-- future: DF2/DF4 bullet dwarf compatibility (lower) -->
         <g class="rm-node--future rm-node--hydro">
-          <rect x="800" y="748" width="390" height="68" rx="12"></rect>
-          <text x="995" y="772" text-anchor="middle" font-size="20">DF2/DF4 &ldquo;bullet dwarf&rdquo; scenario</text>
-          <text x="995" y="796" text-anchor="middle" font-size="20">compatibility with SIDM</text>
-        </g>
+          <rect x="1080" y="742" width="300" height="108" rx="12"></rect>
+          <text x="1230" y="774" text-anchor="middle" font-size="27">DF2/DF4 &ldquo;bullet dwarf&rdquo;</text>
+          <text x="1230" y="806" text-anchor="middle" font-size="27">scenario compatibility</text>
+          <text x="1230" y="838" text-anchor="middle" font-size="27">with SIDM</text>
         </g>
       </svg>
+
+
+
+
+
       </div>
       <figcaption class="roadmap-legend">
         <div class="roadmap-legend__row">
-          <span><i class="legend-swatch"></i> finished</span>
-          <span><i class="legend-swatch legend-swatch--ongoing"></i> ongoing</span>
-          <span><i class="legend-swatch legend-swatch--future"></i> future</span>
+          <span><i class="legend-swatch"></i> Completed work</span>
+          <span><i class="legend-swatch legend-swatch--ongoing"></i> In progress / prioritized</span>
+          <span><i class="legend-swatch legend-swatch--future"></i> Planned</span>
         </div>
         <div class="roadmap-legend__row">
           <span><i class="legend-swatch legend-swatch--hydro"></i> full hydro</span>
           <span><i class="legend-swatch legend-swatch--dmstars"></i> dm(+stars)</span>
+          <span><i class="legend-swatch legend-swatch--stripe"></i> student-led</span>
         </div>
       </figcaption>
       <button type="button" class="roadmap-zoom" aria-label="View the roadmap at full size">
@@ -315,6 +371,9 @@
         <a href="#life-story-2022">Evolution: a single SIDM (sub)halo</a>
         <span class="rm-list-meta">arXiv:2110.00259</span>
       </li>
+      <li class="is-future">
+        elastic vs dissipative SIDM in core-collapse
+      </li>
       <li>
         Can core-collapse halt itself with v-dependent models?
       </li>
@@ -327,8 +386,8 @@
         <span class="rm-list-step"><span class="rm-plus">+</span> tagging method</span><br>
         tagging DM particles as stars: does it work for SIDM? &middot; a better tagging method?
       </li>
-      <li class="is-future">
-        a landscape study of SIDM stellar tidal tracks
+      <li class="is-future is-stripe">
+        parameter space scan: stellar tidal tracks in SIDM
       </li>
       <li>
         <span class="rm-list-step"><span class="rm-plus">+</span> merger history to make a population</span><br>
@@ -343,24 +402,27 @@
         <a href="#black-hole-forthcoming">post-core-collapse co-evolution: halo and SIDM-seeded black hole</a>
         <span class="rm-list-meta">arXiv:2608.xxxxx</span>
       </li>
+      <li class="is-future is-stripe">
+        parameter space scan: <em>M</em><sub>halo</sub> vs <em>M</em><sub>BH</sub>
+      </li>
       <li class="is-future">
         dwarf AGN/BH abundance prediction given SIDM models
       </li>
       <li class="is-future">
         strong-lens predictions with SIDM + seeded BH
       </li>
-      <li class="is-future is-hydro">
+      <li class="is-ongoing is-hydro">
         <span class="rm-list-step"><span class="rm-plus">+</span> hydro</span><br>
         gas dynamics, star formation &amp; feedback during core collapse
       </li>
-      <li class="is-future is-hydro">
+      <li class="is-future">
         smallest halos hosting galaxies in CDM vs core-collapse SIDM
       </li>
       <li>
         <a href="#bypassed-core-2026">SIDM &amp; possible Local Group past pericenter</a>
         <span class="rm-list-meta">arXiv:2604.08647</span>
       </li>
-      <li class="is-future is-hydro">
+      <li class="is-future is-hydro is-stripe">
         <span class="rm-list-step"><span class="rm-plus">+</span> hydro</span><br>
         gas collision imprints in SIDM + LG past pericenter scenario
       </li>

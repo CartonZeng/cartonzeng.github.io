@@ -278,9 +278,11 @@ main { padding: 2.5rem 0 4rem; }
 }
 
 .rm-node rect {
-  fill: #f8e3e7;
+  /* Finished-paper box: a slightly stronger scarlet wash than the future/
+     ongoing tints, so completed work reads as the most saturated card. */
+  fill: rgba(186, 12, 47, 0.15);
   stroke: var(--blue-muted);
-  stroke-width: 2.5;
+  stroke-width: 3.5;
   transition: fill .15s ease, stroke-width .15s ease;
 }
 
@@ -290,10 +292,11 @@ main { padding: 2.5rem 0 4rem; }
 .rm-node--dashed rect {
   fill: #f8e3e7;
   stroke: var(--blue-muted);
-  stroke-width: 2.5;
+  stroke-width: 3.5;
   stroke-dasharray: 6 5;
 }
 .rm-node--dashed text { font-family: var(--sans); fill: var(--ink-muted); font-weight: 500; }
+.rm-node--dashed.rm-node--hydro rect { fill: rgba(0, 188, 212, 0.15); }
 
 /* Future / planned node: borderless card with a soft tinted fill.
    Default fill (pink) = dm(+stars); +hydro nodes get a low-alpha cyan. */
@@ -305,6 +308,14 @@ main { padding: 2.5rem 0 4rem; }
   fill: rgba(0, 188, 212, 0.15);
 }
 .rm-node--future text { font-family: var(--sans); fill: var(--ink-muted); font-weight: 500; }
+/* Striped fill = student-lead work: vertical transparent stripes over the
+   base tint (the transparent stripe shows the white canvas behind). */
+.rm-node--stripe rect { fill: url(#rm-stripe-pink); }
+.rm-node--stripe.rm-node--hydro rect { fill: url(#rm-stripe-cyan); }
+/* Dotted envelope around the staged-goal / observational-probes column. */
+.rm-envelope { fill: none; stroke: #9aa0a8; stroke-width: 3.5; stroke-dasharray: 2 6; stroke-linecap: round; }
+.rm-envelope-label { fill: #7a8088; font-weight: 600; }
+.rm-section-label { fill: #7a8088; font-weight: 600; }
 
 /*
   IMPORTANT: do NOT set font-size in CSS px on these SVG texts.
@@ -318,20 +329,21 @@ main { padding: 2.5rem 0 4rem; }
 .rm-node .rm-meta { font-weight: 400; fill: #1a56db; letter-spacing: .02em; }
 .rm-node .rm-blurb { font-weight: 400; fill: var(--ink-muted); }
 .rm-node { cursor: pointer; }
-.rm-node:hover rect { fill: var(--blue-soft); stroke-width: 3.5; }
+.rm-node:hover rect { fill: rgba(186, 12, 47, 0.22); stroke-width: 4.5; }
 .rm-node:focus-visible rect { outline: 2px solid var(--blue); outline-offset: 3px; }
 
-.rm-edge { fill: none; stroke: var(--ink-faint); stroke-width: 2.6; }
+.rm-edge { fill: none; stroke: var(--ink-faint); stroke-width: 3.5; }
 .rm-edge--dashed { stroke-dasharray: 6 5; }
 .rm-edge-label { font-family: var(--mono); fill: var(--blue-muted); }
 
 .roadmap-legend {
   display: flex;
   flex-direction: column;
-  gap: .6rem;
-  font-size: 1.15rem;
+  gap: .75rem;
+  font-size: 1.35rem;
   color: var(--ink-muted);
   margin-top: .5rem;
+  margin-left: 14rem;
 }
 
 .roadmap-legend__row {
@@ -343,11 +355,12 @@ main { padding: 2.5rem 0 4rem; }
 
 .roadmap-legend span { display: inline-flex; align-items: center; gap: .45rem; }
 
-.legend-swatch { width: 22px; height: 12px; border: 1.5px solid var(--blue-muted); border-radius: 2px; background: #fff; }
+.legend-swatch { width: 30px; height: 17px; border: 1.5px solid var(--blue-muted); border-radius: 2px; background: #fff; }
 .legend-swatch--ongoing { border-style: dashed; }
 .legend-swatch--future { border: none; background: #e6e6e9; }
 .legend-swatch--hydro { border: none; background: rgba(0, 188, 212, 0.15); }
 .legend-swatch--dmstars { border: none; background: #f8e3e7; }
+.legend-swatch--stripe { border: none; background: repeating-linear-gradient(90deg, #f8e3e7 0 6px, transparent 6px 12px); }
 
 /* Narrow screens: the diagram is too dense to read, so swap in a linear
    version carrying the same links and the same connector labels. */
@@ -366,6 +379,9 @@ main { padding: 2.5rem 0 4rem; }
 .roadmap-list li.is-forthcoming::before { background: var(--blue-soft); }
 .roadmap-list li.is-future::before { background: #f8e3e7; border: none; }
 .roadmap-list li.is-hydro::before { background: rgba(0, 188, 212, 0.15); border: none; }
+.roadmap-list li.is-ongoing::before { border: 2px solid var(--blue-muted); border-style: dashed; }
+.roadmap-list li.is-stripe::before { background: repeating-linear-gradient(90deg, #f8e3e7 0 3px, #fff 3px 6px); border: 1.5px solid var(--blue-muted); }
+.roadmap-list li.is-stripe.is-hydro::before { background: repeating-linear-gradient(90deg, rgba(0, 188, 212, 0.35) 0 3px, #fff 3px 6px); border: 1.5px solid var(--blue-muted); }
 .roadmap-list a { font-weight: 600; text-decoration: none; }
 .roadmap-list .rm-list-meta { display: block; font-size: .85rem; color: #1a56db; }
 .roadmap-list .rm-list-step { display: inline-block; font-family: var(--mono); font-size: 1rem; color: var(--blue-muted); background: var(--blue-softer); padding: .15rem .5rem; border-radius: 3px; margin-bottom: .25rem; }
@@ -972,3 +988,12 @@ body.fig-lightbox-open { overflow: hidden; }
 }
 /* The lightbox is a viewer: don't let the cloned node links navigate. */
 .fig-lightbox-svg-wrap a { pointer-events: none; }
+/* Legend rendered inside the lightbox: give it an opaque card so the dark
+   scrim behind doesn't swallow the muted text / swatch colors. */
+.fig-lightbox-svg-wrap .roadmap-legend--lightbox {
+  margin: .75rem 0 0;
+  padding: 1rem 1.25rem;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, .45);
+}

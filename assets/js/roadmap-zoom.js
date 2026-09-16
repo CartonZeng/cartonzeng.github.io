@@ -56,6 +56,14 @@
     clone.style.height = "auto";
     wrap.appendChild(clone);
 
+    // Bring the legend along so the full-size view is self-contained.
+    var legend = document.querySelector(".roadmap-legend");
+    if (legend) {
+      var legendClone = legend.cloneNode(true);
+      legendClone.classList.add("roadmap-legend--lightbox");
+      wrap.appendChild(legendClone);
+    }
+
     box.removeAttribute("hidden");
     document.body.classList.add("fig-lightbox-open");
     box.scrollTop = 0;
