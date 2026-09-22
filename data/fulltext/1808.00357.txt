@@ -1,0 +1,2202 @@
+Prepared for submission to JCAP
+Eﬀects of neutrino mass and
+asymmetry on cosmological structure
+formation
+Zhichao Zeng,a,b,c,1 Shek Yeunga and Ming-chung Chua
+aDepartment of Physics, the Chinese University of Hong Kong, Sha Tin, NT, Hong Kong
+bDepartment of Physics, the Ohio State University, Columbus, Ohio 43210, USA
+cCenter for Cosmology and AstroParticle Physics (CCAPP), the Ohio State University,
+Columbus, Ohio 43210, USA
+E-mail: zeng.408@buckeyemail.osu.edu, syeung@phy.cuhk.edu.hk,
+mcchu@phy.cuhk.edu.hk
+Abstract. Light but massive cosmological neutrinos do not cluster signiﬁcantly on small
+scales, due to their high thermal velocities. With ﬁnite masses, cosmological neutrinos be-
+come part of the total matter ﬁeld and contribute to its smoothing. Structure formation in the
+presence of massive neutrinos is therefore impeded compared to that in the standard ΛCDM
+cosmology with massless neutrinos. Neutrinos’ masses also distort the anisotropy power spec-
+trum of cosmic microwave background (CMB). Furthermore, a ﬁnite chemical potential µ for
+cosmological neutrinos, still allowed by current data, would have a non-negligible impact
+on CMB and structure formation. We consistently evaluate eﬀects of neutrino masses and
+chemical potentials on the matter power spectrum by use of a neutrino-involved N-body simu-
+lation, with cosmological parameters obtained from a Markov-Chain Moonte-Carlo (MCMC)
+reﬁtting of CMB data. Our results show that while a ﬁnite averaged neutrino mass mν tends
+to suppress the matter power spectrum in a range of wave numbers, the neutrino degeneracy
+parameters ξi ≡µi/T (i =1, 2, 3) enhance the latter, leading to a large parameter degeneracy
+between mν and ξi. We provide an empirical formula for the eﬀects on the matter power
+spectrum in a selected range of wave numbers induced by mν and η ≡
+qP
+i ξ2
+i . Observing
+a strong correlation between mν and η, we propose a single redshift-independent parameter
+mν −4
+3η2 to characterize the neutrino eﬀects on the matter power spectrum.
+1Corresponding author.
+arXiv:1808.00357v3  [astro-ph.CO]  7 Mar 2019
+
+Contents
+1
+Introduction
+1
+2
+Neutrino energy density and the cosmic expansion
+3
+2.1
+Cosmic neutrino background
+3
+2.2
+Neutrino asymmetry and constraints on {ξi}
+4
+2.3
+Reﬁtting the Planck 2015 data with CosmoMC
+5
+2.4
+Cosmic neutrinos and background expansion
+5
+3
+Neutrino free-streaming eﬀect
+8
+3.1
+Linear evolution of the neutrino over-density
+9
+3.2
+Grid-based neutrino simulation
+9
+3.3
+Particle-based neutrino simulation
+11
+3.4
+Comparison between grid-based and particle-based simulations
+11
+4
+Results
+12
+4.1
+Neutrino eﬀects on the power spectrum
+12
+4.2
+Results for varying mν and η
+15
+5
+Summary and disscussion
+20
+A Linear evolution of the neutrino over-density
+21
+B Error analysis of the ﬁtting of ∆R(mν, η2)
+26
+C Reﬁtting of cosmological parameters: correlation with η
+26
+1
+Introduction
+Cosmological neutrinos are believed to be the most abundant fermions in the Universe.
+However, this cosmological neutrino background (CNB) is diﬃcult to detect directly, due
+to its low temperature of about 2 K now. On the other hand, results of neutrino oscillation
+experiments show that there are three neutrino mass eigenstates, mνi(i = 1, 2, 3), with
+mass-squared splittings ∆m2
+12 ≈7.37 × 10−5 eV2 and |∆m2
+23| ≈2.50 × 10−3 eV2 [1]. These
+slightly massive neutrinos eﬀectively behave as hot dark matter, which has been ruled out as
+the dominant part of the dark matter [2], although it is still the only known component. This
+CNB is expected to have impact on the CMB anisotropies and large-scale structure (LSS)
+formation. Compared to those in the standard ΛCDM cosmology with massless neutrinos,
+the radiation-matter equality time and the Hubble expansion rate would be modiﬁed with
+massive cosmological neutrinos. The photon diﬀusion scale θd and sound horizon scale θs
+would then be altered, resulting in a modiﬁed angular anisotropy power spectrum of the
+CMB. The integrated Sachs-Wolfe eﬀect and the gravitational lensing of CMB polarization
+are also aﬀected by massive neutrinos via early structure growth [3]. Altogether the updated
+constraints on the sum of neutrino masses are P
+i mνi < 0.23 eV from the Planck 2015
+observation [4], and P
+i mνi < 0.12 eV from the newest Planck 2018 result [33].
+– 1 –
+
+The large scale structure formation is more sensitive than CMB to the sum of neutrino
+masses. It is well known that the growth of structure is governed by the competing eﬀects of
+the cosmic expansion and self-gravity of matter perturbations, both of which are aﬀected by
+the massive neutrinos [5]. Unlike photons, slightly massive cosmological neutrinos experience
+a transition from being relativistic to non-relativistic as the universe cools down, resulting in
+a diﬀerent background expansion rate from the ΛCDM model. On the other hand, compared
+to cold dark matter (CDM), cosmological neutrinos have a higher thermal velocity and are
+less likely to be trapped by potential wells. Thus their spatial distribution is much more
+disperse than CDM. As a consequence, below its free-streaming scale, the CNB slows down
+the growth of structures, leading to a suppression of the total matter power spectrum. This
+free-streaming eﬀect has traditionally been studied in the linear regime [6, 7], and included
+in numerical Boltzmann codes such as CAMB [8]. However, as the Lagrangian perturbation
+theory is limited to the condition that the over-density ﬁeld |δ| ≪1, this linear method
+cannot be used to explore the inﬂuence of massive neutrinos on the late non-linear growth
+of structures. Instead, cosmological N-body simulation or simulation-based Haloﬁt formula
+should be used [9]. A natural way to implement neutrinos in N-body simulations is to treat
+them as an independent kind of simulation particles, with a much higher typical velocity
+compared to that of CDM particles [10–13]. This particle-based simulation is in principle
+accurate but computationally expensive, and the consequent power spectrum is dominated by
+shot noise in small scales due to the ﬁnite number of neutrino particles [5, 10]. Another much
+cheaper alternative is to implement neutrinos as an over-density ﬁeld on regular grids, and
+its evolution is then studied by linear perturbation theory. This method is justiﬁable since
+neutrinos do not signiﬁcantly cluster below its free-streaming scale, kfs, which is larger than
+the non-linear scale knl [5]. This grid-based simulation was ﬁrst proposed in [14], in which
+the neutrino power spectrum was evolved by CAMB and improved to include the non-linear
+eﬀect of CDM clustering in [5]. The consistency between these two approaches to include
+neutrinos in cosmological N-body simulation has been well tested in both [5] and this paper.
+Most of the studies mentioned above use the same cosmological parameter set when
+comparing the matter power spectra for diﬀerent neutrino masses. However, the cosmologi-
+cal parameters obtained from ﬁtting the CMB power spectrum also depend on the neutrino
+mass given. A fully consistent study should take this into consideration. This is regarded
+as a third mechanism for massive neutrinos to aﬀect the LSS in our work, although it is not
+really independent from either the expansion history or the free-streaming eﬀect. Because
+both CMB and LSS are sensitive to the sum of neutrino masses instead of the mass hierar-
+chy [28], we add a new variable mν ≡P mνi/3, the averaged mass for the three neutrino
+mass eigenstates, into a Markov-Chain Monte-Carlo code CosmoMC for ﬁttings of cosmological
+parameters from the Planck 2015 CMB data (as the likelihood code of Planck 2018 is not
+released to public yet) [4, 15]. N-body simulations are then generated using these sets of
+reﬁtted cosmological parameters. In this way the study of neutrinos’ inﬂuence on LSS is
+self-consistent.
+Another mystery about neutrinos is whether they are Majorana or Dirac particles. If
+we assign the chemical potentials of neutrinos to be {µi}, where i labels the neutrino mass
+eigenstates, then for anti-neutrinos they are {−µi}. Naturally Majorana neutrinos must have
+µi = 0, and if µi̸ = 0, neutrinos are Dirac fermions. Because the neutrino distribution has
+been frozen after decoupling, {ξi ≡µi/T} are ﬁxed and denoted as the neutrino degeneracy
+parameters. The diﬀerence between {ξi} and {−ξi} leads to an asymmetry in the neutrino
+and anti-neutrino number densities. Big Bang nucleosynthesis (BBN) constrains this asym-
+– 2 –
+
+metry of electron-type neutrinos to be small, with |ξe| ≤O(10−2), while the total neutrino
+asymmetry is mainly constrained by the eﬀective number of relativistic species Neff by CMB,
+and ξµ,τ of O(1) is still allowed [16, 17]. In this paper we also include the possibility of ﬁnite
+{ξi} in our CosmoMC ﬁtting for cosmological parameters as well as the modiﬁed N-body sim-
+ulation to study its inﬂuence on LSS, in addition to the eﬀect of neutrino mass. We follow
+[18] to set ξe = 0 and ξµ = ξτ, the latter because of the strong mixing between νµ and ντ.
+Only one free parameter is left for {ξi}, which we choose to be η ≡
+qP ξ2
+i .
+In this work, we examine the inﬂuence of the averaged neutrino mass mν and the
+neutrino degeneracy parameter η on the total matter power spectrum. All three mechanisms:
+the modiﬁcation of the cosmic expansion rate, the neutrino free-streaming eﬀect and the shifts
+in cosmological parameters obtained from CMB ﬁtting are consistently included. We mainly
+use the grid-based method of including neutrinos in N-body simulation, by our own modiﬁed
+version of the Gadget2 code [19].
+This paper is organized as follows.
+In Section 2 we elaborate on the calculation of
+neutrino energy density and the treatment of {ξi} with known constraints. The introduction
+to our CosmoMC reﬁtting is also included. We elaborate on the detailed procedure to conduct
+both the particle-based and grid-based simulations, and compare the measured total matter
+power spectra to show the consistency of these two methods in Section 3. We present our
+results in Section 4, and provide an empirical formula for the neutrino induced change in the
+matter power spectrum. Our summary and disscussion are in Section 5.
+2
+Neutrino energy density and the cosmic expansion
+2.1
+Cosmic neutrino background
+Cosmological neutrinos are thermally produced relic particles of the Big Bang, and they
+follow the Fermi-Dirac distribution:
+fν(E, T) =
+1
+e
+E−µ
+T
++ 1
+,
+(2.1)
+where E =
+p
+p2 + m2 is the neutrino energy.
+The neutrino energy density is given by
+ρν(T) =
+1
+2π2ℏ3 (
+Z ∞
+0
+E
+e
+E−µ
+T
++ 1
+p2dp +
+Z ∞
+0
+E
+e
+E+µ
+T
++ 1
+p2dp).
+(2.2)
+The normal number of degrees of freedom gν = 2 is separated into the neutrino and
+anti-neutrino terms here. Cosmic neutrinos decouple from baryons at temperature T ∼1
+MeV, and the thermal distribution has been frozen ever since, i.e. the denominator e
+E−µ
+T
++ 1
+is ﬁxed. Then the chemical potential µ scales as T, and so we have a constant degeneracy
+parameter ξ ≡µ/T. Because at T ∼1 MeV neutrinos are highly relativistic, E is simply
+replaced by the momentum p in the distribution fuction (2.1). Finally we have:
+ρν(T) =
+1
+2π2ℏ3 (
+Z ∞
+0
+E
+e
+p
+T −ξ + 1
+p2dp +
+Z ∞
+0
+E
+e
+p
+T +ξ + 1
+p2dp).
+(2.3)
+The neutrino temparature Tν is well known to be related to the CMB temparature Tγ
+Tν = ( 4
+11)1/3Tγ.
+(2.4)
+– 3 –
+
+This relation is derived from the entropy conservation before and after the electron-
+positron annihilation, which heats up the photons but not the neutrinos.
+Therefore Tν
+should not be directly dependent on m or ξ. On the other hand, the neutrino degeneracy
+ξ reduces the weak interaction rate between neutrinos and other species, because some of
+the initial and ﬁnal states are occupied [20]. Therefore, the neutrino decoupling temperature
+Tdcp(ξ) would be higher. But since the derivation of (2.4) follows the simpliﬁed model that
+neutrinos had completely decoupled from other species before the e−e+ annihilation and were
+not heated, which still holds for ﬁnite ξ, so Eq. (2.4) is still valid.
+2.2
+Neutrino asymmetry and constraints on {ξi}
+A ﬁnite ξ would naturally lead to an asymmetry of neutrinos and anti-neutrinos, deﬁned by
+L ≡n −¯n
+nγ
+∝[ξ3 + π2ξ],
+(2.5)
+where n, ¯n and nγ are the number densities for neutrinos, anti-neutrinos and photons
+respectively [20]. Eq. (2.5) is exact for massless neutrinos, and it is still good approximation
+for light but massive neutrinos, with an error of O(1%) for m < 0.1 eV. The asymmetry
+of electron neutrinos Le would aﬀect the neutron-proton ratio, which is tightly bounded
+by the 2H/1H ratio and the 4He abundance in BBN [21].
+The updated constraint gives
+−0.018 ≤ξe ≤0.008 (−4.5 ≤103Le ≤2.0) at 68% C.L. On the other hand, ξµ and ξτ
+of O(1) are still allowed, being only weakly constrained by the extra number of relativistic
+species ∆Neff = Neff −3.046 by both CMB and BBN [4, 16–18].
+In the early universe, the high interaction rate blocks neutrino ﬂavor oscillations and
+keeps neutrinos in ﬂavor eigenstates.
+Thus the asymmetry matrix L is diagonal in Lα
+(α = e, µ, τ).
+However, as shown in [18], as temperature drops below ∼15 MeV, neu-
+trino ﬂavor oscillations become active and oﬀ-diagnoal components in Lα become signiﬁcant.
+At around T ∼2 – 5 MeV, right before BBN and neutrino decoupling, the evolution of Lαβ
+reaches equilibrium again, and L is diagonal in mass eigenstates, Li (i = 1, 2, 3). We can use
+the Pontecorvo-Maki-Nakagawa-Sakata (PMNS) matrix to transform between the ﬂavor and
+mass bases:
+Li = U−1
+PMNSLαUPMNS.
+(2.6)
+More speciﬁcally we have
+Le = c2
+13(c2
+12L1 + s2
+12L2) + s2
+13L3,
+(2.7)
+where cij, sij, tij are the cosine, sine and tangent of the mixing angle θij. Assuming
+Le = 0, the asymmetries of other ﬂavors become
+Lµ = c23[c23(1 −t2
+12) −2 cos(δCP )s13s23t12]L2
++{s2
+23(1 −t2
+13) −t2
+13t12c23[t12c23 + 2 cos(δCP )s13s23)]}L3,
+Lτ = s23[s23(1 −t2
+12) + 2 cos(δCP )s13c23t12]L2
++{c2
+23(1 −t2
+13)+t12t2
+13s23[2 cos(δCP )s13c23 −t12s23]}L3,
+(2.8)
+where the neutrino CP phase δCP is relevant.
+– 4 –
+
+Furthermore, due to the strong mixing of νµ and ντ, we follow [18] to set Lµ = Lτ.
+Thus in the set of equations (2.7) and (2.8) we only have one degree of freedom left to
+determine Li and ξi, which we choose to be η ≡
+qP ξ2
+i . This is because the main CMB
+constraint on the total asymmetry is the deviation of the eﬀective number of relativistic
+degrees from 3 (instead of 3.046 because the small distortion of 0.046 caused by incomplete
+neutrino decoupling before the e−e+ annihilation should not be aﬀected much by ﬁnite {ξi})
+∆Neff = (
+P
+i ρνi + P
+i ρ ¯νi
+7
+8( Tν
+Tγ )4ργ
+−3) ∝
+X
+i
+(ξ2
+i + ξ4
+i
+2π2 ),
+(2.9)
+which is proportional to η2 up to the leading order, independent of the CP phase δCP .
+2.3
+Reﬁtting the Planck 2015 data with CosmoMC
+The ﬁducial model of ﬁtting from CMB includes a cosmological parameter set of six free
+variables: {Ωch2, Ωbh2, θ, τ, As, ns}. Besides, it is also a common practice, as in the
+Planck 2015 paper [4], to include P mνi(= 3mν) as another free variable in the MCMC
+process to set constraints on it.
+In this work, apart from the sum of neutrino masses P mνi, we modify CAMB to include
+the calculations of neutrino energy densities with non-zero η [8].
+So we have a set of 8
+parameters as our variables of CosmoMC: {Ωch2, Ωbh2, θ, τ, As, ns, mν, η}. In section (4.1)
+we use the mean values of the reﬁtting results when {mν, η} are both freely varying, while in
+section (4.2) we sample diﬀerent sets of {mν, η} with equal spaces and ﬁx them in CosmoMC,
+so as to study the degeneracy of their eﬀects.
+This modiﬁed CosmoMC is used together with the Planck 2015 data and likelihood codes
+lowTEB and plikHM TTTEEE to ﬁnd the best-ﬁt and mean values of cosmological parameters
+[4, 15]. More details can be found in (Lau et al. in preparation) and Appendix C, where
+we show the ﬁtting results of cosmological parameters with or without η as a free parameter
+(the ﬁducial model here includes mν). We can also see that the tension of H0 is alleviated
+when η is included in the MCMC ﬁtting.
+2.4
+Cosmic neutrinos and background expansion
+Eq. (2.3) clearly reduces to ρ ∝T 4 ∝a−4 and ρ ∝a−3 at the ultra-relativistic (p ≫m)
+and non-relativistic (p ≪m) limits respectively. We deﬁne a power law index x such that
+ρν ∝ax, with η and mν to be parameters, and we show x as a function of z in Fig. 1a, with
+parameters listed in Table 1.
+We sample mν with values 0, 0.048 eV and 0.096 eV, which are 0, 1, 2 times the mean
+value of mν in our CosmoMC ﬁt of the Planck 2015 data. We also run for η = 0, 0.359, the latter
+being the mean value in the CosmoMC ﬁt. As shown in Fig. 1a, the cosmological neutrinos
+clearly experience a smooth transition from x = −4 to x = −3, roughly from redshift z ∼104
+to z ∼101, the cosmic redshifts most important for cosmological structure formation. The
+transition occurs earlier for more massive neutrinos, as expected. It can also be seen from
+Fig. 1a that η does not have much eﬀect on the transition.
+There is naturally a deviation of the Hubble expansion history from that of the standard
+ΛCDM Universe. The Hubble expansion rate is determined by the Friedmann equation
+H ≡˙a
+a =
+r
+8πG
+3
+(ργ + ρν + ρc+b + ρΛ),
+(2.10)
+– 5 –
+
+no.
+model
+mν(eV)
+η
+H0
+Ωc+b
+Ων
+ΩΛ
+A1
+ﬁducial
+0
+0
+67.74
+0.3097
+∼10−5
+0.6844
+A2
+η
+0
+0.359
+67.74
+0.3097
+∼10−5
+0.6844
+A3
+mν
+0.048
+0
+67.74
+0.3064
+0.0033
+0.6844
+A4
+mν, η
+0.048
+0.359
+67.74
+0.3063
+0.0034
+0.6844
+A5
+2mν
+0.096
+0
+67.74
+0.3030
+0.0067
+0.6844
+A6
+2mν, η
+0.096
+0.359
+67.74
+0.3029
+0.0068
+0.6844
+A7
+mν, η, reﬁtting
+0.048
+0.359
+66.95
+0.3203
+0.0035
+0.6762
+Table 1.
+Parameters for comparison of the modiﬁed Hubble parameter H(mν, η) and that in the
+CDM cosmology H(0, 0). Data A1 is the pure CDM case. For A2-A6, we sampled mν to be 0, 0.048
+and 0.096 eV, and η = 0.0, 0.359. We follow the convention to keep Ωm = Ωc+b + Ων a ﬁxed value,
+and so the excess of neutrino energy density is eﬀectively deducted from the fraction of dark matter.
+In A7, all the cosmological parameters are consistently reﬁtted from the Planck 2015 data using our
+CosmoMC code, with mν and η included.
+where ρΛ ∝a0, ρc+b ∝a−3 and ργ ∝a−4 are the energy densities of dark energy, matter,
+and radiation respectively. We have to evaluate the integration (2.3) numerically for ρν, due
+to the transition. The resulting ratio H(mν, η)/H(0, 0) versus z is plotted in Fig. 1b for the
+parameter sets in Table 1.
+For parameter sets A1-A6, the same cosmological parameters are used, with Ωi and
+H0 ﬁtted from our CosmoMC, ﬁxing (mν, η) = (0, 0). When neutrinos are massive and Ων
+not negligible, we ﬁx Ωm = Ωc+b + Ων as a constant, so as to keep a ﬂat Universe. It is
+the conventional treatment in previous studies to deduct the excess due to neutrino energy
+density from cold dark matter [5, 9, 14].
+In Fig. 1b we can see that when η > 0 with zero neutrino mass, H is increased at high
+redshift, because the eﬀective number of relativistic species Neff is larger. Corresponding
+cases for H(mν, 0) are all lower than H(0, 0), as shown by the dashed curves in Fig. 1b.
+This suppression peaks at z ∼103, with a magnitude −0.4% for mν = 0.048 eV and is
+roughly proportional to mν. To understand this drop, we plot the fractional energy densities
+Ωc+b(z), Ων(z) and Ωγ(z) in Fig. 1c, in which three cosmic eras can be clearly distinguished:
+radiation-dominated, matter-dominated and dark energy-dominated.
+From z ∼104, the
+contribution of matter to the total energy density rapidly increases and surpasses radiation.
+But at this time massive neutrinos are still radiation-like, just entering the transition to
+matter-like particles, as shown in Fig. 1a. This time delay between the transition of neutrino
+relativistic degree and the transition of radiation-dominated to matter-dominated era leads
+to a decrease in total energy density and thus H compared to those in the ΛCDM cosmology.
+Later on, this deﬁciency in total energy density is alleviated as neutrinos evolve to be more
+matter-like, and the magnitude of the suppression in H gradually returns to zero.
+The black solid curve in Fig. 1b (A7/A1 in Table 1) is based on our reﬁtted cosmological
+parameter set, with mν = 0.048 eV and η = 0.359 as parameters. From the row A7 in Table
+1, we can see that Ωi and H0 are shifted by a noticeable amount. In this way we do not need
+to worry about the excess of neutrino energy density, as all the cosmological parameters are
+consistently reﬁtted. The resulting H(mν, η) behaves distinctly from previous comparisons.
+Naturally, the normalization factor H0 is diﬀerent from the ΛCDM case. Furthermore, the
+larger Ωm after the reﬁtting naturally leads to a peak of H(mν, η)/H(0, 0) in the matter-
+dominated era.
+– 6 –
+
+-3
+0
+3
+5
+log(z)
+4.0
+3.5
+3.0
+x
+0
+mν, η
+2mν, η
+η =0
+(a) Fig. 1a
+-3
+0
+3
+5
+log(z)
+0.99
+1.0
+1.01
+H(m,η)/H(0,0)
+0, η
+mν, η
+2mν, η
+mν, η, refitting
+η =0
+(b) Fig. 1b
+-3
+0
+3
+5
+log(z)
+0.0
+0.5
+1.0
+Ωi(z)
+ν
+cdm +b
+γ
+(c) Fig. 1c
+0.05
+0.1
+1.0
+k[hMpc−1 ]
+1.002
+1.004
+1.006
+1.008
+R(k)
+mν
+mν, η
+(d) Fig. 1d
+Figure 1.
+a) Relation between the power index x of neutrino energy density and redshift z. The
+dashed red, cyan and green curves show x for data sets A1, A3 and A5, with mν = 0, 0.048, 0.096
+eV respectively and η = 0. The corresponding cases for η = 0.359 are shown in solid curves, which
+are indistinguishable from the dashed ones. b) Ratio between the modiﬁed Hubble expansion rate
+H(mν, η) and that of ΛCDM H(0, 0), for parameter sets A1 (red dashed), A3 (cyan dashed), A5
+(green dashed), A2 (solid red), A4 (solid cyan) and A6 (solid green). The solid black curve is for A7,
+in which mν = 0.048 eV, η = 0.359, and the cosmological parameters are reﬁtted from Planck 2015
+data using CosmoMC. c) Energy density fractions Ωi of matter (green), photons (red) and neutrinos
+(blue) respectively, for mν = 0.048 eV and η = 0. d) Relative matter power spectra with inﬂuence of
+neutrinos, when only the modiﬁed Hubble expansion rate is considered. The yellow curve shows the
+power spectrum of A3, with mν = 0.048 eV, relative to the power spectrum of A1, which is from the
+standard CDM cosmology. The blue curve shows the ratio of the power spectra for A4 and A1.
+– 7 –
+
+The cosmic structure formation is known to be governed by the competing eﬀects of
+gravity and cosmic expansion. So the modiﬁed H would naturally aﬀect this process. We
+implement H(mν, η) in the N-body simulation code Gadget2 to study this eﬀect, and the
+resulting relative matter power spectra R(k) = P(mν, η, k)/P(0, 0, k) are shown in Fig. 1d.
+For A3 and A4 sets of parameters, a slightly stronger clustering of simulation particles can
+be observed. This is due to the small decrease in expansion rate from z = 49, when our
+simulation is initiated. As the power spectrum is aﬀected only at sub-percent level when
+only the background expansion is modiﬁed, we do not separate this eﬀect from neutrino
+free-streaming in the following discussions.
+3
+Neutrino free-streaming eﬀect
+The high thermal speed of cosmological neutrinos makes them weakly bounded to gravi-
+tational potential wells provided by matter. So the over-density ﬁeld of massive neutrinos
+δν grows much slower than that of CDM and baryons δc+b. This leads to a smaller total
+over-density ﬁeld δt due to the averaging eﬀect:
+δt = (1 −fν)δc+b + fνδν,
+(3.1)
+where fν ≡Ων/Ωm is the mass fraction of cosmic neutrinos. However, as both neutrinos
+and matter particles are sources of gravitational potential, one cannot assert that the ﬁnal
+over-density ﬁeld is aﬀected only by ∼fν. Non-linear eﬀects can amplify the role of massive
+neutrinos in structure formation.
+In the linear regime where δt ≪1, δc+b and δν can be co-evolved via perturbation
+theory by Boltzmann codes such as CAMB. Nevertheless, for a complete study including the
+non-linear eﬀect at late time, N-body cosmological simulation should be used.
+We have adopted two methods for including the neutrino eﬀects in an N-body simulation.
+In the grid-based method, cosmic neutrinos are treated as a density ﬁeld on grids, and the
+total over-density ﬁeld in Eq.(3.1) is calculated at every simulation time step to keep track of
+the correct gravitational potential. The evolution of δν is calculated by the linear theory, the
+detailed derivation of which is based on [22] and discussed in Appendix A. The procedures of
+our grid-based simulation are listed in Section [3.2]. In the particle-based method, neutrinos
+are added as a new kind of simulation particles, which have a velocity dispersion diﬀerent
+from the CDM particles. We elaborate in detail the setup of our particle-based simulation
+in Section [3.3], and compare it to the grid-based simulation in Section [3.4].
+In principle, the particle-based method should be accurate and is still widely used in
+recent large-size simulations such as [13], because it keeps track of the positions and velocities
+of neutrino simulation particles. But it has two intrinsic disadvantages. First, it is much more
+computationally expensive, due to not only the increased number of particles, but also the
+fact that smaller time steps are needed to resolve the motion of the high-speed neutrinos.
+Second, unlike CDM, neutrinos themselves do not signiﬁcantly cluster at small scales. Thus
+the neutrino power spectrum at small scales is dominated by shot-noise. Another problem
+is that the neutrino chemical potential gives rise to a degeneracy pressure, which cannot be
+trivially transformed to a particle-particle interaction and implemented into the Newtonian
+force term in an N-body simulation. Therefore, we choose the grid-base method to be our
+main simulation strategy, with the particle-based method a reference for comparison.
+– 8 –
+
+3.1
+Linear evolution of the neutrino over-density
+From [22] the linear growth equation of the neutrino over-density ﬁeld is
+eδν(s, k) = 4πG
+Z s
+0
+a4(s′)(s−s′)Φ[k(s−s′)][¯ρc+b(s′)eδc+b(s′, k)+¯ρν(s′) eδν(s′, k)]ds′+Φ(ks) eδν(0, k),
+(3.2)
+where s is the time in co-moving coordinate deﬁned in Eq.(A.8), eδi is the over-density
+of component i in k-space, and the function Φ is given by
+Φ(q) = B0 + P∞
+n=1(−1)n+1{ξB1(n) sin(Aξ) + ξB2(n) cos(Aξ) + B3(n) sin(Aξ) + B4(n)[cos(Aξ) + e−nξ]}
+A(
+R ∞
+0
+x2
+ex−ξ−1dx +
+R ∞
+0
+x2
+ex+ξ+1dx)
+.
+(3.3)
+In Eq.(3.3), A ≡qT/m, x ≡um/T, with T, m and u the neutrino temperature, mass
+and speed respectively. Bi(n) are given in Appendix A.
+In Eq.(3.2), the second term on the right hand side is the linear part of the growth
+equation, so that the initial condition can be separated from a time dependent growth factor.
+The ﬁrst term is a complicated self-involved integration, which reﬂects the interaction between
+the total gravitational potential and neutrino over-density ﬁeld. Since eδν(s, k) itself appears
+in the integral, we need to solve this integral equation iteratively.
+Now if we have the
+initial condition eδν(0, k) and the over-density of CDM (together with baryons) eδc+b(s′, k) as
+a function of time s′, we can calculate the neutrino over-density at the ﬁnal time s, eδν(s, k).
+We elaborate on the derivation of Eqs.(3.2) and (3.3) in Appendix A.
+3.2
+Grid-based neutrino simulation
+Gadget2 is a hybrid code of the Tree and PM algorithms. Since we only have CDM particles
+and simulate cosmic neutrinos as grid-based density ﬁeld, only the PM part, which is respon-
+sible for the long-range force, is re-calculated using Eq.(3.1). The over-density ﬁeld of CDM
+and baryons δc+b is directly measured in the simulation, while δν is evaluated by Eq.(3.2).
+The initial condition eδν(0, k) is recorded in the previous time step, while for eδc+b(s′, k) we
+use a linear interpolation between eδc+b(0, k) and eδc+b(s, k).
+Normally in cosmological simulations, the number of PM grids is not smaller than the
+particle number, which is of O(106) in our calculation. It would be very time consuming to
+ergodically go through all the k-grids. So we use following tricks in [5] to reduce the number
+of calculations. First, in the growth equation (3.2), there is no mixing between the real and
+imaginary parts of eδν(k), and so only the growth of Re[ eδν(k)] is needed. The complex phase
+of eδν(k) is succeeded from the initial condition, which we assume to be the same as the phase
+of the CDM density ﬁeld from the beginning of the simulation. Second, from Eq.(3.3), Φ(q)
+only depends on |q| as the directional information is averaged out in the integration. So we
+only evaluate the evolution of the ensemble average eδν(k), with a proper binning.
+The detailed procedure of our grid-based neutrino simulation is listed as below:
+1. The original Boltzmann code CAMB is used to generate the power spectrum of CDM
+or massive neutrinos or their weighted average at any redshift. We modify the calculation
+of the neutrino energy density in CAMB so that it also includes the contribution of a non-zero
+neutrino degeneracy parameter ξ.
+2. We generate the power spectra for CDM (and baryons) and massive neutrinos sep-
+arately at the starting redshift z = 49 using CAMB. The ratio of these two power spectra
+– 9 –
+
+rini(k) is also recorded. Then the CDM power spectrum Pc+b(k) at z = 49 is put into the
+initial condition generator 2LPT, which is based on the second order Lagrangian perturbation
+theory, to generate the initial conditions for our cosmological simulation [23]. Please note
+that since we already generate the initial power spectra for CDM and neutrinos at the start-
+ing redsfhit z = 49, we have not made use of the calculation of linear growth rate in 2LPT,
+which is incorrect because the eﬀect of massive neutrinos is not implemented in the standard
+2LPT formalism. In other words, we only use the calculation of the displacement ﬁeld and
+corresponding velocity ﬁeld in 2LPT, given an input power spectrum.
+3. At the 0th time step, we calculate the CDM power spectrum Pc+b(k), with proper
+binning {ki}. Then the neutrino power spectrum Pν(k) is given using rini(k). eδc+b(k) =
+p
+Pc+b(k) and eδν(k) =
+p
+Pν(k) are saved as the initial conditions for the ﬁrst calculation of
+Eq.(3.2).
+4. At the nth (n ≥1) time step, we have the initial over-density ﬁelds for both CDM
+and neutrinos, eδc+b(0, k) and eδν(0, k), recorded in the previous time step. Then we calculate
+the CDM over-density at the current time step eδc+b(s, k) using Gadget2. Here the time s in
+co-moving coordinate is calculated from ds =
+dt
+a2(t), as shown in Eq.(A.8). We have
+s =
+Z an
+an−1
+1
+a3H(a)da,
+(3.4)
+where an−1 and an are the scale factors of the previous and current PM time steps.
+Then eδc+b(s′, k) at any time s′ in [0, s] is obtained by linear interpolation, since the time
+diﬀerence between two PM time steps is usually small.
+5. Then we put eδc+b(s′, k) and eδν(0, k) into the Volterra equation Eq.(3.2), and solve
+it iteratively with Φ(ks)eδν(0, k) as the initial trial function. Usually one iteration would be
+enough for convergence. Finally we have the neutrino over-density at the current time step
+eδν(s, k).
+6. Following the assumption that the over-density ﬁelds for CDM and neutrinos have
+the same phase, we can restore eδν on each k-grid:
+eδν(s, k) =
+eδν(s, k)
+eδc+b(s, k)
+eδc+b(s, k).
+(3.5)
+Then the total over-density ﬁeld is corrected as
+eδt(s, k) = (1 −fν)eδc+b(s, k) + fνeδν(s, k).
+(3.6)
+Here fν ≡¯ρν/(¯ρν + ¯ρc+b) is also carefully treated at each time step, considering that
+neutrinos are not yet fully non-relativisitc at higher redshift. Eventually the original eδc+b(s, k)
+in Gadget2 is substituted by this corrected eδtot(s, k). In this way the gravitational potential
+and thus the long-range force on CDM simulation particles are corrected with neutrino free-
+streaming eﬀect.
+7. eδν(s, k), eδc+b(s, k) and the scale factor an for this time step are saved as the initial
+conditions for the next PM calculation.
+8. Steps 4-7 are repeated every time when calculation of the PM force is called in the
+Gadget2 simulation, until redshift 0 when the simulation ends. At all the designated redshifts
+for output, eδν(s, k) are also recorded.
+This simulation scheme we adopt is very similar to that of [5], except for a few minor
+diﬀerences:
+– 10 –
+
+1. According to the description in [5], the authors use the same relative amplitude of
+over-density for both CDM (and baryons) and neutrinos in the initial condition, while we
+generate the initial power spectra of CDM and massive neutrinos separately from CAMB, and
+set their diﬀerent initial over-density ﬁelds accordingly.
+2. In the calculation of linear evolution of neutrino over-density, [5] includes both the 0th
+order (over-density) and 1st order (bulk velocity) terms in the multipole moment expansion,
+while we only include the 0th order. However, since the bulk velocity is much less than the
+thermal velocity, which is the source of the 0th order term, it is safe to neglect it.
+Since the directly measured power spectrum from a snapshot is eﬀectively Pc+b(k), the
+same weighted average Eq.(3.6) is applied again to obtain the total power spectrum. We use
+our own code for the power spectrum measurement, using the Cloud-in-Cell scheme for the
+density ﬁeld distribution. Jing’s power-law iterative correction for the window eﬀect is also
+implemented for the ﬁnal result [24].
+In Gadget2 simulations, the calculation of the PM force is not strictly applied at every
+time step. In between two PM steps, the time interval is sometimes further divided into
+shorter steps, during which some of the simulation particles would be drifted according to
+their velocities. This should not aﬀect the consistency of our correction on the PM force, as
+long as the corresponding scale factor a is correctly recorded.
+3.3
+Particle-based neutrino simulation
+In our particle-based neutrino simulation, we have N3 CDM particles and another N3 neu-
+trino particles. So the masses and softening lengths for CDM and neutrino particles are
+scaled according to the direct ratio of Ωc+b and Ων. The major modiﬁcation lies in the initial
+condition generator 2LPT, since the dynamics in Gadget2 remains the same with an extra
+kind of particles. Firstly, for the initial conﬁguration, each neutrino particle is displaced from
+a CDM particle by half the average distance L/2
+3√
+N in the positive direction of each axis.
+The spatial perturbations of both kinds of particles are then applied according to their CAMB
+power spectra respectively. Secondly, for the velocity ﬁeld, apart from the gravitational ﬂow
+which is related to the spatial perturbation, the neutrino thermal velocity is included, which
+actually dominates. The momenta of thermally produced cosmological neutrinos follow the
+Fermi-Dirac distribution Eq.(2.1), with ξ = µ/T = 0, as the particle-based method cannot
+be used to simulate neutrinos with ﬁnite chemical potential. So the probability of a neutrino
+particle’s momentum to be smaller than pn is
+Pn(p′ < pn) =
+R pn
+0
+f(p′)p′2dp′
+R ∞
+0 f(p′)p′2dp′ .
+(3.7)
+Then the magnitude of the thermal velocity |vth| is calculated from the momentum p,
+sampled according to (3.7). Since the typical velocity is of order 0.1c, special relativistic
+eﬀect is included in evaluating |vth|. The thermal velocity needs to be further divided by √a
+to be consistent with the internal unit of Gadget2. Uniform distribution of spherical angles
+φ and sin θ is also applied to vth, so that there is no preference in directions.
+3.4
+Comparison between grid-based and particle-based simulations
+We check the validity of our grid-based simulation code by comparing it with the particle-
+based simulation. The ratios of the total power spectra of these two neutrino simulations
+relative to a pure CDM simulation R(k) ≡Pν,cdm(k)/Pcdm(k) are compared.
+Since the
+– 11 –
+
+particle-based simulation has N3 CDM and neutrino particles each, for fairness we also
+require 2N3 CDM particles for the grid-based simulation and the pure CDM simulation,
+with the same unperturbed initial conﬁguration and mass splitting. We choose N = 128
+through out this work. Please note that in the setup of the 2N3 CDM particles, they are
+under diﬀerent categories of simulation particles, having diﬀerent masses according to Ωc/Ων
+(same as in the particle-based simulation). In this way we have the same mass and spatial
+resolution when comparing the results.
+We use the same cosmological parameter set in this comparison, where Ωm = Ων +
+Ωc+b = 0.3, Ωb = 0.05, ΩΛ = 0.7, h = 70, the spectral index ns = 1, and the amplitude of
+the primorial power spectrum As = 2.43(∗10−9). This set of cosmological parameters is the
+same as in [5], the result of which is also a reference for our comparison. The simulation box
+size is 200 h−1Mpc, and the starting redshift is z = 49.
+Fig. 2a and Fig. 2b show the relative power spectra of grid-based and particle-based
+simulations, with diﬀerent realizations. We can see from Fig. 2a that the results of both
+the grid-based and particle-based methods are in good agreement with [5].
+However, as
+seen in Fig. 2b, the results for both methods diﬀer from the reference curve of [5] by a
+small amount. This is due to cosmic variance as we have only changed the random seed for
+initial conditions of simulations in Fig. 2a and Fig. 2b. Nevertheless, the grid-based and
+particle-based methods still produce consistent results. As shown in Fig. 2c, the diﬀerence
+of R(k) between these two simulation methods R(k)[grid] −R(k)[particle] is within 0.5% in
+the wave-mode range of 0.2 ∼1.5 hMpc−1.
+Compared to the linear prediction by CAMB, the relative power spectrum in N-body
+simulation shows an extra suppression for k from 0.2 to 2 hMpc−1. References [25] and [5]
+give a qualititive explanation to this behaviour, that the neutrino free-streaming eﬀect ﬁrstly
+delays the the start of the non-linear growth, and secondly pushes the non-linear scale to a
+larger wave number. This trough in the power spectrum suppression relative to that of CDM
+is a special signature for N-body simulations including massive neutrinos. Quantitatively
+the scoop shape can be understood via the halo model. As mentioned in [29], the strongest
+suppression on the matter power spectrum is at k ∼1hMpc−1, which is the typical transition
+scale of the 1-halo and 2-halo terms in the halo model. The Pk in this scale is dominated by
+the 1-halo term of the most massive haloes. [30–32] show that in the cosmology with massive
+neutrinos, the abundance of massive haloes are more aﬀected than small haloes, which leads
+to the signature scale of the strongest suppression. This can be explained via the reduced
+variance in the Press-Schechter halo mass function, which is for the spehrical collapse model
+of isolated haloes, and via the hierachical formation of large haloes [32].
+4
+Results
+4.1
+Neutrino eﬀects on the power spectrum
+In this paper all three mechanisms for the cosmic neutrinos to aﬀect the large-scale structure
+are consistently considered: the free-streaming eﬀect, the modiﬁed expansion history and
+the reﬁtting of the cosmological parameters with mν and η.
+The eﬀect of the modiﬁed
+background expansion is only about 1%, as shown in Section [2.4]. So we do not discuss
+it separately, but implement it in the grid-based free-streaming code. Then we analyze the
+eﬀects of mν and η separately, by controlling input variables. Six sets of simulations are
+generated, the parameters of which are listed in Table 2. Our grid-based simulations have
+1283 CDM particles, box size of 200 h−1Mpc on each side and starting redshift of 49.
+– 12 –
+
+0.05
+0.1
+1.0
+k[hMpc−1 ]
+0.8
+0.9
+1.0
+R(k)
+linear
+particle
+grid
+A&B 2013
+(a) Fig. 2a
+0.05
+0.1
+1.0
+k[hMpc−1 ]
+0.8
+0.9
+1.0
+R(k)
+linear
+particle
+grid
+A&B 2013
+(b) Fig. 2b
+0.05
+0.1
+1.0
+k[hMpc−1 ]
+-2%
+-1%
+0
+1%
+2%
+R(k)[grid]−R(k)[particle]
+grid vs particle
+123456
+123457
+(c) Fig. 2c
+Figure 2.
+a) Relative power spectra R(k) of our grid-based (solid red), particle-based (solid green)
+simulations and the linear result by CAMB (solid blue). The dashed black and grey curves are reference
+curves from [5], for non-linear and linear power spectra respectively. The random seed for the initial
+condition is 123456. b) Same as Fig. 2a, but the random seed is 123457. c) Discrepancy between
+relative power spectra from grid-based and particle-based simulations. The blue and green curves are
+for seeds 123456 and 123457 respectively.
+– 13 –
+
+no.
+model
+mν(eV)
+η
+H0
+Ωb
+Ωcdm
+Ων
+ΩΛ
+As(10−9)
+ns
+B1
+ﬁducial
+0
+0
+67.74
+0.0484
+0.2613
+∼10−5
+0.6903
+2.204
+0.9641
+B2
+fs
+0.048
+0.0
+67.74
+0.0484
+0.2580
+0.0033
+0.6903
+2.204
+0.9641
+B3
+fs
+0.048
+0.359
+67.74
+0.0484
+0.2579
+0.0034
+0.6903
+2.204
+0.9641
+B4
+fs, [all]
+0.048
+0.359
+66.95
+0.0496
+0.2707
+0.0035
+0.6762
+2.240
+0.9660
+B5
+fs, [Ωb, Ωc, H0]
+0.048
+0.359
+66.95
+0.0496
+0.2707
+0.0035
+0.6762
+2.204
+0.9641
+B6
+[all]
+0.0
+0.0
+66.95
+0.0496
+0.2707
+∼10−5
+0.6797
+2.240
+0.9660
+Table 2.
+Parameters of N-body simulations. The data set B1 is the pure CDM simulation. In data
+sets B2 and B3 only the eﬀect of neutrino free-streaming is considered, with and without the neutrino
+degeneracy parameter η respectively. For data set B4, we include the reﬁtting of all cosmological
+parameters, while for B5, only Ωi and H0 are reﬁtted, but not As or ns. In the data set B6, all
+cosmological parameters are chosen to be the same as those in B4, but the neutrino free-streaming
+eﬀect is not included.
+In Table 2, the data set B1 is a pure CDM simulation (mν = 0, η = 0), while for data
+sets B2 and B3 the neutrino free-streaming eﬀect is included. In B2 we only have massive
+neutrinos of mν = 0.048 eV (η = 0), while in B3 we add η = 0.359 as well. These are
+the mean values from our CosmoMC ﬁtting of the Planck data. We follow the conventional
+treatment to keep Ωm = Ωc + Ωb + Ων a ﬁxed value in data sets B2 and B3, and so the
+cosmological parameters used in B2 and B3 are the same as those in B1, except for a small
+redistribution of density from Ωcdm to Ων. In data sets B4 and B5, the reﬁtted cosmological
+parameters are used together with the neutrino free-streaming. In the data set B4, all the
+aﬀected cosmological parameters are modiﬁed accordingly, including {Ωi}, H0, the scalar
+amplitude As for primordial perturbation and the spectral index ns. In the data set B5 we
+only include the reﬁtting of H0 and {Ωi}. The data set B6 is another CDM simulation where
+only the reﬁtted cosmological parameters are included, but not the neutrino free-streaming.
+The comparison of these cases are shown in Fig. 3a. We also show the corresponding linear
+power spectra given by CAMB, in dashed curves.
+Comparing data sets B2 and B3 (blue and yellow) we see that the impact of η is small,
+if only the neutrino free-streaming eﬀect is considered. This is because Ων is only shifted
+slightly by η = 0.357 compared to η = 0. The magnitudes of suppression of R(k) in data
+sets B2 and B3 are about 10% at most, with the same trough-like deviation from the linear
+prediction as we have reported in Fig. 2a. This is also consistent with the empirical result
+from [10] that ∆P(k)/P(k) ≈−9.8Ων/Ωm. But for the data set B5 (green), where we include
+the reﬁtted H0 and {Ωi}, the suppression is decreased. When we further include the reﬁtted
+As and ns in the data set B4 (red), the suppression is further decreased to about 4% only. In
+the data set B6 where we only consider the reﬁtted cosmological parameters, the total power
+spectrum is even increased by about 5% at most. The diﬀerence between data sets B4 and
+B6 (black and red) is still about 9% −10%, consistent with previous results. We have also
+plotted the ratio of B4/B6 as the violet curve, which is the pure free-streaming eﬀect with
+the newly ﬁtted cosmological parameters. As expected, it is pretty close to the blue curve
+(B3/B1), showing the robustness of free-streaming eﬀect in diﬀerent cosmologies. Therefore,
+we can conclude from Fig. 3a that the reﬁtted cosmological parameters increase the total
+power spectrum, while the free-streaming eﬀect and the modiﬁed expansion rate together
+result in a suppression. A completely consistent treatment of cosmological neutrinos’ impact
+on the matter power spectrum must include all these mechanisms. Similar results are also
+observed in a recent paper [26], where the cosmological parameters are allowed to vary, apart
+– 14 –
+
+0.05
+0.1
+1.0
+k[hMpc−1 ]
+0.9
+0.95
+1.0
+1.05
+R(k)
+fs(mν)
+fs(mν,η)
+fs(mν,η), [all]
+fs(mν,η), [Ωi, H0]
+[all]
+B4/B6
+(a) Fig. 3a
+0.05
+0.1
+1.0
+k[hMpc−1 ]
+0.94
+0.95
+0.96
+0.97
+0.98
+R(k)
+fs,[all]
+0.018 eV
+0.024 eV
+(b) Fig. 3b
+Figure 3.
+a) Relative power spectra R(k) ≡P(m, ξ, k)/P(0, 0, k) for data sets in Table 2. The
+solid blue, yellow, green, red and black curves show N-body simulation results of data sets B2, B3,
+B4, B5, B6 respectively, relative to B1, while the dashed ones are corresponding ratios of linear power
+spectra given by CAMB. The solid violet curve shows the ratio of B4/B6, which reﬂects the pure free-
+streaming eﬀect in the new cosmology. b) Comparison between the relative power spectrum using
+the mean values of CosmoMC ﬁt, mν = 0.048 eV and η = 0.359 in B4, and relative power spectra
+of free-streaming-only simulations. The solid red curve shows the result of B4 relative to B1, while
+the dashed yellow, green, blue and black curves show the free-streaming-only power spectra with mν
+sampled to be 0.018, 0.020, 0.022, 0.024 eV respectively.
+from the neutrino free-streaming eﬀect.
+We further conduct a degeneracy test to see what value of mν would a 4% suppression in
+the matter power spectrum (data set B4, red curve in Fig. 3a) imply, if only the free-streaming
+of massive neutrinos is considered (η = 0, no reﬁtting of cosmological parameters). From
+[10], ∆P(k)/P(k) ≈−9.8Ων/Ωm, and so we estimate the neutrino mass to be mν ≈0.022
+eV. Then we sample four sets of mν = [0.018, 0.020, 0.022, 0.024] eV and η = 0, and generate
+simulations accordingly. In Fig. 3b we can see that the closest estimate is mν = 0.02 eV,
+while the shape of the suppression curve is slightly diﬀerent. This is to say, the suppression
+of the matter power spectrum considering only the free-streaming eﬀect of neutrinos with
+mν = 0.022 eV is roughly the same as that with mν = 0.048 eV and η = 0.359, with reﬁtting
+of cosmological parameters consistently included. Thus the conventional method to constrain
+the neutrino mass solely from the free-streaming eﬀect can have an error as large as 100%, if
+the ﬁnite chemical potential and reﬁtting of cosmological parameters are ignored.
+It is clear that the free-streaming eﬀect mainly depends on the neutrino mass, while the
+eﬀects of mν and η on the reﬁtted cosmological parameters are still to be unveiled. We will
+try to break this degeneracy in the following section.
+4.2
+Results for varying mν and η
+Following the spirit of Section 4.1, we sample a series of ﬁxed parameters {mν, η}, put each
+of them into our MCMC reﬁtting to obtain the corresponding cosmological parameters, and
+– 15 –
+
+generate grid-based neutrino simulations with our modiﬁed Gadget2 code accordingly. The
+ﬁtting results of cosmological parameters are listed in Table 3. For the convenience of future
+use, we numerically ﬁt the changes of corresponding cosmological parameters (including their
+uncertainties from the CosmoMC reﬁtting) as functions of mν and η as in Eqs.(4.1). Note that
+here the cosmological parameters are normalized by their values in the ΛCDM cosmology
+and mν is normalized by 0.1 eV.
+∆H0
+H0[Λcdm]
+[%] = −4.40
+mν
+0.1 eV + 4.50η2[%]
+∆Ωb
+Ωb[Λcdm]
+[%] = 8.62
+mν
+0.1 eV −7.42η2[%]
+∆Ωc
+Ωc[Λcdm]
+[%] = 9.67
+mν
+0.1 eV −4.07η2[%]
+∆As
+As[Λcdm]
+[%] = 1.98
+mν
+0.1 eV + 3.67η2[%]
+∆ns
+ns[Λcdm]
+[%] = −0.21
+mν
+0.1 eV + 1.62η2[%]
+(4.1)
+In our least squares regression to obtain these numerical formulae, we keep mν in ﬁrst
+order, while η in second order. This is because the regression result shows that the coeﬃcient
+of η1 is 0 within uncertainty. So we simply omit the ﬁrst order term. This is also physically
+reasonable, as in the calculation of the neutrino energy density in Eq. (2.9), the contributions
+of neutrinos and anti-neutrinos cancel at the ﬁrst order in η.
+From Eq.(4.1), we can see that for the fractional changes in H0, Ωb and Ωc, the coeﬃ-
+cients of mν and η2 have opposite signs, and are comparable in magnitude. For the scalar
+amplitude, both mν and η2 lead to an increased As. As for the power spectral index ns, the
+coeﬃcient of η2 is almost one order larger than that of mν. All these cosmological parameters
+are shifted by 1% −10%, which are signiﬁcant. Thus noticeable eﬀects of mν and η2 on the
+matter power spectrum can also be expected.
+In Fig. 4a we select four cases with mν = [0.02, 0.08] eV and η = [0.0, 1.006], together
+with their mean values mν = 0.048 eV, η = 0.359 in our reﬁtting of the Planck data (C1, C5,
+C11, C15 and C16 in Table 3) to plot the ratios of power spectra to that of ΛCDM cosmology
+(C0 in Table 3). The cases with η = 0 restore the typical suppression on the power spectrum
+due to the free-streaming eﬀect, while a non-zero value of η leads to an enhancement of the
+power spectrum. Thus the ﬁnal power spectrum is the result of these two competing factors.
+We can also see from this ﬁgure that the eﬀects of mν and η2 are comparable in magnitude
+for the range of parameter values we considered.
+From Fig.
+4a, these relative power spectra are of diﬀerent shapes and do not have
+a universal signature. For convenience, we deﬁne a physical quantity to characterize the
+eﬀects of mν and η2. We measure the averaged value of ratios of power spectra R(k) ≡
+P(mν, η, k)/P(0, 0, k) in the k range of 0.3 ∼1.0 hMpc−1, ¯R[0.3,1.0], where the non-linear
+power spectrum deviates signiﬁcantly from the linear one the most, as shown in Fig. 3a.
+This k-range can be customized for future comparison with diﬀerent observations. Then we
+deﬁne
+∆R = ¯R[0.3,1.0] −1
+(4.2)
+– 16 –
+
+0.05
+0.1
+1.0
+k[hMpc−1 ]
+0.9
+1.0
+1.1
+1.2
+R(k)
+mν =0.02 eV, η =0.0
+(0.02 eV,1.006)
+(0.08 eV,0.0)
+(0.08 eV,1.006)
+(0.048 eV,0.359)
+(a) Fig. 4a
+0.0
+0.25
+1.0
+η2
+-10
+0
+10
+20
+∆R[%]
+0. 02 eV
+0. 05 eV
+0. 08 eV
+0. 048 eV
+(b) Fig. 4b
+0
+3
+6
+9
+z
+12
+16
+20
+Ci[%]
+−Cm
+Cη
+−C l
+m
+C l
+η
+−C l
+m(fs)
+(c) Fig. 4c
+0
+3
+6
+9
+z
+0
+10
+20
+Ci[%]
+−Cm
+Cη
+−C2
+C1
+(d) Fig. 4d
+Figure 4.
+a) Relative power spectra R(k) for data sets C1 (dashed green) and C5 (dashed blue),
+where mν = 0.02 eV and η = 0.0, 1.006 respectively, data C11 (solid red) and C15 (solid blue), where
+mν = 0.08 eV and η = 0.0, 1.006 respectively, and data C16 (solid red), where the mean values of
+reﬁtted cosmological parameters are used. b) Percentage diﬀerence ∆R of the averaged power spectra
+in the k-range [0.3, 1.0] hMpc−1, for the 16 data sets in Table 2 from that of the ΛCDM (C0). Yellow,
+red and green dots show groups C1-C5, C6-C10 and C11-C15, where mν = 0.02, 0.05 and 0.08 eV
+respectively. The blue dot is for the mean-value data set C16. The dashed curves are reference ﬁttings
+from Eq.(4.3). c) Redshift evolution of coeﬃcients −Cm and Cη from the ﬁtted formula Eq.(4.3). The
+solid green and blue curves show −Cm and Cη from grid-based neutrino simulations, while the dashed
+green and blue curves show −Cm and Cη of the linear power spectra given by CAMB. The dashed red
+curve shows the −Cm of the linear power spectrum when only neutrino free-streaming is considered.
+d) Redshift evolution of coeﬃcients −Cm (blue), Cη (green), C1 (violet) and −C2 (grey) from Table
+4. The shaded regions show the uncertainties of C1 and −C2 respectively.
+– 17 –
+
+no.
+mν(eV)
+η
+H0
+Ωb
+Ωcdm
+Ων
+ΩΛ
+As(10−9)
+ns
+∆R(%)
+C0
+0.0
+0.0
+67.74
+0.0484
+0.2613
+∼10−5
+0.6903
+2.204
+0.9641
+0.0
+C1
+0.02
+0.0
+67.27
+0.0491
+0.2651
+0.0014
+0.6844
+2.209
+0.9638
+-2.95 ± 5.41
+C2
+0.02
+0.251
+67.46
+0.0489
+0.2644
+0.0014
+0.6853
+2.218
+0.9647
+-1.76 ± 5.41
+C3
+0.02
+0.502
+68.00
+0.0482
+0.2628
+0.0014
+0.6876
+2.230
+0.9675
+1.44 ± 5.58
+C4
+0.02
+0.754
+68.97
+0.0471
+0.2596
+0.0014
+0.6919
+2.255
+0.9725
+7.51 ± 6.01
+C5
+0.02
+1.006
+70.39
+0.0456
+0.2548
+0.0015
+0.6981
+2.292
+0.9797
+16.63 ± 6.68
+C6
+0.05
+0.0
+66.32
+0.0504
+0.2733
+0.0036
+0.6727
+2.223
+0.9633
+-7.55 ± 5.05
+C7
+0.05
+0.251
+66.48
+0.0502
+0.2729
+0.0036
+0.6733
+2.229
+0.9639
+-6.50 ± 5.12
+C8
+0.05
+0.502
+67.04
+0.0496
+0.2708
+0.0037
+0.6759
+2.246
+0.9670
+-3.50 ± 5.33
+C9
+0.05
+0.754
+67.96
+0.0485
+0.2679
+0.0037
+0.6799
+2.272
+0.9719
+2.12 ± 5.68
+C10
+0.05
+1.006
+69.35
+0.0468
+0.2630
+0.0038
+0.6864
+2.308
+0.9790
+10.52 ± 6.19
+C11
+0.08
+0.0
+65.39
+0.0518
+0.2816
+0.0060
+0.6606
+2.237
+0.9625
+-12.68 ± 4.81
+C12
+0.08
+0.251
+65.56
+0.0516
+0.2811
+0.0060
+0.6613
+2.244
+0.9634
+-12.55 ± 4.79
+C13
+0.08
+0.502
+66.11
+0.0509
+0.2789
+0.0060
+0.6642
+2.260
+0.9663
+-8.80 ± 4.98
+C14
+0.08
+0.754
+66.97
+0.0498
+0.2764
+0.0061
+0.6677
+2.287
+0.9713
+-3.56 ± 5.30
+C15
+0.08
+1.006
+68.25
+0.0482
+0.2723
+0.0062
+0.6733
+2.322
+0.9781
+3.76 ± 5.87
+C16
+0.048
+0.359
+66.95
+0.0496
+0.2707
+0.0035
+0.6762
+2.240
+0.9660
+-4.06 ± 7.08
+Table 3.
+Sampled values of mν and η, and results of the reﬁtted cosmological parameters. The
+data set C0 is the pure ΛCDM case. In groups C1-C5, C6-C10 and C11-C15, mν are 0.02, 0.05 and
+0.08 eV respectively, while within each group, η is sampled to be [0.0, 0.251, 0.502, 0.754, 1.006] in
+sequence. The data set C16 is the mean values of our CosmoMC ﬁt, with both mν and η freely varying.
+Other groups of sampled values are selected to be around this mean-value set. The last column is the
+measurement of the percentage diﬀerence ∆R of the averaged power spectra at z = 0 in the k-range
+[0.3, 1.0]hMpc−1, which we select to be a convenient quantity for comparison of diﬀerent simulations.
+to be the fractional diﬀerence between these power spectra and the pure CDM case. The
+values of ∆R at redshift 0 are listed in Table 3, and plotted as discrete points in Fig. 4b.
+The uncertainty of ∆R is also included, the details of which are discussed in Appendix B.
+We can see clearly that in agreement with the previous argument for regression, ∆R is linear
+in mν and η2. Then we use the same regression strategy to ﬁt for its dependence on mν and
+η2 with the 17 datasets in Table 3. The two-variable linear regression of ∆R against mν and
+η2 gives
+∆R(z)[%] = Cm
+mν
+0.1 eV + Cηη2[%],
+(4.3)
+where we deﬁne Cm and Cη to be the two coeﬃcients, with Cm(z = 0) = −16.7 and Cη(z =
+0) = 17.97. We can see that mν ∼O(0.1 eV) and η2 ∼O(1) would have comparable eﬀects
+on the total matter power spectrum at z = 0, but in opposite directions.
+The evolution of Cm and Cη in cosmic time is also studied.
+We repeat the ﬁtting
+of Eq.(4.3) for a series of redshifts [0, 0.25, 0.5, 1, 2, 3, 5, 9]. The results of this two-variable
+linear regression are listed in Table 4 and plotted in Fig. 4c. The corresponding Cl
+m and Cl
+η
+for the linear power spectra calculated by CAMB are also shown as dashed lines in Fig. 4c.
+As a comparison, the Cl
+m for the linear power spectrum with only neutrino free-streaming
+eﬀect considered is plotted as the red dashed line, which monotonically increases with time.
+This is well-expected, because in the same cosmology, the suppression of structure due to
+neutrino free-streaming is accumulative, and increases as structure grows.
+However, the
+– 18 –
+
+z
+Cm(%)
+Cη(%)
+σmm
+σηη
+σmη
+θ (π)
+C1(%)
+C2(%)
+0
+-16.17
+17.97
+9.18
+13.75
+-6.93
+1.80
+2.57±2.04
+-24.03 ± 4.33
+0.25
+-16.08
+17.64
+8.10
+11.46
+-6.00
+1.80
+2.16±1.88
+-23.77±4.00
+0.5
+-18.66
+21.03
+10.09
+14.17
+-7.41
+1.79
+2.11±2.11
+-28.04±4.45
+1
+-17.02
+21.23
+9.63
+14.44
+-7.26
+1.80
+1.37±2.09
+-27.17±4.44
+2
+-14.82
+21.72
+9.93
+14.81
+-7.46
+1.80
+-0.74±2.12
+-26.28±4.50
+3
+-12.64
+20.62
+9.26
+13.70
+-6.92
+1.80
+-1.94±2.05
+-24.10±4.33
+5
+-10.43
+18.55
+8.51
+12.12
+-6.27
+1.80
+-2.83±1.95
+-21.09±4.10
+9
+-8.76
+15.80
+9.57
+12.99
+-6.93
+1.79
+-2.85±2.03
+-17.84±4.29
+Table 4.
+Results of the two-variable regression of ∆R at diﬀerent redshifts as a linear function of mν
+and η2, the elements of the covariance matrices of these ﬁttings σmm, σηη and σmη, the rotation angles
+θ to a new basis in which the covariance matrices are diagonal, and the corresponding coeﬃcients in
+the new basis.
+Cm(%)
+Cη(%)
+σmm
+σηη
+σmη
+θ (π)
+C1(%)
+C2(%)
+Ωb
+8.62
+-7.42
+0.49
+0.52
+-0.32
+1.76
+-1.13±0.43
+11.32 ± 0.91
+Ωc
+9.67
+-4.07
+1.23
+1.30
+-0.81
+1.76
+-4.18±0.67
+9.62±1.44
+H0
+-4.40
+4.50
+0.69
+0.81
+-0.48
+1.77
+0.35±0.52
+-6.28±1.11
+As
+1.98
+3.67
+7.71
+9.17
+-5.33
+1.77
+-3.89±1.75
+-1.44±3.72
+ns
+-0.21
+1.62
+0.18
+0.21
+-0.12
+1.77
+-0.92±0.26
+-1.35±0.56
+Table 5.
+Same analysis results as Table 4, but for standard cosmological parameters.
+Cl
+m of the linear power spectrum (blue dashed curve) deviates from the red dashed curve
+and even shows a drop at low redshift. This is because the P(mν, η, k) and P(0, 0, k) are
+from diﬀerent cosmologies, and so both the initial power spectra and their growths behave
+diﬀerently. We can also see that the Cm and Cη ﬁtted from the non-linear simulations deviate
+signiﬁcantly from those for linear power spectra, although both have a similar drop in z. Thus
+it is important to insist on using N-body simulation to study the neutrino-included power
+spectrum. The green and blue solid curves, for the non-linear Cm and Cη, overlap at low
+redshift, but deviate from each other at earlier time. Therefore, although the aﬀected power
+spectrum is an integrated result of the eﬀects of mν and η2, it may be possible to break
+this parameter degeneracy by studying the redshift dependence of Cm and Cη in future
+observations.
+There may be correlation between mν and η2 in the ﬁtting of the changes in cosmolog-
+ical parameters and relative power spectra into Eqs.(4.2) and (4.3). Thus we calculate the
+covariance matrices of these ﬁttings and list the elements in Table 4 and Table 5, from which
+we can see that the oﬀ-diagonal terms σmη are indeed comparable to the diagonal terms σmm
+and σηη. Therefore, anti-clockwise rotations with angles θ are applied to the original basis
+(mν, η2), so that the new covariance matrices are diagonal in the new basis (v1, v2). The rota-
+tion angles θ and coeﬃcients in the new basis C1 and C2 are also listed in Table 4 and Table
+5, for the ﬁttings of ¯R[0.3,1.0] and cosmological parameters respectively. It can be seen that θ
+for the ﬁtting of ∆R is always of about 1.80π, independent of redshift z. For diﬀerent cosmo-
+logical parameters, θ also share a similar value, of about 1.77π. Furthermore, in terms of the
+ﬁtting for ∆R, the magnitude of C2 dominates over that of C1, which is almost zero within
+uncertainty, as can be seen in Table 4. Therefore, v2 ≡−sinθ ·mν +cosθ ·η2 ≈0.6mν −0.8η2
+should be the main contributor to the change in total matter power spectrum. The redshift
+– 19 –
+
+-0.5
+0.0
+0.5
+mν[0. 1eV] −4η2/3
+-10
+0
+10
+20
+30
+∆R
+z = 0
+(a) Fig. 5a
+-0.5
+0.0
+0.5
+mν[0. 1eV] −4η2/3
+-10
+0
+10
+20
+30
+∆R
+z = 2
+(b) Fig. 5b
+Figure 5.
+a) At redshift z = 0, represent the ∆R of C1-C16 as a function of v2 = mν −4
+3η2 only.
+b) Same as a), but at redshift z = 2, where the linear coeﬃcient C1 for another sub-dominant vector
+v1 = 4
+3mν + η2 is closest to 0.
+dependences of −Cm, Cη, C1 and −C2 are plotted in Fig. 4d.
+With our discovery that the change to matter power spectrum ∆R is mainly contributed
+by v2 = mν −4
+3η2, we revisit Fig. 4b, but now plot ∆R as a function of v2 only. In Fig. 5a
+we show the case of z = 0, in comparison to Fig. 4b, while in Fig. 5b we show the case of
+z = 2, where the linear coeﬃcient C1 for another vector v1 = 4
+3mν + η2 is closest to 0. We
+can see that as expected, v2 = mν −4
+3η2 is indeed the dominant contributor to the neutrino
+eﬀects on the matter power spectrum.
+5
+Summary and disscussion
+In this paper we have studied the impact of massive and degenerate cosmological neutrinos on
+the total matter power spectrum. Apart from the neutrino free-streaming eﬀect and modiﬁed
+expansion history, we have also used the CosmoMC code to reﬁt the cosmological parameters
+from the Planck 2015 CMB data when ﬁnite neutrino mass and degeneracy are allowed,
+so that the study is self-consistent. Our simulations show that for a reasonable range of
+parameter values, the neutrino degeneracy parameter squared η2 has a comparable eﬀect on
+the matter power spectrum as that of the mass parameter mν, but with opposite signs, and
+so there could be an issue of parameter degeneracy. Thus previous studies that estimate the
+neutrino mass purely from the free-streaming eﬀect on LSS may not be accurate and should
+be re-evaluated. We provide a numerical ﬁtting for the percentage deviation from ΛCDM of
+the averaged relative power spectrum ∆R = ¯Rk[0.3,1.0] −1 in the k-range [0.3, 1.0] hMpc−1, as
+a linear function against mν and η2. The selection of this k-mode range can be customized
+for diﬀerent observations. This two-variable regression shows good linearity. The redshift
+evolution of the corresponding coeﬃcients Cm and Cη are also studied. We observe that
+although Cm and Cη are similar in magnitude in the late time, they diﬀer at higher redshifts.
+We further investigate the covariance matrix of this numerical ﬁtting and ﬁnd that the oﬀ-
+diagonal term is comparable to the diagonal terms. Therefore, we propose to characterize
+the neutrino properties by a redshift independent parameter mν −4
+3η2, which dominates the
+– 20 –
+
+neutrino eﬀects on the cosmological structure as well as the covariance. This also suggests
+that LSS alone may not be enough to break the parameter degeneracy between mν and η,
+and combined analyses with other cosmological probes such as CMB are needed.
+We choose the grid-based method to include massive neutrinos in our simulation. It is
+not only more eﬃcient, but can also be easily extended to neutrino models with a non-zero
+lepton asymmetry parameter η, which may not be compatible with the particle-based simu-
+lation schemes. This is because the non-zero η eﬀectively introduces a degeneracy pressure
+term apart from gravity, which is not a two-body force, and thus diﬃcult to simulate in
+current N-body schemes. Our code is conceptually similar to that of [5], only that we have
+modiﬁed Gadget2 instead of Gadget3, which makes it much easier to be made public in the
+future.
+In this work, we investigate the eﬀects of neutrinos on the matter power spectrum in the
+comoving units, e.g. k[hMpc−1], which is the intrinsic unit in cosmological simulations, and
+thus the systematic error is minimized. However, as the ﬁtting result of h is dependent on mν
+and η, we may need to transform to physical units in future comparison with observations.
+It should also be noted that as mentioned in [18], by the time of neutrino decoupling, the
+neutrino lepton asymmetry is already diagonal in mass eigenstates. Thus strictly speaking,
+cosmological neutrinos do not follow thermal distribution in mass eigenstates, but linear
+combination of thermal distributions in ﬂavor eigenstates. Further studies into how reliable
+this assumption can be and how to improve it should be done. The authors of a recent study
+[27] comment on the grid-based simulation that the eﬀect of the sound speed is ignored when
+the neutrinos are treated as ﬂuid, which leads to a deﬁcit in the neutrino power spectrum.
+This should not aﬀect our results much, as the neutrino power spectrum only accounts for a
+tiny part in the total matter power spectrum. However, future studies may need to include
+this correction when high accuracy is required.
+A
+Linear evolution of the neutrino over-density
+The following derivation is mainly based on [22], with some reference to [5] as well.
+The general continuity equation for a density ﬁeld is given by
+Z ∂ρ
+∂t d3r +
+I
+V
+ρv · ds =
+Z ∂ρ
+∂t d3r +
+Z
+∇· (ρv)d3r = 0.
+(A.1)
+So we have
+∂ρ
+∂t + ∂(ρ ˙ri)
+∂ri
+= 0.
+(A.2)
+Considering also the momentum space, we substitute ρ with Fν, the neutrino distribu-
+tion function, deﬁned by ρ ∝
+R
+Fνd3p, and Eq.(A.2) becomes
+∂Fν
+∂t + ∂(Fν ˙ri)
+∂ri
++ ∂(Fν ˙pi)
+∂pi
+= 0.
+(A.3)
+Applying the following identity from the Hamiltonian equation
+∂˙ri
+∂ri
++ ∂˙pi
+∂pi
+= ∂2H
+∂ri∂pi
+−∂2H
+∂pi∂ri
+= 0,
+(A.4)
+we obtain the Vlasov equation from Eq.(A.3):
+– 21 –
+
+dFν
+dt = ∂Fν
+∂t + ∂Fν
+∂ri
+˙ri + ∂Fν
+∂pi
+˙pi = 0.
+(A.5)
+Here we use Newtonian gravity for the ˙pi, because both the Vlasov equation and the
+Gadget2 N-body simulation code are in the non-relativistic regime. So we have
+˙p = m∇φ = −mG
+Z
+ρt
+r-r’
+—r-r’—3 d3r′,
+(A.6)
+where ρt is the total energy density of all massive particles, including cosmological
+neutrinos, baryons and CDM.
+We can divide Fν into an unperturbed Fermi-Dirac term f0
+ν (v) and a perturbation term
+which is position dependent, f′
+ν(r, v):
+Fν = f0
+ν (v) + f′
+ν(r, v).
+(A.7)
+Then we put Eq.(A.6) and (A.7) into Eq.(A.5) and switch to the comoving coordinates:
+ds =
+dt
+a2(t)
+x =
+r
+a(t)
+u ≡dx
+ds = a(t)v −Ha(t)r,
+(A.8)
+and obtain
+∂f′
+ν
+a2∂s + u · ∂f′
+ν
+a2∂x −¨aax · ∂f0
+ν
+∂u −Ga2 ∂f0
+ν
+∂u ·
+Z
+ρt(s, x’)
+x-x’
+—x-x’—3 d3x′ = 0.
+(A.9)
+We notice that there is an ¨a term in Eq.(A.9). Applying the Friedmann equation
+¨a
+a = −4πG
+3
+¯ρt,
+(A.10)
+where ¯ρt is the unperturbed total energy density, and
+4πx
+3
+=
+Z
+x-x’
+—x-x’—3 d3x′,
+(A.11)
+then the last two terms in Eq.(A.9) can be combined. Finally we have
+∂f′
+ν
+∂s + u · ∂f′
+ν
+∂x −Ga4 · ∂f0
+ν
+∂u
+Z
+¯ρtδt(s, x’)
+x-x’
+—x-x’—3 d3x′ = 0,
+(A.12)
+where
+¯ρtδt ≡ρt −¯ρt = ¯ρc+bδc+b + ¯ρνδν.
+(A.13)
+Applying Fourier transform to Eq.(A.12), we have
+∂ef′ν(s, k, u)
+∂s
++ik·u ef′ν(s, k, u)−Ga4 ∂f0
+ν
+∂u ·
+Z
+[¯ρc+b(s)δc+b(s, x’)+¯ρν(s)δν(s, x’)]d3x′
+Z
+e−ik·x
+x-x’
+—x-x’—3 d3x = 0,
+(A.14)
+– 22 –
+
+where ef′ν indicates the Fourier transformed perturbation of the neutrino distribution
+function.
+Using the fact
+Z
+e−ik·x
+x-x’
+—x-x’—3 d3x = e−ik·x’
+Z
+e−ik·y
+y
+—y—3 d3y = −4πi k
+k2 e−ik·x’
+(A.15)
+to combine the ﬁrst two terms in Eq.(A.14), and multiplying through by eik·us, we have
+∂
+∂s[ ef′ν(s, k, u)eik·us] + eik·us4πGa4 ik
+k2 · ∂f0
+ν
+∂u
+Z
+e−ik·x’[¯ρc+b(s)δc+b(x’) + ¯ρν(s)δν(x’)]d3x′ = 0.
+(A.16)
+Next we integrate Eq.(A.16) with respect to the time variable s, and we have
+ef′ν(s, k, u) +
+Z s
+0
+e−ik·u(s−s′)4πGa4(s′)ik
+k2 · ∂f0
+ν
+∂u [¯ρc+b(s′)eδc+b(s′, k) + ¯ρν(s′) eδν(s′, k)]ds′
+= ef′ν(0, k, u) · e−ikus,
+(A.17)
+where eδi(k) ≡
+R
+e−ik·x’δid3x′ is the over-density ﬁeld in k-space, and the term on the
+right hand side of Eq.(A.17) is the initial condition of this integration.
+Eq.(A.17) reveals the evolution of the perturbation of the neutrino distribution fuction,
+but we always need to turn to the over-density ﬁeld, which is measurable. Integrating over
+d3u on both sides, we have
+eρν(s, k) + ik
+k2 ·
+Z
+e−ik·u(s−s′) ∂f0
+ν
+∂u d3u
+Z s
+0
+4πGa4(s′)[¯ρc+b(s′)eδc+b(s′, k) + ¯ρν(s′) eδν(s′, k)]ds′
+=
+Z
+e−ik·us ef′ν(0, k, u)d3u,
+(A.18)
+where eρν(s, k) ≡eδν(s, k)
+R
+f0
+ν d3u.
+Integrating by parts, we have
+Z
+e−ik·u(s−s′) ∂f0
+ν
+∂u d3u = ik(s −s′)
+Z
+e−ik·u(s−s′)f0
+ν d3u.
+(A.19)
+Also up to the ﬁrst-order approximation, the perturbation to the initial distribution
+function can be treated as
+ef′ν(0, k, u) =
+Z
+e−ik·xf′
+ν(0, x, u)d3x ≈
+Z
+e−ik·xf0
+ν (0, u)δν(0, x)d3x = f0
+ν (0, u) eδν(0, k).
+(A.20)
+For convenience, we deﬁne
+Φ(q) =
+R
+f0
+ν e−iq·ud3u
+R
+f0ν d3u
+.
+(A.21)
+– 23 –
+
+Then we put Eq.(A.19), Eq.(A.20) and Eq.(A.21) into Eq.(A.18), and we have the ﬁnal
+equation of the neutrino over-density growth:
+eδν(s, k) = 4πG
+Z s
+0
+a4(s′)(s−s′)Φ[k(s−s′)][¯ρc+b(s′)eδc+b(s′, k)+¯ρν(s′) eδν(s′, k)]ds′+Φ(ks) eδν(0, k).
+(A.22)
+In Eq.(A.22), the second term on the right hand side is the linear part of the growth
+equation, so that the initial condition can be separated from a time dependent growth factor.
+The ﬁrst term is a complicated self-involved integration, which reﬂects the interaction between
+the total gravitational potential and neutrino over-density ﬁeld. Since eδν(s, k) itself appears
+in the integral, we need to solve this integration equation iteratively.
+Eq.(A.22) can be
+rewritten as
+eδν(s, k) = F(s, k) +
+Z s
+0
+G(s, s′, k) eδν(s′, k)ds′.
+(A.23)
+This equation is a Volterra equation of the second kind. The kernel G(s, s′, k) is of the
+same order as 10−3aH2
+0(s−s′)Φ[k(s−s′)], where we can see Φ[k(s−s′)] < 1 from Eq.(A.21),
+and for a small time step H0 · s ≪1. Therefore if we use F(s, k) to be the initial seed, the
+iteration
+eδν
+(n)(s, k) = F(s, k) +
+Z s
+0
+G(s, s′, k) eδν
+(n−1)(s′, k)ds′ = F(s, k) +
+Z s
+0
+G(s, s′, k)F(s′, k)ds′
++
+ZZ s
+0
+G(s, s′, k)G(s′, s′′, k)F(s′′, k)ds′ds′′ + ...
+(A.24)
+would converge very fast. In our actual calculation, one iteration would be enough to
+achieve the accuracy of about 10−5.
+Next let us focus on the evaluation of Φ(q).
+In Eq.(A.21) the denominator can be
+evaluated by numerical integration. But for the numerator,
+Z
+f0
+ν e−iq·ud3u = 2π
+Z ∞
+0
+Z π
+0
+u2[cos(qu cos θ) −i sin(qu cos θ)] sin θ
+e
+mu
+T −ξ + 1
+dudθ + anti.,
+(A.25)
+where anti. means the contribution of anti-neutrinos. The sine part ﬁnally vanishes
+when integrating over θ, and there remains
+2π
+Z ∞
+0
+Z π
+0
+u2 cos(qu cos θ) sin θ
+e
+mu
+T −ξ + 1
+dudθ + anti. = 2π
+Z ∞
+0
+2u2 sin(qu)
+qu(e
+mu
+T −ξ + 1)
+du + anti.
+= 4π T 2
+qm2 [
+Z ∞
+0
+x sin(Ax)
+(ex−ξ + 1)dx +
+Z ∞
+0
+x sin(Ax)
+(ex+ξ + 1)dx]
+,
+(A.26)
+where x = um
+T and A = q T
+m. Some public numerical libraries such as gsl.qag would
+fail to evaluate this integration, as there is a high frequency oscillation in the integral kernel
+when x is large. Thus a series expansion is used for Eq.(A.26). For the anti-neutrino term,
+we simply use the geometric series:
+– 24 –
+
+1
+ex+ξ + 1 =
+1
+ex+ξ[1 −(−e−(x+ξ))] = e−(x+ξ)
+∞
+X
+n=0
+(−1)ne−n(x+ξ) =
+∞
+X
+n=1
+(−1)n+1e−n(x+ξ).
+(A.27)
+Then after integrating over x, we have
+Z ∞
+0
+x sin(Ax)
+(ex+ξ + 1)dx =
+∞
+X
+n=1
+(−1)n+1e−nξ
+2nA
+(A2 + n2)2 .
+(A.28)
+But for the neutrino part, the integration kernel is a bit tricky to be expanded, because
+the convergence radius for (−1)n+1e−n(x−ξ) does not cover the whole space. So we separate
+the integration into two parts
+Z ∞
+0
+x sin(Ax)
+(ex−ξ + 1)dx =
+Z ξ
+0
+x sin(Ax)
+(ex−ξ + 1)dx +
+Z ∞
+0
+(y + ξ) sin[A(y + ξ)])
+(ey + 1)
+dy.
+(A.29)
+The ﬁrst term is evaluated numerically, where x is small enough to avoid the high
+oscillation problem. For the second part, we can again use the same series expansion. We
+deﬁne
+B1(n) ≡
+Z ∞
+0
+e−ny cos(Ay)dy =
+n
+A2 + n2
+B2(n) ≡
+Z ∞
+0
+e−ny sin(Ay)dy =
+A
+A2 + n2
+B3(n) ≡
+Z ∞
+0
+ye−ny cos(Ay)dy =
+n2 −A2
+(A2 + n2)2
+B4(n) ≡
+Z ∞
+0
+ye−ny sin(Ay)dy =
+2nA
+(A2 + n2)2
+,
+(A.30)
+and then
+Z ∞
+0
+(y + ξ) sin[A(y + ξ)])
+(ey + 1)
+dy =
+∞
+X
+1
+(−1)n+1[ξB1(n) sin(Aξ)+ξB2(n) cos(Aξ)+B3(n) sin(Aξ)+B4(n) cos(Aξ)]
+(A.31)
+Therefore, combining Eqs.(A.28)-(A.31) with Eq.(A.26), and dividing Eq.(A.26) with
+the normalization integration in Eq.(A.21), we ﬁnally have the expression for Φ(q):
+Φ(q) = B0 + P∞
+n=1(−1)n+1{ξB1(n) sin(Aξ) + ξB2(n) cos(Aξ) + B3(n) sin(Aξ) + B4(n)[cos(Aξ) + e−nξ]}
+A(
+R ∞
+0
+x2
+ex−ξ+1dx +
+R ∞
+0
+x2
+ex+ξ+1dx)
+,
+(A.32)
+with B0 ≡
+R ξ
+0
+x sin(Ax)
+(ex−ξ+1)dx and the denominator to be calculated by direct integration.
+– 25 –
+
+B
+Error analysis of the ﬁtting of ∆R(mν, η2)
+There are four sources of errors in our ﬁnal ﬁtting of ∆R(mν, η2): a) the uncertainties of the
+reﬁtting of cosmological parameters from CMB; b) the uncertainty in the measurement of the
+matter power spectrum; c) the uncertainty propagation from P(k) to ∆R; d) the uncertainty
+of ﬁtting ∆R into a linear function of mν and η2.
+Their corresponding treatments are
+elaborated as follows:
+a) There are ﬁve cosmological parameters involved in our modiﬁed simulations, Ωb, Ωc,
+H0, As and ns. First, we test how each aﬀects the power spectrum using the haloﬁt model in
+CAMB. It turns out that in the selected wavemode range k ∈[0.3, 1.0] hMpc−1, increasing all
+of these parameters except for Ωb would lead to an increase in the matter power spectrum.
+However, since in the N-body simulation, Ωb and Ωc are not distinguished when simulation
+particles are CDM only, we should consider their eﬀects together. As a result, a large value
+of Ωb + Ωc leads to a larger power spectrum. Therefore, for each simulation setup in Table 3,
+we run two additional data sets with the same (mν, η), but the cosmological parameters are
+chosen to be the ±1σ values from our CosmoMC ﬁtting. The power spectra measured from
+these simulations are denoted as P(k)+ and P(k)−respectively.
+b) The uncertainty of measurement of power spectrum is taken to be the statistical
+standard deviation of binning. As a conservative estimation, we choose the larger of |P(k)++
+σP(k)+ −P(k)| and |P(k)−−σP(k)−−P(k)| to be the uncertainty of P(k).
+c) ∆R = ¯R[0.3,1.0] −1 is the average of the deviation of the relative power spectrum
+R(k) = P(mν, η, k)/P(0, 0, k) from 1, and so we regard this ratio at each bin of k as an
+independent measurement of ∆R. Thus the propagation of uncertainty is given by
+σ∆R =
+sP[σR(k)]2
+N2
+,
+(B.1)
+where N is the number of bins, and δR(k) is given by the propagation
+σR(k) =
+s
+1
+P 2(0, 0, k)[σP(mν,η,k)]2 + P 2(mν, η, k)
+P 4(0, 0, k) [σP(0,0,k)]2.
+(B.2)
+d) Then the series of ∆R(mν, η), together with their error bars, are ﬁtted into Eq.(4.3)
+using scipy.optimize.curve fit. The corresponding covariance matrices are also given.
+The uncertainties of ﬁtting the changes on cosmological parameters into functions of
+(mν, η2) as Eq.(4.1) are analyzed in a similar process, and the results are listed in Table 5.
+C
+Reﬁtting of cosmological parameters: correlation with η
+As mentioned in the previous sections, η increases the energy density of neutrino and aﬀects
+the expansion history of the universe. Therefore we expect η to be correlated with other
+cosmological parameters, and the posterior distributions of all the cosmological parameters
+would be aﬀected. We use the MCMC ﬁtting method which is widely used by the CMB com-
+munity to ﬁnd the posterior distribution of cosmological parameters. The ﬁtting is done by
+the CosmoMC code [15] which calculates the CMB anisotropy power spectrum by calling CAMB,
+a numerical solver of the Boltzmann equations. We modiﬁed CAMB to calculate the power spec-
+trum with a non-zero η. CosmoMC is also modiﬁed to include the new cosmological parameter
+η. We used the modiﬁed CosmoMC together with the Planck likelihood code and the data sets
+– 26 –
+
+lowTEB and plikHM TTTEEE for the MCMC ﬁtting. The data set lowTEB contains low multi-
+pole ℓtemperature and LFI polarization data, while plikHM TTTEEE contains high multipole
+ℓtemperature and E mode polarization power spectra produced using cross half-mission map.
+In addition to the standard cosmological parameters {Ωch2, Ωbh2, θ, τ, As, ns, mν}, we
+have added one extra parameter η. The posterior distributions of the parameters are shown
+in Figure 6.
+The results without adding η are also plotted for comparison. As expected, some of the
+parameters are correlated with η. Therefore, the marginalized distributions of the parameters
+are also aﬀected. This also means that the mean values of the cosmological parameters are
+diﬀerent.
+As an example, consider the correlation between H0 and η.
+The 2D contours
+in Figure 6 show a clear positive correlation between H0 and η. This correlation mainly
+comes from the tight constraint of the characteristic angular scale of the CMB anisotropy θs,
+deﬁned as the ratio between rs, the comoving sound horizon at CMB decoupling and DA, the
+comoving distance of the last scattering surface. η mainly aﬀects the early time expansion
+which determines rs, while H0 aﬀects the late time expansion which determines DA. Since
+θs is tightly constrained, any change in rs must be compensated by a corresponding change
+in DA.
+As a result, the 2D contours of H0 versus η roughly follow a line given by the
+constraint θs = const. To demonstrate this correlation, we performed a MCMC ﬁtting with
+all parameters except η and H0 ﬁxed. The results are shown in Figure 7. More details of the
+MCMC ﬁttings can be found in (Lau et al. in preparation).
+Acknowledgments
+We appeciate the inspiring discussions with Jiajun Zhang, Hantao Liu, Jianxiong Chen,
+Shihong Liao and Tom Broadhurst.
+Zeng would also like to thank Jiajun Zhang for his
+mentorship in learning about the N-body simulation. This work is supported partially by
+a CUHK VC Discretionary Fund.
+This work is partially supported by a grant from the
+Research Grant Council of the Hong Kong Special Administrative Region, China (Project
+No. 14301214). Simulations in this work were performed using the Central Research Cluster
+at CUHK.

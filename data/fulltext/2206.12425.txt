@@ -1,0 +1,1605 @@
+MNRAS 000, 1–14 (0000)
+Preprint 28 June 2022
+Compiled using MNRAS LATEX style ﬁle v3.0
+A semi-analytic study of self-interacting dark-matter haloes with baryons
+Fangzhou Jiang1,2 ★, Andrew Benson1, Philip F. Hopkins2, Oren Slone3,4, Mariangela Lisanti3,5,
+Manoj Kaplinghat6, Annika H. G. Peter7,8,9, Zhichao Carton Zeng7,8, Xiaolong Du1, Shengqi Yang1,
+Xuejian Shen2
+1 Carnegie Observatories, 813 Santa Barbara Street, Pasadena, CA 91101, USA
+2 TAPIR, California Institute of Technology, Pasadena, CA 91125, USA
+3 Department of Physics, Princeton University, Princeton, NJ 08544, USA
+4 Center for Cosmology and Particle Physics, Department of Physics, New York University, New York, NY 10003, USA
+5 Center for Computational Astrophysics, Flatiron Institute, 162 Fifth Ave, New York, NY 10010, USA
+6 University of Irvine, Irvine, CA 92697, USA
+7 Department of Physics, The Ohio State University, 191 W. WoodruﬀAve., Columbus OH 43210, USA
+8 Center for Cosmology and Astroparticle Physics, The Ohio State University, 191 W. WoodruﬀAve., Columbus OH 43210, USA
+9 Department of Astronomy, The Ohio State University, 140 W. 18th Ave., Columbus OH 43210, USA
+ABSTRACT
+We combine the isothermal Jeans model and the model of adiabatic halo contraction into a simple semi-analytic procedure for
+computing the density proﬁle of self-interacting dark-matter (SIDM) haloes with the gravitational inﬂuence from the inhabitant
+galaxies. We show that the model agrees well with cosmological SIDM simulations over the entire core-forming stage and up to
+the onset of gravothermal core-collapse. Using this model, we show that the halo response to baryons is more diverse in SIDM
+than in CDM and depends sensitively on galaxy size, a desirable link in the context of the structural diversity of bright dwarf
+galaxies. The fast speed of the method facilitates analyses that would be challenging for numerical simulations – notably, 1) we
+quantify the SIDM halo response as functions of the baryonic properties, on a ﬁne mesh grid spanned by the baryon-to-total-mass
+ratio, 𝑀b/𝑀vir, and galaxy compactness, 𝑟1/2/𝑅vir; 2) we show with high statistical precision that for typical Milky-Way-like
+systems, the SIDM proﬁles are similar to their CDM counterparts; and 3) we delineate the regime of gravothermal core-collapse
+in the 𝑀b/𝑀vir −𝑟1/2/𝑅vir space, for a given cross section and a given halo concentration. Finally, we compare the isothermal
+Jeans model with the more sophisticated gravothermal ﬂuid model, and show that the former yields faster core formation and
+agrees better with cosmological simulations. We attribute the diﬀerence to whether the target CDM halo is used as a boundary
+condition or as the initial condition for the gravothermal evolution, and thus comment on possible future improvements of the
+ﬂuid model. We have made our programs for the model publicly available at https://github.com/JiangFangzhou/SIDM.
+Key words: galaxies: dwarf – galaxies: evolution – galaxies: haloes – galaxies: structure
+1 INTRODUCTION
+Self-interacting dark matter (SIDM) provides appealing revisions on
+small scales to the standard Λ+Cold Dark Matter (CDM) paradigm of
+cosmic structure formation. Elastic self-interactions of dark-matter
+particles transfer heat towards the central regions of dark-matter
+haloes, creating constant-density, isothermal cores (e.g., Kochanek
+& White 2000; Colin et al. 2002; Vogelsberger et al. 2012; Peter et al.
+2013; Rocha et al. 2013). This is a convenient way of explaining the
+dark-matter cores in some dwarf galaxies (e.g., Blok et al. 2008; Oh
+et al. 2015), without breaking the large-scale success of the standard
+cosmology.
+Galaxy formation complicates this picture. Hydro-cosmological
+SIDM simulations, as well as idealized SIDM-only simulations with
+analytical disk potentials, have shown that the dark-matter density
+★Troesh Scholar, fzjiang@caltech.edu, fjiang@carnegiescience.edu
+proﬁles can sometimes be equally cuspy or cuspier than their CDM
+counterparts (e.g., Sameie et al. 2021; Elbert et al. 2018). This implies
+that the response of SIDM haloes to the inhabitant galaxies are diverse
+and highly sensitive to certain baryonic details. The sensitivity of
+the SIDM halo response to baryonic details could be advantageous
+for explaining the small scale puzzles (e.g., Kamada et al. 2017;
+Creasey et al. 2017; Ren et al. 2019; Kaplinghat et al. 2020; Zentner
+et al. 2022). In fact, there is now compelling observational evidence
+that the structures of bright dwarf galaxies are diverse, not only in
+terms of the central dark-matter density slope (e.g., Relatores et al.
+2019; Shi et al. 2021) but also straightforwardly in terms of the
+galaxy size, which ranges from ∼0.5 kpc for compact ellipticals
+(e.g., Chilingarian & Zolotukhin 2015) all the way to ∼5 kpc for
+ultra-diﬀuse galaxies (e.g., Koda et al. 2015). These two aspects
+of structural diversity may actually be highly correlated, at least in
+ΛCDM. For example, simulated ultra-diﬀuse galaxies tend to be
+hosted by cored dark-matter haloes (e.g., Jiang et al. 2019), where
+© 0000 The Authors
+arXiv:2206.12425v1  [astro-ph.CO]  24 Jun 2022
+
+2
+Jiang et al.
+supernovae-driven gas outﬂows puﬀup simultaneously the galaxies
+and the host haloes.
+It is therefore interesting to revisit the correlation between galaxy
+size and host halo structure in the context of SIDM. Can we quantify
+the halo response to baryons in simple terms? Is it stronger or weaker
+than that in CDM? Which baryonic process is the most important for
+establishing the galaxy-SIDM-halo relation? To answer these ques-
+tions, hydro-cosmological SIDM simulations have been developed,
+however, they must ﬁnd a balance between sample size and numeri-
+cal resolution: zoom-in hydro-cosmological SIDM simulations have
+so far been limited to a small sample of Milky-Way-like systems
+and dwarfs (e.g., Sameie et al. 2021; Shen et al. 2021; Cruz et al.
+2021), whereas large-box SIDM simulations (e.g., Robertson et al.
+2019) which contain large statistical samples still lack the resolution
+for reliably resolving the innermost few kpc. In this work, we adopt
+a semi-analytic approach based on the isothermal Jeans model ﬁrst
+introduced in Kaplinghat et al. (2014, 2016). This model solves the
+Jeans-Poisson equation for the proﬁle of the SIDM isothermal core,
+given the dark-matter density and velocity dispersion at the centre as
+well as the baryonic distribution. A recent adaptation of this method
+has been shown to be remarkably accurate compared to large-box
+SIDM simulations (Robertson et al. 2021). We improve this model
+by adding a prescription for adiabatic halo contraction (Gnedin et al.
+2004), thus making it more self-consistent in describing the baryonic
+eﬀect.
+This integrated model takes a target CDM halo and baryonic po-
+tential as inputs. It computes the contracted CDM halo given the
+baryonic potential, and stitches an isothermal SIDM core to the
+CDM-like outskirt by minimizing their diﬀerences at the transition
+radius within which collisions are frequent. As such, this model can
+quickly compute density proﬁles for SIDM haloes with inhabitant
+galaxies, and, as we show below, produce results that are remarkably
+similar to those from zoom-in hydro-cosmological simulations. The
+speed of this semi-analytic approach enables investigations of SIDM
+halo response with high statistical precision and with long baselines
+of input parameters such as baryonic size and mass.
+This paper is organized as follows. In §2, we recap the model
+ingredients and combine them into a workﬂow, summarized in §2.4.
+In §3, we compare the model predictions to the results from zoom-
+in cosmological SIDM simulations, including both dark-matter-only
+setups and hydro-simulations. After demonstrating the accuracy of
+the model, we use it to study the halo response in §4, where we
+quantitatively relate the inner structure of the SIDM haloes to the
+compactness and mass fraction of the inhabitant galaxies, and show
+the importance of considering adiabatic halo contraction. Finally,
+in §5, we compare this model to the other one-dimensional method
+for SIDM haloes that is extensively studied in the literature – the
+gravothermal ﬂuid model (§5.1), and we also study the facilitation
+of gravothermal core-collapse by the inhabitant galaxy, providing
+regions of core-collapse in the space spanned by galaxy mass fraction
+and galaxy compactness, as a function of the cross section and target
+halo concentration. For general readers who want to skip the technical
+details and get to the results sooner, §2.4 can be a good starting point.
+Throughout, we deﬁne the virial radius of a distinct halo as the
+radius within which the average density is Δ = 200 times the critical
+density for closure. We also assume spherical symmetry for both the
+dark-matter haloes and galaxies. We adopt a ﬂat cosmology with the
+present-day matter density Ωm = 0.3, baryonic density Ωb = 0.0465,
+dark energy density ΩΛ = 0.7, a power spectrum normalization
+𝜎8 = 0.8, a power-law spectral index of 𝑛𝑠= 1, and a Hubble
+parameter of ℎ= 0.7, unless otherwise mentioned.
+2 ANALYTIC METHOD FOR COMPUTING THE DENSITY
+PROFILE OF SIDM HALOES
+Scattering between dark-matter particles is prevalent in the centre of
+a halo where the dark-matter density is high, but is infrequent on the
+outskirts where the scattering timescale is longer than the lifetime
+of the halo. The full proﬁle of an SIDM halo therefore consists of
+a thermalized core and a CDM-like outer region. The transition is
+around a characteristic radius𝑟1, within which an average dark-matter
+particle has experienced more than one scattering over the lifetime
+𝑡age of the halo (Kaplinghat et al. 2016):
+4
+√𝜋𝜌dm(𝑟1)𝑣(𝑟1)𝜎𝑚=
+1
+𝑡age
+,
+(1)
+where the left-hand side is the scattering rate per particle, with 𝜌dm
+the DM density, (4/√𝜋)𝑣the average relative velocity between DM
+particles for a Maxwellian distribution (where 𝑣is the 1D velocity
+dispersion), and 𝜎𝑚the self-interaction cross-section per particle
+mass. Note that the cross section also carries a radius dependence if
+it is velocity dependent, which comes in via the velocity dispersion
+proﬁle, i.e., 𝜎𝑚= 𝜎𝑚[𝑣(𝑟)]. Here, we assume constant cross section
+in the velocity-dispersion regime of interest. This assumption holds
+when the halo develops its isothermal core within 𝑟1.
+The impact of DM self-interactions on the halo density proﬁle
+can be regarded as a modiﬁcation to the inner part (𝑟< 𝑟1) of a
+CDM counterpart, and can be computed using the spherical Jeans
+equation with the assumption that the halo is isothermal within 𝑟1
+and in approximate equilibrium.
+2.1 Proﬁle of the isothermal core
+The density proﬁle of the isothermal dark-matter core can be solved
+by combining the spherical Jeans equation and the Poisson equation:
+d(𝜌dm𝑣2)
+d𝑟
++ 2𝛽
+𝑟𝑣2 = −𝜌dm
+dΦ
+d𝑟,
+(2)
+1
+𝑟2
+d
+d𝑟
+
+𝑟2 dΦ
+d𝑟
+
+= 4𝜋𝐺𝜌= 4𝜋𝐺(𝜌dm + 𝜌b),
+(3)
+where Φ is the total gravitational potential, 𝜌is the total density, and
+𝜌b is the baryon density. With the assumption of an isotropic (𝛽= 0)
+and constant 1D velocity dispersion (𝑣(𝑟) = 𝑣0), the Jeans equation
+has a simple generic solution:
+𝜌dm(𝑟) = 𝜌dm0 exp
+"
+−ΔΦ(𝑟)
+𝑣2
+0
+#
+or ΔΦ(𝑟) = −𝑣2
+0 ln
+ 𝜌dm(𝑟)
+𝜌dm0
+
+,
+(4)
+where 𝜌dm0 is the central dark-matter density, and ΔΦ(𝑟) = Φ(𝑟) −
+Φ(0) is the potential diﬀerence between radius 𝑟and the centre.
+Combining eq. (3) and eq. (4), we get
+1
+𝑟2
+d
+d𝑟
+
+𝑟2 d ln 𝜌dm(𝑟)
+d𝑟
+
+= −4𝜋𝐺
+𝑣2
+0
+[𝜌dm(𝑟) + 𝜌b(𝑟)].
+(5)
+Following Kaplinghat et al. (2014), we assume a Hernquist proﬁle
+for the baryon distribution,
+𝜌b(𝑟) =
+𝑀b/2𝜋𝑟3
+0
+𝑟
+𝑟0
+
+1 + 𝑟
+𝑟0
+3 ,
+(6)
+MNRAS 000, 1–14 (0000)
+
+SIDM haloes
+3
+where 𝑀b is the baryon mass, and 𝑟0 the scale radius. Then, eq. (5)
+can be rewritten as the dimensionless form:
+d2ℎ
+d𝑦2 + 2
+𝑦
+dℎ
+d𝑦+ 𝑏
+𝑦+
+𝑎𝑒ℎ
+(1 −𝑦)4 = 0,
+(7)
+where ℎ(𝑦) ≡Φ(𝑦)/𝑣2
+0, 𝑦= (𝑟/𝑟0)/(1+𝑟/𝑟0), 𝑎≡4𝜋𝐺𝑟2
+0𝜌dm0/𝑣2
+0,
+and 𝑏≡2𝐺𝑀b/𝑟0𝑣2
+0. The boundary conditions for solving this equa-
+tion are ℎ(0) = 0 and ℎ′(0) = −𝑏/2. The isothermal core proﬁle can
+therefore be obtained by integrating eq. (7), given the baryon prop-
+erties (𝑀b, 𝑟0), the central DM density (𝜌dm0), and the constant
+velocity dispersion within the core (𝑣0).
+There are four parameters in total that fully determine the isother-
+mal dark-matter proﬁle: two for baryons (𝑀b, 𝑟0) and two for dark
+matter (𝜌dm0, 𝑣0). For modelers, the baryonic parameters (𝑀b, 𝑟0)
+are usually known – for constructing simple toy halo models based
+on observations, (𝑀b, 𝑟0) are available from surface photometry; for
+building more complex semi-analytic or semi-empirical frameworks,
+they can be set from empirical abundance-matching relations. How-
+ever, the DM parameters (𝜌dm0, 𝑣0) are not readily known. They
+need to be determined iteratively given the virial mass 𝑀vir and
+concentration 𝑐of the target CDM halo, as we will describe in §2.3.
+We emphasize that, the isothermal Jeans model assumes that the
+system is in approximate equilibrium. Strictly speaking, an SIDM
+halo is never in Jeans equilibrium, but constantly evolving by trans-
+porting energy from the dynamically hotter region to colder places.
+For a target system that is initially described by a CDM proﬁle, the
+dynamically hottest place is where the 𝑣(𝑟) proﬁle peaks, so with
+self-interactions, the heat ﬂows to the centre. As the system evolves,
+the core temperature gradually becomes the highest and then con-
+ducts energy outwards. The full time evolution can be described
+using the gravothermal ﬂuid equations (see §5.1).
+2.2 Halo contraction
+The dark-matter distribution contracts in response to the condensa-
+tion of baryons in the halo centre. Blumenthal et al. (1986) described
+this process assuming circular orbits and an adiabatic invariant of
+𝑀(𝑟)𝑟, where 𝑀(𝑟) is the total mass enclosed within radius𝑟. Gnedin
+et al. (2004) showed that the original adiabatic-contraction treatment
+overestimates the magnitude of contraction compared to the results of
+cosmological hydro-simulations, and attributed the mismatch to the
+oversimpliﬁed assumption of circular orbits. To account for orbital
+eccentricity and orbital phase distributions, they proposed a modiﬁed
+invariant, 𝑀(¯𝑟)𝑟, where ¯𝑟is the orbit-averaged radius for particles at
+instantaneous radius 𝑟, approximated by
+¯𝑥= 𝐴𝑥𝑤,
+(8)
+where 𝑥= 𝑟/𝑅vir, and the parameters 𝐴≈0.85 and 𝑤≈0.8 are
+calibrated with simulations. There is some halo-to-halo variation in
+these parameters (Gnedin et al. 2011), which we ignore in this work.1
+With 𝑀(¯𝑟)𝑟invariant and assuming that the baryons are initially
+distributed with the same radial proﬁle as the dark matter, one can
+show that the ﬁnal radius 𝑟f of dark-matter particles initially located
+at 𝑟> 𝑟f obeys the equation:
+𝑟
+𝑟f
+= 1 −𝑓b + 𝑀b( ¯𝑟f)
+𝑀i(¯𝑟) ,
+(9)
+1 We ignore the halo-to-halo variation because there seems to be no system-
+atic trend of 𝑤or 𝐴with halo mass or concentration. 𝑤is weakly dependent
+on the details of cooling, but usually within 0.6-1.0.
+where 𝑓b = 𝑀b/𝑀vir is the galactic mass fraction within 𝑅vir, 𝑀b(𝑟)
+is the ﬁnal baryon mass within 𝑟, and 𝑀i(𝑟) is the initial total mass
+proﬁle.
+Assuming that the initial distribution of DM and baryons both
+follow an NFW proﬁle (Navarro et al. 1997),
+𝜌(𝑟) =
+𝜌s
+𝑐𝑥(1 + 𝑐𝑥)2 , where 𝜌s =
+𝑐3
+3 𝑓(𝑐) Δ𝜌crit,
+(10)
+with Δ the average overdensity with respect to the critical density
+of the Universe 𝜌crit(𝑧), 𝑐the concentration parameter, and 𝑓(𝑐) =
+ln(1 + 𝑐) −𝑐/(1 + 𝑐), and that the ﬁnal baryonic distribution obeys
+a Hernquist proﬁle, then a solution of eq. (9) can be obtained. The
+details of this step can be found in the appendix of Gnedin et al.
+(2004). Solving eq. (9) for 𝑟f for an initial radius 𝑟, we get the
+enclosed mass proﬁle 𝑀dm,f(𝑟f) = (1 −𝑓b)𝑀i(𝑟) of the contracted
+halo.
+The contracted DM mass proﬁle is non-parametric. To facilitate
+subsequent modeling, such as solving for the characteristic radius 𝑟1,
+we need simple, parametric expressions for the density proﬁle 𝜌dm(𝑟)
+and the velocity-dispersion proﬁle 𝑣(𝑟). We therefore ﬁt the proﬁle
+of a contracted halo with the Dekel-Zhao (DZ) proﬁle (Freundlich
+et al. 2020), which has analytic expressions for 𝜌dm(𝑟) and 𝑣(𝑟), and
+is ﬂexible enough in the centre to account for the contraction, at the
+expense of adding just one more degree of freedom than NFW. The
+enclosed mass of a DZ proﬁle is given by
+𝑀dm(𝑟) = (1 −𝑓b)𝑀vir
+𝑔(𝑐𝑥, 𝛼)
+𝑔(𝑐, 𝛼) ,
+(11)
+where 𝑔(𝜉, 𝛼) = [𝜉1/2/(1 + 𝜉1/2)]2(3−𝛼); and 𝑐and 𝛼are the free
+parameters describing the concentration and innermost density slope
+of the halo. The density proﬁle and the velocity dispersion proﬁle are
+given by
+𝜌dm(𝑟) =
+𝜌DZ
+𝑥𝛼(1 + 𝑥1/2)2(3.5−𝛼) ,
+(12)
+𝑣2(𝑟) = 2𝑉2
+vir
+𝑐
+𝑔(𝑐, 𝛼)
+𝑥3.5
+𝜒2(3.5−𝛼)
+8
+∑︁
+𝑖=0
+(−1)𝑖8!
+𝑖!(8 −𝑖)!
+1 −𝜒4(1−𝛼)+𝑖
+4(1 −𝛼) + 𝑖,
+(13)
+where 𝜌DZ = [𝑐3(3 −𝛼)]/[3𝑔(𝑐, 𝛼)] × Δ𝜌crit, 𝑉vir is the circular
+velocity at the virial radius, and 𝜒= 𝑥1/2/(1 + 𝑥1/2). We ﬁt the
+mass proﬁle 𝑀dm,f(𝑟f) of a contracted halo using eq. (11) and then
+solve eq. (1) for the transition radius 𝑟1 using the density and velocity
+dispersion of the best-ﬁt DZ proﬁle. For typical baryon distributions
+(0.01 <∼𝑓b <∼0.2 and 0.005 <∼𝑟0/𝑅vir <∼0.1), the best-ﬁt DZ proﬁle
+agrees with the non-parametric solution of 𝑀dm,f(𝑟f) to per-cent
+level.
+From now on, we drop the ‘dm’ in the subscription of the symbol
+for central DM density 𝜌dm0 and simply denote it by 𝜌0.
+2.3 Stitching the isothermal core to the CDM outskirt
+To obtain the full proﬁle of a SIDM halo with baryons, we determine
+the parameters (𝜌0, 𝑣0) of the isothermal core iteratively, such that
+the core joins the contracted CDM halo at radius 𝑟1 smoothly in terms
+of the local density and the enclosed mass. Speciﬁcally, we search
+the space of 𝜌0-𝑣0 to minimize the following objective quantity:
+𝛿2 =
+ 𝜌iso(𝑟1) −𝜌cdm(𝑟1)
+𝜌cdm(𝑟1)
+2
++
+ 𝑀iso(𝑟1) −𝑀cdm(𝑟1)
+𝑀cdm(𝑟1)
+2
+,
+(14)
+where 𝜌iso(𝑟) and 𝜌cdm(𝑟) are the density proﬁles, and 𝑀iso(𝑟) and
+𝑀cdm(𝑟) are the enclosed DM mass proﬁles, of the isothermal core
+MNRAS 000, 1–14 (0000)
+
+4
+Jiang et al.
+10
+3
+10
+2
+10
+1
+100
+101
+r  [kpc]
+104
+105
+106
+107
+108
+109
+1010
+1011
+1012
+  [M
+kpc
+3]
+r1
+rs
+rres
+SIDM (low-density)
+SIDM (high-density)
+CDM contracted
+CDM DM-only
+10
+3
+10
+2
+10
+1
+100
+101
+r [kpc]
+100
+101
+102
+Vcirc [km/s]
+r1rs
+rres
+101
+102
+v0 [km/s]
+106
+107
+108
+109
+1010
+1011
+1012
+1013
+1014
+0 [M
+/kpc3]
+0.5v(r1)
+2v(r1)
+(r1)
+(rres)
+-2
+-1.5
+-1
+-0.5
+0
+log
+Figure 1. Illustration of the semi-analytical workﬂow (§2.4) – example of ﬁnding the SIDM proﬁle for a cross-section of 𝜎𝑚= 1 cm2/ g and a target CDM halo
+formed 𝑡age = 5 Gyr ago with a present-day virial mass of 𝑀vir = 1011𝑀⊙and a concentration of 𝑐= 15. The inhabitant galaxy has a total cold baryon mass of
+𝑀b = 109𝑀⊙, and half-mass radius of 𝑟1/2 = 1.9 kpc (𝑟1/2/𝑅vir = 0.02). The thin grey dashed lines show the density proﬁle (left) and circular-velocity proﬁle
+(middle) of the original dark-matter-only target CDM halo; and the thick dashed lines are the proﬁles for the adiabatically contracted CDM halo. The thicker
+solid black lines are the proﬁles of the best-matching SIDM isothermal core, which corresponds to the low-density solution of (𝜌0, 𝑣0) as marked by the bigger
+black ‘+’ sign in the right-hand panel. The thinner solid black lines are the proﬁles that correspond to the discarded high-density solution, as marked by the
+smaller ‘+’ sign in the right-hand panel. The right-hand panel shows the colour map of the ‘stitching error’ 𝛿, deﬁned in eq. (14), in the space of central density
+𝜌0 versus central velocity dispersion 𝑣0. Clearly there are two 𝛿minima, but only the low-density solution agrees with simulation results (see Fig. 2). As shown
+in Appendix A, the two solutions get closer as the system evolves (i.e., as 𝑡age or cross-section increases). When they join, gravothermal core-collapse starts to
+speed up (see §5.2). The vertical and horizontal dashed lines indicate the region 𝜌cdm(𝑟1) < 𝜌0 < 𝜌cdm(𝑟res = 10 pc) and 0.5𝑣(𝑟1) < 𝑣0 < 2𝑣(𝑟1) , which
+brackets the low-density solution uniquely for a wide range of halo age and cross section.
+and the contracted CDM halo, respectively. There are two minima
+of 𝛿2 in the 𝜌0-𝑣0 space, with similar 𝑣0 values but very diﬀerent
+𝜌0. The existence of the two solutions was already noted by Elbert
+et al. (2018). Here we illustrate them clearly in the right-hand panel
+of Fig. 1.
+Elbert et al. only accepted the lower-density solution as it agrees
+with their simulation results better. We emphasize that both solutions
+are physical in the sense that they both meet the requirement of
+constant temperature below 𝑟1. It is just that realistic haloes form
+with properties closer to the lower-density solution, which is why the
+lower-density solution agrees better with cosmological simulation
+results. We ﬁnd by trial and error that a practical searching range
+for the lower-density solution is 𝜌cdm(𝑟1) < 𝜌0 < 𝜌cdm(10 pc) and
+0.5𝑣(𝑟1) < 𝑣0 < 2𝑣(𝑟1), which, in most cases, brackets a unique
+minimum of 𝛿2.
+As will be shown below, this simple formalism can capture the
+onset of gravothermal core-collapse. As the halo age 𝑡age increases
+or as the cross section 𝜎𝑚becomes larger, the two minima of 𝛿2
+get closer – they ﬁrst both decrease in 𝜌0; then the lower-density
+solution turns around, manifesting the onset of gravothermal core-
+collapse; and ﬁnally the two solutions merge as core-collapse speeds
+up, beyond which point the isothermal model is no longer applicable.
+This is illustrated in Appendix A, and the high-density solution is
+therefore also useful, as we will address further in §5.2.
+2.4 Workﬂow
+We summarize the workﬂow for getting the density proﬁle of a SIDM
+halo with baryons as follows:
+1. Given a CDM halo described by an NFW proﬁle (i.e., with known
+virial mass 𝑀vir, concentration 𝑐, and age 𝑡age), and given an
+inhabitant galaxy described by a Hernquist proﬁle (parameterized
+by the mass 𝑀b and scale size 𝑟0), compute the adiabatically
+contracted halo proﬁle (§2.2).
+2. Given the self-interaction cross-section, 𝜎𝑚, solve eq. (1) for the
+radius of frequent scattering, 𝑟1, using the density proﬁle and
+velocity-dispersion proﬁle of the contracted CDM halo.
+3. Integrate the spherical Jeans-Poisson equation, eq. (5), to obtain
+an isothermal core proﬁle (§2.1) – do this iteratively to ﬁnd the
+central DM density 𝜌0 and the central velocity dispersion 𝑣0 by
+minimizing the relative stitching error deﬁned in eq. (14) (§2.3).
+To illustrate, Fig. 1 shows an example of the density and circular
+velocity proﬁles of an SIDM halo obtained with this workﬂow. In this
+example, we adopt a self-interaction cross-section of 𝜎𝑚= 1 cm2/ g
+and a target CDM halo of 𝑀vir = 1011𝑀⊙, 𝑐= 15, and 𝑡age = 10 Gyr
+with a Hernquist baryon distribution of mass 𝑀b = 109𝑀⊙and
+half-mass radius 𝑟1/2 = 1.9 kpc (i.e., a Hernquist 𝑟0 = 𝑟1/2/(1 +
+√
+2) ≈0.8 kpc). These choices are largely arbitrary for illustration
+purposes, but are of the same of order as the Large Magellanic
+Cloud (LMC). In Appendix A, we demonstrate how the two solutions
+evolve as the halo age increases, and discuss in §5.2 that the high-
+density solution can help us to phenomenologically predict the onset
+of gravothermal core-collapse. While this procedure is devised for
+haloes with baryons, it is fully compatible with dark-matter-only
+cases, for which one simply sets 𝑀b small and 𝑟1/2 large.
+3 COMPARISON WITH COSMOLOGICAL SIDM
+SIMULATIONS
+In this section, we show that the aforementioned workﬂow gives
+halo proﬁles closely matching those from cosmological SIDM sim-
+ulations. We also provide a simple analytical ﬁtting formula for the
+dark-matter-only cases.
+MNRAS 000, 1–14 (0000)
+
+SIDM haloes
+5
+10
+1
+100
+101
+r  [kpc]
+106
+107
+108
+  [M
+kpc
+3]
+r1
+r1
+r1
+rs
+Pippin CDM (sim)
+Pippin SIDM01 (sim)
+Pippin SIDM1 (sim)
+Pippin SIDM10 (sim)
+NFW
+SIDM01 (model)
+SIDM1 (model)
+SIDM10 (model)
+universal coreNFW
+universal coreNFW
+Figure 2. Comparison of the dark-matter density proﬁles from the model and
+from the cosmological 𝑁-body simulations of the Pippin haloes as in Elbert
+etal. (2015) at 𝑧= 0. The greycirclesrepresent thereference-CDMsimulation
+result; and the green, blue, and red circles represent the SIDM simulation
+results of cross-sections of 𝜎𝑚= 0.1, 1, and 10 cm2/g, respectively (labeled
+as SIDM01, SIDM1, and SIDM10). The CDM halo is well described by an
+NFW proﬁle of 𝑀vir = 109.89𝑀⊙and 𝑐= 15.8, as indicated by the grey solid
+line – this is used as the starting point of the isothermal Jeans model. The
+model predictions are shown by the solid lines of corresponding colours. The
+vertical dotted lines show the 𝑟1 radii. The model predictions agree very well
+with the simulation results across 2 dex in cross section. The thin dashed lines
+in pale colours represent a universal approximation, which is the coreNFW
+proﬁle with a scale radius 𝑟c that is 0.45 times the respective 𝑟1.
+3.1 Comparison with dark-matter only simulations
+To compare the model to cosmological dark-matter-only simulations,
+we use the zoom-in simulations of Elbert et al. (2015) and focus on
+the ‘Pippin’ haloes therein. The simulations adopt the Wilkinson
+Microwave Anisotropy Probe-7 cosmology (Komatsu et al. 2011),
+with ℎ= 0.71, Ωm = 0.266, ΩΛ = 0.734, 𝑛s = 0.963 and 𝜎8 =
+0.801. For the high-resolution runs that we compare to, the particle
+mass is 1.5 × 103𝑀⊙, and the Plummer equivalent force softening
+length is 28 pc. The Pippin halo was run in both CDM and SIDM
+with a wide range of velocity-independent cross-sections of 𝜎𝑚=
+0.1 −50 cm2/g, all starting from the same initial conditions. The
+SIDM implementation follows that of Rocha et al. (2013). The CDM
+Pippin halo is accurately described by an NFW proﬁle with a virial
+mass of 𝑀vir = 109.89𝑀⊙and a concentration of 𝑐= 15.8, as shown
+by the grey line in Fig. 2. We use this NFW proﬁle as the input of the
+target CDM proﬁle for our model, and compute the SIDM proﬁles
+for 𝜎𝑚= 0.1, 1, and 10 cm2/g, which are then compared to the
+corresponding simulation results. Since we are dealing with dark-
+matter only cases, 𝑀b is set to be inﬁnitesimally small. We ﬁnd that
+the model predictions agree well with the simulation results across
+the cross-section range.
+While this semi-analytic procedure is already reasonably fast
+( <∼0.1 second per system using our publicly available python im-
+plementation), it still requires numerical root-ﬁnding for determin-
+ing 𝜌0 and 𝜎0. To accommodate semi-analytic frameworks designed
+for large ensembles of haloes and subhaloes (e.g., Benson 2012;
+Jiang et al. 2021), an even faster formula would be useful. We ﬁnd
+that a CORENFW proﬁle (Read et al. 2016) with the scale radius
+being a ﬁxed fraction of 𝑟1 provides decent approximations. The
+CORENFW proﬁle has an enclosed mass proﬁle given by
+𝑀(𝑟) = 𝑀NFW(𝑟) tanh
+ 𝑟
+𝑟c
+
+,
+(15)
+where 𝑀NFW(𝑟) is the enclosed mass of the target NFW proﬁle,
+and 𝑟c is a characteristic core size. We ﬁnd by trial and error that
+CORENFW proﬁles with 𝑟c = 0.45𝑟1 ﬁt accurately the SIDM haloes
+derived from the same target CDM halo across 2 dex in cross section,
+as shown by the thin dashed lines in Fig. 2. We have veriﬁed that
+this universal approximation holds as long as the system is not in the
+core-collapse regime, and thus applies to most SIDM haloes with
+𝑐<∼20, 𝑡age <∼14 Gyr, and 𝜎𝑚<∼10 cm2/g. It breaks down when the
+baryonic component is not negligible, or when the halo starts to
+core-collapse, for which a more complicated proﬁle shape is needed.
+3.2 Comparison with hydro simulations
+We also compare the model predictions to cosmological hydro simu-
+lations, to test its performance when the system is baryon dominated
+in the centre. We use three Milky-Way-mass systems in the FIRE-2
+SIDM suite (Sameie et al. 2021): m12i, m12f, and m12m, which
+have virial masses of 𝑀200m = 1011.95, 1012.15, and 1012.08𝑀⊙, re-
+spectively, at 𝑧= 0. These galaxies are simulated with cross sections
+of 𝜎𝑚= 1 and 10 cm2 g, and they all have CDM-only reference runs
+with matched initial conditions which we can use for the model in-
+puts. Among the three systems, m12i and m12f have Milky-Way-like
+sizes of 𝑟1/2 ≈4 kpc and a stellar mass of 𝑀b ∼1010.7𝑀⊙, while
+m12m has a slightly higher stellar mass of 𝑀b ∼1010.9𝑀⊙and a
+much more extended stellar distribution of 𝑟1/2 ≈8 kpc. Table 1
+of Sameie et al. (2021) provides more detailed information of these
+simulations.
+Again, following the workﬂow in §2.4, we ﬁt NFW proﬁles to
+the CDM-only simulations at 𝑧= 0 and treat the best-ﬁt proﬁles as
+the target haloes, as shown by the grey lines in Fig. 3. Then we ﬁt
+Hernquist proﬁles to their stellar distributions, as represented by the
+coloured dotted lines in Fig. 3, and use them to model the adiabatic
+contraction of these haloes. We assume these systems formed 𝑡age = 7
+Gyr ago, which is the average formation time of haloes of Milky-Way
+mass scale. The predicted SIDM proﬁles, as shown by the coloured
+solid lines in Fig. 3, match the simulation results fairly accurately. For
+the SIDM1 runs, the central densities are matched at percent levels.
+For the SIDM10 runs, while the model slightly overpredicts the
+central densities, it still correctly captures the shape of the simulated
+density proﬁles: there is a relatively ﬂat central core at 𝑟<∼1 kpc, a
+steep decrease at 𝑟∼5 kpc, and a ﬂatter part again at 𝑟∼𝑟1 ∼40 kpc.
+The good agreement between the model and the simulations pro-
+vides insights into the galaxy-halo connection in the context of SIDM.
+In CDM, there are two equally important competing baryonic eﬀects
+on halo structure – on the one hand, the galactic potential makes the
+halo contract and become more cuspy; on the other hand, supernovae-
+driven outﬂows heat the potential well and ﬂatten the central density.
+The net eﬀect of the competing mechanisms depend sensitively on
+details of the subgrid physics for star formation and supernovae (e.g.,
+Bose et al. 2019). The SIDM simulations here also include both
+of the competing mechanisms, but the model only considers halo
+contraction and ignores stellar feedback. Hence, the fact that good
+agreement is still achieved between the model and the FIRE2-SIDM
+simulations implies that the core-formation eﬀect from supernovae is
+subdominant and overwhelmed by the eﬀect of the SIDM halo in the
+presence of the baryonic potential (see also Sameie et al. for discus-
+sion). It is therefore reasonable to speculate that SIDM simulations
+MNRAS 000, 1–14 (0000)
+
+6
+Jiang et al.
+100
+101
+102
+r  [kpc]
+105
+106
+107
+108
+109
+1010
+  [M
+kpc
+3]
+m12f
+100
+101
+102
+r  [kpc]
+105
+106
+107
+108
+109
+1010
+  [M
+kpc
+3]
+m12i
+CDM DMO 
+DM
+SIDM10 
+DM
+SIDM1 
+DM
+SIDM10 
+star
+SIDM1 
+star
+contracted CDM 
+DM
+contracted CDM 
+DM
+simulation: SIDM10 
+DM
+simulation: SIDM1 
+DM
+simulation: CDM DMO 
+DM
+simulation: SIDM10 
+DM
+simulation: SIDM1 
+DM
+simulation: CDM DMO 
+DM
+100
+101
+102
+r  [kpc]
+105
+106
+107
+108
+109
+1010
+  [M
+kpc
+3]
+m12m
+Figure 3. Comparison of the dark-matter density proﬁles from the model and from the FIRE2-SIDM hydro-cosmological simulations – showing three examples
+of Milky-Way-mass systems at 𝑧= 0: m12f, m12i, and m12m, as in Sameie et al. (2021). The open circles represent the density proﬁles in the reference CDM
+dark-matter-only (DMO) runs. The solid grey lines show the best-ﬁt NFW proﬁles, which are used as inputs in the isothermal Jeans model. The dotted lines
+represent the best-ﬁt Hernquist proﬁles of the stellar density distributions in the hydro-simulations. The red and blue colours diﬀerentiate the SIDM results for
+𝜎𝑚= 10 (SIDM10) and 1 cm2/ g (SIDM1), respectively. The stellar proﬁles are used as inputs to the model for computing halo contraction. The dashed lines
+of corresponding colours represent the proﬁles of the contracted CDM haloes. The ﬁlled circles and solid lines of the matching colour represent the proﬁles
+from the SIDM simulations and the corresponding models. Overall, the model preditions are in decent agreement with the simulations – for the SIDM1 run, the
+central densities at 𝑟∼1 kpc agree at percent level; for SIDM10, the shapes of the simulated proﬁles are correctly reproduced.
+are not sensitive to the sub-grid baryonic physics for certain ranges
+of SIDM parameters. This should be better tested with hydro+SIDM
+simulations with varied strength of feedback.
+4 SIDM HALO RESPONSE
+In this section, we use the model for quantitative analysis of the
+SIDM halo response. We express the halo structures as functions of
+the baryonic mass fraction (𝑀b/𝑀vir) and the baryonic compactness
+(𝑟1/2/𝑅vir), and also take this opportunity to show the importance of
+considering adiabatic halo contraction.
+4.1 Enhanced structural diversity in SIDM
+Zoom-in hydro-simulations have hinted that SIDM haloes are more
+responsive to the presence of a baryonic distribution (rather than
+baryonic feedback) than their CDM counterparts. Here, we use the
+isothermal Jeans model to show this more explicitly.
+First, we vary the size of the baryonic component while keeping
+the total mass and baryon mass ﬁxed at 𝑀vir = 1011𝑀⊙and 𝑀b =
+109𝑀⊙– these values are typical of bright dwarf galaxies such
+as the LMC or sub-𝐿★galaxies which exhibit the most dramatic
+structural diversity. We also keep the halo age and the target-halo’s
+concentration ﬁxed at typical values of 𝑡age = 10 Gyr and 𝑐= 10.
+We run the model for two cross sections, 𝜎𝑚= 1 and 0.1 cm2/ g. We
+perform control-experiments to get the CDM references, i.e., starting
+from the same target halo and the same galaxy as used for the SIDM
+calculations, and simply compute the adiabatically contracted CDM
+halo proﬁles. Fig. 4 shows the comparison. The sensitivity of the
+halo response in the SIDM models is indeed much higher than that
+of the reference CDM cases. Notably, the inner SIDM density slope
+(evaluated at, e.g., 𝑟∼0.5 kpc ≈0.5%𝑅vir) can be ﬂat, equally
+cuspy, or cuspier than that of the reference CDM proﬁle, depending
+MNRAS 000, 1–14 (0000)
+
+SIDM haloes
+7
+10
+1
+100
+101
+r  [kpc]
+106
+107
+108
+109
+1010
+  [M
+kpc
+3]
+m = 1.0 cm2/g
+r1/2/Rv = 0.005
+r1/2/Rv = 0.010
+r1/2/Rv = 0.020
+dark-matter only
+SIDM
+CDM
+SIDM
+CDM
+10
+1
+100
+101
+r [kpc]
+0
+20
+40
+60
+80
+Vcirc [km/s]
+10
+1
+100
+101
+r  [kpc]
+106
+107
+108
+109
+1010
+  [M
+kpc
+3]
+m = 0.1 cm2/g
+10
+1
+100
+101
+r [kpc]
+0
+20
+40
+60
+80
+Vcirc [km/s]
+Figure 4. Illustration of the high sensitivity of SIDM halo response to baryonic potentials. The left-hand panels and right-hand panels show the density proﬁles
+and circular velocity proﬁles, respectively, of SIDM haloes (solid lines) and CDM counterparts (dashed lines). For all the cases, we keep ﬁxed the virial mass of
+𝑀vir = 1011𝑀⊙, the target concentration of 𝑐= 10, and the galaxy mass of 𝑀b = 109𝑀⊙, only varying the galaxy size. The colours diﬀerentiate the half-mass
+radii of 𝑟1/2 = 0.005, 0.01, and 0.02𝑅vir, as indicated, or equivalently, 𝑟1/2 ≈0.47, 0.95, and 1.9 kpc – these are representative of compact, normal, and
+ultra-diﬀuse dwarf galaxies. The upper and lower panels show the results for cross sections of 𝜎𝑚= 1 cm2/ g and 0.1 cm2/ g, respectively. The vertical dotted
+lines mark the positions of 𝑟1 for the corresponding colour. Clearly, SIDM haloes are more sensitive to baryonic compactness than their CDM counterparts.
+The strong diﬀerence in the inner halo is not driven by the diﬀerence in 𝑟1, which is actually negligible for 𝜎𝑚= 1 cm2/ g or larger; instead, it arises from
+the diﬀerence in 𝑉circ(𝑟), or more precisely in the derivatives of the gravitational potential dΦ/d𝑟= 𝑉circ(𝑟)2/𝑟and d2Φ/d𝑟2, as hinted from the right-hand
+panels.
+on whether the galaxy is diﬀuse (𝑟1/2 = 2 kpc), normal (1 kpc), or
+compact (𝑟1/2 ≃0.5 kpc). The range of the central densities, e.g.,
+evaluated at 𝑟= 0.1 kpc, of the CDM results is only 0.5 dex, while
+that of the SIDM models spans more than an order of magnitude.
+This remarkable diversity in halo response is not driven by the
+diﬀerence in the characteristic radius 𝑟1. In fact, for 𝜎𝑚>∼1 cm2/ g,
+the 𝑟1 values are similar across the diﬀerent galaxy sizes, as shown
+by the vertical dotted lines in Fig. 4. Only for cross sections as
+small as 𝜎𝑚∼0.1 cm2/ g, 𝑟1 becomes comparable to the galaxy
+size and diﬀers signiﬁcantly depending on the latter. Even here, 𝑟1
+occurs where the halo density proﬁles converge, so the dramatic
+diﬀerence in the inner halo cannot be attributed to that of 𝑟1 or of
+the local density 𝜌(𝑟1). The structural diversity must then arise from
+the diﬀerence in the enclosed mass proﬁle, or 𝑉circ(𝑟), as shown in
+the right-hand panels of Fig. 4. A small change in the baryonic size
+results in ampliﬁed diﬀerences in the gradient and the Laplacian of
+the potential, dΦ/d𝑟= 𝑉circ(𝑟)2/𝑟and d2Φ/d𝑟2, which are leading
+terms in the Jeans-Poisson equation (eq. (7)) underlying the whole
+model.
+The structural diversity of bright dwarf galaxies (𝑀b ≈108−9𝑀⊙)
+has drawn a lot of attention recently. Notably, these galaxies span two
+orders of magnitude in size and exhibit a wide range of morphologies,
+including compact dwarfs with 𝑟1/2 as small as ∼0.1 kpc and ultra-
+diﬀuse galaxies with 𝑟1/2 up to 10 kpc. The structural diversity is also
+manifested in the logarithmic density slope 𝑠≡d ln 𝜌/d ln 𝑟near the
+centre (𝑟<∼1 kpc), as inferred from baryonic kinematics. For example,
+as Relatores et al. (2019) summarized, 𝑠ranges between 0 and 1.5
+for galaxies with 𝑀b ∼109𝑀⊙. It is challenging for hydro+CDM
+models to fully explain such a dramatic extent of structural diversity,
+especially given that both the galaxy size and the inner halo structure
+exhibit wide ranges. Recently, Zentner et al. (2022) demonstrated
+that SIDM and feedback-aﬀected CDM models are equally better
+than a CDM model in explaining the halo structural diversity as seen
+in the SPARC survey (Lelli et al. 2016), however, the prevalence
+of compact bright dwarfs with 𝑟1/2 <∼1 kpc remains a challenge for
+hydro-CDM simulations featuring strong feedback (e.g., Jiang et al.
+2019). Here, galaxy size is an input of the model, so we do not provide
+an explanation for the size diversity, but we have clearly shown that
+SIDM models have the virtue of making the two aspects strongly
+coupled, such that if there is an explanation for the size diversity, it
+explains automatically the range of DM density slopes.
+Second, we extend the above exercise by scanning a wide range in
+MNRAS 000, 1–14 (0000)
+
+8
+Jiang et al.
+10
+3
+10
+2
+10
+1
+Mb/Mvir
+10
+2
+10
+1
+Rb, 1/2/Rvir
+s
+dln
+dln r |1kpc
+0.50
+0.75
+1.00
+1.25
+1.50
+1.50
+1.75
+2.00
+2.25
+2.25
+2.50
+Gravothermal
+core-collapse
+10
+3
+10
+2
+10
+1
+0.0
+0.5
+1.0
+1.5
+2.0
+s
+Rb, 1/2/Rv = 0.02
+fiducial
+no AC
+0.00.51.01.5
+s
+10
+2
+10
+1
+Mb/Mv = 0.01
+10
+3
+10
+2
+10
+1
+Mb/Mvir
+10
+2
+10
+1
+log(
+0/
+s)
+0.80
+1.20
+1.60
+2.00
+2.00
+2.40
+2.40
+2.80
+2.8
+3.20
+3.20
+3.60
+3.60
+4.00
+4.00
+GC
+10
+3
+10
+2
+10
+1
+0.5
+1.5
+2.5
+log(
+0/
+s)
+Rb, 1/2/Rv = 0.02
+0.5
+1.5
+2.5
+log(
+0/
+s)
+10
+2
+10
+1
+Mb/Mvir = 0.01
+Figure 5. The inner logarithmic density slope (left) and central density (right) of SIDM haloes as functions of the baryonic mass fraction 𝑀b/𝑀vir and the
+galaxy size in units of the virial radius 𝑟1/2/𝑅vir. Here we choose 𝜎𝑚= 1 cm2/ g and adopt a target halo formed 𝑡age = 10 Gyr ago with present-day virial mass
+𝑀vir = 1011𝑀⊙and concentration 𝑐= 10. The slope 𝑠≡−d ln 𝜌/d ln 𝑟is evaluated at 𝑟= 1 kpc, and the central density is expressed in units of the NFW
+scale density 𝜌s. The main panels are the contour maps of 𝑠and log(𝜌0/𝜌𝑠), with the contour-level values indicated. The thick black lines in the top and side
+panels show one-dimensional slices of the main panels, with one of the baryonic properties ﬁxed at the values indicated by the dotted lines in the main panel.
+The thin grey lines in the top and side panels show the results without considering adiabatic halo contraction – these are equivalent to the ‘inside-out’ models
+of Robertson et al. (2021). Focusing on our ﬁducial model with adiabatic contraction, the density slope increases from ∼0.3 to 2 as 𝑀b/𝑀vir increases from
+10−4 to 0.04 or as 𝑟1/2/𝑅vir decreases from 0.1 to 0.005, for the speciﬁc slices. For 𝑀b/𝑀vir ∼0.01 and 𝑟1/2/𝑅vir ∼0.02, representative of Milky-Way-mass
+galaxies according to abundance matching, the SIDM density proﬁle is actually rather similar to the CDM case with an inner slope of ∼1. Accounting for
+adiabatic contraction makes the central density up to four times higher (e.g., at 𝑀b/𝑀vir = 0.04) and the central density slope ∼30% steeper. In the lower right
+corner of the space, an isothermal solution can no longer be achieved, manifesting the speed-up of gravothermal core-collapse (GC).
+the space spanned by the baryonic mass fraction and galaxy compact-
+ness, and thus more systematically describe the SIDM halo response.
+Still adopting 𝜎𝑚= 1 cm2/ g and a target CDM halo of 𝑡age = 10 Gyr,
+𝑀vir = 1011𝑀⊙, and 𝑐= 10, we vary 𝑀b/𝑀vir from 10−4 to 0.1, and
+𝑟1/2/𝑅vir from 0.004 to 0.1. We express the halo structure in terms
+of the inner density slope 𝑠≡−d ln 𝜌/d ln 𝑟evaluated at 𝑟= 1 kpc,
+and the central density 𝜌0 in units of the NFW scale density 𝜌s.
+The results are shown in Fig. 5. The main panels of Fig. 5 show
+the contour maps of 𝑠and 𝜌0/𝜌s in the 2D baryon-property space.
+The top panels and side panels show the 1D slices of the 2D map
+with either of the baryonic quantities ﬁxed (at 𝑀b/𝑀vir = 0.01 or
+𝑟1/2/𝑅vir = 0.02). Clearly, the SIDM halo becomes more dense and
+cuspy as the galaxy becomes more massive and compact. Although
+we have used a massive dwarf halo for illustration, the result applies
+to other mass scales as well since we have expressed the baryonic
+properties in units of the virial quantities.
+Hydro-cosmological zoom-in simulations have shown that, for
+Milky-Way-like systems, SIDM halo proﬁles are rather similar to
+their CDM counterparts down to quite small radii. This can be seen
+for example in m12f and m12i in Fig. 3, and it has motivated some
+semi-analytic studies to assume NFW proﬁles for their Milky-Way
+sized SIDM host halo when studying the satellite galaxies (e.g., Jiang
+et al. 2022). Here we can easily check the validity of this assumption
+in Fig. 5. Abundance-matching studies have shown that a Milky-
+Way-mass system typically has a stellar-to-total-mass ratio of ∼1
+per cent (e.g., Moster et al. 2013), and a half mass radius that is ∼2
+per cent of the host-halo virial radius (e.g., Somerville et al. 2018).
+For these representative values, as can be seen in Fig. 5, the SIDM
+proﬁle indeed has an inner logarithmic density slope very close to
+the NFW value of 𝑠∼1.
+4.2 Necessity of considering adiabatic contraction
+Robertson et al. (2021) also studied the isothermal Jeans model in
+detail and made comparisons with cosmological simulations. There,
+the authors adopted an inside-out ﬁtting scheme. That is, diﬀerent
+from what we do here, they start from an isothermal core proﬁle
+deﬁned by 𝜌0 and 𝑣0 in the centre, evaluate 𝑟1 using the core proﬁle,
+and ﬁnd the NFW proﬁle on the outskirt that smoothly joins the core
+at 𝑟1. In this regard, our workﬂow as described in §2.4 is called the
+outside-in approach (e.g., Sagunski et al. 2021). As Robertson et al.
+(2021) noted, in the inside-out approach, the outer halo is completely
+determined by the NFW proﬁle and there is no freedom to incorporate
+contraction. That said, it is still able to capture the eﬀect of baryonic
+potential on the SIDM proﬁle partially, via the baryonic terms in the
+Jeans-Poisson equation, eq. (5). It is just not entirely self-consistent,
+as the baryonic potential will aﬀect the entire halo, making the outer
+part also deviate from NFW.
+Here, with the outside-in approach, we can quantify the diﬀerence
+made by including adiabatic halo contraction. We emulate the inside-
+out model by skipping the halo contraction step of our workﬂow and
+only consider the baryonic potential in the Jeans-Poisson equation.
+The diﬀerence is shown in the top and side panels of Fig. 5 – the
+thick black lines show the halo response from the ﬁducial model,
+MNRAS 000, 1–14 (0000)
+
+SIDM haloes
+9
+and the thin grey lines show the result skipping halo contraction
+(with everything else the same). As can be seen, accounting for adi-
+abatic contraction does not introduce a big diﬀerence for galaxies
+of 𝑀b/𝑀vir <∼0.001 or for diﬀuse systems of 𝑟1/2/𝑅vir >∼0.04; how-
+ever, for massive and compact systems, the central density in our
+ﬁducial model can be up to four times higher (see e.g., the result at
+𝑀b/𝑀vir = 0.04), and the central density slope can also be diﬀerent
+by up to 30%. In short, for massive and compact systems, an ex-
+plicit adiabatic-contraction treatment must be included for accurate
+results; for diﬀuse and dark-matter dominated systems, considering
+the baryon potential in the Jeans Poisson equation provides results
+that are close enough.
+5 DISCUSSION
+In this section, we ﬁrst compare the isothermal Jeans model to the
+more sophisticated gravothermal ﬂuid model, which also predicts
+SIDM halo proﬁles and is studied extensively in the literature. Then,
+we study the facilitation of gravothermal core-collapse by the inhab-
+itant galactic potential, and use the isothermal Jeans model to predict
+the regime of core-collapse in the space of galaxy mass fraction
+versus galaxy compactness.
+5.1 Comparison with gravothermal ﬂuid evolution
+The isothermal Jeans model assumes a system to be in approximate
+equilibrium, whereas with dark-matter self-interactions, the system
+is never in strict equilibrium. The full hydrodynamical evolution can
+be described by the gravothermal ﬂuid model, which is extensively
+studied in a series of seminal works (Lynden-Bell & Eggleton 1980;
+Balberg & Shapiro 2002; Koda & Shapiro 2011; Pollack et al. 2015;
+Essig et al. 2019; Nishikawa et al. 2020). This method treats SIDM
+as a gravothermal ﬂuid, and solves a set of coupled partial diﬀerential
+equations for the evolution of the spherically symmetric proﬁles of
+mass 𝑀(𝑟, 𝑡), density 𝜌(𝑟, 𝑡), velocity dispersion 𝑣(𝑟, 𝑡), and the
+luminosity of the radiated heat 𝐿(𝑟, 𝑡) –
+𝜕˜𝑀
+𝜕˜𝑟= ˜𝑟2 ˜𝜌,
+𝜕( ˜𝜌˜𝑣2)
+𝜕˜𝑟
+= −
+˜𝑀˜𝜌
+˜𝑟2 ,
+𝜕˜𝐿
+𝜕˜𝑟= −˜𝑟2 ˜𝜌˜𝑣2
+ 𝜕
+𝜕˜𝑡
+
+˜𝑀
+ln
+ ˜𝑣3
+˜𝜌
+
+,
+˜𝐿= −3
+2 ˜𝑟2 ˜𝑣
+ 𝑎
+𝑏˜𝜎2
+𝑚+
+1
+𝐶˜𝜌˜𝑣2
+−1 𝜕˜𝑣2
+𝜕˜𝑟.
+(16)
+These equations describe mass conservation, hydrostatic equilib-
+rium, the ﬁrst law of thermodynamics, and heat conduction, respec-
+tively, where 𝑎= 4/√𝜋, 𝑏= 25√𝜋/32, and 𝐶is a calibration param-
+eter of order unity. Following Koda & Shapiro (2011) and Nishikawa
+et al. (2020), we have expressed the equations with the dimension-
+less quantities: ˜𝑟≡𝑟/𝑟s, ˜𝜌≡𝜌/𝜌s,
+˜𝑀≡𝑀/𝑀0 with the mass
+scale 𝑀0 = 4𝜋𝑟3s 𝜌s, ˜𝜎𝑚≡𝜎𝑚/𝜎𝑚0 with the cross-section scale
+𝜎𝑚0 = 1/𝑟s𝜌s, ˜𝑣≡𝑣/𝑣0 with the velocity scale 𝑣0 =
+√︁
+𝐺𝑀0/𝑟s,
+˜𝐿≡𝐿/𝐿0 with the luminosity scale 𝐿0 ≡𝐺𝑀2
+0/𝑟s𝑡0, and ˜𝑡≡𝑡/𝑡0
+with the time scale 𝑡0 = 1/𝑎𝜎𝑚𝑣0𝜌s. This assumes that the initial
+proﬁle 𝜌(𝑟, 𝑡= 0) is NFW, with scale radius 𝑟s and scale density 𝜌s.
+With the dimensionless quantities, we have the convenience that the
+density-proﬁle evolution is self-similar as long as we are in the long-
+mean-free-path2 regime, and thus the result is almost independent of
+the cross section or the initial NFW concentration when expressed
+in ˜𝜌(˜𝑟, ˜𝑡). This is illustrated in Balberg & Shapiro (2002) and in
+Appendix C of Nishikawa et al. (2020).
+There are a few diﬀerences between the isothermal Jeans model
+and the ﬂuid model. First and foremost, conceptually, the ﬂuid model
+gives the full (time-dependent) solution to the Boltzmann Equations
+with an assumed conductivity; while the isothermal model approx-
+imates the instantaneous proﬁle as being in equilibrium, and there-
+fore does not have time evolution per se other than a dependence
+on halo age. Second, the isothermal model is only applicable to the
+isothermal-coring stage and the onset of gravothermal core-collapse;
+while the ﬂuid model can follow the evolution well into core-collapse.
+Third, solving the ﬂuid equations requires discretizing the spherical
+halo and is relatively computationally expensive; whereas the isother-
+mal model only requires performing the minimization at 𝑟1, and
+within each iteration, the numerical integration of the Jeans-Poisson
+equation is quite fast. The speed advantage makes it easier for incor-
+porating into large semi-analytic frameworks. Fourth, the ﬂuid model
+only considers the dark-matter component, at least as presented in the
+literature so far; while the isothermal model easily accounts for bary-
+onic eﬀects by including baryonic terms in the Jeans-Poisson equa-
+tion and by considering adiabatic contraction. For this reason, when
+we compare the the two models, we focus on the dark-matter-only se-
+tups.3 Finally, the ﬂuid model can easily adapt to velocity-dependent
+cross sections – one can simply plug a 𝑣-dependent cross section
+𝜎𝑚(𝑣) in the fourth equation of eq. (16); while the isothermal model
+evaluates the 𝑟1 radius using the instantaneous cross section, and thus
+ignores any 𝑣-dependence. For typical particle-physics models, the
+𝑣-dependence eﬀectively makes the cross section larger in the past
+and thus makes the isothermal coring faster (Nadler et al. 2020). That
+said, if we know the growth history of the target CDM halo including
+the velocity dispersion proﬁle as a function of redshift 𝑣(𝑟, 𝑧), then
+we can solve for an 𝑟1(𝑡age) that includes the time dependence:
+1 =
+∫𝑡age
+0
+𝜌(𝑟1, 𝑡)𝑣(𝑟1, 𝑡)𝜎𝑚[𝑣(𝑟1, 𝑡)]d𝑡,
+(17)
+where 𝑡(𝑧) is the lookback time. We can therefore perform the isother-
+mal Jeans modeling for each time and construct a density-proﬁle
+evolution 𝜌(𝑟, 𝑧) that approximates the case of a 𝑣-dependent cross
+section.
+We summarize these similarities and diﬀerences of the two meth-
+ods in Table 1. Overall, the isothermal Jeans model is simplistic yet
+much faster. In Fig. 6, we compare the two models in the space of
+the dimensionless central density ˜𝜌0 versus the dimensionless time
+˜𝑡. For the ﬂuid model, ˜𝜌0(˜𝑡) is simply obtained by solving eq. (16).
+We have followed the numerical method as detailed in Nishikawa
+et al. (2020), starting from the NFW proﬁle of the 𝑧= 0 CDM
+Pippin halo (i.e., solid grey line in Fig. 2), adopting a cross section
+of 𝜎𝑚= 5 cm2/ g, and using 𝐶= 0.75 as calibrated to idealized
+simulations (Koda & Shapiro 2011). Despite the speciﬁc choices, we
+emphasize that the cross section, the details of the NFW proﬁle, or
+the exact value of 𝐶as long as it is between 0.5 and 1, has weak
+impact on the result in this dimensionless space in the core-forming
+regime. For the isothermal model, in order to construct the ‘time
+evolution’, we repeat the exercise for a series of halo age 𝑡age and plot
+2 That is, when the mean free path of scattering, 𝜆= 1/𝜌𝑣, is larger than the
+gravitational scale length, 𝐻=
+√︁
+𝑣2/4𝜋𝐺𝜌
+3 It is in principle possible to include a static baryon component in the second
+equation of eq. (16) and thus make the ﬂuid model capture baryon eﬀects as
+well, but this is beyond the scope of this work.
+MNRAS 000, 1–14 (0000)
+
+10
+Jiang et al.
+Table 1. Comparison of the two 1D models of self-interacting DM haloes –
+the isothermal Jeans model versus the gravothermal ﬂuid model. See §5.1 for
+details
+Isothermal
+Gravothermal
+similarities
+Operation target
+CDM halo
+CDM halo
+Applicable before core-collapse
+yes
+yes
+diﬀerences
+Speed
+fast
+slow
+Applicable after core-collapse
+no
+yes
+Captures baryonic eﬀect
+yesa
+nob
+Support 𝑣-dependent 𝜎𝑚
+noc
+yes
+a It captures the gravitational eﬀect of the baryonic potential, not the
+baryonic feedback.
+b In principle, one can add a static baryonic term in the second equation
+of eq. (16), such that the gravothermal ﬂuid model can also capture the
+halo response to the baryonic component.
+c However, velocity dependence eﬀectively makes the cross section
+larger in the past, so if given the growth history of the target CDM
+halo, we can redeﬁne 𝑟1 with eq. (17) and perform the isothermal Jeans
+modeling for each time.
+˜𝜌0 versus ˜𝑡≡𝑡age/𝑡0. The same target CDM halo and cross section
+are used for both methods. Again, these details are largely irrelevant
+for this dimensionless parameter space due to the self-similar nature
+of the density evolution in the core-formation regime, and we have
+veriﬁed with the isothermal Jeans model that it predicts a universal
+track in the ˜𝜌0-˜𝑡space for diﬀerent 𝜎𝑚. For the isothermal model,
+in addition to the default, low-density solution, we also record the
+high-density solution, and display both solutions in Fig. 6. We reiter-
+ate that only the low-density solution is supposed to be comparable
+to the simulation results or the ﬂuid model predictions.
+As can be seen, both models show a similar qualitative behavior
+– an isothermal core grows as the density keeps decreasing; then the
+central density reaches a minimum and turns around, manifesting
+the onset of gravothermal core-collapse. However, there is a clear
+diﬀerence: with the isothermal model, the core develops faster, and
+reaches a minimum central density that is ∼2 times lower than that
+predicted by the ﬂuid model, at a slightly later time. This diﬀerence
+cannot be attributed to the calibration parameter 𝐶. In fact, smaller
+(larger) 𝐶makes the turn-around of ˜𝜌0 occur later (earlier), but it has
+little impact on the steepness of the isothermal-coring stage.
+What causes the diﬀerence? Which model is more accurate? To
+get some clues, we compare the model predictions to simulation re-
+sults of diﬀerent kinds. First, we compare to the cosmological Pippin
+𝑁-body simulations of Elbert et al. (2015). Following Essig et al.
+(2019), an ‘evolutionary’ track ˜𝜌0(˜𝑡) can be constructed using the
+simulation results all at the same time of 𝑧= 0. This is because the
+dimensionless time ˜𝑡≡𝑡(𝑧)/𝑡0 ∝𝜎−1
+𝑚, where the cosmic time at
+𝑧= 0 is 𝑡= 13.7 Gyr for the Pippin cosmology, so diﬀerent cross
+sections correspond to diﬀerent dimensionless times. Speciﬁcally,
+the Pippin halo was run with cross sections 𝜎𝑚= 0.5, 1, 5, 10, and
+50 cm2/ g, and the central densities at 𝑧= 0 are 𝜌0 = 7.5, 5.0, 3.0,
+2.6, and 4.3×107𝑀⊙kpc−3, respectively. The CDM counterpart has
+𝜌s = 1.7 × 107𝑀⊙kpc−3 and 𝑟s = 2.7 kpc. Hence, the dimension-
+less central densities are ˜𝜌0 = 4.4, 2.9, 1.8, 1.5, and 2.5, which are
+reached at the dimensionless times of ˜𝑡= 4.6, 9.2, 46, 92, and 460,
+respectively. Interestingly, the isothermal Jeans model, albeit sim-
+plistic, agrees with the cosmological Pippin simulations very well.
+Notably, the steeper isothermal coring at ˜𝑡<∼100 is the same, and the
+10
+1
+100
+101
+102
+103
+t
+100
+101
+102
+103
+0
+tmerge
+isothermal low-density soln
+isothermal high-density soln
+gravothermal
+cosmological sim Pippin
+idealized sim: c90
+idealized sim: c45
+Figure 6. Comparison of the gravothermal ﬂuid model (black solid line) and
+the isothermal Jeans model (brown solid line) in terms of the (dimensionless)
+central density ˜𝜌0 ≡𝜌0/𝜌s as a function of time ˜𝑡≡𝑡/𝑡0. See §5.1 for the
+deﬁnitions and the details of the calculations. Note that the details of the target
+CDM halo or the cross section have little impact on the dimensionless ˜𝜌0(˜𝑡)
+track. Simulation results are overplotted for comparison – the grey circles
+represent the Pippin cosmological simulations of diﬀerent cross sections
+𝜎𝑚= 0.5, 1, 5, 10, and 50 cm2/ g at 𝑧= 0; the red and green dash-dotted
+lines represent the idealized isolated simulations starting from NFW proﬁles
+with 𝑐= 45 and 90, and with 𝜎𝑚= 10 cm2/ g. The isothermal model
+agrees better with the cosmological results, while the ﬂuid model agrees with
+the idealized simulations – their diﬀerence likely originates from whether the
+target CDM halo is used as an initial condition or as a boundary condition (see
+§5.1 for discussion). The orange solid line represents the usually-discarded
+high-density solution of the isothermal model. The point when the high-
+density and low-density solutions merge coincides with when gravothermal
+core-collapse speeds up and the core temperature is well above the velocity
+dispersion of the CDM-like outskirt (see §5.2).
+last simulation data point at ˜𝑡= 460, which exhibits core-collapse,
+is almost on top of the model prediction. This time happens to be
+when the low-density solution and the high-density solution merge,
+beyond which the isothermal Jeans model is no longer applicable.
+Mathematically, for a continuously evolving quantity (such as the
+central density ˜𝜌0) that has two solutions, any transition between the
+solutions must be continuous and therefore any continuous parameter
+(such as time ˜𝑡) must enable a smooth transition between the solu-
+tions. In this sense, the transition is when the density increases and
+that is the onset of core collapse. Physically, beyond this time, a neg-
+ative velocity-dispersion gradient starts to develop so the isothermal
+assumption breaks (see §5.2 and Appendix A for more discussion).
+In practice, the merging point is manifested by where the ‘stitching
+error’ 𝛿2 can no longer be minimized to zero.
+Second, we compare the model predictions to idealized SIDM
+𝑁-body simulations of isolated haloes. To this end, we simulate
+with the Arepo code (Springel 2010; Weinberger et al. 2020) two
+Milky-Way sized haloes, which are initialized with NFW proﬁles at
+𝑧= 0 with 𝑐= 45 and 90, respectively, and are evolved with a self-
+interacting cross section of 10 cm2/ g. The details of the simulations
+are provided in Appendix B. Again, ˜𝜌0(˜𝑡) is not sensitive to the details
+of the target halo or the cross section, and the high concentrations are
+chosen simply to facilitate the gravothermal evolution and shorten
+the computation time. Clearly, the ﬂuid model agrees well with the
+idealized simulations, whereas the isothermal model agrees better
+with cosmological results.
+MNRAS 000, 1–14 (0000)
+
+SIDM haloes
+11
+We hypothesize that the diﬀerence originates from how the target
+CDM halo is used in the modeling. Speciﬁcally, in the ﬂuid model,
+the present-day target CDM halo is used to initialize the system. That
+is, there are two implicit assumptions here: ﬁrst, for the entire history
+of the target halo up until 𝑡= 0, dark matter remains collisionless,
+and only at 𝑡> 0, DM becomes self-interacting; second, the halo
+stops mass accretion and evolves in isolation at 𝑡> 0. As such, the
+proﬁle we obtain at time 𝑡(𝑡> 0) is virtually that of an isolated
+system at a future cosmic time of 𝑡+ the age of the Universe today,
+with the eﬀect of self-interactions during the entire assembly of the
+target halo not taken into account. It is therefore not surprising that
+the ﬂuid model disagrees with the cosmological results but agrees
+better with the idealized simulations which essentially make the same
+implicit assumptions.
+In contrast, in the isothermal model, the target CDM halo at 𝑧= 0
+is not treated as an initial condition, but instead used for the boundary
+condition at 𝑟1. In the context of trying to understand why distinct
+CDM haloes all have the universal NFW shape, it has been well-
+established that there is a correspondence between the density-proﬁle
+shape and the shape of the mass assembly history (e.g., Ludlow et al.
+2013). In this regard, using the target NFW proﬁle to set the boundary
+condition means that we have implicitly used some information of
+the cosmological mass assembly history of the halo. It is therefore
+reasonable to expect agreement with the cosmological simulations.
+It is still remarkable that the simplistic stitching at 𝑟1 results in this
+high level of agreement and we caution against over-interpretating it
+physically. But we have veriﬁed that altering the detailed deﬁnition
+of 𝑟1 does not change the qualitative agreement. For example, multi-
+plying a constant factor in eq. (1) will not change the overall shape of
+the ˜𝜌0(˜𝑡) track. This implies that, when the isothermal assumption
+is valid, there is no hysteresis of the core. After all, the isothermal
+state is a thermodynamic equilibrium, so does not depend on how
+the state was reached.
+We also caution that the comparison in Fig. 6 should not be inter-
+preted as a criticism of the ﬂuid model, but instead a clariﬁcation of
+what it does as implemented in the literature (Lynden-Bell & Eggle-
+ton 1980; Koda & Shapiro 2011; Balberg & Shapiro 2002; Pollack
+et al. 2015; Essig et al. 2019; Nishikawa et al. 2020). To adapt it
+for better cosmological usage, one may want to explore revisions of
+the sort of the following. In particular, in order to model the SIDM
+counterpart of a CDM halo at 𝑧= 0, it is reasonable to adopt the
+CDM proﬁle at 𝑧= 𝑧form as the initial condition, where 𝑧form is a
+characteristic formation redshift of the halo. Accordingly, the mass,
+density, and velocity dispersion in eq. (16) shall be updated accord-
+ing to cosmological average trends to account for the growth history
+of the halo. For example, for each timestep, one can add a mass
+increment to each radius bin self-similarly according to the instanta-
+neous density proﬁle, where the sum of the mass depositions across
+all the bins is equal to the average mass growth in that timestep.
+There are well-established empirical mass assembly histories and
+mass-concentration-redshift relations from CDM simulations (e.g.,
+McBride et al. 2009; Dutton & Macciò 2014). We explore improve-
+ments of this sort in a future study (Yang et al. in preparation).
+5.2 Gravothermal core-collapse and facilitation by the
+inhabitant galaxy
+As Fig. 6 shows, gravothermal core-collapse occurs, i.e., the central
+density starts to increase, at ˜𝑡>∼100. Soon after the onset of core-
+collapse, one can see with the ﬂuid model that the central velocity
+dispersion increases to a level that is higher than the CDM 𝑣(𝑟1), and
+thus a steep negative velocity-dispersion gradient occurs at 𝑟<∼𝑟1, as
+10
+1
+100
+101
+r
+0.1
+0.2
+0.3
+0.4
+v
+CDM (initial)
+SIDM (
+0 = 10 1st time)
+SIDM (
+0 = 5 1st time)
+SIDM (
+0
+0, merge)
+SIDM (
+0 = 10 2nd time)
+SIDM (
+0 = 100)
+Figure 7. Evolution of the velocity dispersion proﬁle from the ﬂuid model.
+The dashed black line represents the initial CDM proﬁle. The coloured solid
+lines represent the SIDM proﬁles at diﬀerent times, as indicated. Notably,
+the orange line represents the result when ˜𝜌0 reaches the value when the
+low-density and the high-density solutions merge in the isothermal Jeans
+model, ˜𝜌0,merge. Since the central density ˜𝜌0 initially decreases and later
+turns around, it will reach certain values twice – e.g., both the blue and red
+lines here correspond to ˜𝜌0 = 10, but the former is during core-formation
+while the latter is during core collapse. The dotted vertical lines indicate the
+corresponding 𝑟1 radii. The triangles indicate the isothermal Jeans solutions
+of the central velocity dispersions (only for the ﬁrst three cases, because the
+isothermal model is no longer applicable to the later stages of evolution).
+Obviously, beyond ˜𝜌0,merge, a negative velocity-dispersion gradient develops
+at 𝑟∼𝑟1, core-collapse speeds up, and therefore the isothermal model stops
+working as the assumption of constant velocity dispersion at 𝑟< 𝑟1 is no
+longer valid.
+shown in Fig. 7. Then, the ﬂat isothermal core becomes signiﬁcantly
+smaller than𝑟1 and thus gravothermal core-collapse speeds up. Recall
+that the key assumption for the isothermal Jeans model is that the core
+has constant 𝑣= 𝑣0 throughout the region 𝑟< 𝑟1. This assumption
+holds at the onset of core-collapse, which is why the isothermal
+model is still able to capture the upturn in the central density. But the
+isothermal method fails as core-collapse continues, because 𝑟1, as
+deﬁned in eq. (1), increases with time, and therefore the assumption
+of 𝑣= 𝑣0 within 𝑟1 breaks when 𝑣0 increases to be signiﬁcantly
+higher than the peak of the CDM 𝑣(𝑟) proﬁle.
+Recall that in the isothermal model, we accept the lower-density
+solution because realistic haloes form with properties closer to it.
+However, we emphasize that both the low-density and high-density
+solutions are physical, as they satisfy the Jeans-Poisson equation
+with constant velocity dispersion within 𝑟1. A smooth transition
+between them is achieved shortly after the central density starts to
+increase, manifesting core-collapse. Therefore, we can practically
+use the moment when the two solutions merge as an indicator of
+gravothermal core-collapse.
+The inhabitant galaxy facilitates core-collapse by making the halo
+contract in the ﬁrst place. Naturally, this eﬀect is particularly strong
+when the galaxy is massive and compact. To illustrate this, we high-
+light the region of core-collapse in the 𝑟1/2/𝑅vir −𝑀b/𝑀vir space in
+Fig. 5. The operational deﬁnition of this region is that: for galaxies on
+the border of this region, the SIDM haloes that formed 10 Gyr ago
+have started core-collapse, such that no isothermal solution exists
+that joins smoothly the CDM outskirt (with 𝛿2 < 0.01).
+MNRAS 000, 1–14 (0000)
+
+12
+Jiang et al.
+10
+2
+10
+1
+Mb/Mvir
+10
+2
+10
+1
+Rb, 1/2/Rvir
+m = 1 cm2/g, c = 5
+m = 1 cm2/g, c = 10
+m = 1 cm2/g, c = 20
+m = 10 cm2/g, c = 5
+m = 10 cm2/g, c = 10
+m = 10 cm2/g, c = 20
+Gravothermal
+core-collapse
+Figure 8. Critical baryonic properties for gravothermal core-collapse – the
+same as the boundary of the core-collapse region in Fig. 5, but for diﬀerent
+halo concentrations and SIDM cross sections, as indicated. The way to read
+this is: if the inhabitant galaxy has higher mass or more compact size than this
+threshold, the host SIDM halo formed ∼10 Gyr ago will start core-collapse.
+Practically, systems sitting on the threshold have the two isothermal solutions
+merged into one. Beyond this threshold to the lower right corner, a smooth
+joint with 𝛿2 < 0.01 between the SIDM core and the CDM-like outskirt is no
+longer achievable, or equivalently speaking, it is no longer possible to have
+constant velocity dispersion within 𝑟1. See §5.2 for details.
+The region for core-collapse depends on the target CDM con-
+centration and the self-interacting cross section, and becomes larger
+for higher 𝑐and 𝜎𝑚. This is illustrated in Fig. 8. For instance, at
+𝑀b/𝑀vir = 0.02 ﬁxed, haloes with 𝑟1/2/𝑅vir <∼0.01 will collapse
+if 𝜎𝑚= 1 cm2/ g. The exact size limit is slightly lower for lower
+concentration. The galaxy-size limit becomes 𝑟1/2/𝑅vir <∼0.02 for
+𝜎𝑚= 10 cm2/ g. Given that numerous galaxies populate the region
+𝑟1/2/𝑅vir ∼0.01-0.02 observationally, this parameter space may po-
+tentially provide useful constraints on SIDM models. To this end,
+however, we think that it still requires more detailed understanding
+of how the inhabitant galaxies react to core-collapse. Regardless, the
+baryon-facilitated core-collapse itself might be a viable way to create
+compact bright dwarfs, which are common in the real Universe but
+are diﬃcult to produce in cosmological hydro-simulations.
+For dwarf galaxies with 𝑀b/𝑀vir ≪0.01, there is basically no
+constraint on how compact the galaxy can get before core-collapse
+kicks in, as long as 𝑐and 𝜎𝑚are not extremely high.
+In short, with the current implementation of the isothermal Jeans
+model, although we cannot self-consistently describe core-collapse,
+we can phenomenologically delineate the onset of core-collapse as a
+function of the baryonic properties, given the target halo concentra-
+tion and the cross section.
+6 CONCLUSION
+In this paper, we combine the isothermal Jeans model and the pre-
+scription for adiabatic halo contraction into a fast semi-analytic pro-
+cedure for calculating the density proﬁle of SIDM haloes. This
+method takes the inputs of 1) a target CDM halo described by an
+NFW proﬁle, and 2) an observable baryon distribution described by
+a Hernquist proﬁle. It computes the contraction, ﬁts the contracted
+CDM halo with a Dekel-Zhao proﬁle, and stitches an isothermal core
+to the CDM outskirt at the characteristic radius 𝑟1 by minimizing the
+fractional diﬀerence in density and enclosed mass. We have shown
+that this model works remarkably well compared to cosmological
+SIDM simulations both in dark-matter-only setups (Pippin) and with
+hydrodynamics and star formation (FIRE2-SIDM). We provide a
+simple CORENFW approximation formula for the dark-matter-only
+cases, where the characteristic core size of 𝑟c = 0.45𝑟1 universally
+applies to a wide range of cross sections and target CDM halo con-
+centrations.
+We use this model to study the response of SIDM haloes to their
+inhabitant galaxies. We show that the halo response to the baryonic
+potential is more intensiﬁed and more diverse in SIDM than in CDM.
+Notably, depending on the compactness of the baryonic distribution,
+the central dark-matter density slope can be cored, equally cuspy,
+or cuspier than the CDM counterpart – a desirable feature in the
+context of the structural diversity of bright dwarf galaxies. We note
+that, while the model does not capture feedback-driven halo expan-
+sion and only considers adiabatic contraction, it agrees well with the
+FIRE2-SIDM simulations which incorporate both eﬀects. We there-
+fore argue that the dominant baryonic eﬀect in the context of SIDM is
+adiabatic contraction, and that the details of baryonic feedback may
+be unimportant in SIDM models.
+The fast speed of the numerical implementation of the model en-
+ables the following analyses that would be otherwise challenging for
+numerical simulations. We quantify the SIDM halo response on a ﬁne
+mesh grid spanned by the baryon-to-total mass ratio 𝑀b/𝑀vir and the
+ratio between the half mass radius and the virial-radius 𝑟1/2/𝑅vir, in
+terms of the central logarithmic density slope, 𝑠≡d ln 𝜌/d ln 𝑟|1 kpc,
+as well as the core density in units of the scale density of the reference
+CDM halo, 𝜌0/𝜌s. With this, we are able to conﬁrm with unprece-
+dented precision that for typical Milky-Way-like hosts, the SIDM
+proﬁles are similar to their CDM counterparts – an assumption often
+used in semi-analytic or idealized studies of SIDM satellite galaxies.
+We also delineate the regime of gravothermal core-collapse in the
+space of galaxy mass versus galaxy size, 𝑀b/𝑀vir −𝑟1/2/𝑅vir. This
+can be done for any choice of the cross section and the target CDM
+halo concentration. For any given baryon-to-total ratio, there is a limit
+on how compact the galaxy can get in terms of 𝑟1/2/𝑅vir, beyond
+which core-collapse will be triggered within the Hubble time. This
+threshold is lower (i.e., galaxies can be more compact) if the target
+CDM halo concentration is smaller or if the cross section is smaller.
+With 𝑐= 10 and 𝜎𝑚= 1 cm2/ g, galaxy sizes cannot be smaller than
+∼0.01𝑅vir for typical baryon-to-total ratios of ∼0.02. Given that
+numerous galaxies have 𝑟1/2 ∼0.01𝑅vir, we think that this baryon-
+facilitated gravothermal core-collapse may provide useful constraints
+on SIDM models, if we can better understand how galaxies react to
+core-collapse.
+Finally, we compare the isothermal Jeans model with the more so-
+phisticated gravothermal ﬂuid model which is extensively studied in
+the literature. We show that the isothermal model agrees better with
+cosmological simulations: they both show a steeper central-density
+decrease in the isothermal coring regime and a later gravothermal
+core-collapse compared to the ﬂuid model. On the contrary, the ﬂuid
+model agrees well with idealized simulations of isolated haloes ini-
+tialized with NFW proﬁles. We argue that the diﬀerence originates
+from whether the target CDM proﬁle is used for the boundary condi-
+tion (as in the case of the isothermal model) or as the initial condition
+(as in the case of the ﬂuid model).
+We have made our programs publicly available, including the pro-
+grams for computing the proﬁles of SIDM haloes with baryons, as
+well as the programs that calculate the threshold for gravothermal
+MNRAS 000, 1–14 (0000)
+
+SIDM haloes
+13
+core-collapse in the 𝑀b/𝑀vir −𝑟1/2/𝑅vir space. They can be down-
+loaded at https://github.com/JiangFangzhou/SIDM. While we stick
+to Hernquist galaxies in the paper for self-consistency (as eq. (5)
+is based on Hernquist galaxies), the adiabatic contraction model of
+Gnedin et al. (2004) actually also accommodates exponential disks
+and is implemented in the code.
+ACKNOWLEDGEMENTS
+We thank Ethan Nadler, Maya Silverman, Igor Palubski, and Dylan
+Folsom for helpful general discussions. FJ is partially supported by
+the Troesh Scholarship from the California Institute of Technology.
+AB, AHGP, ZCZ, and XD are supported in part by the NASA As-
+trophysics Theory Program under grant 80NSSC18K1014. ML and
+OS are supported by the DOE under Award Number DE-SC0007968
+and the Binational Science Foundation (grant No. 2018140).

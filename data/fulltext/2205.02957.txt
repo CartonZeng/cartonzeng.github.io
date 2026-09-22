@@ -1,0 +1,2003 @@
+Draft version March 6, 2023
+Typeset using LATEX twocolumn style in AASTeX63
+Gravothermal solutions of SIDM halos: mapping from constant to velocity-dependent cross section
+Shengqi Yang,1 Xiaolong Du,1 Zhichao Carton Zeng,2, 3 Andrew Benson,1 Fangzhou Jiang,1
+Ethan O. Nadler,4, 5 and Annika H. G. Peter2, 6, 3
+1Carnegie Observatories, 813 Santa Barbara Street, Pasadena, CA 91101, U.S.A
+2Department of Physics, The Ohio State University, 191 W. WoodruﬀAve., Columbus, OH 43210, USA
+3Center for Cosmology and AstroParticle Physics, The Ohio State University, 191 W. WoodruﬀAve., Columbus, OH 43210, USA
+4Carnegie Observatories, 813 Santa Barbara Street, Pasadena, CA 91101, USA
+5Department of Physics & Astronomy, University of Southern California, Los Angeles, CA, 90007, USA
+6Department of Astronomy, The Ohio State University, 140 W. 18th Ave., Columbus, OH 43210, USA
+ABSTRACT
+The scale-free gravothermal ﬂuid formalism has long proved eﬀective in describing the evolution
+of self-interacting dark matter halos with a constant dark matter particle cross section.
+However,
+whether the gravothermal ﬂuid solutions match numerical simulations for velocity-dependent cross-
+section scenarios remains untested. In this work, we provide a fast mapping method that relates the
+constant-cross-section gravothermal solution to models with arbitrary velocity dependence in the cross
+section. We show that the gravothermal solutions after mapping are in good agreement with Arepo
+N-Body simulation results. We illustrate the power of this approach by applying this fast mapping
+method to a halo hosting a low surface brightness galaxy UGC 128. We show that this fast mapping
+method can be used to constrain free parameters in a physically motivated cross-section model and
+illustrate parameter space favored by the rotation curve measurement.
+Keywords: Dark matter; Milky Way dark matter halo
+1. INTRODUCTION
+Self-interacting dark matter (SIDM) is a promising
+class of candidate to explain the cored dark matter (DM)
+halos implied by observations of local dwarf galaxies (de
+Blok et al. 2008; Oh et al. 2015), while maintaining
+the accurate reproduction of large-scale cosmic proper-
+ties provided by the cold dark matter (CDM) paradigm
+(Peebles 1982; Planck Collaboration et al. 2011, 2014;
+Anderson et al. 2012). In the SIDM model, ﬁrst pro-
+posed by Spergel & Steinhardt (2000), in addition to
+the gravitational interactions, DM particles also scatter
+with each other. The eﬀect of scattering is negligible
+on large scales due to the low DM particle number den-
+sity and the resulting long relaxation time. However,
+the DM particle collisional mean free path can become
+smaller than the orbital Jeans scale near the halo center,
+causing the formation of an isothermal core and even the
+gravitational catastrophe (Lynden-Bell & Wood 1968)
+at small scales.
+Corresponding author: Shengqi Yang
+syang@carnegiescience.edu
+The gravothermal ﬂuid formalism originally developed
+for studying the gravitational catastrophe of stellar clus-
+ters (Lynden-Bell & Wood 1968; Eggleton 1971) has
+been extended to isolated SIDM halos and provides rich
+physical insights into the nature of SIDM halo evolu-
+tion (e.g.
+Lynden-Bell & Eggleton 1980; Balberg &
+Shapiro 2002; Balberg et al. 2002; Shapiro 2018; Essig
+et al. 2019; Nishikawa et al. 2020). Although it makes
+multiple simplifying assumptions, numerical solutions to
+the gravothermal ﬂuid formalism show surprisingly good
+agreement with idealized N-Body simulations and also
+match reasonably well with cosmological SIDM zoom-in
+simulations (Koda & Shapiro 2011; Elbert et al. 2015;
+Essig et al. 2019; Outmezguine et al. 2022).
+A nice
+property of the gravothermal ﬂuid formalism is that
+the ﬂuid equations themselves can be re-written into a
+form that is independent of the halo density and radius
+scales. Therefore, although computationally expensive,
+the ﬂuid formalism only needs to be numerically solved
+once and can be rescaled to SIDM halos with arbitrary
+masses, sizes, and concentrations.
+All previous comparisons between the gravothermal
+solutions and numerical simulations have assumed a con-
+arXiv:2205.02957v3  [astro-ph.CO]  2 Mar 2023
+
+2
+Yang et al.
+stant DM particle scattering cross section.
+However,
+if SIDM is the explanation for the apparent deviations
+from CDM behavior on small scales, then recent ob-
+servations indicate that the cross section, σ, for DM
+particle self-interaction is likely varying among systems
+of diﬀerent scales. Speciﬁcally, σ is constrained to be
+of the order of 0.1 cm2/g, 1 cm2/g, and 10 cm2/g for
+galaxy cluster, galactic, and dwarf-galaxy halos, respec-
+tively, where the DM particle velocity dispersion de-
+creases from ∼1000 km/s to ∼1 km/s (e.g.
+Kapling-
+hat et al. 2016; Elbert et al. 2018; Sagunski et al. 2021;
+Andrade et al. 2022). A velocity-dependent cross sec-
+tion σ ∝v−4 at high velocity is also motivated by par-
+ticle physics, assuming a Yukawa or Coulomb poten-
+tial for the self-interaction (Ackerman et al. 2009; Feng
+et al. 2009; Ibe & Yu 2010; Kummer et al. 2018). Moti-
+vated by this, more recent SIDM numerical simulations
+have started to focus on velocity-dependent cross sec-
+tion models (e.g. Nadler et al. 2020). Testing whether
+the gravothermal ﬂuid solutions are still in good agree-
+ment with numerical simulations assuming a velocity-
+dependent cross section model becomes crucial in devel-
+oping better understanding of the SIDM N-Body sim-
+ulations, as well as justifying SIDM cross section con-
+straints derived by gravothermal ﬂuid formalism-based
+methods.
+In this work, we show using an analytic gravother-
+mal ﬂuid formalism that assuming diﬀerent cross sec-
+tion values/models eﬀectively re-scales SIDM halo evo-
+lution rates.
+In particular, there exists a one-on-one
+time mapping between any two SIDM halos simulated
+by the gravothermal ﬂuid approach such that their den-
+sity, velocity, and all the other physical properties are
+identical up to some re-scaling factors. Based on this
+ﬁnding, we propose a fast mapping method that trans-
+fers the gravothermal numerical solutions assuming a
+constant SIDM cross section to those with arbitrary
+velocity dependent cross section models.
+To test the
+performance of this mapping method we perform mul-
+tiple idealized N-Body simulations assuming velocity-
+dependent cross section scenarios with Arepo (Springel
+2010). We ﬁnd excellent agreement between the mapped
+gravothermal solutions and N-Body simulation results.
+This mapping approach is powerful because it eliminates
+the degrees of freedom introduced by SIDM cross section
+model assumptions, such that one only needs to solve the
+gravothermal ﬂuid equations for once and one can then
+re-scale the solution to halos of arbitrary sizes, masses,
+and cross section models. Due to the high computational
+eﬃciency, this method is useful for exploring the con-
+tinuous parameter space and constraining SIDM cross
+sections.
+It is also applicable to semi-analytic galaxy
+formation models to eﬃciently generate SIDM halo pop-
+ulations. To demonstrate the utility of this approach, we
+combine the mapping method with rotation curve mea-
+surements of the low surface brightness (LSB) galaxy
+UGC 128 (van der Hulst et al. 1993) and illustrate the
+parameters of the Navarro–Frenk–White (NFW) den-
+sity proﬁle (Navarro et al. 1996) and velocity-dependent
+cross section models favored by observations.
+As this work was nearing completion, Outmezguine
+et al. (2022; hereafter
+O22) introduced a mapping
+method with a similar spirit, but which diﬀers in detail
+from our work. We ﬁnd that O22 only compared the
+mapped gravothermal solutions with idealized N-Body
+simulations that assume constant cross sections (Koda
+& Shapiro 2011). Example applications of their map-
+ping method are also not discussed in detail. We have
+therefore expanded this work to include comparison of
+our approach with that of O22.
+Calibrating the gravothermal ﬂuid formalism to cos-
+mological zoom-in simulations is an even more inter-
+esting topic to explore.
+However, cosmological simu-
+lations generally contains more complicated physics and
+can break multiple assumptions made in the current
+ﬂuid model. As a ﬁrst step, in this work we will only
+compare gravothermal solutions with idealized SIDM N-
+Body simulations for isolated halos with constant or
+velocity dependent cross sections. We leave the more
+complicated gravothermal solution versus cosmological
+simulation comparisons to future works.
+The plan of this paper is as follows.
+In Section 2
+we brieﬂy introduce our idealized SIDM halo simula-
+tion sets. Section 3 is an introduction to the gravother-
+mal ﬂuid formalism. We brieﬂy review the long-mean-
+free-path (lmfp) gravothermal solution mapping method
+among diﬀerent constant cross scenarios introduced by
+Balberg et al. (2002); Koda & Shapiro (2011); Essig
+et al. (2019) in Section 4. We then explain the method-
+ology of mapping the lmfp gravothermal solutions from
+constant cross section σ to velocity dependent cross
+section σ(v) in Section 5, and comparing the mapped
+gravothermal solutions with N-Body simulation results
+as well as O22 in Section 6. We brieﬂy discuss the gen-
+eralization of this lmfp mapping method to the short-
+mean-free-path (smfp) and intermediate regime in Sec-
+tion 7. In Section 8 we combine the mapping method
+with observational data and show parameter constraints
+of the velocity-dependent cross section models. We con-
+clude in Section 9.
+2. IDEALIZED SIDM N-BODY SIMULATION
+In this work we perform idealized N-Body simulations
+of an isolated Milky Way-sized halo with NFW initial
+
+σ(v) mapping
+3
+density proﬁle:
+ρ(r) =
+ρs
+r
+rs
+
+1 + r
+rs
+2 ,
+(1)
+where ρs = 4.2 × 106 M⊙/kpc3, and rs = 24.54 kpc.
+The halo virial radius and mass, deﬁned with overden-
+sity ∆vir = 99.2 with respect to the critical density, are
+rvir = 280.6 kpc and Mvir = 1012.1M⊙.
+To guaran-
+tee a ﬁnite halo mass, we apply an exponential cutoﬀ
+to the halo density proﬁle at rvir. Convergence test re-
+sults show that such an exponential cutoﬀat r ≳10rs
+brings negligible inﬂuence to the SIDM halo gravother-
+mal evolution. The properties of this halo are chosen to
+be consistent with the host halo from the CDM zoom-
+in simulation presented in Nadler et al. (2020), which
+has also been resimulated in velocity-dependent SIDM
+models.1 However, our selection of these halo proper-
+ties is an arbitrary choice for testing the performance of
+the gravothermal solution mapping method introduced
+in Section 5. Since the gravothermal ﬂuid formalism is
+scale free (i.e. independent of ρs and rs besides some re-
+scaling factors), comparisons between the gravothermal
+solutions and isolated SIDM halo simulations of arbi-
+trary sizes and masses are equivalent.
+To
+avoid
+extremely
+long
+halo
+core
+collapsing
+timescales and, therefore, expensive simulations, we se-
+lect a large constant cross section factor σc = 30 cm2/g
+and consider a simple velocity-dependent cross section
+model introduced in Gilman et al. (2021),
+σ(v) =
+σc
+
+1 + v2
+ω2
+2 ,
+(2)
+where ω is a characteristic velocity beyond which the
+cross section drops as v−4. This asymptotic behavior
+is motivated by Coulomb or Yukawa interactions (Ack-
+erman et al. 2009; Feng et al. 2009; Ibe & Yu 2010;
+Kummer et al. 2018). The factor 1 in the denominator
+is used to avoid divergent cross section for low-velocity
+particles in the numerical simulations.
+We consider four diﬀerent cross section models where
+ω = ∞(i.e. σ = σc = 30 cm2/g is a constant), and
+ω = 1000, 500, 400 km/s. Notice that since DM parti-
+cle 1D root-mean-square (rms) velocity at the halo cen-
+ter and at the core-formation moment (when the halo
+central density reaches minimum) is about 100 km/s,
+1 This host halo was selected from the CDM cosmological simula-
+tion c125–1024, and its corresponding zoom-in simulation was
+ﬁrst presented in Mao et al. (2015).
+corresponding to a 3D rms relative velocity of about
+250 km/s, those four scenarios corresponds to constant
+cross section, and weak, intermediate, strong cross sec-
+tion velocity dependency, respectively.
+We use SpherIC (Garrison-Kimmel et al. 2013) to
+generate ﬁve initial conditions with identical resolu-
+tions and halo properties, but diﬀerent random seeds.
+Through this we can quantify the eﬀects of discrete-
+ness noise in the initial conditions on the evolution of
+the halo in the N-body simulations. We set the particle
+mass to 106 M⊙so the halo in each simulation is resolved
+with 1.7 × 106 particles. For each cross section scenario
+we simulate ﬁve halos with the Arepo SIDM module,
+and we direct the reader to Vogelsberger et al. (2012,
+2014, 2019) for a detailed introduction to the numeri-
+cal method. This SIDM simulation pipeline has been
+adopted by many previous works (e.g. Zeng et al. 2022)
+and has been proved to generate valid simulation results
+for cross section up to 60 cm2/g.
+3. GRAVOTHERMAL FLUID FORMALISM
+Consider a spherically symmetric and isolated halo.
+Assuming gravothermal equilibrium is achieved at every
+radius and every moment, the halo evolution can be de-
+scribed by the following four equations (see also Balberg
+et al. 2002; Essig et al. 2019):
+∂M
+∂r = 4πr2ρ,
+(3)
+∂(ρv2
+rms)
+∂r
+= −GMρ
+r2
+,
+(4)
+L
+4πr2 = −κ∂T
+∂r ,
+(5)
+ρv2
+rms
+γ −1
+ ∂
+∂t
+
+M
+ln v2
+rms
+ργ−1 = −
+1
+4πr2
+∂L
+∂r .
+(6)
+Throughout this paper we use M(r) to denote halo en-
+closed mass at radius less than r. Then, ρ(r), vrms(r),
+L(r), κ(r), and T(r) = mv2
+rms(r)/kB correspond to halo
+density, 1D rms velocity averaged over the Maxwell-
+Boltzmann (MB) distribution, luminosity, thermal con-
+ductivity, and temperature at radius r respectively.
+Here, m is the DM particle mass and kB is the Boltz-
+mann constant. Since we do not consider the halo center
+movement throughout this work, the rms velocity and
+velocity dispersion among DM particles are identical at
+all radii. Assuming the DM particles act as a monotonic
+ideal gas, we set the adiabatic index γ = 5/3. The Jeans
+equation (Eq 4) forces gravothermal equilibrium where
+the outward pressure ∂(ρv2
+rms)/∂r is balanced by the
+gravitational force. Eq 5 deﬁnes the heat ﬂux, and Eq 6
+
+4
+Yang et al.
+is the ﬁrst law of thermal dynamics. Together Eqs 5–6
+govern the quasi-static time evolution of a SIDM halo.
+For ideal gas environments where the heat conduction
+is solely realized by the thermal motion and collisions
+among gas particles, the kinetic theory of gases gives
+heat conductivity:
+κsmfp ∝nλ2kB
+tr
+,
+(7)
+and it is conventional to deﬁne κsmfp = 2.1vrmskB/σ, de-
+rived from integration over the MB velocity distribution.
+Here, n = ρ/m is the local DM particle number density,
+λ = 1/(nσ) is the mean free path, and tr = λ/v12 is the
+relaxation time. Here we use σ to denote DM particle
+scattering cross section, which is either a constant or a
+velocity dependent quantity. We use v12 to distinguish
+particle relative velocity from the 1D-rms velocity vrms
+used for the temperature deﬁnition.
+Eq 7 does not apply to low-density and low self-
+interaction-cross-section gravothermal systems, where
+most of the particles tend to orbit several times before
+colliding with one another. Using the Jeans’ length H =
+p
+v2rms/(4πGρ) to approximate particles’ characteristic
+orbital radii, Eq 7 is only accurate when λ ≪H (also re-
+ferred as the short-mean-free-path or smfp regime). In
+this work we only care about halo evolution processes
+that satisfy λ ≫H, also referred as the long-mean-free-
+path or lmfp regime. To derive the lmfp regime heat con-
+ductivity one just needs to replace the mean free path
+λ with the scale height H (Spitzer 1987):
+κlmfp ∝nH2kB
+tr
+.
+(8)
+It is conventional to assume κlmfp = (3β/2)nH2kB/tr =
+0.27βnv3
+rmsσkB/(Gm), where β is an adjustable param-
+eter to match the ﬂuid numerical solutions with N-body
+simulations.
+The value of β cannot be derived from
+ﬁrst-principles and is therefore treated as a free param-
+eter to be calibrated against N-body simulations. It is
+known that calibration to N-Body simulations results in
+β of order unity, but with some variation in the range
+0.5−1.5 depending on the speciﬁc simulation and cross-
+section parameters (Essig et al. 2019). We will show in
+Section 6 that in the lmfp regime, it is valid to absorb
+constant factors resulting from integration over the MB
+velocity distributions into β when σ is constant. How-
+ever, we will demonstrate that a more careful treatment
+is required for relative velocity dependent cross section
+σ(v12) cases.
+A nice feature of this gravothermal ﬂuid formalism is
+that, given the halo initial density proﬁle as NFW with
+characteristic radius rs and density ρs, the equation set
+Eq 3-6 can be rewritten into the scale-free form such that
+the unit-less gravothermal solutions can be applied to
+an arbitrary halo by re-scaling. Speciﬁcally, all physical
+quantities in the ﬂuid formalism equation set x can be
+separated into a unit factor x0 and a scale-free factor ˆx
+(i.e. x = x0ˆx) such that Eq 3–6 can be written into the
+unit-less form:
+∂ˆ
+M
+∂ˆr = ˆρˆr2 ,
+∂(ˆρˆv2
+rms)
+∂ˆr
+= −
+ˆ
+M ˆρ
+ˆr2 ,
+ˆL
+ˆr2 = −ˆκ∂ˆv2
+rms
+∂ˆr
+,
+ˆρˆv2
+rms
+ ∂
+∂ˆt
+
+ˆ
+M
+ln ˆv3
+rms
+ˆρ
+= −1
+ˆr2
+∂ˆL
+∂ˆr .
+(9)
+The unit variables are (Essig et al. 2019):
+r0 = rs , ρ0 = ρs , M0 = 4πr3
+sρs ,
+vrms,0 =
+p
+4πGρsrs , t0 = 1/
+p
+4πGρs ,
+L0 = (4π)5/2G3/2ρ5/2
+s
+r5
+s , (σ/m)0 = 1/(ρsrs) ,
+(10)
+and
+it
+can
+be
+derived
+that
+ˆκlmfp
+=
+0.27 ×
+4πβˆρˆv3
+rms( ˆ
+σ/m), ˆκsmfp = 2.1ˆvrms/( ˆ
+σ/m). Hereafter we
+will abbreviate ( ˆ
+σ/m) as ˆσ for simplicity. We assume
+ˆκ = 1/(ˆκ−1
+lmfp + ˆκ−1
+smfp) to join the lmfp and smfp regimes
+smoothly.
+The steps to solve Eq 9 numerically are (Essig et al.
+2019):
+1. Determine input parameters β and ˆσ.
+2. Grid the halo with NFW density proﬁle ˆρ =
+1/ˆr/(1 + ˆr)2 into 150 log radial bins spread uni-
+formly in range −2 ≤log ˆr ≤323.
+We assume
+boundary conditions ˆ
+M = ˆL = 0 at the inner ra-
+dius and ˆL = 0 at the outer radius to solve for
+the radial proﬁle of ˆvrms through the Jeans equa-
+tion.
+Following Pollack et al. (2015) and Essig
+et al. (2019), we take values of ˆ
+Mi and ˆLi of the
+ith shell at the log radial grid ˆri, while ˆρi, ˆvrms,i
+are taken as the averaged values between the i −1
+and the ith shell.
+3. Let the ﬂuid code take a small time step dˆt such
+that the speciﬁc energy ˆu = 3ˆv2
+rms/2 changes by a
+2 In this work log denotes a base-10 logarithm and ln denotes a
+natural logarithm.
+3 We have tested that setting the halo outer bound at log ˆr = 1, 2, 3
+or the inner bound at log ˆr = −3, −2 has negligible inﬂuence on
+the ﬂuid solutions.
+
+σ(v) mapping
+5
+factor of no more than 10−3 among all the shells:
+dˆui
+dˆt = −∂ˆLi
+∂ˆ
+Mi
+.
+(11)
+4. After taking one time step forward, perturb ˆr,
+ˆρ, and ˆvrms of each shell for 10 times such that
+the gravothermal equilibrium (Eq 4) is established
+again throughout the halo.
+During the pertur-
+bation, the mass, speciﬁc energy, and entropy
+s = ln(ˆv3
+rms/ˆρ) of each shell are conserved.
+5. Repeat step 2. , 3. and 4. iteratively until core col-
+lapse.
+We checked that the basic assumptions made in solv-
+ing Eq 9, i.e. (1) The halo is spherically symmetric, (2)
+The halo mass and scale do not vary with time, are sat-
+isﬁed in the idealized N-Body simulations for isolated
+halos. However, those assumptions may be not valid for
+cosmological simulations due to halo interactions, merg-
+ers and the mass accretion.
+Notice that most of the current gravothermal ﬂuid
+studies are interested in SIDM models with moderate
+cross section and near unity β values. Such a setup re-
+sults in the halo remaining in the lmfp regime for most of
+its life until core collapse occurs. Moreover, σ decreases
+drastically with vrms at vrms ≳ω under the velocity-
+dependent cross section scenario, leaving the heat con-
+duction more likely to be dominated by the lmfp term.
+We therefore focus on the gravothermal solutions in the
+lmfp regime in this work.
+Speciﬁcally, we choose in-
+put parameters ˆσ = 0.01, β = 0.6 in step 1. and solve
+Eq 9 numerically to derive the gravothermal solutions,
+which will be used by the mapping method introduced
+in Section 4-6. We stop the ﬂuid code evolution when
+βˆσˆt reaches 173. At the last time step, the halo is still
+in the lmfp regime, and has entered the core-collapsing
+stage where its central density increases rapidly. The
+time evolution of the ratio between ˆκlmfp and ˆκsmfp at
+the halo center is shown in Figure 1 by the blue solid
+curve.
+We notice that the halos simulated in Section 2 adopt
+a much greater cross section of ˆσ = 0.65.
+To check
+the validity of the lmfp assumption we numerically solve
+Eq 9 for another set of input parameters {β = 0.82, ˆσ =
+0.65}, and present the halo central density time evo-
+lution in the red dashed curve of Figure 1. This halo
+still evolves in the lmfp regime during most of its life-
+time before core collapse, although the increase of cross
+section boosts the halo to be closer to the smfp regime
+since ˆκlmfp/ˆκsmfp ∝βˆσ2. Ideally we would like to sim-
+ulate a halo with smaller cross section to better match
+the assumption made in this work. However, this will
+10
+1
+100
+101
+102
+t
+10
+5
+10
+4
+10
+3
+10
+2
+10
+1
+100
+101
+102
+103
+lmfp/
+smfp
+= 0.60 ,
+= 0.01
+= 0.82 ,
+= 0.65
+Figure 1.
+Time evolution of the ratio between the lmfp
+and the smfp heat conductivities at the halo center, assum-
+ing two diﬀerent sets of parameters {ˆσ = 0.01, β = 0.6}
+(blue solid) and {ˆσ = 0.65, β = 0.82} (red dashed).
+For
+the {ˆσ = 0.01, β = 0.6} set of gravothermal solution ˆκlmfp ≪
+ˆκsmfp throughout the halo evolution process, so the total heat
+conductivity is always dominated by the lmfp term. In the
+{ˆσ = 0.65, β = 0.82} case the halo also evolves mostly in the
+lmfp regime, but enters the smfp regime at βˆσˆt = 155.
+delay the onset of core collapse and lead to more expen-
+sive and unstable idealized N-Body simulations. We will
+show later that even for this large constant cross section
+ˆσ = 0.65 the lmfp assumption still holds, and the simu-
+lated halo evolution matches the lmfp gravothermal so-
+lution well. The smfp tension will be further alleviated
+when we consider the velocity-dependent cross-section
+scenarios, where the velocity dependency will largely
+decrease the eﬀective cross section and bring the halo
+further away from the smfp regime.
+SIDM halo gravothermal evolution described by Eq 9
+is shown in Figure 2.
+Speciﬁcally, at the NFW ini-
+tial state (shown in the red solid curves) where ˆρ =
+1/ˆr/(1+ ˆr)2, the halo temperature is highest at ˆr ≈0.8.
+The heat therefore ﬂows to both the halo center and out-
+skirts. The halo center keeps absorbing heat until local
+thermal equilibrium is reached. At this point a cored
+region is formed where the density and the rms velocity
+are uniform, as shown by the green dashed curves. DM
+particles in the halo cored region continuously lose en-
+ergy due to outward heat transfer. In this process their
+orbital scale decreases and the kinetic temperature in-
+creases. As shown by the blue dashed-dotted curves, the
+halo core density and temperature will keep increasing
+and will move further away from thermal equilibrium
+with the halo outskirts. Such a regime is also referred
+to as gravothermal catastrophe or core collapse.
+While the gravothermal model is computationally
+much more eﬃcient than running an N-body simulation
+it is still too slow to apply to large ensembles of halos as
+
+6
+Yang et al.
+might be required in a semi-analytic model of subhalo
+evolution, or when generating realizations of subhalo
+populations for analysis of gravitational lensing systems
+(e.g. Benson (2012); Gilman et al. (2021)). For example,
+the calculations shown in this section required around
+24 CPU hours to compute. While this is trivially man-
+ageable for a single halo, it is impractical to apply to
+ensembles of millions of halos. As such it is useful to be
+able to map a single solution of the gravothermal model
+to more general cases. We will explore this possibility
+in the remainder of this paper.
+Additionally, in Appendix A we provide a triple power
+law empirical model calibrated to this set of fully lmfp
+solutions with high precision.
+The advantage of this
+analytical model is that it captures the halo core size,
+core collapsing time, and the radius where the cored
+density proﬁle joins smoothly to the halo NFW outskirt
+with simple formulas, and can be easily implemented
+into semi-analytic galaxy formation models.
+4. MAPPING GRAVOTHERMAL SOLUTIONS
+BETWEEN CONSTANT CROSS SECTIONS
+In this section we brieﬂy review the mapping method
+discussed in Balberg et al. (2002); Koda & Shapiro
+(2011); Essig et al. (2019) that transfers the gravother-
+mal solutions under a constant cross section ˆσ1 to an-
+other constant cross section ˆσ2, assuming the halo is
+mostly evolving in the lmfp regime.
+The third and fourth equations in Eq 9 shows that
+the halo evolution rate is degenerated with radius in-
+dependent factors in the heat conductivity ˆκ.
+In the
+lmfp regime ˆκlmfp ∝βˆσ, therefore βˆσ and the inverse
+of the halo evolution time ˆt are degenerate such that
+the gravothermal solution time evolution can be param-
+eterized by βˆσˆt.
+In other words, there exists a one-
+to-one mapping βaˆσaˆta ↔βbˆσbˆtb between two sets of
+gravothermal solutions with parameters {βa, ˆσa} and
+{βb, ˆσb} such that:
+ˆxa(ˆr, ˆta) = ˆxb
+
+ˆr, ˆta × βaˆσa
+βbˆσb
+
+,
+(12)
+here ˆx(ˆr, ˆt) stands for arbitrary scale-free halo property
+at radius ˆr and time ˆt, including ˆρ, ˆvrms, ˆ
+M, ˆL, etc. We
+show the scale-free halo central density ˆρc versus βˆσˆt for
+two sets of gravothermal solutions with very diﬀerent
+input parameters in Figure 3.
+The time evolution of
+these two halos is almost identical after the ﬁrst few
+time steps, where ˆκlmfp is comparable to ˆκsmfp for the
+ˆσ = 0.65 case, and the lmfp assumption is not very
+accurate (see Figure 1).
+Although the gravothermal ﬂuid formalism considers
+a very simpliﬁed picture, it provides numerical solutions
+10
+5
+10
+3
+10
+1
+101
+103
+10
+2
+10
+1
+100
+101
+102
+r
+0.1
+0.2
+0.3
+0.4
+vrms
+NFW
+core formed
+core collapse
+Figure 2. Gravothermal evolution phases of a SIDM halo
+described by the ﬂuid formalism.
+The top/bottom panel
+shows the halo density/rms velocity proﬁles at diﬀerent evo-
+lution stages.
+The red solid curves show the NFW initial
+condition at ˆt = 0.
+The green dashed curves present the
+moment when the halo central density reaches minimum,
+and an isothermal core is formed at the halo center. The
+blue dashed-dotted curves show the afterward core collaps-
+ing process.
+10
+1
+100
+101
+102
+t
+100
+101
+102
+103
+c
+= 0.60 ,
+= 0.01
+= 0.82 ,
+= 0.65
+Figure 3. SIDM halo central density time evolution given
+by the gravothermal ﬂuid formalism at parameters {β =
+0.6, ˆσ = 0.01} (blue solid) and {β = 0.82, ˆσ = 0.65} (red
+dashed). The halo evolution is almost identical with time
+parameter βˆσˆt when the κ is dominated by the lmfp term.
+
+σ(v) mapping
+7
+0
+5
+10
+15
+20
+t [Gyr]
+107
+108
+109
+c [M
+/kpc3]
+Arepo, 
+= 30 cm2/g
+Arepo, low resolution
+fluid,
+= 0.82
+Figure 4. Halo central density evolution comparisons be-
+tween the averaged Arepo N-Body simulation results (black
+solid curve) and the gravothermal ﬂuid formalism numeri-
+cal solutions (red solid curve). The gray band encloses the
+maximum and minimum halo central density among the ﬁve
+Arepo realizations. The cyan band shows convergence test
+results where the particle number in each N-Body realization
+is decreased from 1.7 × 106 to 4.2 × 105.
+in surprisingly good agreement with idealized N-Body
+simulations of isolated halos up to a slightly varying β
+factor. As an example, in Figure 4 we present halo cen-
+tral density versus evolution time relation comparisons
+between the gravothermal solutions (red solid curve)
+and the averaged Arepo N-body simulations (black solid
+curve) for a Milky Way sized SIDM halo with ρs =
+4.2×106M⊙/kpc3, rs = 24.54 kpc, and σ/m = 30 cm2/g
+(see Section 2 for simulation details). To test conver-
+gence, we reduce the particle number by a factor of 4 in
+each N-Body realization and present the averaged sim-
+ulation results as the cyan dashed curve. We ﬁnd the
+rescaled lmfp gravothermal solution with β = 0.82 cap-
+tures the overall halo evolution and reproduces the core
+collapsing time in the Arepo simulation results. We no-
+tice that the ﬂuid numerical solution has halo central
+density that drops faster than the N-Body results prior
+to isothermal core formation (0 ≤t/Gyr ≤2). The cen-
+tral density also grows slightly faster than N-Body at
+t ≳18 Gyr. Those diﬀerences are, again, caused by the
+fact that we have selected a very large cross section for
+the N-Body simulations. The basic assumption of this
+mapping method, that the halo is always in the lmfp
+regime, is not of high accuracy. Since our focus is to ex-
+tend the lmfp gravothermal ﬂuid formalism to velocity-
+dependent cross section scenario and capture the overall
+halo evolution in the N-Body simulations, in this work
+we will accept this slight disagreement. Moreover, the
+smfp problem is alleviated when we simulate velocity
+dependent cross section models.
+5. MAPPING GRAVOTHERMAL SOLUTIONS
+FROM CONSTANT TO
+VELOCITY-DEPENDENT CROSS SECTION
+In this section we introduce a mapping method to
+transfer the gravothermal solutions under a constant
+cross section ˆσ to those under a velocity-dependent cross
+section model σ(v). In numerical simulations the veloc-
+ity used to determine the scattering probability between
+two particles is generally the particle relative velocity
+v12, but in this section we will consider a simpler case
+where the cross section is determined by the particle rms
+velocity. We will discuss this mapping method under the
+more practical σ(v12) scenario in Section 6.
+In this paper we will use the cross section model intro-
+duced by Eq 2 as an example, but this mapping method
+is applicable to arbitrary σ(v) model.
+In Section 4 we have shown that there exists a one-
+to-one mapping βaˆσaˆta ↔βbˆσbˆtb between two sets of
+gravothermal solutions with diﬀerent β and constant
+cross sections.
+Now consider two sets of gravother-
+mal solutions, one with constant cross section {βa, ˆσa}
+and the other with a velocity-dependent cross section
+{βb, ˆσb(ˆvrms,b)}. The linear time mapping does not hold
+anymore since ˆσb(ˆvrms,b) is a function of radius and time
+rather than a constant. However, if in every small time
+interval we may assume a characteristic halo-wide cross
+section (or, equivalently, a characteristic velocity) such
+that we can drop the cross section radial dependence
+ˆσ(ˆvrms,b(ˆr, ˆtb)) ≈ˆσ(ˆvc
+rms,b(ˆtb)), then there exists the fol-
+lowing one-to-one mapping for every small time step:
+βaˆσadˆta = βbˆσb(ˆvc
+rms,b(ˆtb))dˆtb
+= βbˆσb(ˆvc
+rms,a(ˆta))dˆtb .
+(13)
+Here the second equation holds because alternating a
+time dependent while radius independent SIDM cross
+section has no inﬂuence on the gravothermal ﬂuid so-
+lution besides non-linearly stretching the time axis. In
+other words there still exists the following one-to-one
+mapping between these two sets of gravothermal solu-
+tions:
+ˆxa(ˆr, ˆta) = ˆxb(ˆr, ˆtb)
+= ˆxb
+ 
+ˆr,
+Z ˆta
+0
+βaˆσa
+βbˆσb(ˆvcrms,a(ˆt′a))dˆt′
+a
+!
+.
+(14)
+In practice one has the constant cross section gravother-
+mal solution that speciﬁes the halo density and rms
+velocity radial proﬁles at an array of time ˆta
+=
+{ˆt0
+a, ˆt1
+a, ..., ˆtN
+a } (here ˆti
+a is the time of the ith step), and
+aims to map it to some velocity-dependent cross section
+scenario.
+To achieve this one will need to ﬁrst com-
+pute the time step δˆta = {ˆt0
+a, ˆt1
+a −ˆt0
+a, ..., ˆtN
+a −ˆtN−1
+a
+}, and
+
+8
+Yang et al.
+then use Eq 13 to compute the mapped time step δˆtb =
+[βaˆσa/βbˆσb(ˆvc
+rms,a(ˆta))]δˆta. Summing δˆtb up, a new time
+axis ˆtb is derived such that ˆxb(ˆr, ˆtb) = ˆxa(ˆr, ˆta).
+The remaining problem is to determine how to choose
+the characteristic rms velocity ˆvc
+rms at each time. Since
+the SIDM core evolves the most with time, while the
+halo outskirt shows very little time evolution (see Fig-
+ure 2), we ﬁnd that simply using the halo central rms
+velocity shows very good mapping performance:
+ˆvc
+rms(ˆt) = ˆvrms(ˆr = ˆrmin, ˆt) .
+(15)
+Here ˆrmin = 10−2 is the inner most radial bin of the
+ﬂuid formalism.
+To test this mapping method, we assume ˆσc = 0.01,
+β = 0.6, and numerically solve Eq 9 for two cross section
+models. For the ﬁrst test we assume a constant cross sec-
+tion ˆσ = ˆσc, while for the second test we assume ˆσ =
+[ˆσc/(1+ˆv2
+rms/ˆω2)2]. We consider four velocity-dependent
+cross section models with ˆω = 0.01, 0.1, 0.3, 1.0, corre-
+sponding to very strong, strong, intermediate, and week
+velocity dependency. Figure 5 presents the unitless time
+of the constant cross section gravothermal solution re-
+scaled by this mapping method. Notice that the dark
+matter particle 1D velocity dispersion ˆvrms varies from
+0.1 to 0.4 near the halo center (see Figure 2 bottom
+panel), which is small comparing to 1.0. The halo SIDM
+cross section for the ˆω = 1.0 case is therefore almost a
+constant ˆσ = ˆσc, corresponding to a nearly trivial time
+mapping relation shown by the magenta dotted curve.
+Decreasing ˆω suppresses the total cross section value ˆσ,
+and also boosts the velocity dependence of the parti-
+cle scattering probabilities. As a result, the re-scaled ˆt
+enlarges for the lower ˆω cases, and the time mapping
+non-linearity becomes more signiﬁcant.
+Comparisons between the mapped constant cross sec-
+tion gravothermal solutions (green dashed lines) and
+the actual velocity dependent gravothermal solutions
+(black solid curves) are shown in Figure 6. We ﬁnd this
+simple remapping method can successfully reproduce
+the gravothermal solutions under velocity-dependent
+cross section models in all the cases, although it over-
+estimates the core collapsing time by 14%, 13%, 7.5%,
+and 1.3%, respectively. This overestimation is caused
+by Eq 15 where we set the halo central rms velocity as
+a characteristic velocity that determines the overall DM
+particle cross section at every moment. A true charac-
+teristic vrms is generally lower than the central veloc-
+ity, and therefore our method slightly underestimates
+the eﬀective cross section at each time and will further
+overestimate the core collapsing time.
+We also check the performance of the mapping method
+introduced in O22. Instead of using a time-varying char-
+101
+102
+103
+104
+t for 
+= 0.6 and 
+= 0.01
+100
+102
+104
+106
+108
+1010
+1012
+rescaled t
+= 0.01
+= 0.10
+= 0.30
+= 1.00
+Figure 5. Mapping relation for the gravothermal solution
+time variable. The x axis present the scale-free time ˆt of the
+gravothermal solution under constant cross section ˆσ = 0.01.
+We map ˆt to velocity-dependent cross section model ˆσ =
+[ˆσc/(1+ˆv2
+rms/ˆω2)2], with ˆσc = 0.01 and ˆω = 0.01, 0.1, 0.3, 1.0.
+The re-scaled time is presented on the y axis for each case.
+For simplicity we have ﬁxed β = 0.6 in this test.
+acteristic rms velocity ˆvc
+rms, O22 makes a more simpliﬁed
+assumption to use the rms velocity at the halo center and
+at the instance of maximum core size as the character-
+istic value. Eﬀectively the characteristic rms velocity is
+assumed to be:
+ˆvc
+rms = ˆvrms(ˆr = ˆrmin, ˆt = ˆtˆρc,min) .
+(16)
+We show the halo central density time evolution mapped
+by O22 as magenta dotted curves in Figure 6.
+We
+show that the O22 method only underestimates the core
+collapsing time by 6%, 5%, 2.3%, and 0.3% for the
+ˆω = 0.01, 0.1, 0.3, 1.0 scenarios, but it cannot correctly
+capture the halo evolution prior to the instance of max-
+imum core size.
+The accuracy of our mapping method can be further
+boosted if we compute the characteristic ˆvc
+rms, or, equiv-
+alently, the characteristic cross section, at each time step
+more carefully. Speciﬁcally, at every time step we can
+deﬁne the characteristic cross section as the averaged
+cross section weighted by the mass of multiple shells:
+ˆσc = Σiout
+0
+4πˆr2
+i δˆriˆρiˆσb,c(ˆvrms,i)
+Σiout
+0
+4πˆr2
+i δˆriˆρi
+,
+(17)
+where i is the shell index, and iout corresponds to the
+shell that joins smoothly to the halo NFW outskirts,
+beyond which the DM particle self-interaction is negli-
+gible. The radius of shell iout is given by Eq A4 and
+Eq A8 in Appendix A. After this step we can map the
+time step of the constant cross section gravothermal so-
+lution as δˆtb = [βaˆσa/βbˆσc
+b(ˆta)]δˆta. We ﬁnd that this
+
+σ(v) mapping
+9
+more careful way of computing the characteristic cross
+section eﬀectively decreases the mapping method frac-
+tional error in predicting the core collapsing moment to
+6.4%, 5.6%, 2.9%, and 0.5% for ˆω = 0.01, 0.1, 0.3, 1.0
+cases, providing performance equally as good as O22
+while maintaining a good match to the actual gravother-
+mal numerical solutions before the instance of maximum
+core size. However, we do not use this more complicated
+treatment as the default method because it can be com-
+putationally expensive when applied to a large number
+of halos. Furthermore, in practice the at most ∼10%
+core collapsing time mapping error is small compared to
+the β factor uncertainties.
+6. CALIBRATING THE MAPPING METHOD TO
+N-BODY SIMULATION
+To calibrate the gravothermal solution remapping
+method introduced in Section 5 to N-body simulations,
+we consider cross section models that are determined by
+the relative velocity v12 between two scattering particles.
+Such velocity-dependent models will inﬂuence the heat
+conductivity averaged over the MB velocity distribution
+⟨κlmfp⟩, resulting in additional complexity.
+It is worth recalling how ⟨κlmfp⟩is computed for the
+constant cross section case. By convention:
+κlmfp(v12) = 3
+2βnH2 kB
+tr
+= 3βkB
+8πG
+nσ
+m v2
+rmsv12 ,
+(18)
+and the relative-velocity can be deﬁned as v12
+=
+p
+v2
+1 + v2
+2 −2v1v2 cos θ12, where θ12 is the angle between
+the velocity vectors v1 of particle 1 and v2 of particle 2.
+To compute the averaged heat conductivity over the MB
+velocity distribution, previous works compute the aver-
+aged v12. Speciﬁcally, let us deﬁne the MB distribution
+and the averaged v12 as:
+fMB(v)d3v = fMB(v)v2dv sin(θ)dθdφ = v2
+
+m
+2πkBT
+3/2
+exp
+
+−mv2
+2kBT
+
+sin(θ)dvdθdφ ,
+⟨v12⟩=
+Z π
+0
+sin θ1dθ1
+Z 2π
+0
+dφ1
+Z 2π
+0
+dφ12
+Z ∞
+0
+v2
+1fMB(v1)dv1
+Z ∞
+0
+v2
+2fMB(v2)dv2
+Z π
+0
+v12 sin(θ12)dθ12
+=
+4
+√π
+r
+kBT
+m
+=
+4
+√π vrms = 2.26vrms .
+(19)
+Using this result for ⟨v12⟩in Eq 18 gives the deﬁnition
+assuming a constant DM particle cross section:
+⟨κlmfp⟩= 3βkB
+8πG
+nσ
+m v2
+rms⟨v12⟩= 0.27βnv3
+rmsσkB/(Gm).
+(20)
+One may argue that a better deﬁnition of the aver-
+aged heat conductivity might be ⟨κlmfp⟩∝⟨v1v2v12⟩,
+or ⟨v3
+12⟩, or ⟨vn⟩/vn−3
+rms , where n is an arbitrary num-
+ber. The speciﬁc choice does not matter for constant
+cross section scenarios because those diﬀerent integra-
+tions will only cause a constant factor diﬀerence to
+Eq 20, which can be absorbed into the free parame-
+ter β.
+This is no longer true if a velocity-dependent
+cross section is assumed.
+Speciﬁcally, the deﬁnition
+⟨κlmfp⟩∝⟨vnσ(v12)⟩/(vn−3
+rms σc) results in ⟨vn⟩/vn−3
+rms for
+ω →∞. However, with ﬁnite ω the vn term serves as a
+weight in the integration. Larger n biases the integra-
+tion over the MB distribution toward higher velocities,
+corresponding to a smaller eﬀective cross section and
+longer halo core collapse timescale. Therefore it is nec-
+essary to deﬁne ⟨κlmfp⟩in a physically motivated way
+that matches N-Body results.
+Notice that the heat ﬂux is determined by the product
+of the conductivity and the the temperature gradient:
+H∂T/∂r ∼∆T ∼∆E is the characteristic temperature
+variation and energy transferred within a particle’s or-
+bit. Here temperature is also a statistical property aver-
+aged over the MB distribution T ∝⟨v2
+12⟩, so the energy
+transfer rate is proportional to v3
+12σ(v12) (Colquhoun
+et al. 2021). We therefore deﬁne the averaged heat con-
+ductivity as:
+⟨κlmfp⟩= 0.27βnv3
+rmskB/(Gm)⟨v1v2v3
+12σ(v12)⟩
+⟨v1v2v3
+12⟩
+.
+(21)
+Here the v1v2 term in the numerator comes from the
+scale height H2. One v12 term is contributed by 1/tr,
+and the other v2
+12 term comes from the temperature
+gradient.
+The numerator is deﬁned such that Eq 21
+reduces to Eq 20 at ω
+→∞.
+This deﬁnition is
+slightly diﬀerent from the ansatz assumed in O22, where
+⟨κlmfp⟩∝⟨v3
+12σ(v12)⟩. We notice that the triple integral
+⟨v1v2v3
+12σ(v12)⟩needs to be computed for every time in-
+terval, which signiﬁcantly slows down the mapping cal-
+culations. However, it can be shown that the integration
+results are only sensitive to ω/
+√
+T ∝ω/vrms times βσc,
+
+10
+Yang et al.
+Figure 6. Scale-free SIDM halo central density evolution under a constant cross section (red solid) and a velocity-dependent
+cross section model (black solid). In each panel the re-scaled constant cross section gravothermal solutions given by the method
+introduced in Section 5 and O22 are presented in the green dashed curve and magenta dotted curve, respectively. We consider
+four diﬀerent cross section models with ˆω = 0.01, 0.1, 0.3, 1.0 and compare the numerical solution with the re-scaled results
+in the top left, top right, bottom left, and bottom right panels. Both mapping methods show reasonable agreement with the
+gravothermal numerical solutions. We notice that O22 is slightly more accurate in mapping the core collapsing time, while this
+work more accurately reproduces the halo evolution before its central density reaches a minimum.
+we therefore create a lookup table for the integration re-
+sult spanning in parameter range 0.01 ≤ω/vrms ≤100
+and use the linearly interpolated integration results to
+achieve fast mapping.
+To map a set of constant cross section gravothermal
+solutions with parameters {βa, ˆσc,a} to those assuming a
+velocity-dependent cross section model with parameters
+{βb, ˆσc,b, ˆω}, we perform the following steps:
+1. Compute the time step δˆta = {ˆt0
+a, ˆt1
+a −ˆt0
+a, ..., ˆtN
+a −
+ˆtN−1
+a
+}.
+2. Compute
+the
+mapped
+time
+step
+δˆtb
+=
+[βaˆσc,a/βb][⟨v1v2v3
+12⟩ˆta/⟨v1v2v3
+12ˆσb(v12)⟩ˆta]δˆta.
+Here ⟨x⟩ˆta implies computing the averaged x over
+a MB distribution where the temperature is given
+by the constant cross section gravothermal solu-
+tions at the innermost radius and time ˆta.
+We
+choose the halo central temperature as a charac-
+teristic value at every time step with the same
+argument as discussed in Section 5.
+3. Sum over all δˆtb to obtain a new time axis such
+that ˆxb(ˆr, ˆtb) = ˆxa(ˆr, ˆta).
+Assuming that in the idealized N-Body simulation
+β does not vary with ω, we compare the mapped
+gravothermal solutions and Arepo N-Body simulations
+under velocity-dependent cross section models intro-
+duced by Eq 2 with diﬀerent ω.
+We ﬁnd excellent
+matches, as presented in Figure 7. We notice that this
+comparison is only performed in a limited ω ≥400 km/s
+range for this Milky Way sized halo. Ideally, we would
+extend this comparison to cross section models with
+
+σ(v) mapping
+11
+stronger velocity dependency, i.e. with even lower char-
+acteristic velocity ω.
+However, a halo collapses more
+slowly as ω decreases, which makes the N-Body simu-
+lation less stable and computationally more expensive.
+Furthermore, for the Milky Way sized halo we simulate
+in this work ω ≤400 km/s is a less interesting scenario,
+where the halo collapsing time is much longer than the
+age of the universe.
+We also show the gravothermal solution mapped by
+O22 in the magenta dotted curves in Figure 7. Speciﬁ-
+cally, O22 suggests to deﬁne the averaged heat conduc-
+tivity as:
+⟨κlmfp⟩∝Kn = ⟨vn
+12σ(v12)⟩
+⟨vn
+12⟩
+
+rmin,tρc,min
+, n = 3 .
+(22)
+It is emphasized in O22 that the assumption ⟨κlmfp⟩∝
+K3 should be further tested by N-Body simulations. We
+ﬁnd this assumption overestimates the eﬀective cross
+section as well as the heat conductivity, leading to a
+faster core collapse than the N-Body results. However,
+we ﬁnd assuming ⟨κlmfp⟩∝K5 and a linear time re-
+scaling gives mapping performance as precise as Eq 21.
+This good match is also proved independently by Yang
+& Yu (2022) through N-body simulations.
+7. EXTEND THE LMFP MAPPING METHOD TO
+MORE GENERAL CASES
+The lmfp gravothermal solution mapping method in-
+troduced in Section 4-6 can be easily generalized to the
+smfp regime as well as to the intermediate regime. How-
+ever, in this work we do not test the validity of the smfp
+and intermediate regime mapping methods introduced
+in this section due to diﬃculties in both computation
+and physics. Neither will we apply these mappings in the
+following sections. From the computational aspect, we
+ﬁnd the gravothermal ﬂuid formalism introduced in Sec-
+tion 3 runs into numerical issues when solving systems
+with very large cross section. Furthermore, the Arepo
+idealized SIDM simulation pipeline introduced in Sec-
+tion 2 is not tested for isolated halos with cross section
+greater than 60 cm2/g. From the aspect of physics, a
+very large SIDM cross section may change the structure
+formation from that of CDM. The initial density proﬁle
+of the large cross section SIDM halo is also uncertain
+and unlikely to be NFW (Ahn & Shapiro 2003).
+Let us ﬁrst revisit Eq 9 in the fully smfp regime. Now
+since we switch focus from ˆκlmfp ∝βˆσ to ˆκsmfp ∝1/ˆσ,
+it becomes clear that the time mapping relation changes
+from βaˆσaˆta ↔βbˆσbˆtb to ˆta/ˆσa ↔ˆtb/ˆσb for the constant
+SIDM cross section models. For the relative velocity de-
+pendent cross section scenarios one only needs to modify
+the time interval mapping as:
+δˆtb =
+⟨v3
+12⟩ˆta/ˆσc,a
+⟨v3
+12/ˆσb(v12)⟩ˆta
+δˆta ,
+(23)
+to map gravothermal solutions computed under constant
+cross sections ˆσc,a to those assuming velocity dependent
+cross section models ˆσb(v12). Here one v12 term in the
+MB integration comes from the mean free path λ and
+another v2
+12 term comes from the energy transfer as has
+been discussed in Section 6. The two key diﬀerences be-
+tween the lmfp and smfp mapping methods are: (1) The
+smfp heat conductivity and, therefore, the gravothermal
+solutions are no longer dependent on the free parameter
+β. (2). In the lmfp regime a halo collapses faster with a
+larger cross section, but the situation is reversed in the
+smfp regime.
+To consider the intermediate regime where the mean
+free path and the scale height are comparable, the time
+mapping relation among constant cross section models
+has form ˆκaˆta ↔ˆκbˆtb, where ˆκ = 1/(ˆκ−1
+lmfp + ˆκ−1
+smfp). For
+the relative velocity dependent cross section scenarios
+the time interval mapping relation is:
+δˆtb = ⟨ˆκav2
+12⟩ˆta
+⟨ˆκbv2
+12⟩ˆta
+δˆta ,
+(24)
+here the v12 terms in the MB integration comes again
+from the energy transfer. The challenge of computing
+Eq 24 compared to the asymptotic lmfp and smfp sce-
+narios is that constant parameters β, ˆσc, as well as the
+scale-free density ˆρ can no longer be pulled out from
+the integration due to this more complicated heat con-
+ductivity expression.
+It is therefore necessary to pre-
+pare a 4D lookup table that simultaneously covers the
+variations of {β, ˆσc, ˆω/ˆvrms, ˆρ} to achieve fast mapping
+calculations.
+8. OBSERVATIONAL CONSTRAINTS ON THE
+CROSS SECTION MODEL
+Both the gravothermal ﬂuid formalism and idealized
+N-Body simulations are computationally expensive in
+the sense that they cannot be directly used to explore
+the continuous SIDM particle parameter space.
+The
+strength of the lmfp mapping method introduced in
+this work is that one needs to numerically solve for the
+gravothermal ﬂuid equations only once, and can then
+extend this solution to halos with arbitrary cross sec-
+tion models, as long as the halo is mostly evolving in
+the lmfp regime. It therefore serves as a powerful tool
+for deriving constraints on SIDM cross section model
+parameters.
+Halos hosting dwarfs and LSB galaxies are promis-
+ing laboratories for constraining SIDM models because
+
+12
+Yang et al.
+Figure 7. Comparisons of halo central density time evolution between the averaged Arepo N-Body simulation results (black
+solid curve) and the mapped gravothermal solutions (green dashed curves) under diﬀerent velocity dependent cross section
+models. In each panel, the maximum and minimum halo central density among the ﬁve Arepo realizations are enclosed by
+the gray band. The red curve shows the gravothermal solution that matches with N-Body assuming a constant cross section
+σ = 30 cm2/g, which is identical to the red curve shown in Figure 2. We use β = 0.82 as calibrated in Figure 4, and assume it
+does not vary with ω. We ﬁnd the mapping method introduced in this work matches with Arepo N-Body simulation results
+extremely well. It outperforms the ⟨κlmfp⟩∝K3 deﬁnition, which is assumed as an ansatz in O22. We also ﬁnd under a linear
+time re-scaling, the deﬁnition of the averaged heat conductivity ⟨κlmfp⟩∝K5 performs equally as well as Eq 21.
+these small galaxies serve as powerful tracers of the DM
+halo density proﬁle, while their shallow baryonic poten-
+tials leave little inﬂuence on the DM dynamics (although
+see Pontzen & Governato 2012; Read et al. 2016 for ex-
+ample). As a demonstration of the utility of this work,
+we constrain the cross section model parameter space
+favored by the rotation curve measurement of a LSB
+dwarf galaxy UGC 128 (van der Hulst et al. 1993; Ka-
+mada et al. 2017). We select UGC 128 because in this
+system the circular velocity is mostly determined by the
+dark matter component, while the stellar disc has neg-
+ligible eﬀect (Kamada et al. 2017). The fact that our
+model does not capture baryonic physics is therefore
+not expected to signiﬁcantly inﬂuence the SIDM param-
+eters inferred from UGC 128’s rotation curve. We notice
+that the rotation curves of dozens of dwarf/LSB galax-
+ies have been measured carefully (e.g. Kuzio de Naray
+et al. 2008; Oh et al. 2015; Essig et al. 2019).
+Some
+of the measurements have been used to derive stringent
+upper bounds on cross section models (e.g. Read et al.
+2018; Jiang et al. 2021). While a careful and thorough
+exploration of the SIDM cross section model parameter
+space using all the available dwarf/LSB observational
+data will be an important step to take, in this work
+we choose to show just an example application of the
+gravothermal solution mapping method. We therefore
+illustrate parameter space regions favored by the data
+on UGC 128 alone and defer a more complete analysis
+of a larger dwarf/LSB galaxy sample to a subsequent
+work. In this work we trust the UGC 128 rotation curve
+measurement and ignore potential error underestimation
+caused by beam smearing, coherent turbulence, the lack
+of determination of pressure support, and the treatment
+of inclination errors (Oman et al. 2019; Sellwood et al.
+2021). The derived constraints can therefore be over-
+tightened.
+We assume β = 0.5 and a halo evolution time of
+10 Gyr. We then use emcee (Foreman-Mackey et al.
+2013) to conduct the MCMC sampling over the 4D
+parameter space −2.5 ≤log σc/[cm2/g] ≤4.0, 0.0 ≤
+log ω/[km/s] ≤4.0, 5.0 ≤log ρs/[M⊙/kpc3] ≤8.0, and
+−1.0 ≤log rs/[kpc] ≤2.0, assuming uniform priors on
+these logarithmic variables. Here σc and ω are parame-
+ters introduced by the velocity dependent cross section
+model σ(v12) = σc/(1 + v2
+12/ω2)2, and {ρs, rs} are the
+NFW proﬁle scaling parameters. In each MCMC step
+we use the gravothermal mapping method introduced in
+Section 6 to compute the halo density proﬁle at t = 10
+Gyr, and transfer the dark matter density proﬁle to ro-
+tation curve through vcirc(r) =
+p
+GM(< r)/r.
+Here
+vcirc(r) is the circular velocity at radius r. We adopt a
+Gaussian likelihood function to direct 20 MCMC ran-
+dom walkers with the UGC 128 rotation curve measure-
+ment. To get a quantitative sense of how strongly the
+baryonic gravitational potential in this system may in-
+ﬂuence the parameter ﬁtting results, we perform two in-
+dependent MCMC ﬁts for the total rotation curve and
+the dark matter halo rotation curve, respectively. Con-
+tributions to the rotation curve from stars and gas are
+ﬁt by Kamada et al. (2017). A triangle plot for the pa-
+rameter constraints is presented in Figure 8 left panel.
+The MCMC ﬁtting results show that the NFW pa-
+rameters ρs and rs are more sensitive to the diﬀerences
+between the total and dark matter only rotation curves,
+while the log σc−log rs parameter constraints show little
+response to this data variation. This is fortunate as we
+are generally more interested in learning about the cross
+section parameters rather than ﬁtting NFW parameters
+
+σ(v) mapping
+13
+2
+0
+2
+log
+c
+1.2
+1.3
+1.4
+1.5
+logrs
+6.2
+6.4
+6.6
+log
+s
+1
+2
+3
+log
+1
+2
+3
+log
+6.2
+6.4
+6.6
+log
+s
+1.2
+1.3
+1.4
+1.5
+logrs
+total RC
+DM RC
+2
+0
+2
+log
+c
+1.2
+1.3
+1.4
+1.5
+logrs
+6.2
+6.4
+6.6
+log
+s
+1
+2
+3
+log
+1
+2
+3
+log
+6.2
+6.4
+6.6
+log
+s
+1.2
+1.3
+1.4
+1.5
+logrs
+total RC
+DM RC
+Figure 8. Parameter constraints for the NFW initial condition Eq 1 and the cross section model Eq 2 resulting from dwarf
+galaxy UGC 128 (van der Hulst et al. 1993; Kamada et al. 2017) rotation curve measurements. We ﬁx β = 0.5 and a halo
+evolution time of 10 Gyr. We assume Gaussian likelihood for the total/DM only rotation curve measurements and show the
+parameter space favored by observation in red/blue regions.
+The contours enclose parameter constraints at 68% and 95%
+conﬁdence levels. The left panel shows MCMC ﬁtting results derived from the original UGC 128 rotation curve, while for the
+right panel the rotation curve error bars for the innermost three radius bins (r ≤5 kpc) are enlarged by a factor of 2 to account
+for potential measurement uncertainty underestimation.
+of diﬀerent halos with high accuracy. However, the gen-
+erality of this feature should be further tested using a
+larger observational sample.
+The MCMC results also show that the NFW scaling
+parameters ρs and rs are degenerate. This is expected
+since the density proﬁle amplitude increase caused by
+increasing ρs can be compensated by decreasing rs,
+which eﬀectively shifts the halo density proﬁle to smaller
+radii.
+Despite this parameter degeneracy we are still
+able to constrain {ρs, rs} within a range much nar-
+rower than the ﬂat priors. The best-ﬁt NFW param-
+eters for this halo ﬁtted from the total rotation curve
+are log ρs/[M⊙/kpc3] = 6.49+0.17
+−0.16 and log rs/[kpc] =
+1.34 ± 0.09 (1σ errors). For the rotation curve with the
+ﬁtted stellar disc and gas components subtracted, the
+best-ﬁt NFW scales are log ρs/[M⊙/kpc3] = 6.40 ± 0.17
+and log rs/[kpc] = 1.35 ± 0.10. There is a “L”-shaped
+degeneracy between the cross section parameters log σc
+and log ω. One can also see such a degeneracy from the
+asymptotic behavior of the cross section model. Speciﬁ-
+cally, the cross section model reduces to the constant fac-
+tor σc for high ω, and the parameter constraints become
+independent of ω. On the other hand, lowering ω eﬀec-
+tively decreases the cross section, resulting in a weaker
+upper bound on σc. The turn over of this “L”-shaped
+band occurs on a scale comparable to the characteris-
+tic rms velocity of the halo. Therefore, the degeneracy
+between σc and ω can be at least partially broken by
+combining similar parameter constraints for systems of
+diﬀerent sizes, masses, and characteristic velocity dis-
+persions, and we defer a more careful analysis to a fu-
+ture work. We also emphasize that in this ﬁt we have
+assumed β = 0.5 and halo evolution time of 10 Gyr.
+Due to the βˆσˆt degeneracy introduced in Sections 4-6,
+assuming alternative β and halo evolution time values
+would rescale the σc constraints by a factor of 1/(βt).
+The constraints on parameters {ω, ρs, rs} are insensitive
+to the β and halo age assumptions.
+The single “L”-shaped band in the log σc −log ω pa-
+rameter space favored by the observed rotation curve
+was a surprise to us. Speciﬁcally, we have assumed an
+NFW initial density proﬁle, for which the halo central
+density ﬁrst decreases, reaching a maximum core size,
+and then increases with time. There will be in general
+two βσt instances where the cored halo density proﬁles
+are very similar to each other (unless the halo is mea-
+sured to be precisely at the moment of maximum core
+size, or the halo has entered the late core collapsing stage
+where its central density is higher than the initial state):
+one from the core formation process and another one
+from the core collapsing process. The existence of two
+gravothermal solutions with similar halo density proﬁles
+
+14
+Yang et al.
+but very diﬀerent βˆσˆt is one of the causes of the huge
+SIDM cross section constraint dispersion among diﬀer-
+ent works (Kamada et al. 2020). For example, SIDM
+cross sections of Milky Way’s dwarf satellite galaxies
+constrained by isothermal models such as Kamada et al.
+(2017) and Valli & Yu (2018) only pick out the low cross
+section solution because the isothermal models by design
+only works for the SIDM halo core formation process.
+Cross sections constrained by isothermal-based meth-
+ods are therefore relatively low, ranging from 0.1 to 40
+cm2/g. On the other hand, previous studies such as Cor-
+rea (2021) that use the gravothermal ﬂuid formalism to
+constrain SIDM cross sections may only focus on the
+halo core collapsing process, and give higher constraints
+30–200 cm2/g for similar systems.
+We ﬁnd the “L”-
+shaped band favored by the UGC 128 rotation curve
+points to one solution during the core formation pro-
+cess. As an example, we pick one point in the best-ﬁt
+parameter space σc = 1 cm2/g, ω = 104 km/s, and
+compare the mapped halo density proﬁle as well as the
+rotation curve at t = 10 Gyr with observations in Fig-
+ure 9. We show the best-ﬁt gravothermal solutions to
+the total and DM only rotation curves in black and blue
+solid curves, respectively. We ﬁnd ﬁxing the best-ﬁt ρs,
+rs, and ω values, but enlarging σc to about 100 cm2/g
+gives very similar mapped halo density proﬁle at t = 10
+Gyr, although under such a large cross section the halo
+has started core collapse. The gravothermal solutions
+with identical halo central density to the best-ﬁt solu-
+tion, but a much larger cross section is shown in dashed
+lines in Figure 9. The red/green dashed line corresponds
+to the total/DM only rotation curve case. We show in
+the right panel of Figure 9 that, for either the total
+or the DM only case, rotation curve measurements of
+UGC 128 at radii less than about 5 kpc do not favor
+either one of those two gravothermal solutions, owning
+to their similar halo central densities.
+To clarify the
+origin of this tight cross section constraint from UGC
+128, in the left panel of Figure 9 we compare these two
+sets of gravothermal solutions to NFW proﬁles with the
+total/DM-only rotation curve best-ﬁt {ρs, rs} parame-
+ters, shown in black/blue dotted curve. During the halo
+core formation process where σc = 1 cm2/g, the halo
+density proﬁle is only suppressed in the cored region
+(r ≲5 kpc) compared to the NFW initial condition.
+However, for the σc ≈100 cm2/g case the halo density
+is altered by DM self-interactions over a larger radial
+range (r ≲100 kpc). As a result the halo density proﬁle
+outside the cored region becomes steeper than the initial
+NFW proﬁle. This subtle diﬀerence is distinguishable by
+the rotation curve measurements outside the isothermal
+core. However, we emphasize that all the above analy-
+sis relies on the assumption that the UGC 128 rotation
+curve data and its measurements uncertainties are sta-
+tistically valid.
+The rotation curve error bars can be
+underestimated, especially at the galaxy central region,
+due to center oﬀsets, non-circular motions, inclination,
+the eﬀects of pressure support, and many other obser-
+vational uncertainties (see de Blok 2010 for a review).
+While a careful reprocessing of the UGC 128 rotation
+curve data is beyond the scope of this work, we attempt
+to account for potentially underestimated uncertainties
+through increasing the UGC 128 rotation curve error
+bars of the innermost three radius bins, where the radius
+is less than 5 kpc, by a factor of 2. The MCMC ﬁtting re-
+sults are shown in Figure 8 right panel. Assuming larger
+measurement uncertainties near the galaxy center, the
+“L”-shaped bands in the log σc −log ω space become
+signiﬁcantly wider such that cross sections as large as
+σc ∼100 cm2/g can be preferred by the rotation curve
+measurement at 95% conﬁdence level.
+We note that dissipative cooling processes (Essig et al.
+2019), the eﬀects of a baryonic disc (Jiang et al. 2022),
+and tidal eﬀects (Zeng et al. 2022) can all speed up
+the onset of halo core collapse.
+On the other hand,
+Meshveliani et al. (2022) suggests that halo mass ac-
+cretion and merger can delay the core collapse process,
+and proposes a correction term to the halo core collaps-
+ing time in order to account for this eﬀect. However,
+the goal of this work is simply to introduce a convenient
+non-linear time rescaling method for the gravothermal
+ﬂuid formalism without considering any of the above
+eﬀects. Nevertheless, such a preliminary constraint al-
+ready shows the advantage of our mapping method in
+the sense that it can rapidly explore the continuous pa-
+rameter space, and clearly present the parameter degen-
+eracies.
+9. CONCLUSION AND DISCUSSION
+In this work we introduce a fast mapping method
+that transfers the gravothermal ﬂuid formalism solu-
+tions from the constant cross section scenario to arbi-
+trary velocity-dependent cross section models. Such a
+mapping is intrinsically built in the gravothermal ﬂuid
+formalism. Speciﬁcally, when a halo is evolved fully in
+either the lmfp or the smfp regime, cross section only
+inﬂuences the heat conductivity of the isolated halo at
+each radius and moment, which further determines the
+halo evolution rate.
+Varying the cross section model
+assumptions therefore only re-maps the time axis of the
+halo evolution, but has no eﬀect on the radial proﬁle am-
+plitudes/shapes of halo density, velocity, enclosed mass,
+etc. Such a time re-mapping is linear between two dif-
+ferent constant cross sections, but becomes non-linear
+
+σ(v) mapping
+15
+0
+5
+10
+15
+20
+25
+30
+35
+40
+r [kpc]
+0
+20
+40
+60
+80
+100
+120
+140
+vcirc [km/s]
+Gas
+Stars
+total RC
+DM RC
+100
+101
+102
+103
+r [kpc]
+102
+103
+104
+105
+106
+107
+108
+ [M
+/kpc3]
+c = 1 cm2/g
+c
+100 cm2/g
+NFW
+Figure 9. The best-ﬁt halo density proﬁles (left) and rotation curves (right) at 10 Gyr, assuming β = 0.5 but diﬀerent SIDM
+cross sections. The black/blue solid curves show the best-ﬁt mapped gravothermal solution to the total/DM only rotation curve.
+These two best-ﬁt solutions correspond to a small cross section σc = 1 cm2/g, ω = 104 km/s.The red/green dashed lines show
+mapped gravothermal solutions under a larger cross section σc ≈100 cm2/g, ω = 104 km/s, but identical halo central densities
+to the total/DM only rotation curve best-ﬁt solutions. Compared to the NFW proﬁles with the total/DM only rotation curve
+best-ﬁt {ρs, rs} parameters shown by the black/blue dotted curves, density proﬁles for the σc = 1 cm2/g case is only suppressed
+in the cored region, while a larger region in the halo is inﬂuenced by the DM self-interaction for the σc ≈100 cm2/g case. Only
+the small cross section solutions match the observed total/DM only rotation curves, shown by black/blue data points. The
+purple and pink dotted curves show rotation curves contributed by gas and stars in UGC 128, ﬁtted by Kamada et al. (2017).
+between constant and velocity dependent cross section
+models.
+The thermal conductivity of a SIDM halo varies at
+diﬀerent radii and times. To achieve fast mapping we
+use the thermal conductivity at the halo center at each
+instance as a characteristic value. We test the perfor-
+mance of this mapping method through comparing the
+mapped gravothermal solutions, assuming a constant
+cross section, with actual gravothermal numerical solu-
+tions assuming diﬀerent velocity dependent cross section
+models. We ﬁnd that the fast mapping method intro-
+duced in this work nicely captures the full time evolu-
+tion of a SIDM halo, although it slightly overestimates
+the core collapsing time due to the simpliﬁed assump-
+tion about the halo instantaneous heat conductivity. We
+show that the accuracy of this mapping method can be
+further boosted through a more careful treatment of the
+instantaneous heat conductivity calculation, but argue
+that since the fractional error of the default mapping
+is small compared to the uncertainties of halo evolution
+time and the free parameter β, the more complicated
+mapping method is unnecessary.
+Calibrating gravothermal solutions with N-Body sim-
+ulations under the assumption of a velocity dependent
+cross section is more challenging since in numerical sim-
+ulations the particle scattering probabilities are gener-
+ally determined by their relative velocities, while the
+constant cross section gravothermal ﬂuid formalism only
+cares about the particle rms velocity/velocity dispersion
+in each radial shell. Assuming the SIDM particle ve-
+locity in each halo shell follows the Maxwell-Boltzman
+distribution, we deﬁne the averaged thermal conductiv-
+ity as ⟨κlmfp⟩∝⟨v1v2v3
+12σ(v12)⟩, where v1, v2 are the
+velocities of two particles, and v12 is the relative veloc-
+ity. The velocity terms in the MB-distribution averaging
+bracket are contributed by particle orbiting scales, col-
+lisional relaxation times, and energy transfer. We show
+that this physically motivated deﬁnition of the averaged
+heat conductivity provides an excellent match between
+the mapped gravothermal solutions and Arepo ideal-
+ized N-Body simulation results, assuming multiple dif-
+ferent velocity dependent cross section models.
+The advantage of this mapping method lies in its high
+computational eﬃciency. Speciﬁcally, it takes about 24
+CPU hours of computation with our gravothermal ﬂuid
+code to reach the core-collapse regime for an SIDM halo
+in the lmfp regime, and introducing a velocity dependent
+cross section model brings at least two extra degree-of-
+freedom. It is therefore impractical to continuously ex-
+plore the cross section model parameter space directly
+with the gravothermal ﬂuid code. Luckily, by adopting
+the mapping method introduced in this work one only
+needs to solve the ﬂuid code for once, and can fast map
+this set of numerical solutions to halos with arbitrary
+cross section assumptions. Besides deriving parameter
+constraints, this mapping method is also suitable to be
+
+16
+Yang et al.
+implemented into semi-analytic galaxy formation mod-
+els in order to achieve fast SIDM halo population gen-
+eration.
+As an example application, we select the LSB system
+UGC 128 where the baryonic disc potential has negligi-
+ble inﬂuence on the galaxy rotation curve, and use the
+mapping method to constrain 4 free parameters in the
+NFW and velocity-dependent cross section models. We
+have assumed β = 0.5 and a halo evolution time of 10
+Gyr, but we show analytically that the βt assumption
+will only re-scale constraints of the cross section scaling
+parameter σc.
+The other three parameters {ω, ρs, rs}
+are not sensitive to the assumed β and halo age values.
+To get a quantitative sense of how much the baryonic
+gravitational potential in this system may inﬂuence the
+parameter ﬁtting results, we perform two independent
+MCMC ﬁts for the total rotation curve and the dark
+matter halo rotation curve, respectively, ﬁnding that
+the SIDM parameters of interest are unaﬀected.
+We
+also show that the accurately measured UGC128 rota-
+tion curve can distinguish two very similar gravothermal
+solutions during the core formation and core collapsing
+phases, and favors the low cross section solution. We no-
+tice that the constraints derived in this work do not ac-
+count for other possible non-linear eﬀects that can inﬂu-
+ence the halo core collapsing time, including cooling, an
+additional gravitational potential contributed by a bary-
+onic disc or black hole, tidal eﬀects, halo mass accretion,
+and merger. The constraints can be too tight since we
+have trusted the UGC128 rotation curve measurements,
+and have ignored possible error underestimation. Never-
+theless the advantage of this fast gravothermal solution
+mapping method is recognized in the sense that it can
+quickly explore the continuous 4D parameter space with
+the ﬁrst-principle gravothermal solutions, and eﬀectively
+capture degeneracies among the SIDM halo parameters
+of interest.
+We also compare the performance of this mapping
+method with a similar strategy proposed in O22. We
+ﬁnd the simpler method introduced in O22, where the
+characteristic heat conductivity is assumed to be a
+time and radius independent constant, outperforms the
+method introduced in this work in reproducing the core
+collapse time when mapping between gravothermal so-
+lutions with vrms dependent cross section models. How-
+ever, this work performs better in mapping the full halo
+evolution process, while O22 fails to capture the halo
+central density evolution before the instant of maximum
+core size if the cross section model has strong velocity
+dependency. Correctly mapping the SIDM halo core for-
+mation process is as important as capturing the core col-
+lapse time because: 1) most current SIDM cosmological
+simulations evolve halos with mild self-interaction cross
+section for only around 10 Gyr, such that the simula-
+tion stops before an isothermal core has been completely
+formed (e.g. Elbert et al. 2015; Nadler et al. 2020), and
+2) observations may prefer a SIDM model with small
+cross section.
+If this is the case, most halos hosting
+observable galaxy clusters/galaxies/dwarfs are still ap-
+proaching their maximum core size.
+O22 propose to
+estimate the averaged thermal conductivity in a par-
+ticle relative velocity dependent scenario as ⟨κlmfp⟩∝
+⟨vn
+12σ(v12)⟩, where n is to be calibrated to N-Body sim-
+ulations. We ﬁnd that a physically motivated deﬁnition
+⟨κlmfp⟩∝⟨v1v2v3
+12σ(v12)⟩outperforms the ansatz as-
+sumed in O22, where n = 3. However, we show that
+combining the linear time re-scaling method introduced
+by O22 and the deﬁnition ⟨κlmfp⟩∝⟨v5
+12σ(v12)⟩, also
+suggested by Yang & Yu (2022), gives an equally good
+match to the N-Body simulation results as ⟨κlmfp⟩∝
+⟨v1v2v3
+12σ(v12)⟩.
+10. ACKNOWLEDGEMENTS
+We thank Yiming Zhong for sharing his gravothermal
+ﬂuid code, and for many helpful discussions. We thank
+Mark Vogelsberger for sharing the Arepo N-body simu-
+lation package including the SIDM module. Computing
+resources used in this work were made available by a
+generous grant from the Ahmanson Foundation. This
+work was supported in part by the NASA Astrophysics
+Theory Program under grant 80NSSC18K1014.
+APPENDIX
+A. AN EMPIRICAL MODEL FOR THE LMFP GRAVOTHERMAL DENSITY PROFILES.
+In this appendix we introduce a convenient empirical model for the density proﬁle of SIDM halos, calibrated to the
+lmfp gravothermal solution used in this work.
+Balberg et al. (2002) has proved that the gravothermal density proﬁle evolves with time self-similarly, and the density
+in the halo outskirts falls with radius as ˆρ ∝ˆr−2.19. This derivation is elegant, but not directly applicable to most of
+the numerical SIDM simulations. Speciﬁcally, in most idealized N-Body as well as some cosmological simulations the
+halo starts from an NFW initial state where ˆρ ∝ˆr−3 at large radii. As a result, when a core has been formed the halo
+
+σ(v) mapping
+17
+density still drops as ˆρ ∝ˆr−2.19 slightly outside the core radius. At even larger radii the density proﬁle joins smoothly
+with the NFW initial condition, and drops as ˆρ ∝ˆr−3. At this stage the halo density proﬁle can be captured by a
+triple power law.
+We ﬁrst deﬁne the instant of halo core collapse as the time at which the halo central density diverges:
+log(βˆσˆt) = E = 2.238 ,
+(A1)
+and the instant of maximum core size as the time when the halo central density reaches its minimum:
+log(βˆσˆt) = F = 1.341 .
+(A2)
+We ﬁnd at the early stage of the halo evolution, i.e. log(βˆσˆt) < F, the halo density proﬁle can still be described by
+the NFW proﬁle multiplied by a tanh central cut:
+ˆρ = tanh(ˆr/rcore)
+ˆr(1 + ˆr)2
+,
+(A3)
+where we use free parameter rcore to capture the core size. We ﬁnd the following empirical model described the time
+evolution of the halo core size at log(βˆσˆt) ≤1.341 with high accuracy:
+log rcore = Arcore(log(βˆσˆt))2 + Brcore log(βˆσˆt) + Crcore .
+(A4)
+Here Arcore = −0.1078, Brcore = 0.3737, Crcore = −0.7720 are calibrated to the gravothermal solutions.
+As mentioned before, in later phases of halo evolution, log(βˆσˆt) > 1.341, when a core has been formed, the density
+proﬁle can be described by triple power law:
+ˆρ(ˆr) =
+ρcore
+1 +
+
+ˆr
+rcore
+s 
+1 +
+ˆr
+rout
+3−s .
+(A5)
+Here s = 2.19 is provided by Balberg et al. (2002) gravothermal solution self-similar analysis. Again we use free
+parameter rcore to trace the characteristic halo core size at each time step. Similarly, the parameter ρcore captures the
+halo central density, and rout traces the radius where the density proﬁle inﬂuenced by self-interaction joins smoothly
+to the NFW outskirts. We develop the following empirical model for ρcore, rcore, and rout, calibrated to the lmfp
+gravothermal solution:
+log ρcore = Aρcore(log βˆσˆt −(E + 3))2 + Cρcore +
+Dρcore
+(E + 0.0001 −log βˆσˆt)0.02 ,
+(A6)
+where Aρcore = 0.05771, Cρcore = −21.64, Dρcore = 21.11,
+log rcore = Arcore(log βˆσˆt −(E + 2))2 + Crcore +
+Drcore
+(E + 0.0001 −log βˆσˆt)0.005 ,
+(A7)
+where Arcore = −0.04049, Crcore = 43.07, Drcore = −43.07, and
+log rout = Arout(log βˆσˆt −(E + 2))2 + Crout +
+Drout
+(E + 0.04 −log βˆσˆt)0.005 ,
+(A8)
+where Arout = 0.02403, Crout = −4.724, Drout = 5.011.
+We compare the halo density proﬁle given by the gravothermal solution and this empirical model at ﬁve characteristic
+moments in Figure 10. This simple empirical model accurately captures the overall time evolution and radial trend
+of the gravothermal solutions throughout the halo evolution process. We also show the halo central density using
+the exact result from the gravothermal ﬂuid model and our empirical model (along with their fractional diﬀerence)
+in Figure 11. The fractional error of this empirical model is better than 10% at most times. Even at the very late
+core collapsing stage its accuracy is still better than 50%. This degree of accuracy is suﬃcient for many applications,
+considering the fact that the random ﬂuctuations in N-Body simulation results can cause the halo central density
+to ﬂuctuate at a similar level. The fractional error shows non-continuous behavior at the maximum core moment
+
+18
+Yang et al.
+10
+2
+10
+1
+100
+101
+r
+10
+2
+10
+1
+100
+101
+102
+103
+104
+log
+c
+NFW
+Core forming
+Maximum core
+Early collapse
+Late collapse
+Figure 10. Density proﬁle comparisons between the gravothermal solutions and the empirical model introduced in this section.
+We compare the numerical solution and empirical model at the halo initial state βˆσˆt = 0 (red), core formation state βˆσˆt < F =
+1.341 (green), maximum core moment βˆσˆt = F (blue), early core collapse βˆσˆt = 150 (magenta), and the late core collapse state
+βˆσˆt = E = 2.238 (cyan). The gravothermal solution density proﬁles are shown as faint solid curves, while the empirical model
+predictions are shown in the dashed lines.
+10
+2
+10
+1
+100
+101
+102
+t
+101
+102
+103
+c
+gravothermal
+model
+10
+2
+10
+1
+100
+101
+102
+t
+0.1
+0.0
+0.1
+0.2
+0.3
+0.4
+0.5
+(
+model
+c
+gravo
+c
+)/
+gravo
+c
+Figure 11. Left: Halo central density time evolution comparisons between the gravothermal solutions (black solid curve) and
+empirical model (red dashed curve) introduced in this section. Right: Fractional error of the empirical model in reproducing
+the halo central density given by the gravothermal solutions.
+βˆσˆt = 1.341 because we switch the density proﬁle empirical description from a tanh cutoﬀto the triple power law
+here.
+This analytic empirical model has wide applications. For example, it can be implemented into semi-analytic galaxy
+formation models for fast SIDM halo simulation. As another example, we show in Section 5 that the characteristic
+radius rout provided by this model can be used to boost the accuracy of the mapping method introduced in this work.

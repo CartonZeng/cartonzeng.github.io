@@ -1,0 +1,1586 @@
+The Sensitivity of Substructure Lensing to SIDM Core-collapse Model Variation
+Charlie Mace,1, 2, ∗Birendra Dhanasingham,3 Zhichao Carton Zeng,4 Francis-Yan
+Cyr-Racine,5 Xiaolong Du,6 Annika H. G. Peter,1, 2, 7, 8 and Andrew Benson9
+1Department of Physics, The Ohio State University, 191 W. Woodruff Ave., Columbus OH 43210, USA
+2Center for Cosmology and Astroparticle Physics, The Ohio State University, 191 W. Woodruff Ave., Columbus OH 43210, USA
+3Minnesota Institute for Astrophysics, University of Minnesota, 116 Church St. SE, Minneapolis, MN 55455, USA
+4Department of Physics and Astronomy, Mitchell Institute for Fundamental Physics and Astronomy,
+Texas A&M University, College Station, Texas 77843, USA
+5Department of Physics and Astronomy, University of New Mexico, 210 Yale Blvd NE, Albuquerque, NM 87106, USA
+6Department of Physics and Astronomy, University of California, Los Angeles, California 90095, USA
+7Department of Astronomy, The Ohio State University, 140 W. 18th Ave., Columbus OH 43210, USA
+8School of Natural Sciences, Institute for Advanced Study, 1 Einstein Drive, Princeton, NJ 08540
+9Carnegie Science, Observatories, 813 Santa Barbara Street, California 91101, USA
+(Dated: May 26, 2026)
+Strong gravitational lensing has emerged as a powerful probe of dark matter substructure, and shows particu-
+larly strong promise as a test of self-interacting dark matter (SIDM). The compact halos produced by SIDM can
+leave distinct imprints on lensing observations, but the core-collapse timeline for subhalos is difficult to model
+accurately. This difficulty is an obstacle to accurate substructure lensing predictions, where small variations in
+core-collapsing subhalos can lead to significant differences in the lensing power. To quantify this problem and
+inform future lensing analyses, we test various methods of modeling core-collapsing halos and show the effect
+of each variation on the two-point correlation function of the effective deflection field’s divergence and curl. Our
+tests include smoothly evolving density profiles versus instantaneously collapsing halos, probabilistic collapse
+versus individual halo evolution, and variation of the initial and final density profile parameters. We find that the
+two-point correlation function is sensitive to most of these variations at small length scales, but the detectability
+of these differences will depend on the observational probe.
+I.
+INTRODUCTION
+Self-interacting dark matter (SIDM) is a set of particle
+physics models that include interactions between particles
+other than the gravitational force, in contrast to commonly in-
+voked cold dark matter (CDM) models, where there is no such
+interaction. In SIDM models with elastic collisions, which
+are the focus of this study, the heat transfer facilitated by dark
+matter interactions will cause the characteristics of dark mat-
+ter halos to evolve over time, starting with the formation of
+isothermal, constant-density cores. This core formation stage
+is predicted to be followed by a process called the gravothermal
+catastrophe, or core-collapse, which produces a small dense
+core in the center of the halo [1, 2]. The dynamic evolution
+predicted by SIDM models may resolve several contradictions
+between cold dark matter (CDM) models and observational
+data, such as the diversity problem (CDM; [3–11], SIDM;
+[12–22]) and the cuspy halo problem (CDM; [23–28], SIDM;
+[29, 30]).
+One potential probe of SIDM is substructure lensing, where
+we observe strong gravitational lenses and infer properties of
+the substructure inside the lens and along the line-of-sight [31–
+44]. These tests are highly sensitive to the core-collapsed dark
+matter halos predicted by many SIDM models, which would
+strongly perturb the lensing potential of their host [42, 45,
+46]. Observations of strong gravitational lenses have found
+evidence for subhalo perturbers, through detection of isolated
+line-of-sight structure [33, 34, 47–52] and also measurements
+∗E-mail: mace.103@osu.edu
+of flux ratio anomalies of multiple-image lensed quasars [38,
+44, 53–57].
+Inferring the properties of dark substructure from gravita-
+tional lenses requires accurate modeling of both the lens sub-
+structure and the line-of-sight structure for a given model of
+dark matter. Recent work has demonstrated that line-of-sight
+structure imparts a unique signature on the lensing potential.
+This signature can be understood through “effective multiplane
+gravitational lensing,” a method in which we define an effective
+gravitational lensing potential which incorporates the cumula-
+tive effects of line-of-sight structure on the lensing deflection
+map [40, 41, 58].
+The statistic of interest in this analysis
+is the effective lensing potential’s two-point correlation func-
+tion, which is projected against Chebyshev polynomials and
+quantified by the relative strength of each multipole moment.
+While these observational probes are promising tests of dark
+matter structure, the constraints they provide rely on the robust-
+ness of our substructure and line-of-sight structure models. For
+SIDM in particular, accurate modeling of the rapid and dras-
+tic gravothermal catastrophe is crucial to accurate predictions
+for lensing observables. Current approaches to core-collapse
+models involve a number of choices and simplifying assump-
+tions regarding the collapsing halo profile, such as assuming
+the core-collapsing halo instantaneously transitions from its
+initial density profile to the final core-collapsed state.
+As
+an additional challenge, the timescale on which a given halo
+collapses is often dominated by uncertainty. Some of this un-
+certainty is from a lack of numerical precision [59, 60], and
+some stems from the complex evolution of the systems we
+are trying to model [21, 46, 61]. It is not immediately clear
+what the best modeling choices are, and what effect various
+arXiv:2605.24174v1  [astro-ph.CO]  22 May 2026
+
+2
+simplifying assumptions have on the complicated pipeline of
+substructure lensing inference. This uncertainty is a discon-
+nect between existing inference and the underlying physical
+models they aim to test. Without a solid understanding of this
+problem and guidance for clear modeling choices, the ability
+of lensing observations to illuminate the nature of dark matter
+will be limited.
+To quantify this modeling challenge, we test various modifi-
+cations of the SIDM core-collapsing halo density profile in the
+context of substructure lensing. These modifications represent
+modeling choices that can be made when generating a subhalo
+and line-of-sight halo population for a substructure lensing
+inference study. Our modifications include variation of both
+the initial halo (uncollapsed) and final (core-collapsed) density
+profiles, and comparisons between instantaneously collapsing
+and time-evolving halo profiles. Our baseline core-collapse
+model is a gravothermal fluid solution calibrated to 𝑁-body
+simulations of isolated SIDM halos, and model tidal evolution
+based on SIDM substructure simulations. We implement our
+model variations into random realizations of main lens subha-
+los and line-of-sight structure generated with the open source
+package pyHalo [53], assuming a Planck 2018 cosmology
+[62].
+We vary the density profiles of perturbing substruc-
+ture, testing their impact on effective multiplane gravitational
+lensing predictions.
+This paper is structured as follow. InSection II we detail how
+we generate realizations for lensed systems, implement various
+SIDM models, and perform gravitational lensing calculations.
+Next we present our calibration to 𝑁-body substructure simu-
+lations (Section III A), and show results for our density profile
+variations (Sections III B and III C). We summarize our find-
+ings in Section IV.
+II.
+METHODS
+In this section we describe how we generate realizations
+of galaxy-scale lens systems with subhalos and line-of-sight
+halos, model core-collapse in these realizations, and produce
+lensing statistics from these models. First, we include details of
+the 𝑁-body simulations we use to model tidal effects (Section
+II A), and how we generate the CDM subhalos and line-of-
+sight halos for our lensing realizations (Section II B). Next,
+we replace the CDM halos with SIDM halos by modifying
+the density profiles. We discuss our various SIDM profiles,
+starting with our continuously collapsing model (Section II C)
+and variations to the collapse threshold (Section II C 4), and
+moving on to models with binary core-collapse (Section II D).
+We end the section with an overview of effective multi-plane
+gravitational lensing, which we use to calculate the two-point
+correlation function of the lensing convergence (Section II E).
+A.
+N-body Simulations
+To validate our core-collapse model (described in detail in
+Section II C), we use 𝑁-body simulation data first generated
+as part of Ref. [20]. These data were generated with the 𝑁-
+body code Arepo [63], using a previously tested SIDM module
+[64–66].
+The simulations feature an analytic host profile and four
+different random realizations of substructure generated with
+Galacticus1, a semi-analytic model of galaxy formation
+[67]. The analytic host is modeled as an NFW profile with
+mass 𝑀200𝑐= 1013 𝑀⊙and concentration 𝑐200 = 6.7 at a
+redshift of 𝑧lens = 0.5, and the merger trees include subha-
+los and sub-subhalos with infall masses above 108 𝑀⊙. We
+define the virial mass 𝑀200𝑐as the mass of a spherical over-
+density defined such that the halo density is equal to 200 times
+the critical density of the Universe. To accurately model low
+mass subhalos that may be insufficiently resolved for accurate
+core-collapse behavior, these simulations employ a hierarchi-
+cal simulation framework. In this approach we group subhalos
+by halo mass and simulate them in batches of differing mass
+resolution, ensuring that subhalos are similarly resolved on all
+scales. More details on the simulation methods are available
+in Ref. [20].
+Each set of initial conditions is run in Arepo with a variety
+of SIDM models. In this work, we are using simulations with
+SIDM scattering cross-sections given by:
+𝜎/𝑚=
+𝜎0
+
+1 + 𝑣2
+rel/𝜔2
+2
+(1)
+where 𝑣rel is the relative velocity between two dark matter parti-
+cles, and the characteristic cross-section 𝜎0 and cutoff velocity
+𝜔are free model parameters [39, 68–72]. This study uses the
+simulations for only two sets of cross-section model parame-
+ters: {𝜎0 = 200 cm2/g, 𝜔= 50 km/s} and {𝜎0 = 200 cm2/g,
+𝜔= 200 km/s}. We use these simulations to calibrate an
+approximate treatment of tidal effects in gravothermal core-
+collapse, which is discussed in more detail in Section II C.
+B.
+Gravitational Lens Realizations
+We generate realizations of gravitational lens subhalos and
+line-of-sight halos using version 1.4.1 of the Python package
+pyHalo2, an open-source toolkit for generating dark matter
+halo populations for gravitational lensing calculations [53].
+Our realizations are generated with the preset CDM model
+in pyHalo, which allows for custom settings adjusting the
+lens system, source system, and population parameters for
+subhalos and line-of-sight halos.
+Each of our realizations
+is for a lens system at redshift 𝑧lens = 0.5.
+The lens host
+halo has a mass of 𝑀200𝑐= 1013 𝑀⊙and concentration of
+𝑐200 = 6.7, matching the host halo in the 𝑁-body simulations
+(see Section II A). The main deflector is modeled as a power-
+law ellipsoid with Einstein radius 𝜃E = 1.0 arcsec, eccentricity
+1 https://github.com/galacticusorg/galacticus
+2 https://github.com/dangilman/pyHalo
+
+3
+components (𝑒1 = 0.05, 𝑒2 = 0.08), and logarithmic slope
+2.0 [73]. External gravitational shear components are set to
+(𝛾1 = 0.01, 𝛾2 = −0.01). The source is placed at 𝑧source = 1.0,
+which is a typical source redshift for galaxy-scale strong lenses
+[74, 75] and comparable to data included in recent James Webb
+Space Telescope (JWST) strong lens analysis [44].
+Subhalos of the main deflector in our 𝑁-body simulation
+comparison (Section III A) are rendered in the mass range
+108 −1010 𝑀⊙to match the range of substructure mass in the
+𝑁-body simulations. For the rest of the study (Section III B and
+onward) we extend to lower masses, and render subhalos and
+line-of-sight halos in the range 106−1010 𝑀⊙. Structure below
+106 𝑀⊙has relatively little impact on lensing measurements
+[44], and structure more massive than 1010 𝑀⊙can often
+be modeled individually due to visible baryons or significant
+lensing effects (see Ref. [76]). We sample subhalos from a
+power-law mass function:
+d2𝑁sub
+d𝑚d𝐴= Σsub
+𝑚0
+ 𝑚
+𝑚0
+ 𝛼
+F (𝑀host, 𝑧)
+(2)
+with logarithmic slope 𝛼= −1.90 and pivot mass 𝑚0 =
+108 𝑀⊙based on 𝑁-body simulations [77, 78]. We set the
+subhalo mass function normalization to Σsub = 0.0033 kpc−2,
+which produces subhalo projected densities similar to the
+Galacticus merger trees used in our 𝑁-body comparison
+(see Section III A). This value is about a factor of 30 lower
+than predictions by 𝑁-body simulations [79] and early grav-
+itational lensing inference from JWST [44], but we do not
+expect rescaling of the mass function to affect our primary re-
+sults regarding the relative impact of density profile features.
+The final term in Equation (2) captures scaling with the host
+halo mass and redshift:
+log10(F ) = 𝑘1log10
+
+𝑀host
+1013 𝑀⊙
+
++ 𝑘2log10(𝑧lens + 0.5)
+(3)
+with 𝑘1 = 0.88 and 𝑘2 = 1.7 based on calibration to
+Galacticus [54].
+Following the same procedure as Ref. [40], we render line-
+of-sight halos in a double-sided cone with a 6 arcsec opening
+angle except when otherwise specified. Halo populations at
+each redshift are sampled from a rescaled Sheth-Tormen (ST)
+mass function [38, 80]:
+d2𝑁LOS
+d𝑚d𝑉
+= 𝛿LOS(1 + 𝜉2halo)
+
+d2𝑁
+d𝑚d𝑉
+
+ST
+,
+(4)
+where, 𝛿LOS is a normalization factor which we fix at 1.0
+and 𝜉2halo is the two-halo term of the three-dimensional two-
+point correlation function. This two-halo correction describes
+the correlation of structure near the main deflector which is
+not already captured in the host halo’s bound structure. The
+final term in Equation (4) is the standard Sheth-Tormen mass
+function.
+We generate formation redshifts for subhalos and line-of-
+sight halos using the method described in Appendix C of
+Ref.
+[81], which models the mass accretion and potential
+well growth histories of dark matter halos. Infall redshifts for
+subhalos are sampled from the distribution in the Galacticus
+merger trees used in our 𝑁-body simulations. This is a mass in-
+dependent distribution of redshifts, calculated numerically and
+implemented into pyHalo. The mass added by substructure
+and line-of-sight structure is offset by sheets of negative lens-
+ing convergence at various redshifts, added by pyHalo. We
+consider only subhalos with infall times greater than 4 Gyr, to
+match the population used in Ref. [20] as precisely as possible.
+In the CDM halo realization, subhalo and line-of-sight halo
+density profiles are modeled as a truncated Navarro-Frenk-
+White (NFW) profile [82]:
+𝜌TNFW(𝑟) =
+𝜌s
+𝑟/𝑟s(1 + 𝑟/𝑟s)2
+𝑟2
+t
+𝑟2 + 𝑟2
+t
+(5)
+where 𝜌s and 𝑟s are the NFW scale density and radius respec-
+tively [83]. The truncation radius 𝑟t for subhalos is determined
+by the tidal track predictions in Ref. [84], which are matched to
+Galacticus predictions (using the TruncationGalacticus
+class in pyHalo). Line-of-sight halos are truncated at 𝑟t = 𝑟50
+(where the enclosed density is 50 times the critical density of
+the Universe at the halo’s redshift), which is comparable to
+the splashback radius [85] (using the TruncationRN class in
+pyHalo).
+C.
+Continuous Core-collapse
+1.
+Density Profile
+We implement smoothly evolving SIDM halo density pro-
+files using the empirical model presented in Ref. [71], with
+the addition of a truncation radius 𝑟t (see Appendix A for
+more detail on the truncated profile). This density evolution
+is piecewise in time, depending on whether the halo is in the
+early stages of evolution (core-formation) or late stages (core-
+collapse):
+ˆ𝜌early(ˆ𝑟, 𝛽ˆ𝜎ˆ𝑡) = tanh(ˆ𝑟/𝑟c)
+ˆ𝑟(1 + ˆ𝑟)2
+ˆ𝑟2
+t
+ˆ𝑟2 + ˆ𝑟2
+t
+ˆ𝜌late(ˆ𝑟, 𝛽ˆ𝜎ˆ𝑡) =
+𝜌c
+1 + (ˆ𝑟/𝑟c)2.19(1 + ˆ𝑟/𝑟out)0.81
+ˆ𝑟2
+t
+ˆ𝑟2 + ˆ𝑟2
+t
+.
+(6)
+In this paper, hatted variables (such as ˆ𝜌and ˆ𝑟) are dimen-
+sionless and are calculated by rescaling by the initial NFW
+profile parameters. Whether we are using ˆ𝜌early or ˆ𝜌late de-
+pends on how far the halo is into its core-collapse evolution,
+parametrized by the product 𝛽ˆ𝜎ˆ𝑡. We calculate this timescale
+from the dimensionless scattering cross-section ˆ𝜎= 𝑟s𝜌s𝜎/𝑚
+(a rescaling of the SIDM interaction cross-section 𝜎/𝑚), the
+dimensionless time parameter ˆ𝑡= 𝑡
+√︁
+4𝜋𝐺𝜌s (where 𝑡is the
+age of the halo), and the heat transfer calibration parameter 𝛽
+(a dimensionless parameter calibrated to 𝑁-body simulations
+[86]). The parameters 𝜌c, 𝑟c, and 𝑟out are all dimensionless
+functions of the rescaled evolution time 𝛽ˆ𝜎ˆ𝑡, with full ex-
+pressions given in the appendix of Ref. [71]. In this work
+
+4
+we neglect the effect of the substructure density profile on the
+truncation, and choose the truncation radius ˆ𝑟t = 𝑟t/𝑟s to match
+the truncation radius used in the CDM realization generated
+by pyHalo, described in Section II B.
+The profile evolution switches from early to late evolution
+at the time when the core is at its largest, log10(𝛽ˆ𝜎ˆ𝑡) = 1.341.
+The evolution terminates deep into the core-collapse regime at
+log10(𝛽ˆ𝜎ˆ𝑡) = 2.237, after which we freeze the density profile
+in time.
+This time corresponds to the final snapshot from
+our gravothermal fluid code solution, but does not necessarily
+correspond to the true final state of a core-collapsed halo. We
+experiment with shifting this ending time in Section II C 4.
+2.
+Deflection Angle Profile
+To make gravitational lensing predictions we must compute
+the deflection angle profile, which is calculated from the en-
+closed projected mass within a distance 𝑟from the halo center
+[39]:
+𝛼(𝑟) ∝1
+𝑟
+∫𝑟
+0
+d𝑟2D 𝑟2D
+∫∞
+−∞
+d𝑧𝜌
+√︃
+𝑟2
+2D + 𝑧2
+
+.
+(7)
+We have not found a closed-form solution to this integral for
+our density profile, so we proceed numerically.
+To calculate the deflection angle as a function of radius, 𝛽ˆ𝜎ˆ𝑡,
+and truncation radius, we create a look-up table for Equation
+(6). We use 150 uniformly distributed points over log10(ˆ𝑟) ∈
+[−2, 3], 271 points over log10(𝛽ˆ𝜎ˆ𝑡) ∈[−5.6, 2.237]3, and
+150 uniformly distributed points over log10(ˆ𝑟t) ∈[−2, 3], and
+linearly interpolate between points on this three-dimensional
+grid. We numerically integrate to produce Equation (7) over
+this grid, creating a look-up table for the deflection angle as a
+function of ˆ𝑟, 𝛽ˆ𝜎ˆ𝑡, and ˆ𝑟t.
+3.
+Time evolution
+To retrieve the deflection angle profile for a particular sub-
+halo or line-of-sight halo, we first determine 𝛽ˆ𝜎ˆ𝑡by calculating
+the age and halo parameters for that individual halo, placing it
+at the appropriate position along its unique core-collapse time-
+line. It is straightforward to calculate ˆ𝑡for each halo, using
+the formation redshift and the redshift of observation, which
+is generated individually for each line-of-sight halo and is 𝑧lens
+for all subhalos.
+To calculate ˆ𝜎, we bypass the complex velocity dependence
+in the cross-section (Equation (1)) by constructing a charac-
+teristic velocity that is representative of typical interparticle
+3 Steps in log10(𝛽ˆ𝜎ˆ𝑡) are not evenly spaced, but are instead based on the vari-
+ation in the density profile parameters log10(𝜌c), log10(𝑟c), and log10(𝑟out).
+A new step in time is added to the look-up table only if one of these param-
+eters would change by at least 0.5% of their total range over the full halo
+evolution.
+1
+2
+3
+4
+tc,iso/tc,sub
+10−1
+100
+101
+102
+No. of subhalos
+σ0 = 50 cm2/g, ω = 100 km/s
+σ0 = 100 cm2/g, ω = 50 km/s
+σ0 = 200 cm2/g, ω = 50 km/s
+σ0 = 200 cm2/g, ω = 200 km/s
+FIG. 1: The distribution of core-collapse acceleration factors
+from N-body simulations, generated using data from Ref.
+[20]. In this work we study only the {𝜎0 = 200 cm2/g,
+𝜔= 50 km/s} and {𝜎0 = 200 cm2/g, 𝜔= 200 km/s}
+models, which have relatively fast core-collapse and a large
+number of collapsed halos to sample the collapse
+distribution. The lines are Gaussian fits, with best fit mean
+and standard deviation values given in Table I.
+relative velocities in a given subhalo. We then compute ˆ𝜎
+for that one velocity, as an approximation to the subhalo’s
+evolution with a velocity-dependent cross-section. This is a
+reasonable approximation for a single halo, where the inter-
+particle velocities will be distributed around such a charac-
+teristic velocity. The characteristic velocity is calculated as
+⟨𝑣rel⟩= 3.8𝜎𝑣, where 𝜎𝑣is the one dimensional velocity dis-
+persion of the initial NFW halo at 𝑟= 𝑟s. Integrating over the
+Boltzmann distribution would suggest a characteristic velocity
+of 2.26𝜎𝑣, but 𝑁-body simulations [20] and gravothermal fluid
+modeling [70, 71] have shown that a factor of 3.8 better mod-
+els the effective heat capacity of the dark matter halo. Once
+⟨𝑣rel⟩is calculated for a given halo, the characteristic 𝜎/𝑚is
+found using Equation (1). With 𝜎/𝑚we can place the subhalo
+on the evolutionary track in Equation (6), and determine the
+appropriate density profile.
+The empirical model in this subsection is valid for isolated
+dark matter halos, and does not include environmental effects
+that could accelerate or delay the gravothermal evolution. We
+hypothesize that the effect of a subhalo’s environment on the
+core-collapse rate can be approximated with a numerical factor
+altering the dimensionless time parameter in the empirical
+model, and that this factor can be measured from 𝑁-body
+simulations of subhalo evolution.
+To account for tidal effects, we break the time evolution
+of each subhalo into two phases: one before infall and one
+after. Before infall, each halo evolves according to our isolated
+model. The post-infall evolution will require calibration to the
+𝑁-body simulations discussed in Section II A.
+
+5
+𝜎0 (cm2/g) 𝜔(km/s) Mean Standard Deviation
+50
+100
+2.39
+0.359
+100
+50
+2.58
+0.439
+200
+50
+1.77
+0.302
+200
+200
+1.06
+0.185
+TABLE I: Means and standard deviations for the Gaussian
+fits to the 𝑡c,iso/𝑡c,sub distributions shown in Figure 1.
+We use the 𝑁-body simulations from Ref. [20] to sample
+collapse acceleration (or deceleration) factors for each halo,
+defined as the ratio between the the isolated halo’s collapse
+time (𝑡c,iso) and the collapse time of that same halo evolved in
+a host potential (𝑡c,sub). We expect these measurements to be
+somewhat biased towards halos that collapse faster, since we
+exclude any halos which do not collapse in isolation. Figure
+1 shows those distributions for four velocity-dependent SIDM
+models, including the two we select for this study. We find
+that the acceleration factors for both selected models are well
+modeled by Gaussian distributions, with fit parameters listed
+in Table I. For each subhalo in our pyHalo realizations, we
+sample an acceleration factor from the Gaussian distribution
+and apply it to the post-infall phase of the SIDM evolution.
+In addition to the influence of the tidal field, we expect this
+acceleration factor to include the effects of highly energetic
+collisions between subhalo and host particles, which can lead
+to evaporation [20, 21, 87].
+While we take a probabilistic
+approach here and do not track individual orbits, orbital history
+plays a major role in the tidal evolution of subhalos. A more
+precise calculation of tidal acceleration would consider the
+orbital parameters of each subhalo. This more sophisticated
+approach is beyond the scope of this study, but may be possible
+with a better understanding of SIDM tidal tracks [21].
+4.
+Collapse Threshold Variation
+While our gravothermal solution ends with a central density
+that diverges as the collapse time is approached, the true final
+state of a core-collapsed halo remains unknown. Core-collapse
+may be halted at some point as the gravothermal evolution is
+interrupted by other physical processes, such as black hole
+formation [2, 88–90]. To test how the lensing signal responds
+to different core-collapse end states, we pick a range of final
+points to consider. Table II lists our eight different choices of
+ending times, along with their values of 𝜌c and 𝑟c (Equation
+(6)), which are displayed in Figure 2.
+For each termination point, we can model collapsed halos
+in two ways. The first approach is to freeze the density profiles
+once they reach the final time, using the density profile at the
+termination time as the fully collapsed profile. When varying
+the collapse time in this way, we are testing the effects of halting
+core-collapse earlier. We expect this approach to reduce the
+lensing power, since we are lowering the central density of all
+collapsed halos. The second approach is to boost the core-
+collapsed profile up to the fully collapsed log(𝛽ˆ𝜎ˆ𝑡) = 2.237
+profile once they pass the termination time. This method keeps
+1.4
+1.6
+1.8
+2.0
+2.2
+log10(
+t)
+101
+102
+103
+c/
+s
+1.4
+1.6
+1.8
+2.0
+2.2
+log10(
+t)
+10
+1
+rc/rs
+FIG. 2: Our selection of core-collapse thresholds as
+discussed in Section II D. The top panel shows the halo
+central density (𝜌c) evolution, the bottom shows the core
+radius (𝑟c), and log(𝛽ˆ𝜎ˆ𝑡) is the dimensionless evolution time
+(see Equation (6)). The circles indicate the points in time at
+which we sample the density profile for binary collapse. The
+empty circle is at the maximal core time, and the filled circles
+are our eight choices for collapse times in Table II.
+the final density profile the same regardless of our choice for
+the collapse time threshold, but allows nearly collapsed halos to
+be treated as collapsed instead of suppressing them back down
+to the initial profile. Unlike the freezing approach, where we
+suppress lensing power, this approach would enhance it.
+D.
+Binary Core-collapse
+A common model of SIDM core-collapse in substructure
+lensing is to treat the core-collapse process as instantaneous,
+and model each halo as one of two profiles: one for col-
+lapsed halos, and another for un-collapsed halos [39, 44, 91].
+If the two density profiles have analytically solvable deflec-
+tion angle integrals (Equation (7)) this treatment can reduce
+computational costs. Binary collapse models assume the core
+formation stage of SIDM evolution does not significantly alter
+
+6
+log10(𝛽ˆ𝜎ˆ𝑡) 𝜌c/𝜌s
+𝑟c/𝑟s
+log(𝜌c)/log(𝜌f)
+𝑡c/𝑡f
+1.939
+4.114 0.3350
+20%
+50.4%
+2.047
+5.858 0.2805
+25%
+64.5%
+2.110
+8.343 0.2351
+30%
+74.7%
+2.151
+11.88 0.1974
+35%
+82.0%
+2.178
+16.92 0.1659
+40%
+87.3%
+2.223
+69.61 0.08364
+60%
+96.8%
+2.234
+286.3 0.04277
+80%
+99.3%
+2.237
+1178
+0.0222
+100%
+100%
+TABLE II: Final density profile choices for collapse
+threshold variation. The model parameters for each choice
+are listed on the left side of the table, and the values of the
+central density (𝜌c) and time (𝑡c) compared to the full
+evolution model (𝜌f and 𝑡f) are on the right.
+lensing measurements on a population level. To test this as-
+sumption and gauge the sensitivity of gravitational lensing to
+the intermediate stages of SIDM halo evolution, we implement
+several models of binary core-collapse and compare them to
+our continuously evolving model (Section II C).
+To model binary collapse in our gravitational lenses, we se-
+lect the initial and final profiles from our continuously evolving
+gravothermal profile (Section II C). With the most basic im-
+plementation of this method, any halo with log(𝛽ˆ𝜎ˆ𝑡) < 2.237
+is modeled with the initial TNFW profile, while halos with
+log(𝛽ˆ𝜎ˆ𝑡) ≥2.237 are considered collapsed, and modeled with
+Equation (6) at log(𝛽ˆ𝜎ˆ𝑡) = 2.237.
+In some of our binary collapse tests, we randomly select
+which halos core-collapse, instead of tracking each halo’s evo-
+lution individually. This probabilistic approach has been used
+with binary collapse models in the literature [39, 91]. To de-
+termine the collapse probabilities, we bin subhalos by infall
+mass and calculate the collapse fraction in each bin using the
+individually evolved halo sample. We then randomly select
+halos in each mass bin for core-collapse, using the desired
+collapse fractions as the collapse probability. Collapse proba-
+bilities for line-of-sight halos are calculated similarly, but are
+binned separately from subhalos due to the expected influence
+of the host halo on subhalo collapse rates [15, 16, 20, 92].
+For both subhalos and line-of-sight halos, we use the mass
+bins [106 −107 𝑀⊙], [107 −108 𝑀⊙], [108 −109 𝑀⊙], and
+[109 −1010 𝑀⊙]. Unlike the most recent probabilistic collapse
+models in the literature [91], this method of random collapse
+does not account for any individual halo properties, such as
+concentration and halo formation time. By using this simple
+model for core-collapse we intend to set an upper bound on in-
+accuracies caused by collapse randomization, which we expect
+more sophisticated collapse choices would improve upon.
+We also experiment with different initial profiles. The stan-
+dard approach is to set an un-collapsed dark matter halo to
+the TNFW initial condition, but for some cross-sections and
+halo populations there may be many halos that reach the cored
+phase without core-collapsing. To test the best initial profile
+for binary collapse, we use the profile of maximum core size
+(log10(𝛽ˆ𝜎ˆ𝑡) = 1.341) for un-collapsed halos in some of our
+tests. The 𝜌c and 𝑟c of the cored initial profile are shown as
+empty circles in Figure 2.
+E.
+Gravitational Lensing
+1.
+Effective Multi-plane Lensing
+To quantify the collective contributions of line-of-sight
+structure to the lensing deflection, we use the effective multi-
+plane lensing framework detailed in [40]. This approach in-
+cludes the influence of line-of-sight structure through an ef-
+fective deflection field αeff:
+αeff(x) = ∇𝜙eff(x) + ∇× Aeff(x).
+(8)
+Unlike in a single-plane lens, which is fully characterized by
+the scalar potential 𝜙eff, the non-linear coupling between lens-
+ing planes has given rise to a vector potential Aeff. The ob-
+served image can be computed from αeff with the lens equa-
+tion:
+u(x) = x −αeff(x)
+(9)
+where u and x are positions on the source and image plane
+respectively.
+When studying single-plane lensing, it is common to cal-
+culate the lensing convergence from the deflection angle α as
+𝜅≡1
+2∇· α. For a single lens plane, the mapping between
+𝜅and the deflection angle is straightforwardly linked to the
+gravitational potential [93], and α is explicitly curl-free. In
+a multi-plane lens the deflection angle now can be sourced
+by a vector field Aeff instead of just the gradient of a scalar
+field, allowing us to define a new convergence based on the
+curl of the effective deflection field. Our two convergences are
+calculated as:
+𝜅div = 1
+2∇· αeff −𝜅0
+(10)
+𝜅curl = 1
+2∇× αeff · ˆz,
+(11)
+where 𝜅0 is the convergence of the lens system’s host halo, and
+ˆz is the line-of-sight direction [38, 40, 94, 95]. By subtracting
+𝜅0 we remove the dominant contribution of the main lens,
+but preserve the non-linear coupling between the main lens
+and line-of-sight structure, which leads to the anisotropies
+that we aim to study. Unlike the single-plane case, neither
+of these terms are equivalent to the projected mass density.
+By studying both the divergence and curl convergences, we
+preserve important information about the non-linear multi-
+plane coupling [40, 41].
+In this study, we compute 𝜅div and 𝜅curl for pyHalo realiza-
+tions (Section II B) with version 1.12.0 of the Python gravita-
+tional lensing package lenstronomy [96, 97]. We compute
+the convergence of our 𝑁-body simulations (Section II A) with
+the C++ library GLAMER [98, 99].
+
+7
+0.03
+0.02
+0.01
+0.00
+0.01
+0.02
+0.03
+div
+FLOS
+SUB
+BLOS
+CDM
+FLOS
+SUB
+BLOS
+SIDM: Full Evolution
+FLOS
+SUB
+BLOS
+SIDM: Random Collapse
+0.004
+0.002
+0.000
+0.002
+0.004
+curl
+FLOS
+SUB
+BLOS
+FLOS
+SUB
+BLOS
+FLOS
+SUB
+BLOS
+FIG. 3: 𝜅div (top) and 𝜅curl (bottom) maps for a single pyHalo rendering, with CDM (left) and two SIDM models (center, right).
+To isolate the effect of substructure and line-of-sight structure, the convergence of the main lens halo is subtracted out. The
+SIDM models use a velocity dependent cross-section (Equation 1) with {𝜎0 = 200 cm2/g, 𝜔= 200 km/s}. Each square of the
+overlaid grid is 0.5 × 0.5 arcsec in angular size, and shaded regions are excluded by our annular mask when calculating the
+two-point correlation function. The critical lensing curve is shown in black. Examples of a subhalo (SUB), a background
+line-of-sight halo (BLOS), and a foreground line-of-sight halo (FLOS) are circled.
+2.
+The Two-point Correlation Function
+The two-point correlation function is a powerful summary
+statistic that encodes information about the distribution of sub-
+structure, as well as their inner deflection angle profiles (and
+hence their density profiles) [34, 40, 41, 94, 100–105]. In this
+section we will compute the correlation function for an ef-
+fective multiplane lens, and use it to disentangle line-of-sight
+effects from the influence of the main lensing plane. As shown
+in [41], the line-of-sight halos create structures in the 𝜅div field
+that exhibit even parity under the transformation 𝜃→−𝜃, but
+the corresponding structures in 𝜅curl exhibit odd parity. To
+measure these signals we will compute the two-point corre-
+lation functions of 𝜅div and 𝜅curl, and decompose them onto
+orthonormal bases. With the parity of line-of-sight signatures
+in mind, we will decompose 𝜅div onto an even basis and 𝜅curl
+onto an odd basis.
+For a convergence map 𝜅, the two-point correlation function
+as a function of a vector r linking two points in the image plane
+is:
+𝜉(r) = 1
+𝑆
+∫
+𝑆
+d2r1[𝜅(r1) −⟨𝜅(r1)⟩][𝜅(r2) −⟨𝜅(r2)⟩] (12)
+where r2 = r1 +r and 𝑆is the area over which we are calculat-
+ing the correlation function. For our density profile modeling
+tests, we compute 𝜉(r) over an annular mask with an inner ra-
+dius of 0.5 arcsec and outer radius 1.5 arcsec, chosen to focus
+on structure near the lensing critical curve. In this study we
+are primarily interested in the how the shape of the two-point
+correlation function changes under variations in perturbing
+halo density profiles, but the mass sheet transform would only
+rescale the amplitude by a constant factor. We are thus ignor-
+ing the mass sheet degeneracy, as in Ref. [41].
+We decompose 𝜉div(𝑟, 𝜃) onto an orthonormal basis of even
+
+8
+7.0
+7.5
+8.0
+8.5
+9.0
+9.5
+10.0
+log10 (Mbound/M
+)
+0
+2
+4
+6
+8
+Nsubhalos
+N-body Ntot = 62.2
+pyHalo Ntot = 44.5
+FIG. 4: The abundance of subhalos within the 1-10 arcsecond
+annular mask for our 𝑁-body simulations and pyHalo
+realizations. The averages are computed over 4 realizations
+for our 𝑁-body simulations (blue), and 200 realizations for
+our pyHalo data (yellow). The average number ⟨𝑁tot⟩of
+subhalos in the mask for each dataset is given in the legend.
+functions cos(ℓ𝜃) as:
+𝜉div(𝑟, 𝜃) =
+∞
+∑︁
+ℓ=0
+𝜉div,ℓ(𝑟) cos(ℓ𝜃),
+(13)
+with the correlation multipoles given by:
+𝜉div,ℓ(𝑟) = 2 −𝛿ℓ0
+𝜋
+∫
+𝜋
+0
+d𝜃𝜉div(𝑟, 𝜃) cos(ℓ𝜃),
+(14)
+and 𝛿𝑖𝑗denoting the Kronecker delta.
+Due to the odd parity of the line-of-sight structure in 𝜅curl,
+we will decompose 𝜉curl(𝑟, 𝜃) onto an orthogonal basis of odd
+functions 𝐵𝜃sin(ℓ𝜃) with:
+𝐵𝜃=
+(
++1
+0 ≤𝜃< 𝜋/2
+−1
+𝜋/2 ≤𝜃< 𝜋.
+(15)
+This decomposition gives:
+𝜉curl(𝑟, 𝜃) =
+∞
+∑︁
+ℓ=1
+𝜉curl,ℓ(𝑟)𝐵𝜃sin(ℓ𝜃),
+(16)
+with the correlation multipoles given by:
+𝜉curl,ℓ(𝑟) = 2
+𝜋
+∫
+𝜋
+0
+d𝜃𝜉curl(𝑟, 𝜃)𝐵𝜃sin(ℓ𝜃).
+(17)
+We will use the correlation multipoles in Equations (14) and
+(17) as our primary comparison of lensing statistics between
+realizations.
+In this study we will be concerned with the
+monopole and quadrupole moments of the 𝜅div map (𝜉div,0 and
+𝜉div,2), and the quadrupole moment of the 𝜅curl map (𝜉curl,2).
+Figure 3 shows an example of the 𝜅div and 𝜅curl maps for
+three different models: CDM, SIDM with full halo evolution
+(Section II C), and SIDM with randomly selected binary col-
+lapse (Section II D). We indicate a main deflector subhalo, a
+foreground line-of-sight halo (between the observer and the
+main deflector), and a background line-of-sight halo (between
+the source and the main deflector) on the convergence maps
+as examples of the distinct structure contributed by each. In
+this figure we can see the quadrupolar structures in the 𝜅div
+field from line-of-sight halos, which are intensified for core-
+collapsed halos. This quadrupole contribution is captured in
+the 𝜉div,2 measurement, which we will show in the next sec-
+tion. Additionally, the signal from line-of-sight halos are often
+stretched into arcs due to the non-linear coupling between lens
+planes.
+When comparing the CDM convergence maps (left column)
+in Figure 3 to the SIDM full evolution (center panels), we
+can see the signals of many halos changing.
+Some halos
+core-collapse, such as our example foreground line-of-sight
+halo, producing high-density peaks in the convergence maps
+that induce relatively strong lensing effects. Some, like the
+indicated subhalo and background line-of-sight halo, happen
+to be in the cored phase of SIDM evolution and have weaker
+signatures compared to the cuspy CDM profiles. In the random
+binary collapse case (right column) the collapse state of each
+halo is randomized, with some producing similar signals as
+in the full evolution, some becoming collapsed, and some
+becoming cored.
+III.
+RESULTS
+A.
+Comparison to N-body Simulations
+To validate our core-collapse acceleration model we gener-
+ate 200 pyHalo realizations with the same subhalo infall mass
+range as the 𝑁-body simulations (log10(𝑀/𝑀⊙) ∈[8, 10]),
+and compare the subhalo population and monopole moment
+of the convergence map to that of the 𝑁-body simulations.
+We do not include line-of-sight structure in these simulations,
+since the 𝑁-body simulations produce halos only in the main
+lens plane. We compute maps of the effective lensing conver-
+gence for the pyHalo and 𝑁-body lenses with lenstronomy
+and GLAMER respectively, over 800 × 800 pixel, 20 × 20 arcsec
+grids.
+We then use pyHalo to compute compute correla-
+tion multipoles from the effective convergence maps, using an
+annular aperture with inner radius 1 arcsec and outer radius
+10 arcsec. This aperture is significantly larger than the one we
+will use in the next section, because the 𝑁-body simulations in-
+clude only subhalos with infall masses above 108 M⊙. Using a
+larger aperture provides enough subhalos to make meaningful
+measurements of the lensing statistics.
+By varying the subhalo mass function normalization Σsub
+(see Section II B for the definition), we can match the pyHalo
+lens realizations to the subhalo population at the end of the
+CDM N-body simulation. With the choice of Σsub = 0.0033
+our pyHalo lenses broadly reproduce the subhalo population
+of our 𝑁-body simulations, as shown in Figure 4. We are un-
+able to produce the population of very low mass subhalos seen
+in the 𝑁-body simulations however, with our realizations pro-
+ducing relatively few 𝑀bound < 107.5𝑀⊙subhalos and about
+18 fewer subhalos in the annular region on average. These very
+
+9
+0.1
+1
+0.3
+3
+r (arcsec)
+0.0
+0.5
+1.0
+1.5
+div, 0(r)×106
+pyHalo (CDM)
+pyHalo (SIDM)
+N-body (CDM)
+N-body (SIDM)
+(a) 𝜎0 = 200 cm2/g, 𝜔= 50 km/s
+0.1
+1
+0.3
+3
+r (arcsec)
+0.0
+0.5
+1.0
+1.5
+div, 0(r)×106
+pyHalo (CDM)
+pyHalo (SIDM)
+N-body (CDM)
+N-body (SIDM)
+(b) 𝜎0 = 200 cm2/g, 𝜔= 200 km/s
+FIG. 5: Comparison of the monopole moment between pyHalo and 𝑁-body realizations. For the pyHalo realizations, we
+render 200 random realizations of lens substructure, and show the mean (thick lines) and standard deviation (shaded regions) of
+𝜉div,0(𝑟). For the 𝑁-body simulations we plot the four individual simulations as thin lines, each averaged over 64 random angles
+of projection. CDM and SIDM results are distinguished by color and line style, for both the pyHalo renderings and the 𝑁-body
+results.
+low mass subhalos are likely the most severely tidally stripped
+subhalos, suggesting the treatment of tidal effects in pyHalo
+differs from the CDM simulation results.
+Figure 5 shows the monopole moment results for two differ-
+ent SIDM models. Since we only have four samples of 𝑁-body
+lenses, we consider whether or not they could reasonably be
+considered as samples from the set of pyHalo renderings as
+a test of our tidal acceleration approach. The 𝑁-body simu-
+lation monopole moments are consistent with the pyHalo re-
+sults in all cases, with the 𝑁-body moments falling within one
+standard deviation of the pyHalo mean moments. We note,
+however, that the SIDM results with the {𝜎0 = 200 cm2/g,
+𝜔= 50 km/s} model are not distinguishable from the CDM
+results in both pyHalo and the 𝑁-body simulations. This is
+consistent with the results of Ref. [20], which found that core-
+collapse in this model is uncommon at halo masses above
+109 𝑀⊙. For the rest of our analysis we will focus on the
+{𝜎0 = 200 cm2/g 𝜔= 200 km/s} model, which produces
+more significant deviations from CDM to test as we modify
+the core-collapse evolution.
+While the 𝑁-body simulations are consistent with pyHalo
+realizations, this does not confirm that our approximate treat-
+ment of tidal effects is sufficient for all applications.
+The
+𝑁-body simulations represent only four samples of the full
+distribution of possible subhalo populations. Based on Figure
+5, we find that our tidal acceleration treatment is a reasonable
+first approximation to the true tidal behavior of core-collapsing
+subhalos, and we can reasonably proceed with it in this study.
+In Section IV we discuss how our tidal acceleration model
+affects the results of this study, and how subhalos could be
+modeled more accurately.
+B.
+Collapse Time Variation
+Now that we have checked our core-collapse implementa-
+tion against the 𝑁-body data, we test many variations of the
+SIDM density profile. In this and all following subsections,
+we calculate lensing statistics over an annular aperture with
+inner radius 0.5 arcsec and outer radius 1.5 arcsec, and reduce
+our lowest rendered halo mass from 108 𝑀⊙to 106 𝑀⊙. All
+of these tests are conducted over the same 200 random realiza-
+tions of subhalos and line-of-sight halo populations rendered
+with pyHalo, with convergence maps computed over 300×300
+pixel2 (3.2×3.2 arcsec2) grids. Further details of our substruc-
+ture and line-of-sight realizations are in Section II B.
+In our first test, we vary the collapse time of the continu-
+ously evolving density profile. We test two different methods:
+in one, we freeze the profile at the collapse time, and in the
+other, we instead boost the profile up to the default final pro-
+file (log(𝛽ˆ𝜎ˆ𝑡) = 2.237). See Section II C for details of the
+continuous profile and these two modifications.
+Figure 6 shows all three multipole moments for a subset
+of collapse times in Table II. In all three subplots we see
+that for the 60% collapse threshold, the lensing prediction
+is significantly different from CDM only in the frozen case,
+where we halt the density profile evolution once it reaches
+the threshold density. With the 20% collapse threshold, both
+boosting and freezing alter the predictions. Freezing the profile
+always suppresses the SIDM enhancement, reducing the gap
+between CDM and SIDM predictions. The boosted density
+profile, when it has an effect, enhances all three moments. In
+Figure 7 we show how the monopole moment changes with
+collapse time, this time plotting every collapse time model.
+These results follow the general trend found in Figure 6.
+From the profile freezing results, we see that altering the cen-
+tral density of core-collapsed halos affects the lensing signal
+at small scales, for thresholds of 60% log10(𝜌f) and lower. For
+
+10
+1.0
+0.3
+3
+r (kpc)
+0.1
+0.03
+0.3
+r (arcsec)
+0
+10
+20
+30
+40
+50
+60
+div, 0(r)×106
+CDM
+SIDM (Full Evolution)
+0.6log10(
+f) (Boost)
+0.2log10(
+f) (Boost)
+0.6log10(
+f) (Freeze)
+0.2log10(
+f) (Freeze)
+1.0
+0.3
+3
+r (kpc)
+0.1
+0.03
+0.3
+r (arcsec)
+6
+5
+4
+3
+2
+1
+0
+div, 2(r)×106
+1.0
+0.3
+3
+r (kpc)
+0.1
+0.03
+0.3
+r (arcsec)
+0
+1
+2
+3
+4
+5
+curl, 2(r)×106
+FIG. 6: Multipole moments for CDM, SIDM full evolution, and SIDM early collapse models with two collapse thresholds from
+Table II. The SIDM models use a velocity dependent cross-section (Equation 1) with {𝜎0 = 200 cm2/g, 𝜔= 200 km/s}. Lines
+are the mean multipole moments as a function of distance, and shaded regions are the uncertainty of the mean derived from 200
+realizations. Note that the distance axis is in angular units on the bottom of the figure, and in physical units on the top.
+0.1
+0.03
+0.3
+r (arcsec)
+2.0
+1.5
+1.0
+0.5
+0.0
+0.5
+1.0
+early
+div, 0(r)
+full
+div, 0(r)
+Full Evolution
+Boost
+Freeze
+0.2log10(
+f)
+0.25log10(
+f)
+0.3log10(
+f)
+0.35log10(
+f)
+0.4log10(
+f)
+0.6log10(
+f)
+0.8log10(
+f)
+FIG. 7: Relative difference between the average monopole
+moment of full SIDM evolution (𝜉full
+div,0) and early collapse
+(𝜉early
+div,0). The lines are the mean values of the monopole
+moments, with dashed lines boosting the density profile and
+dotted lines freezing it. The shaded region is the uncertainty
+in the mean of 𝜉full
+div,0 with 200 realizations.
+lower core-collapsed densities, the change becomes significant
+at smaller scales. The moment 𝜉div,2(𝑟) remains sensitive to
+density changes at larger scales than the moments 𝜉div,0(𝑟) and
+𝜉curl,2(𝑟) do, with distinguishable offsets from full evolution
+persisting above 0.1 arcsec.
+In contrast, the boosting results show that the collapse time
+has very little effect on the lensing statistics. Since the boosted
+profile does not affect the monopole moment until our most
+extreme case (20% log10(𝜌f)), it appears that the final density
+has a much stronger effect on lensing population statistics than
+the collapse time.
+C.
+Binary Core-collapse
+In our next set of tests, we compare the fully time-dependent
+density profile (Section II C) against models with binary core-
+collapse (Section II D). These tests are designed to probe the
+importance of individual halo modeling when computing lens-
+ing population statistics.
+We compute lensing statistics for
+CDM, continuous core-collapse, and four variations of bi-
+nary core-collapse.
+In the four binary collapse models we
+vary the un-collapsed density profile (cored versus NFW) and
+the method of assigning core-collapse (individual evolution
+times versus randomly assigned collapse). When modeling
+un-collapsed profiles as cored, we use the maximal cored
+profile of our gravothermal model (Equation 6 evaluated at
+log(𝛽ˆ𝜎ˆ𝑡) = 1.341).
+Figure 8 shows the three multipole moments for the CDM,
+SIDM, and various binary collapse cases. In the 𝜉div,0 panel
+we can see that the small-scale power is suppressed in binary
+collapse compared to the full time-evolution in all cases. This
+is not a surprising result, as this binary approach models all
+halos with the un-collapsed profile if log(𝛽ˆ𝜎ˆ𝑡) < 2.237, even
+if they are partially collapsed. We can also see in this panel that
+
+11
+1.0
+0.3
+3
+r (kpc)
+0.1
+0.03
+0.3
+r (arcsec)
+0
+10
+20
+30
+40
+div, 0(r)×106
+CDM
+SIDM (Full Evolution)
+Binary (Core, individual collapse)
+Binary (TNFW, individual collapse)
+Binary (Core, random collapse)
+Binary (TNFW, random collapse)
+1.0
+0.3
+3
+r (kpc)
+0.1
+0.03
+0.3
+r (arcsec)
+5
+4
+3
+2
+1
+0
+div, 2(r)×106
+1.0
+0.3
+3
+r (kpc)
+0.1
+0.03
+0.3
+r (arcsec)
+0
+1
+2
+3
+curl, 2(r)×106
+FIG. 8: Multipole moments for CDM, SIDM full evolution, and SIDM binary collapse with variations on the collapse method
+and un-collapsed profile. Among the binary collapse cases, different un-collapsed profiles (cored versus TNFW) are
+distinguished with line style, and different collapse methods (individual evolution versus random) are distinguished with color.
+The SIDM models use a velocity dependent cross-section (Equation 1) with {𝜎0 = 200 cm2/g, 𝜔= 200 km/s}. Lines are the
+mean multipole moments as a function of distance, and shaded regions are the uncertainty of the mean derived from 200
+realizations. Note that the distance axis is in angular units on the bottom of the figure, and in physical units on the top.
+the moment is further suppressed when using cored initial con-
+ditions, and when randomly determining halo core-collapse.
+Since the total fraction of collapsed halos does not change
+when randomizing core-collapse, this suggests that substruc-
+ture with a more pronounced lensing effect tends to collapse
+faster. Since we do not calculate individual tidal tracks for sub-
+halos, this preferential collapse must be due to halo parameters
+(mass and concentration) rather than position in the lens.
+The center and right panels of Figure 8 shows the same com-
+parison for the quadrupole moments 𝜉div,2 and 𝜉curl,2 respec-
+tively, which probe the line-of-sight structure. The quadrupole
+moments also show that binary collapse suppresses power on
+small scales, and this effect is more severe for random collapse
+and cored initial profiles. Similar to the collapse time tests in
+Section III B, we see that model differences are distinguish-
+able in 𝜉div,2(𝑟) at larger scales than they are for the other two
+moments.
+All of our binary core-collapse approaches in Figure 8 sup-
+press the lensing signal on small scales, shifting the multi-
+pole moments away from the SIDM full evolution and to-
+wards results for CDM. The most accurate binary collapse
+model, where halo core-collapse is tracked accurately and un-
+collapsed halos are modeled with a TNFW profile, cannot be
+clearly distinguished from the full evolution with our sample
+of 200 strong lenses. The actual detectability of these offsets
+will depend on the scales being probed in a given analysis, and
+the magnitude of observational uncertainties.
+IV.
+SUMMARY AND DISCUSSION
+In this study, we investigate how the two-point correla-
+tion function of the effective lensing convergence field is af-
+fected by variations in SIDM core-collapse models. To do
+this, we have implemented a time-evolving halo density pro-
+file fit to gravothermal fluid simulations into the pyHalo and
+lenstronomy gravitational lensing codes. To model subhalos
+with this profile, derived originally for isolated halos, we ap-
+ply a numerical factor to each halo’s core-collapse time based
+on 𝑁-body simulations of SIDM subhalos. This factor ac-
+counts for the difference in expected collapse time between
+field halos and substructure, due to tidal effects and evpaora-
+tion [16, 21]. We have varied the final profile central density
+and core-collapse time of this continuous model, and modeled
+the resulting changes to the two-point correlation function.
+We have also compared the continuous collapse profile to bi-
+nary collapse models, where each halo is modeled with one
+of two profiles, depending on whether the halo is considered
+collapsed or uncollapsed. Our results can be summarized as
+follows:
+• The multipole moments of the two-point correlation
+function are much more sensitive to the density profile
+of collapsed halos than they are to the collapse timescale
+(Figure 7). This suggests modest systematic uncertain-
+ties in the SIDM halo core-collapse time (whether the
+uncertainty is in the definition of the collapse time or in
+the actual evolution of the density profile) may not sig-
+nificantly affect lensing predictions, as long as the fully
+collapsed density profile is accurate. With our sample of
+200 simulated strong lenses, we find that collapse times
+up to 20% shorter than the full evolution do not produce
+significantly different values of 𝜉div,0 on all scales larger
+than 2 × 10−2 arcsec.
+• Employing binary core-collapse models suppresses the
+small-scale enhancement to all multipole moments pro-
+
+12
+vided by SIDM core-collapse, but the effect may not
+be significant at larger scales depending on the num-
+ber of strong lenses included in the calculation (Figure
+8). If binary core-collapse models are used, they are
+most accurate compared to full halo evolution when un-
+collapsed halos are modeled with TNFW profiles, as
+opposed to cored profiles which suppress all tested mul-
+tipole moments.
+• In this study, random assignment of core-collapsed pro-
+files suppresses the SIDM enhancement of the multipole
+moments compared to using accurate collapse states for
+individual halos (Figure 8). This suppression suggests
+a correlation between a halo’s influence on the lens-
+ing convergence and its core-collapse speed, even if
+the core-collapse process is ignored. Since we do not
+model the effect of subhalo position on core-collapse
+speed, this correlation must be based on the mass and
+concentration of perturbing halos.
+The interpretation of our final point requires additional dis-
+cussion. The collapse acceleration factor we use to approx-
+imate tidal effects is randomly determined for each subhalo,
+and this is likely influencing the results of the random collapse
+test. Since the subhalos are somewhat randomized in even the
+full evolution model, we would expect that additional shuffling
+of collapse states would have a limited effect on the lensing
+statistics. It is possible that for a fully deterministic model of
+tidal effects, which considers the orbital parameters of indi-
+vidual halos, random collapse would show a more pronounced
+difference from the full evolution. This hypothesis could be
+checked by using more precise SIDM tidal evolution tracks.
+The full evolution core-collapse method we present in this
+manuscript would benefit from further comparisons against
+common methods in the literature. In Appendix B, we show
+that our model is significantly different than the cored and
+truncated NFW profile, but there are other efficient approxi-
+mations of core-collapse (such as the cored power-law profile
+[39, 41, 91] and parametric core-collapse model [106]) which
+could be checked for accuracy against the model in this work,
+or against other physically motivated full-evolution models. It
+would also be useful to implement our full evolution model
+into predictions of flux-ratio anomalies in multiply imaged
+strong lenses, which can be used to probe substructure density
+profiles [39, 44]. These comparisons can be made in future
+work, using the framework developed in this study.
+Our results show that the two-point correlation function is
+sensitive to some common simplifications of and uncertain-
+ties in the SIDM core-collapse process, with the strongest
+effects on the smallest distance scales. Any lensing survey
+that uses this statistic must make intentional and physically
+motivated choices for substructure and line-of-sight structure
+halos. It is not yet clear what effect, if any, these subtle changes
+would have on other measurements such as flux-ratio anoma-
+lies which often use a cored and truncated NFW profile (see
+Appendix B for additional discussion). To produce confident
+tests of SIDM, we recommend that these works include analo-
+gous testing of their core-collapse profile choices, and compare
+the resulting deflection angle profiles against physically mo-
+tivated core-collapse models. Models of SIDM core-collapse
+in realistic environments must also be refined, as testable pre-
+dictions of SIDM may have a strong dependence on the final
+state of core-collapsed halos.
+ACKNOWLEDGMENTS
+We thank Daniel Gilman and Tansu Daylan for useful dis-
+cussions.
+B. D. and F.-Y. C.-R. acknowledge the support
+of program HST-AR-17061.001-A whose support was pro-
+vided by the National Aeronautical and Space Administration
+(NASA) through a grant from the Space Telescope Science
+Institute, which is operated by the Association of Universities
+for Research in Astronomy, Incorporated, under NASA con-
+tract NAS5-26555. F.-Y. C.-R. also acknowledges the support
+of National Science Foundation award OIA-2327192.
+C. M. is partially supported by the Presidential Fellowship
+of the Ohio State University Graduate School. This work ben-
+efited from the Dark Matter Theory, Simulation, and Analysis
+workshop in the Era of Large Surveys workshop at the Kavli
+Institute for Theoretical Physics (NSF PHY-2309135).
+Appendix A: Gravothermal Profile Truncation
+The gravothermal model fit given in Ref. [71] starts from an
+NFW profile, and does not include truncation at any time. To
+model realistic halos with converged total mass, we introduce
+a truncation to the density profile. We do this by including a
+common truncation factor used in TNFW profiles 𝑟2
+t /(𝑟2+𝑟2
+t ),
+with the truncation radius 𝑟t as the only additional parameter.
+We do not explore how this truncation factor may directly
+affect core-collapse evolution, but account for the effect of
+tidal interactions on the collapse time by calibrating to 𝑁-
+body simulations of subhalo populations (see Section II C for
+details). Figure 9 shows the truncated density profile for three
+𝑟t values and three different stages of core-collapse. For actual
+halos in this study, the truncation radius and core-collapse
+stage are selected as described in Section II C.
+Appendix B: Density Profile Comparisons
+Another choice for binary core-collapse profiles is an NFW-
+like density profile with truncation and a constant density core
+(TNFWC)4:
+𝜌TNFWC(𝑟) =
+𝜌′
+s𝑟′
+s
+3
+
+𝑟2 + 𝑟′c
+21/2 
+𝑟′s
+2 + 𝑟2
+
+ 
+𝑟′
+t
+2
+𝑟2 + 𝑟′
+t
+2
+!
+(B1)
+4 This method is implemented in version 1.4.1 of pyHalo, using the TNFWC
+profile in lenstronomy.
+
+13
+10
+2
+10
+1
+100
+101
+102
+r/rs
+10
+5
+10
+2
+101
+/
+s
+NFW
+log(
+t) = -5.6
+NFW
+SIDM (no truncation)
+SIDM (rt = 0.1 × rs)
+SIDM (rt = rs)
+SIDM (rt = 10 × rs)
+10
+2
+10
+1
+100
+101
+102
+r/rs
+10
+5
+10
+2
+101
+/
+s
+Cored
+log(
+t) = 1.341
+10
+2
+10
+1
+100
+101
+102
+r/rs
+10
+5
+10
+2
+101
+/
+s
+Core-collapsed
+log(
+t) = 2.237
+FIG. 9: Our truncation method for SIDM core-collapsing halos at three stages of evolution: the initial CDM profile (left), the
+maximally cored profile (center), and deeply core-collapsed (right). In each panel we compare the gravothermal model density
+profile without any truncation (orange, Equation 6) to profiles with three example truncations (blue, truncation differentiated by
+line style). The initial NFW profile (black) is shown in each panel for reference.
+where 𝜌′
+s 𝑟′
+s, 𝑟′
+c, and 𝑟′
+t are the scale density, scale radius, core
+radius, and truncation radius, respectively. We use primed
+variables to distinguish from the profile parameters of the orig-
+inal NFW or TNFW profile before core collapse, and from the
+parameters of a core-collapsed halo with our gravothermal
+profile.
+Both this model and our gravothermal profile (Equation
+6) include a constant density core, but they differ in their
+outer profiles. The gravothermal profile includes a two-phase
+outer profile that transitions at the outer radius 𝑟out, while the
+TNFWC profile does not. This creates a modeling challenge,
+as it is not clear if there are TNFWC parameter choices that
+produce similar deflection angles profiles as the gravothermal
+model. As an exercise, we attempt to match the TNFWC and
+gravothermal deflection angle profiles with several procedures
+for selecting TNFWC profile parameters. Our goal is to find
+TNFWC parameter choices that produce a deflection angle
+profile similar to a core-collapsed halo with the gravothermal
+model. We compare the deflection profile instead of the density
+profile because the deflection angle is the relevant quantity for
+calculating the convergence map, and includes the effects of 2D
+projection which are not immediately apparent in a 3D profile.
+For this test we will use the most collapsed profile in our lookup
+table (log10(𝛽ˆ𝜎ˆ𝑡) = 2.237), and set the truncation radius to be
+much larger than the NFW scale radius (𝑟t = 𝑟′
+t = 100 × 𝑟s).
+The TNFWC profile has four parameters for us to select
+values for: 𝜌′
+s 𝑟′
+s, 𝑟′
+c, and 𝑟′
+t. The scale density 𝜌′
+s will be set by
+mass conservation, where we assume the core-collapse process
+does not alter the total mass enclosed within some large radius.
+As we do with our gravothermal profile, we will use 60 × 𝑟s
+for this mass conservation radius.
+We will use a similarly
+straightforward assumption to set the truncation radius 𝑟′
+t, and
+calculate the truncation radius in the same manner as we do
+for CDM halos (see Section II C). Both of these choices are
+implemented in pyHalo.
+The final two parameters are less straightforward. While the
+un-collapsed TNFW profile and the collapsed TNFWC profile
+both have a scale radius parameter (𝑟s and 𝑟′
+s, respectively),
+there is no a priori reason the collapsed halo will have the same
+scale length as the un-collapsed profile. One TNFWC core-
+collapse implementation in pyHalo sets the TNFWC scale
+radius equal to the core radius (𝑟′
+s = 𝑟′
+c) when the core size
+is smaller than the truncation radius, and sets it equal to the
+truncation radius otherwise (𝑟′
+s = 𝑟′
+t). This convention reduces
+the number of free parameters to one, only the core radius 𝑟′
+c,
+which can then be chosen to represent the desired stage of
+core-collapse.
+In our first test (left panel of Figure 10), we adopt pyHalo’s
+convention and set the scale radius equal to the core size
+(𝑟′
+s = 𝑟′
+c).
+We then vary the TNFWC core size relative to
+the gravothermal core size. We see that no choice of 𝑟′
+c pro-
+duces deflection profiles similar to the gravothermal model; to
+produce a peak deflection magnitude as low as the gravother-
+mal profile we must use a much larger core, which shifts the
+peak deflection position to larger radii.
+Next, we adopt a new convention and set the TNFWC scale
+radius equal to the scale length of the original TNFW profile
+(𝑟′
+s = 𝑟s). We vary 𝑟′
+c as before, and again find no satisfactory
+choice of parameters (center panel of Figure 10). In this case
+the core radius has little impact on the deflection profile, with
+the TNFWC model producing a peak deflection at a much
+larger radius than the gravothermal model in all cases.
+For our final test, we instead fix the core size for the TN-
+FWC profile equal to the gravothermal core size (𝑟′
+c = 𝑟c),
+and instead allow the TNFWC scale radius to vary. This ap-
+proach comes closest to match the gravothermal profile, with
+the suggestion that some value 𝑟′
+s ∈[0.1×𝑟s, 𝑟s] may provide a
+somewhat close approximation of the gravothermal deflection
+profile.
+Our tests are not exhaustive; we only attempt to match the
+TNFWC profile to one possible halo, a fully-collapsed halo
+with a large truncation radius, and more detailed fitting is
+needed to fully explore the two-dimensional (𝑟′
+s, 𝑟′
+c) parameter
+space. Our findings show that the fitting process is complex,
+and there is not an immediately clear solution for matching
+these two profiles. Additionally, we find that using the same
+TNFWC model assumptions as is done in pyHalo leads to sig-
+nificantly enhanced deflection compared to the gravothermal
+
+14
+model’s core-collapsed profile. These results do not imply that
+one profile is more accurate to the core-collapse process than
+the other, just that the two profiles are not interchangeable.
+Caution should be exercised when comparing results that do
+not make the same density profile assumptions.

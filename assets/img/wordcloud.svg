@@ -1,31 +1,45 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="180.0 96.2 640.0 298.2" role="img" aria-label="Word cloud of the most frequent terms across all publications">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="120.1 70.6 730.4 361.1" role="img" aria-label="Word cloud of the most frequent terms across all publications">
   <title>Most frequent terms across all publications</title>
   <g font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-weight="600">
-    <text x="190.0" y="264.6" font-size="47.7" fill="hsl(219, 59%, 26%)">self-interacting dark matter</text>
-    <text x="490.0" y="310.7" font-size="38.6" fill="hsl(219, 59%, 27%)">halo</text>
-    <text x="380.9" y="214.0" font-size="34.1" fill="hsl(187, 46%, 29%)">core collapse</text>
-    <text x="358.3" y="303.0" font-size="29.0" fill="hsl(207, 48%, 30%)">evolution</text>
-    <text x="366.2" y="174.0" font-size="29.0" fill="hsl(27, 62%, 31%)">gravothermal</text>
-    <text x="574.1" y="302.7" font-size="24.9" fill="hsl(187, 46%, 33%)">subhalo</text>
-    <text x="445.3" y="345.4" font-size="24.9" fill="hsl(219, 59%, 34%)">velocity-dependent</text>
-    <text x="601.9" y="205.6" font-size="22.7" fill="hsl(27, 62%, 36%)">neutrino</text>
-    <text x="345.1" y="331.9" font-size="20.2" fill="hsl(267, 34%, 37%)">simulation</text>
-    <text x="553.2" y="169.0" font-size="20.2" fill="hsl(27, 62%, 38%)">cross section</text>
-    <text x="288.8" y="214.8" font-size="17.4" fill="hsl(267, 34%, 40%)">black hole</text>
-    <text x="469.4" y="370.5" font-size="17.4" fill="hsl(219, 59%, 41%)">core formation</text>
-    <text x="258.6" y="300.4" font-size="17.4" fill="hsl(267, 34%, 42%)">Milky Way</text>
-    <text x="667.5" y="293.1" font-size="17.4" fill="hsl(27, 62%, 44%)">Local Group</text>
-    <text x="359.2" y="359.9" font-size="17.4" fill="hsl(267, 34%, 45%)">diversity</text>
-    <text x="247.7" y="188.6" font-size="17.4" fill="hsl(187, 46%, 46%)">dwarf galaxy</text>
-    <text x="386.9" y="139.8" font-size="17.4" fill="hsl(267, 34%, 48%)">evaporation</text>
-    <text x="495.5" y="140.7" font-size="17.4" fill="hsl(267, 34%, 49%)">structure formation</text>
-    <text x="667.2" y="313.6" font-size="14.0" fill="hsl(27, 62%, 50%)">substructure lensing</text>
-    <text x="284.8" y="321.3" font-size="14.0" fill="hsl(27, 62%, 52%)">N-body</text>
-    <text x="701.6" y="212.0" font-size="14.0" fill="hsl(207, 48%, 53%)">tidal evolution</text>
-    <text x="239.2" y="215.5" font-size="14.0" fill="hsl(219, 59%, 55%)">cored</text>
-    <text x="305.2" y="161.8" font-size="14.0" fill="hsl(219, 59%, 56%)">cuspy</text>
-    <text x="671.4" y="335.9" font-size="14.0" fill="hsl(219, 59%, 57%)">isothermal</text>
-    <text x="378.8" y="381.5" font-size="14.0" fill="hsl(27, 62%, 59%)">semi-analytic</text>
-    <text x="455.4" y="117.7" font-size="14.0" fill="hsl(207, 48%, 60%)">clustering</text>
+    <text x="446.2" y="267.1" font-size="56.0" fill="hsl(219, 59%, 26%)">halo</text>
+    <text x="432.8" y="323.1" font-size="48.1" fill="hsl(219, 59%, 27%)">subhalo</text>
+    <text x="154.8" y="206.0" font-size="45.7" fill="hsl(187, 46%, 28%)">self-interacting dark matter</text>
+    <text x="221.7" y="270.1" font-size="45.1" fill="hsl(207, 48%, 29%)">simulation</text>
+    <text x="571.3" y="252.4" font-size="39.4" fill="hsl(27, 62%, 29%)">core collapse</text>
+    <text x="281.4" y="317.3" font-size="34.4" fill="hsl(187, 46%, 30%)">evolution</text>
+    <text x="335.3" y="158.0" font-size="31.4" fill="hsl(219, 59%, 31%)">cold dark matter</text>
+    <text x="457.7" y="363.9" font-size="30.6" fill="hsl(27, 62%, 32%)">cross section</text>
+    <text x="612.1" y="287.8" font-size="26.9" fill="hsl(267, 34%, 33%)">stellar</text>
+    <text x="611.2" y="322.0" font-size="26.6" fill="hsl(27, 62%, 34%)">galaxy</text>
+    <text x="278.6" y="362.8" font-size="26.5" fill="hsl(267, 34%, 35%)">gravothermal</text>
+    <text x="584.3" y="159.3" font-size="26.4" fill="hsl(219, 59%, 36%)">host</text>
+    <text x="381.8" y="121.8" font-size="23.0" fill="hsl(267, 34%, 36%)">density profile</text>
+    <text x="700.5" y="291.7" font-size="22.4" fill="hsl(27, 62%, 37%)">black hole</text>
+    <text x="646.2" y="156.6" font-size="22.4" fill="hsl(267, 34%, 38%)">neutrino</text>
+    <text x="490.7" y="395.1" font-size="22.4" fill="hsl(187, 46%, 39%)">evaporation</text>
+    <text x="702.8" y="321.3" font-size="20.0" fill="hsl(267, 34%, 40%)">accretion</text>
+    <text x="659.8" y="347.4" font-size="18.9" fill="hsl(267, 34%, 41%)">N-body</text>
+    <text x="354.8" y="390.0" font-size="18.3" fill="hsl(27, 62%, 42%)">concentration</text>
+    <text x="230.5" y="304.3" font-size="17.8" fill="hsl(27, 62%, 43%)">NFW</text>
+    <text x="246.0" y="158.0" font-size="17.8" fill="hsl(207, 48%, 43%)">Milky Way</text>
+    <text x="564.8" y="120.0" font-size="17.7" fill="hsl(219, 59%, 44%)">scattering</text>
+    <text x="393.4" y="94.8" font-size="17.4" fill="hsl(219, 59%, 45%)">velocity dispersion</text>
+    <text x="206.5" y="332.5" font-size="17.3" fill="hsl(219, 59%, 46%)">baryonic</text>
+    <text x="754.6" y="212.4" font-size="17.2" fill="hsl(27, 62%, 47%)">isothermal</text>
+    <text x="660.7" y="377.3" font-size="17.1" fill="hsl(207, 48%, 48%)">initial condition</text>
+    <text x="179.2" y="261.1" font-size="17.0" fill="hsl(219, 59%, 49%)">fluid</text>
+    <text x="328.3" y="122.1" font-size="17.0" fill="hsl(207, 48%, 50%)">cored</text>
+    <text x="726.1" y="345.8" font-size="17.0" fill="hsl(267, 34%, 50%)">heating</text>
+    <text x="653.5" y="127.0" font-size="16.0" fill="hsl(27, 62%, 51%)">field</text>
+    <text x="621.1" y="387.3" font-size="15.8" fill="hsl(207, 48%, 52%)">gas</text>
+    <text x="488.2" y="418.5" font-size="15.7" fill="hsl(27, 62%, 53%)">core formation</text>
+    <text x="346.2" y="414.7" font-size="15.7" fill="hsl(267, 34%, 54%)">velocity-dependent</text>
+    <text x="754.5" y="183.3" font-size="15.6" fill="hsl(267, 34%, 55%)">infall</text>
+    <text x="173.6" y="304.9" font-size="15.1" fill="hsl(187, 46%, 56%)">growth</text>
+    <text x="261.8" y="385.3" font-size="14.7" fill="hsl(267, 34%, 57%)">timescale</text>
+    <text x="130.1" y="238.7" font-size="14.7" fill="hsl(207, 48%, 57%)">pericenter</text>
+    <text x="231.8" y="134.3" font-size="14.7" fill="hsl(27, 62%, 58%)">threshold</text>
+    <text x="579.5" y="93.2" font-size="14.0" fill="hsl(219, 59%, 59%)">enclosed</text>
+    <text x="223.3" y="362.2" font-size="14.0" fill="hsl(219, 59%, 60%)">lensing</text>
   </g>
 </svg>

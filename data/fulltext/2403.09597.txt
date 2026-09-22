@@ -1,0 +1,2619 @@
+Tidal evolution of cored and cuspy dark matter halos
+Xiaolong Du
+,1, 2, ∗Andrew Benson
+,2, † Zhichao Carton Zeng
+,3, 4 Tommaso Treu
+,1
+Annika H. G. Peter
+,3, 4, 5, 6 Charlie Mace
+,3, 4 Fangzhou Jiang
+,7, 2, 8 Shengqi Yang
+,2
+Charles Gannon
+,9 Daniel Gilman
+,10 Anna. M. Nierenberg
+,9 and Ethan O. Nadler
+2, 11
+1Department of Physics and Astronomy, University of California, Los Angeles, CA 90095, USA
+2Carnegie Observatories, 813 Santa Barbara Street, Pasadena, CA 91101, USA
+3Department of Physics, The Ohio State University,
+191 W. Woodruff Ave., Columbus, OH 43210, USA
+4Center for Cosmology and Astroparticle Physics, The Ohio State University,
+191 W. Woodruff Ave., Columbus, OH 43210, USA
+5Department of Astronomy, The Ohio State University, 140 W. 18th Ave., Columbus, OH 43210, USA
+6School of Natural Sciences, Institute for Advanced Study, 1 Einstein Drive, Princeton, NJ 08540
+7Kavli Institute for Astronomy and Astrophysics,
+Peking University, Beijing 100871, People’s Republic of China
+8TAPIR, California Institute of Technology, Pasadena, CA 91125, USA
+9University of California, Merced, 5200 N Lake Road, Merced, CA 95341, USA
+10Department of Astronomy & Astrophysics, University of Chicago, Chicago, IL 60637, USA
+11Department of Physics & Astronomy, University of Southern California, Los Angeles, CA 90007, USA
+The internal structure and abundance of dark matter halos and subhalos are powerful probes of
+the nature of dark matter. In order to compare observations with dark matter models, accurate
+theoretical predictions of these quantities are needed. We present a fast and accurate method to
+describe the tidal evolution of subhalos within their parent halo, based on a semi-analytic approach.
+We first consider idealized N-body simulations of subhalos within their host halo, using a generalized
+mass density profile that describes their properties in a variety of dark matter models at infall,
+including popular warm, cold, and self-interacting ones. Using these simulations we construct tidal
+“tracks” for the evolution of subhalos based on their conditions at infall. Second, we use the results
+of these simulations to build semi-analytic models for tidal effects, including stripping and heating
+and implement them within the code galacticus. Our semi-analytic models can accurately predict
+the tidal evolution of both cored and cuspy subhalos, including the bound mass and density profiles,
+providing a powerful and efficient tool for studying the post-infall properties of subhalos in different
+dark matter models.
+I.
+INTRODUCTION
+The vast majority of the matter density of the Uni-
+verse (∼85%) is known to be non-baryonic, i.e. made of
+something other than the quarks and baryons of the stan-
+dard model of particle physics. Understanding the fun-
+damental physical nature of dark matter (DM) has been
+a long standing goal of physics and cosmology. The com-
+monly accepted model postulates that DM is composed
+by a massive non-relativistic particle (sometimes known
+as the Weakly Interacting Massive Particle, or WIMP),
+and behaves cosmologically as Cold Dark Matter (CDM).
+However, while the CDM model has shown excellent
+agreement with observations on large scales, such as the
+Cosmic Microwave Background and large-scale structure
+of galaxy distributions, reproducing some observations on
+subgalactic scales is challenging within the model [1, 2].
+Examples of these challenges include the cusp-core prob-
+lem [3–5], the too-big-to fail problem [6], and diversity
+problem [7, 8]. To solve these issues, a number of alter-
+native DM models have been proposed, including, e.g.
+∗xdu@astro.ucla.edu
+† abenson@carnegiescience.edu
+warm dark matter [9–12], fuzzy dark matter (FDM) [13–
+18], self-interacting dark matter (SIDM) [19, 20], and
+primordial black holes [21–23].
+A particularly powerful probe of the nature of DM is
+the abundance and internal structure of halos and sub-
+halos. These are the bound hierarchical structures that
+form as a result of gravity, as the Universe evolves. Alter-
+nate dark matter models predict different density profiles
+and abundance for small DM halos and subhalos. The
+demographics and internal structure of halos and subha-
+los already provide some of the most stringent limits on
+alternative dark matter models, including from observa-
+tions of Milky Way satellites [24–34] and strong gravita-
+tional lensing [29, 35–40].
+In order to interpret the observation of DM halos and
+subhalos in terms of reliable constraints on the nature of
+DM, it is essential to have accurate theoretical predic-
+tions to compare with. Numerical simulations have been
+shown to be an essential tool to connect the fundamen-
+tal physics to the growth of structure in the Universe.
+With the rapid development in the computing resources
+and techniques, state-of-the-art cosmological simulations
+are pushing the boundary of numerical capability, i.e.
+to resolve the smallest dark matter halos [41–46] and to
+simulate a large cosmic volume [47, 48].
+In practice, numerical simulations are always limited
+arXiv:2403.09597v2  [astro-ph.GA]  16 Jul 2024
+
+2
+by resolution, especially when we focus on the evolution
+of subhalos. Unlike isolated halos, subhalos are subject
+to frequent tidal interactions with their host halos, which
+leads to mass loss, tidal heating, and possible disruption.
+Even state-of-the-art simulations may suffer from artifi-
+cial disruption of subhalos [49], which may lead to biased
+results when comparing with observations.
+One way to control numerical artifacts is to run
+idealized simulations, in which case only one subhalo
+is evolved in the host potential so that one can run
+high-resolution simulations with manageable comput-
+ing resource. Using such methods, van den Bosch and
+Ogiya [49] carried out a detailed study of numerical ar-
+tifacts in simulations resulting from gravitational soften-
+ing, discreteness noise, and two-body relaxation. They
+also derived the requirements for obtaining properly
+converged results.
+Using a similar approach, Aguirre-
+Santaella et al. [50] studied the evolution of subhalos in
+a realistic Milky Way-like host potential including con-
+tributions from the galactic bulge and disk. However, in
+order to compute statistical properties of subhalos, one
+needs a model to describe the tidal evolution of subhalos
+so that one could look at the evolution of a population
+of subhalos within the context of a cosmological model.
+In order to achieve this, one can either build analytic
+models using appropriate approximations, or train non-
+parametric models such as the one presented in Ref. [51].
+In this work, we first run idealized N-body simula-
+tions to study the evolution of DM halos with different
+initial density profiles in a host gravitational potential,
+aiming to include a broad range of dark matter profiles
+that may be produced by different DM models. Previous
+studies [52–55] have shown that, as subhalos evolve in the
+host, their maximum circular velocity, Vmax, 1 and the ra-
+dius at which this maximum is reached, Rmax, follow a
+universal “tidal track” for a specific initial density pro-
+file. Both Vmax/Vmax,0 and Rmax/Rmax,0 are functions
+of fractional mass remaining in the subhalo and are not
+sensitive to how mass is stripped from the subhalos. We
+calculate the tidal tracks for different initial dark mat-
+ter profiles, including DM halos with cored profiles and
+those with extremely cuspy profiles. Cored profiled can
+result from non-gravitational interactions between DM
+particles, e.g. in FDM [15, 16] and SIDM [19, 20] models,
+while extremely cuspy profiles are found in SIDM model
+when a halo undergoes core collapse [56–60]. Notably,
+Penarrubia et al. [53] has found that for DM profiles with
+different inner slopes, the tidal track is significantly dif-
+ferent.
+We verify such dependence on the inner slope
+and also investigate the influence of the density slope at
+larger radii.
+We then build improved semi-analytic models (SAMs)
+for the tidal effects, including tidal stripping and tidal
+heating, and calibrate these models to the idealized sim-
+ulations. In previous work [59, 61–63], similar SAMs have
+1 The circular velocity is defined as V =
+p
+GM(r)/r.
+been used to describe the tidal evolution of DM halos ini-
+tialized with Navarro-Frenk-White (NFW) density pro-
+files [64]. To model the density evolution of a subhalo
+due to tidal heating, a commonly used approach is to
+estimate the heating energy rate using the impulse ap-
+proximation [65]. See also Ref. [66] for another approach
+using the adiabatic limit. From the heating energy, the
+expansion of mass shells in a subhalo can be solved and
+converted to the change in density profile [61, 63]. In one
+of our previous studies [67], we showed that by includ-
+ing the contribution from the second-order perturbation
+in the heating energy, we can reproduce the tidal track
+for NFW halos accurately. In this work we will extend
+these models to other dark matter profiles.
+This paper is organized as follows. In Sec. II, we de-
+scribe the setup of our idealized simulations. In Sec. III,
+we show our results from the simulations and give fit-
+ting functions for the tidal tracks and density transfer
+functions assuming different initial density profiles. In
+Sec. IV, we describe our semi-analytic models and show
+the calibrations of the model parameters. Conclusions
+and discussions are given in Sec. V.
+II.
+SIMULATION SETUP
+We simulate the evolution of a subhalo in a static host
+halo potential. For the definition of virial radius, rvir, we
+make use of the spherical collapse model [68]
+ρ(< rvir) = ∆vir ρm = ∆vir Ωm
+3H2
+0
+8πG.
+(1)
+At z = 0, ∆vir = 329.621.
+Cosmological parameters
+from [69] are adopted, i.e. Ωm = 0.3153, ΩΛ = 0.68470,
+H0 = 67.36 km/s/Mpc.
+A.
+Initial conditions
+The host is defined to have an NFW density profile [64]
+ρNF W (r) =
+ρ0
+r
+rs
+
+1 + r
+rs
+2 ,
+(2)
+where ρ0 is the characteristic density and rs is the scale
+radius. The acceleration due to the host is then given by
+aNF W (r) = −4πρ0r3
+s
+"
+ln
+
+1 + r
+rs
+
+−
+r
+rs
+1 + r
+rs
+#
+1
+r2 + r2
+softening
+r
+r,
+(3)
+where the term involving rsoftening, the gravitational soft-
+ening length, is introduced to soften the potential in the
+inner regions [70]. For consistency, the value of rsoftening
+
+3
+is taken to be the same as that used for gravitational
+softening between particles. For the host, we choose
+ρ0 = 3.797 × 106 M⊙/kpc3,
+(4)
+rs = 23.69 kpc,
+(5)
+rvir = 263.2 kpc,
+(6)
+Mvir = 1012 M⊙.
+(7)
+The host mass and concentration, chost = rvir/rs, are
+chosen to represent the typical values for the Milky Way
+DM halo (see e.g. [71]).
+At the initial time the subhalo is assumed to be spher-
+ically symmetric and has a density profile described
+by [72–74]:
+ρ(r) =
+ρ0
+
+r
+rs
+γ h
+1 +
+
+r
+rs
+αi(β−γ)/α .
+(8)
+The above parametrization with three free parameters
+are also known as the “Nuker” model which was first
+used to describe the surface brightness profile of galactic
+nuclei [75]. To enforce that the subhalo has a finite total
+mass, we truncate the subhalo density profile at r > rvir
+following [76]
+ρ(r) =
+ρ0
+cγ(1 + cα)(β−γ)/α
+ r
+rvir
+κ
+exp
+
+−r −rvir
+rdecay
+
+, (9)
+where c = rvir/rs is the halo concentration and
+κ = −γ + βcα
+1 + cα +
+rvir
+rdecay
+.
+(10)
+We take rdecay/rvir = 0.1, with which the total mass of
+subhalo is 1.02−1.2Mvir,sub depending on the parameters
+(α, β, γ). Other parameters in the subhalo density profile
+are taken to be
+rs,sub = 1.279 kpc,
+(11)
+rvir,sub = 26.32 kpc,
+(12)
+Mvir,sub = 109 M⊙.
+(13)
+The above subhalo mass and concentration are typical
+values for dwarf satellite galaxies in the Milky Way (see
+e.g. [77]). For this choice of subhalo mass, the dynami-
+cal friction effect is not important (see Sec. IV A), thus
+it is appropriate to simulate its tidal evolution assum-
+ing a static host potential. Note that we fix the virial
+mass of the subhalo, such that ρ0 will differ for different
+combinations of (α, β, γ).
+Given the density profile of a subhalo, an N-body real-
+ization is generated by sampling particle positions from
+that density profile. For the initial velocities of particles
+we assume an isotropic velocity dispersion and use Ed-
+dington’s formula [78] to compute the velocity distribu-
+tion function as a function of radius, taking into account
+the effects of gravitational softening using the approach
+of [70]. Velocities are then sampled from that distribu-
+tion function at the position of each particle. We take
+a particle mass of Mp = 102 M⊙so that the subhalo
+contains N ∼107 particles within its virial radius ini-
+tially. We limit our analysis to the simulation outputs
+when the subhalo is still resolved by at least 104 par-
+ticles so that its density profile can be well measured.
+For the choice of softening length, we follow Ref. [51],
+in which it is suggested that for N = 106 a value of
+rsoftening = 0.0003rvir,sub is sufficient to mitigate the nu-
+merical artifacts [49]. We rescale the softening length ac-
+cording to the particle number, i.e. rsoftening ∝N 1/3
+p
+[79]
+and take
+rsoftening = 1.39 × 10−4rvir,sub = 0.00367 kpc.
+(14)
+As we will discuss below, for the case γ = 1.5, we also
+check the convergence of our results by using different
+numbers of particles and varying the softening length.
+The subhalo is initially placed at the apocenter of its
+orbit at R = 0.7rvir,host as in Ref. [53] and given a tan-
+gential velocity vt, where vt is determined by assuming
+different pericentric/apocentric ratios, Rp/Ra. For each
+combination, we run the simulation with different val-
+ues of Rp/Ra so that the tidal tracks are well measured
+at early times and at the same time include the regime
+where the subhalos have been heavily stripped.
+B.
+Orbital and tidal evolution
+The Gadget-4 code [80] is used to simulate the evo-
+lution of the subhalo within the static host potential. In-
+stead of the TreePM method commonly used in previous
+simulations, we make use of a new feature in Gadget-4,
+the so-called fast multipole method (FMM) which has the
+advantage that the momentum is better conserved. We
+did not switch on the “PMGRID” option since we find
+for the simulations we perform the pure FMM method
+is faster and more accurate. The parameters controlling
+the accuracy of force computation and time integration
+are taken to be
+ErrTolIntAccuracy = 0.01,
+MaxSizeTimestep = 0.01,
+MinSizeTimestep = 0.00,
+TypeOfOpeningCriterion = 1,
+ErrTolTheta = 0.1,
+ErrTolThetaMax = 1.0,
+ErrTolForceAcc = 0.001.
+Our tests show that the above values are sufficient for
+most of the cases we have run (but see Sec. III A 1 for
+the exceptional case with an extremely cuspy profile).
+Details of each parameter can be found in the Gadget-
+4 documentation. 2
+2 https://wwwmpa.mpa-garching.mpg.de/gadget4/gadget4_
+manual.pdf
+
+4
+The particles are evolved using the hierarchical time
+integration scheme introduced in Gadget-4. The time
+step, ∆ti for particle i is determined based on its accel-
+eration ai:
+∆ti = min
+(s
+2ηrsoftening
+|ai|
+, ∆tmax
+)
+,
+(15)
+where
+η
+is
+set
+by
+the
+parameter
+“ErrTolIntAccuracy,”
+and
+∆tmax
+is
+set
+by
+“MaxSizeTimestep.”
+For
+the
+extremely
+cuspy
+case with γ = 1.5, we find that the results for the tidal
+track are not converged with the fiducial settings and
+an extremely small η is needed to achieve convergence,
+so we also test a fixed, global time step in which case
+all particles are forced to have the same time step size
+determined by the minimum over ∆ti (see Sec. III A 1).
+The subhalo is evolved for 37 Gyr. The particle data
+are output every 0.09778 Gyr.
+For each snapshot, we
+performed a self-binding analysis (see Sec. III) to iden-
+tify particles that remain bound to the subhalo, and com-
+puted the rotation curve of the subhalo using those bound
+particles.
+C.
+Analysis
+A reliable self-binding analysis is very important for
+identifying subhalos and determining their properties
+(such as the bound mass).
+Typically, in cosmological
+simulations, various halo finders such as Rockstar [81]
+and AHF [82] have been employed in both cosmological
+and idealized simulations (see, for example [83]).
+Ro-
+bust detection and characterization of subhalos in such
+simulations is challenging—for example, recent studies
+show that the commonly used Rockstar halo finder fails
+to find a non-negligible fraction of subhalos [84, 85]. In
+the present work we have the advantage that all parti-
+cles begin as members of the subhalo—we therefore know
+the starting point which allows us to proceed in a more
+careful and controlled manner from one snapshot to the
+next. Our self-binding algorithm is implemented in the
+Galacticus code [86] to perform this analysis.
+For each snapshot of a simulation, we carry out a
+self-binding analysis to determine which particles remain
+bound to the subhalo. This is an iterative process, which
+proceeds as follows:
+1. At the beginning of simulation, all particles are
+assumed to be gravitationally bound to the sub-
+halo.
+For snapshots at later times, we use the
+bound/unbound status of particles from the previ-
+ous snapshot in the first iteration of our algorithm.
+2. The center-of-mass position rcm and velocity vcm
+are determined from all bound particles.
+3. The gravitational potential energy and kinetic en-
+ergy are computed for each bound particle:
+Ep,i = −
+X
+i̸=j
+mpΦij,
+(16)
+Ek,i = 1
+2mp(vi −vcm)2.
+(17)
+Here Φij is the gravitational potential between par-
+ticles i and j taking into account the effect of the
+gravitational softening used in the simulation. Note
+that when computing Ep,i, only contributions from
+particles identified as being bound to the subhalo
+in the previous iteration are included.
+4. Particles with positive total energy, Et,i = Ep,i +
+Ek,i are considered unbound and excluded from
+later analysis.
+5. Repeat steps (2)–(4) until the following criterion is
+satisfied:
+Mbound −M previous
+bound
+
+
+Mbound + M previous
+bound
+
+/2
+< ϵ.
+(18)
+For all analyses, we take ϵ = 10−3.
+6. The center of the subhalo is determined by search-
+ing for the particle with the most negative Ep,i,
+which corresponds to the position with the high-
+est density. Similarly, the representative velocity
+of the subhalo is determined by the particle with
+the most negative Ev,i. Here Ev,i is computed in
+the same way as Ep,i but replacing the coordinates
+of particles with velocities, following the approach
+of [87].
+After completing the analysis described above, the center
+of the subhalo in phase space is then used to compute
+the density profile and velocity dispersion profile of the
+subhalo as a function of radius.
+This procedure is similar to the one used by van den
+Bosch and Ogiya [49]. In Ref. [49], the authors use the
+5% most-bound particles to determine the center-of-mass
+properties of the subhalo. In our analysis, we compute
+rcm and vcm using all bound particles, which in gen-
+eral gives smoother results for Mbound. Furthermore, our
+convergence criteria differ slightly from that of Ref. [49],
+based on the bound mass rather than the center-of-mass
+position and velocity.
+The evolution of a subhalo’s density profile as it or-
+bits within a host potential can be characterized by its
+Vmax and Rmax. As the subhalo evolves, it is subjected
+to the tidal force of the host halo.
+Vmax/Vmax,0 and
+Rmax/Rmax,0 evolve along a so-called called tidal track
+which is largely independent of precisely how mass is
+stripped away from the subhalos [52–55].
+Here Vmax,0
+and Rmax,0 are the initial values of these parameters.
+While the tidal track is insensitive to the host potential, it
+
+5
+does show significant differences for different initial den-
+sity profiles [53]. Therefore, finding the tidal tracks for
+different dark matter profiles is crucial for modeling how
+subhalo evolution in a host potential may differ under
+various assumptions for the nature of the dark matter
+particle.
+We compute Vmax and Rmax from bound particles for
+each snapshot of our simulations. In practice, after find-
+ing the center of the subhalo, we compute the mass profile
+using radial bins. At small radii, i.e. r < 4rkernel with
+rkernel = 2.8rsofening, linear bins are used to reduce the
+discreteness noise. The bin width is taken to be rkernel.
+At larger radii, logarithmic bins are used and the bin
+width is taken to be ∆log10 R = 0.1.
+The mass pro-
+file data is then super-sampled by a factor of 40 using a
+cubic spline interpolation to determine Vmax and Rmax.
+We find that this approach allows us to obtain more accu-
+rate Vmax and Rmax that are less affected by discreteness
+noise.
+III.
+RESULTS
+A.
+Tidal tracks
+The tidal tracks, Vmax/Vmax,0 versus Rmax/Rmax,0, for
+different combinations of (α, β, γ) are shown in Figs. 1,
+2 and 3. First, we keep α and β fixed at 1 and 3 (the
+values for an NFW profile), respectively, and change γ
+(the logarithmic slope of density profile at small radii),
+see Fig. 1. As can be seen, for γ ≤1, the results from
+Gadget-4 are in good agreement with the fitting func-
+tions found by [53] (dotted) and [55] (red dashed, for
+γ = 1 only).
+However, for γ = 1.5 we find that the
+tidal track obtained from Gadget-4 simulations devi-
+ates from the [53] fitting function at late times (i.e. for
+small values of Vmax/Vmax,0 and Rmax/Rmax,0). Increas-
+ing or decreasing the gravitational softening length by
+a factor of 3 slightly changes our results, but can not
+explain the large deviation from the fitting curve.
+For γ = 0, we find that as the subhalo evolves in the
+host potential, both Vmax/Vmax,0 and Rmax/Rmax,0 de-
+crease (from the upper right corner toward the lower left
+corner).
+However, as tidal evolution proceeds further,
+there exists a turnaround at Rmax/Rmax,0 ∼0.3, after
+which Rmax/Rmax,0 begins to increase. This is because
+the core expands significantly due to tidal heating which
+results in larger Rmax.
+We next increase β from 3 to 4, which produces a more
+rapid decrease of density at large radii—results are shown
+in Fig. 2. Such profiles have been widely used in modeling
+the density profile of spherical galaxies, see e.g. [72, 88–
+90]. Compared to the cases with β = 3 and the same γ,
+the cases with β = 4 are less influenced by tidal effects.
+For example, if we compare the blue circles in Fig. 2 with
+the blue circles in Fig. 1, both having the same Rp/Ra, at
+the end of the simulation Vmax/Vmax,0 and Rmax/Rmax,0
+change less relative to their initial values than in the case
+TABLE I. Best-fit parameters for Eq. (19) for tidal tracks
+with different initial density profiles.
+α β
+γ
+µV
+ηV
+µR
+ηR
+1 3 0
+0.8317 0.4218 −0.3737
+0.1976
+1 3 0.5 0.7152 0.3600 −0.08328
+0.2819
+1 3 1
+0.6175 0.2895
+0.5529
+0.4675
+1 3 1.5 0.3358 0.1692
+1.207
+0.6845
+1 4 0
+0.9149 0.4982 −0.1739
+0.1543
+1 4 0.5 0.6286 0.3968 −0.003293
+0.2660
+1 4 1
+0.4830 0.3055
+0.5597
+0.4802
+1 4 1.5 0.3469 0.2018
+1.254
+0.7847
+2 3 0
+1.055
+0.5114 −0.06394
+0.1182
+2 4 0
+1.412
+0.8288 −0.1514
+−0.002544
+with β = 4. However, the slope of the tidal track in the
+case with β = 4 is steeper.
+Finally, we also run two cases with a different value
+of α = 2 as shown in Fig. 3. The parameter α controls
+how smoothly the density profile slope transits from inner
+value to the value at larger radii. For this value of α, we
+limit our simulations to cored profiles with γ = 0 and
+β = 3, 4. Such density profiles have been found to well
+describe the observed density profile of Galactic globular
+clusters that are unaffected by tidal effects [91]. 3
+We fit the tidal tracks obtained from our simulations
+using the same fitting function introduced in Ref. [53]:
+g(x) =
+2µxη
+(1 + x)µ ,
+(19)
+where x = Mbound(t)/Mbound(0) is the bound mass frac-
+tion, and g is Vmax/Vmax,0 or Rmax/Rmax,0. To mitigate
+the effect of numerical artifacts, we limit our fitting to the
+data with bound mass fraction Mbound/Mbound,0 > 10−3,
+so that the subhalo is resolved by more than 104 parti-
+cles. The best-fit parameters are listed in Table I. The
+fitting function with the best-fit parameters is shown in
+Figs. 1, 2 and 3 by the solid lines.
+For the case α = 1, β = 3, and γ = 1, Ref. [55] pro-
+posed a slightly different fitting formula:
+Vmax/Vmax,0 =
+2α (Rmax/Rmax,0)β
+h
+1 + (Rmax/Rmax,0)2i−α
+(20)
+with α = 0.4 and β = 0.65. The best-fit function for
+this case found in this work is very close to the results of
+Ref. [55].
+For the case with (α, β, γ) = (1, 3, 0), the fitting func-
+tion Eq. (19) cannot capture the turnaround of the tidal
+track (see the top left panel of Fig. 1), so we exclude the
+last data point in the lower right corner from our fitting
+process.
+3 Our parameter β corresponds to the parameter γ in Ref. [91].
+
+6
+10-1
+100
+Rmax/Rmax, 0
+10-1
+100
+Vmax/Vmax, 0
+α = 1, β = 3, γ = 0
+Fitting(thiswork)
+Penarrubia et al. 2010
+Rp/Ra = 2/5
+Rp/Ra = 1/5
+10-1
+100
+Rmax/Rmax, 0
+10-1
+100
+Vmax/Rmax, 0
+α = 1, β = 3, γ = 0.5
+Fitting(thiswork)
+Penarrubia et al. 2010
+Rp/Ra = 1/5
+Rp/Ra = 1/20
+10-1
+100
+Rmax/Rmax, 0
+10-1
+100
+Vmax/Rmax, 0
+α = 1, β = 3, γ = 1
+Fitting(thiswork)
+Penarrubia et al. 2010
+Errani&Navarro2021
+Rp/Ra = 1/5
+Rp/Ra = 1/20
+10-1
+100
+Rmax/Rmax, 0
+10-1
+100
+Vmax/Vmax, 0
+α = 1, β = 3, γ = 1.5
+Fitting(thiswork)
+Penarrubia et al. 2010
+Rp/Ra = 1/100(Fiducial)
+Rp/Ra = 1/200(Fiducial)
+Rp/Ra = 1/100(Global∆t)
+Rp/Ra = 1/200(Global∆t)
+FIG. 1.
+Tidal tracks for (α, β) = (1, 3) and different values of γ and pericentric/apocentric ratios, Rp/Ra, from N-body
+simulations using Gadget-4. Lines show the fitting functions found of [53] (dotted), [55] (red dashed, for γ = 1 only), and
+this work (solid). Note that for the case with γ = 0.5, the last data point, i.e. the one with the lowest Vmax/Vmax,0 has been
+excluded from fitting. For γ = 1.5 (lower right panel), the results from the fiducial runs (circles and triangles) are not converged
+below Rmax/Rmax,0 ∼0.22 (vertical dashed line). Using a global time step size (squares and stars) leads to better converged
+results, see the discussions in the Sec. III A 1.
+1.
+Convergence tests for extremely cuspy subhalos
+As our result for γ = 1.5 differs significantly from that
+shown found by Ref. [53], we conducted additional con-
+vergence tests for this case. There are three parameters
+that control the time and spatial resolution of the simu-
+lation: (1) time step size criterion; (2) softening length,
+rsoftening; (3) particle number, N.
+In Gadget-4, the time step size is chosen based on
+the softening length and the particle acceleration a, as
+defined in Eq. (15). Another time step size criterion that
+has been used in literature is based on the local dynam-
+ical time:
+∆t = ηdyn
+√Gρ,
+(21)
+where ρ is the local density. In this work ηdyn is set to the
+same value as the η parameter used in the acceleration-
+based time step criterion, Eq. (15). To compute the lo-
+cal density, we use the same algorithm as the smoothed-
+particle hydrodynamics (SPH) method implemented in
+Gadget-4 for gas particles [80], i.e. a cubic spline ker-
+nel is used to compute the density at the particle position
+from the 64 nearest neighbor particles. Adding the local
+dynamical time step size criterion does not change the
+results too much, see the left panel of Fig. 4.
+As we decrease the parameter η, the results slowly con-
+verge, but the differences from the results of Ref. [53]
+remain. Possible explanations for the differences include
+the following: (i) To run the simulations, [53] uses SU-
+PERBOX [92] which computes the gravitational interac-
+tions using multiple layers of grids while we use Gadget-
+4, which computes the gravitational interactions using
+FFM; (ii) the details of our self-binding analysis differ
+
+7
+10-1
+100
+Rmax/Rmax, 0
+10-1
+100
+Vmax/Vmax, 0
+α = 1, β = 4, γ = 0
+Fitting(thiswork)
+Fitting(thiswork, β = 3)
+Rp/Ra = 1/5
+Rp/Ra = 1/20
+10-1
+100
+Rmax/Rmax, 0
+10-1
+100
+Vmax/Vmax, 0
+α = 1, β = 4, γ = 0.5
+Fitting(thiswork)
+Fitting(thiswork, β = 3)
+Rp/Ra = 1/100
+10-1
+100
+Rmax/Rmax, 0
+10-1
+100
+Vmax/Vmax, 0
+α = 1, β = 4, γ = 1
+Fitting(thiswork)
+Fitting(thiswork, β = 3)
+Rp/Ra = 1/100
+Rp/Ra = 1/200
+10-1
+100
+Rmax/Rmax, 0
+10-1
+100
+Vmax/Vmax, 0
+α = 1, β = 4, γ = 1.5
+Fitting(thiswork)
+Fitting(thiswork, β = 3)
+Rp/Ra = 1/200(Fiducial)
+Rp/Ra = 1/400(Fiducial)
+Rp/Ra = 1/200(Global∆t)
+Rp/Ra = 1/400(Global∆t)
+FIG. 2. Tidal tracks for (α, β) = (1, 4) and different values of γ from N-body simulations using Gadget-4. Solid black lines
+show the fitting functions found in this work. For comparisons, the fitting functions for the same (α, γ), but β = 3 are also
+shown in each panel (light gray lines).
+from the approach in Ref. [53]. 4
+Interestingly, we find that using a global time step
+size, i.e. all particles are evolved using the same time
+step, significantly improves convergence allowing the use
+of a larger time step, see the right panel of Fig. 4. The
+computing time required to achieve converged results is
+then much shorter than that using individual time step
+sizes for each particle.
+This suggests that to simulate
+extremely cuspy subhalos, the time step size criterion
+should be chosen carefully and using a global time step
+size may be helpful (see also Refs. [93, 94]).
+We also
+find that, when we use a very large time step size, e.g.
+η = 0.5, the results are unconverged, but are in fact closer
+4 Even for the cases where the tidal tracks we find agree well
+with the results of [53], the dependence of Vmax/Vmax,0 and
+Rmax/Rmax,0 on Mbound/Mbound,0 differ from those found by
+[53], indicating some difference in which particles are consid-
+ered to be bound to the subhalo.
+For example, for the case
+(α, β, γ) = (1, 3, 1), we find that we must multiply the bound
+mass we obtain by a factor of 2, to obtain an approximate match
+with Vmax as a function of Mbound/Mbound,0 as found by [53],
+see Appendix A
+to the fitting function obtained by [53]. For this case, the
+time step size ∆t = 1.2 Myr, which is still smaller than
+the one used by [53], i.e. ∆t = 4.6 Myr. Therefore, it is
+possible that the results for the case with γ = 1.5 shown
+in [53] are not fully converged. A direct comparison be-
+tween Gadget-4 and SUPERBOX using the same ini-
+tial conditions and post-analysis would be required to
+further confirm this hypothesis.
+B.
+Evolution of density profiles
+In previous studies, Hayashi et al. [52] and Pe˜narrubia
+et al. [53, 95] have shown that, beyond just Vmax and
+Rmax, the evolution of subhalo density profiles also fol-
+lows a universal behavior and depends only on the re-
+maining fraction of bound mass. A transfer function that
+connects the current density profile ρ(r, t) to the initial
+one, ρ(r, 0), can be defined as
+H(r, x) = ρ(r, t)
+ρ(r, 0),
+(22)
+where x = Mbound/Mbound(0) is the bound mass fraction.
+
+8
+10-1
+100
+Rmax/Rmax, 0
+10-1
+100
+Vmax/Vmax, 0
+α = 2, β = 3, γ = 0
+Fitting(thiswork)
+Rp/Ra = 1/2.5
+Rp/Ra = 1/5
+10-1
+100
+Rmax/Rmax, 0
+10-1
+100
+Vmax/Vmax, 0
+α = 2, β = 4, γ = 0
+Fitting(thiswork)
+Rp/Ra = 1/20
+FIG. 3. Tidal tracks for (α, γ) = (2, 0) and different values of β from N-body simulations using Gadget-4. Solid lines show
+the fitting functions found in this work.
+10-1
+100
+Rmax/Rmax, 0
+100
+3 × 10-1
+4 × 10-1
+6 × 10-1
+Vmax/Vmax, 0
+Fitting(thiswork)
+Penarrubia et al. 2010
+Fiducial
+∆tdyn
+η = 0.0025
+η = 0.000625
+η = 0.01, rsoftening/3
+η = 0.0025, rsoftening/3
+rsoftening/41/3, N = 4 × 107
+10-1
+100
+Rmax/Rmax, 0
+100
+3 × 10-1
+4 × 10-1
+6 × 10-1
+Vmax/Vmax, 0
+Fitting(thiswork)
+Penarrubia et al. 2010
+Fiducial
+Global∆t
+Global∆t, η = 0.16
+Global∆t, η = 0.5, N = 106
+FIG. 4. Convergence test for (α, β, γ) = (1, 3, 1.5), Rp/Ra = 1/200. Left: tidal tracks from N-body simulations with different
+time step size parameter η (circle and squares) and softening length rsoftening (stars). Triangles show the simulation results with
+an additional time step size criterion based on the local dynamical time scale, Eq. (21). Increasing the number of particles by
+a factor of 4 and decreasing rsoftening accordingly by a factor of 41/3 (diamonds) do not grantee converged results. Right: tidal
+tracks from N-body simulations using a global time step size and different η. With a global time step size, converged results
+are obtained at larger η than the cases using the fiducial adaptive time step size. For very large time steps, e.g. η = 0.5 (black
+stars) results are not converged.
+In Ref. [52], a fitting function is proposed as
+H(r, x) =
+ft
+1 + (r/rte)δ ,
+(23)
+with rte the effective tidal radius, ft a normalization fac-
+tor that quantifies the density drop in the center, and
+δ = 3.
+By calibrating to N-body simulations simula-
+tions, Ref. [52] gives the following fitting formulae for rte
+and ft:
+log10
+rte
+rs
+= 1.02 + 1.38 log10 x + 0.37(log10 x)2, (24)
+log10 ft = 0.007 + 0.35 log10 x + 0.39(log10 x)2
++0.23(log10 x)3.
+(25)
+In a more recent study, Green et al. [54] have exam-
+ined the density evolution of subhalos utilizing the DASH
+library [51], a large set of high-resolution, idealized simu-
+lations. They find that the density transfer function has
+an additional dependence on the initial concentration of
+subhalos and proposed a more general formula:
+H(r, x, c) =
+ft
+1 +
+h
+r
+rte
+
+rvir,sub−rte
+rvir,sub
+iδ ,
+(26)
+where the concentration parameter c enters in the virial
+radius, and rte, ft and δ are also concentration depen-
+
+9
+dent:
+rte = rvir,subxb1(c/10)b2cb3(1−x)b4
+exp
+
+b5
+ c
+10
+b6
+(1 −x)
+
+,
+(27)
+ft = xa1(c/10)a2ca3(1−x)a4,
+(28)
+δ = c0 xc1(c/10)c2cc3(1−x)c4.
+(29)
+The values of the parameters in the above equations are
+given in Table 1 of Ref. [54].
+Since, in the current work, we fix the subhalo concen-
+tration at 20.5 [see Eqs. (11) and (12)], we choose to fit
+the density profile measured from our simulations using
+the simpler formula, Eq. (23). Reference [54] found that
+their best fit value for δ is 2–3. Therefore, we consider two
+cases: δ = 3 and δ = 2. We emphasize that sometimes
+it can be useful to have a density profile that leads to
+analytic formula for certain physical quantities, such as
+the enclosed mass within a given radius. The case with
+δ = 2 has been widely used in modeling subhalo den-
+sity profiles in the analysis of strong gravitational lenses
+(e.g. [35]). Applying the transfer function Eq. (23) with
+δ = 2 to the NFW profile, the lensing convergence can
+be computed analytically [96].
+We first measure the density transfer function H of
+subhalos at the apocenters of their orbits from our sim-
+ulations with different initial subhalo profiles. Then we
+fit Eq. (23) to these measured transfer functions to find
+the best fit rte and rt. rte and rt as a function of the
+bound mass fraction for different γ. Results are shown
+in Fig. 5 (colored markers). For each value of γ, we have
+combined the simulation data for different subhalo or-
+bits, i.e. different value of Rp/Ra. Inspired by the work
+of Refs. [52, 54], we fit the mass dependence in rte and
+rt assuming
+rte
+rvir,sub
+= (1 + A) xB
+1 + A x2B exp [−C(1 −x)] ,
+(30)
+ft = (1 + D) xE
+1 + D x2E .
+(31)
+These functions are chosen to ensure that at the begin-
+ning of the simulation (x = 1), rte = rvir,sub and ft = 1.
+The best fit formula are shown in Fig. 5 (colored
+curves) for (α, β) = (1, 3) and different γ. We also com-
+pare our fitting functions to those obtained by Hayashi et
+al. [52] (black curve) and Green et al. [54] (gray curve) for
+initial NFW profiles, i.e. γ = 1. We find that the effec-
+tive tidal radius rte we obtain is in broad agreement with
+that from Hayashi et al. at x > 4×10−2. At x < 4×10−2,
+the fitting formula from Hayashi et al. shows an upturn,
+which does not appear in our results. However, we note
+that the Hayashi et al. fitting function was calibrated
+only for x > 4 × 10−2. Our result for rte is lower than
+that found by Green et al. Here we have taken into ac-
+count the difference in definition of halo concentration
+in our work from Green et al., but this has only a small
+effect. Since the number of particles in our simulations
+TABLE II. Best-fit parameters in Eqs. (30) and (31) for den-
+sity transfer function Eq. (23) with different initial profiles.
+δ = 3 has been assumed.
+α β
+γ
+A
+B
+C
+D
+E
+1 3 0
+−0.9309
+0.04703
+0.7684 1.402
+0.6325
+1 3 0.5
+−0.2291
+0.4123
+1.399
+1.087
+0.4523
+1 3 1
+0.9093
+0.6368
+2.185
+1.436
+−0.2491
+1 3 1.5
+0.8353
+0.7340
+2.432
+0.08093
+0.08491
+1 4 0
+41.33
+0.6082
+4.070
+1.088
+0.7280
+1 4 0.5
+0.4212
+−0.3816
+3.629
+0.6879
+0.4862
+1 4 1
+15.92
+0.7194
+4.982
+0.3359
+0.2508
+1 4 1.5 104.1
+1.247
+6.630
+0.1514
+0.1284
+2 3 0
+−0.9646
+−0.002371 2.511
+1.314
+0.8240
+2 4 0
+5.793E-7 −1.623
+5.471
+0.7780
+1.213
+is 10 times higher than that used by Green et al., we
+can better resolve the central region of the subhalo. We
+have tried excluding radii bins with r < 10−2rvir,sub from
+our fitting. Our results are then in good agreement with
+those from Green et al., as shown by the stars in Fig. 5.
+This suggests that the difference we see is due to numer-
+ical resolution and the range of radii bins used in the
+fitting process. For ft, a similar difference between our
+results and those obtained by Green et al. is also seen, as
+shown in the right panel of Fig. 5. The fitting function
+from Green et al. overestimates the density decrease in
+the central region of subhalos due to tidal effects. Sim-
+ilar findings has been reported in Ref. [55]. Again, we
+show that we can recover the Green et al. results by ex-
+cluding the data points at small radii from the our fitting
+procedure.
+In Fig. 6, we show the density transfer function of sub-
+halos at different times for cuspy (left panel) and cored
+(right panel) initial profiles.
+For comparison, we also
+show our best fit formula and the models from Green et
+al. [54] and Errani et al. [55].
+For the cuspy case, after one orbit we see that our fit-
+ting results (solid and dashed curves) better capture the
+density suppression at large radii than does the model by
+Errani et al. After 4 orbits, when the subhalo is heavily
+stripped, our fitting results perform slightly worse that
+those from Errani et al., but are still in good agreement
+with the simulation data (open circles) below 0.2rvir,sub.
+On the other hand, the model from Green et al. under-
+estimates the central density of subhalos when subhalos
+are heavily stripped.
+For the cored case, ours fitting results also work rea-
+sonably well, even while cored subhalos are more strongly
+influenced by tidal effects. After 3 orbits, the central den-
+sity of the subhalo decreases to 10% of its initial value.
+A full list of the best fit parameters for subhalos with
+different combinations of (α, β, γ) is shown in Tables II
+and III. We note that the fitting functions Eqs. (30) and
+(31) we choose result in tidal radii and central densities
+that decrease as a power-law in the bound mass frac-
+tion at very small bound mass fractions. This is a good
+assumption in most cases, but, for the case with a flat
+core, i.e. γ = 0, tidal heating can lead to significant core
+
+10
+10-3
+10-2
+10-1
+100
+Mbound/Mbound, 0
+10-3
+10-2
+10-1
+100
+rte/rvir, sub
+Thiswork(δ = 3)
+Thiswork(δ = 2)
+Hayashi2003
+Green2019
+γ = 0
+γ = 0.5
+γ = 1
+γ = 1.5
+γ = 1(r > 10−2rvir, sub)
+10-3
+10-2
+10-1
+100
+Mbound/Mbound, 0
+10-1
+100
+ft
+Thiswork(δ = 3)
+Thiswork(δ = 2)
+Hayashi2003
+Green2019
+γ = 0
+γ = 0.5
+γ = 1
+γ = 1.5
+γ = 1(r > 10−2rvir, sub)
+FIG. 5. Best-fit parameters for the density profile as a function of bound mass fraction for (α, β) = (1, 3) and different γ. Left:
+the effective tidal radius in Eq. (23). The filled (open) circles are obtained by fitting Eq. (23) to the density profiles measured
+from simulation assuming δ = 3 (δ = 2). For each γ, data from simulations with different Rp/Ra are combined. The colored
+lines show the fitting formula Eq. (30) with our best-fit parameter values. The fitting functions from Hayashi et al. 2003 [52]
+(black) and Green et al. 2019 [54] (gray) are also shown. Right: the normalization parameter ft in Eq (23). The purple stars
+show the best-fit values for rte and ft when excluding measurements of the density profiles at r < 10−2. The Hayashi et al.
+2003 fitting function is calibrated only for Mbound/Mbound,0 > 4 × 10−2, thus at small mass ratios an extrapolation has be used
+(black dotted line).
+10-3
+10-2
+10-1
+100
+r/rvir, sub
+10-3
+10-2
+10-1
+100
+ρ(r)/ρ(r, 0)
+α = 1, β = 3, γ = 1
+Thiswork(δ = 3)
+Thiswork(δ = 2)
+Green2019
+Errani2021
+t = Torbit
+t = 4Torbit
+N −body
+10-3
+10-2
+10-1
+100
+r/rvir, sub
+10-2
+10-1
+100
+ρ(r)/ρ(r, 0)
+α = 1, β = 3, γ = 0
+Thiswork(δ = 3)
+Thiswork(δ = 2)
+t = Torbit
+t = 3Torbit
+N −body
+FIG. 6. Density profiles of subhalos from the fitting functions (lines; with line type indicating the specific fitting function used
+as indicated in the panel) compared with the simulation data (colored circles). Left: the subhalo initially has a cuspy core with
+(α, β, γ) = (1, 3, 1). The blue (orange) circles shows the density profiles after the subhalo completes 1 (4) orbit(s) as indicated
+in the panel. Right: the subhalo initially has a flat core with (α, β, γ) = (1, 3, 0). The vertical dashed lines indicate 2.8 rsoftening.
+expansion (see Sec. IV), which makes rte eventually be-
+gin to increase with decreasing bound mass faction (see
+the left panels of Figs. 5 and 16). This feature can be
+partially captured by our fitting functions, but the fit-
+ting function will drop again at sufficiently low x, see
+Appendix B. For this reason, the best fit formula for the
+cases with γ = 0 should be used with caution at a bound
+mass fraction much smaller than the value where we have
+available measurements.
+IV.
+SEMI-ANALYTIC MODELS
+In the previous section, we showed tidal tracks and fit-
+ting formula results for DM subhalos with different initial
+density profiles. These empirical fitting formulas can be
+implemented in semi-analytic models such as Galacti-
+cus [86] to study the statistical properties of subhalos.
+On the other hand, a physical model for tidal evolution
+that can reproduce these tidal tracks would be extremely
+useful, especially when extrapolating tidal tracks into
+
+11
+TABLE III. Best-fit parameters in Eqs. (30) and (31) for den-
+sity transfer function Eq. (23) with different initial profiles.
+δ = 2 has been assumed.
+α β
+γ
+A
+B
+C
+D
+E
+1 3 0
+−0.9984
+5.503E-4 1.235
+1.482
+0.6364
+1 3 0.5 −0.1921
+0.4268
+1.463
+1.171
+0.4500
+1 3 1
+0.6849
+0.6644
+2.078
+0.7583 0.2338
+1 3 1.5
+0.9839
+0.7688
+2.518 −0.9951 1.315E-4
+1 4 0
+39.42
+0.5883
+4.054
+1.185
+0.7373
+1 4 0.5
+2.066
+0.3871
+3.636
+0.7524 0.4777
+1 4 1
+13.99
+0.7222
+5.009
+0.3684 0.2231
+1 4 1.5
+83.40
+1.216
+6.620
+0.2850 0.1053
+2 3 0
+−1.024
+0.001643 2.413
+1.371
+0.8315
+2 4 0
+3.273E-6 −1.946
+5.847
+0.8384 1.231
+regimes where artificial disruption [97] can occur. In a
+previous study [67], we showed that by using an improved
+model for tidal heating that accounts for the second-order
+heating terms, we could accurately reproduce the tidal
+track for NFW profiles. In this work, we will extend the
+model of Ref. [67] to the more general density profile in
+Eq. (8). Furthermore, in many applications, in addition
+to the Vmax–Rmax track, the Vmax–Mbound relation, and
+the time evolution of Mbound are required in order to
+build a complete model for the evolution of subhalos. In
+Ref. [98], the tidal stripping model in Galacticus was
+calibrated to cosmological cold dark matter N-body sim-
+ulations, ELVIS [44] and Caterpillar [45]. In this work,
+we extend this tidal stripping model and recalibrate it to
+our simulations of subhalos with different density profiles.
+In the remainder of this section we detail the orbital
+and tidal physics included in our model, and present re-
+sults for the calibration of the parameters of this model.
+All the models described below are implemented in the
+public semi-analytic model for galaxy formation, Galacti-
+cus [86]. 5
+A.
+Orbital evolution
+When a subhalo evolves in a host potential, its accel-
+eration can be written as
+a = ag + adf,
+(32)
+where ag is the gravitational acceleration from the host,
+and adf is the dynamical friction caused by the overdense
+wake of host particles that generated behind the subhalo
+when it orbits within the host. Using the Chandrasekhar
+formula, adf can be computed as [99]
+adf = −4πG2 ln ΛMsubρhost(rsub)Vsub
+V 3
+sub
+
+erf(Xv) −2Xv
+√π exp
+ −X2
+v
+
+,
+(33)
+5 https://github.com/galacticusorg/galacticus
+where G is the gravitational constant, Msub is the bound
+mass of the subhalo, ρhost is the host density at the sub-
+halo position, rsub is the distance to the host center,
+Xv = Vsub/
+√
+2σv with Vsub the velocity of subhalo, σv
+is the velocity dispersion of host particles, and ln Λ is the
+Coulomb logarithm.
+Dynamical friction is only significant for subhalos
+with large mass ratios Msub/Mhost. In our simulations,
+Msub/Mhost = 1/1000, and the dynamical friction ef-
+fect is not relevant. Furthermore, we treat the host as a
+static potential, which will not generate dynamical fric-
+tion since the host does not respond to the gravity of the
+subhalo. However, the subhalo’s orbital radius still de-
+cays slowly with time due to the so-called “self-friction”
+effect [49, 51, 100–102], which arises from the interaction
+between the subhalo and particles stripped away from it
+through tidal forces. A detailed treatment of self-friction
+will be presented elsewhere [103]. In the current work,
+we mimic this effect approximately using (33) and adjust
+ln Λ to match the orbital evolution of subhalos measured
+from simulations. The details of this treatment do not
+significantly affect the calibration of our model.
+B.
+Tidal stripping
+Subhalos are subject to the tidal force from the host.
+The tidal force pulls material in the subhalo away from
+its center. When the gravitational attraction from the
+subhalo is smaller than the tidal force, the subhalo parti-
+cles will be able to become unbound, leading to mass loss
+from the subhalo. This happens outside the tidal radius
+which is defined as
+rt =
+ 
+GMsub(< rt)
+γcω2 −d2Φ
+dr2
+
+rsub
+!1/3
+.
+(34)
+Here ω = |rsub × Vsub|/V2
+sub is the angular frequency of
+the subhalo orbit, and Φ is the gravitational potential of
+the host at the subhalo position. The term γcω2 accounts
+for the centrifugal force in the coordinate system rotating
+with the subhalo.
+Different definitions of tidal radius
+have been used in previous studies, for example γc =
+0 are used by Refs. [52, 62, 104, 105], and γc = 1 are
+used in Refs [106, 107].
+In Ref. [97], both definitions
+have been tested against idealized simulations, and the
+authors found that neither case can perfectly reproduce
+the tidal mass loss measured in simulations. However,
+in their calculations, they did not take into account the
+change of subhalo density profile when it loses mass and is
+heated by tidal shocks. In the current work, we find that
+after accounting for the evolution of the density profile,
+as described in the next subsection, fixing γc = 0 gives a
+better match to simulation results.
+Given the tidal radius, the subhalo mass outside of this
+is assumed to be lost on a timescale Tloss:
+dMsub
+dt
+= −αs
+Msub −Msub(< rt)
+Tloss
+,
+(35)
+
+12
+where αs is a free parameter that controls the efficiency
+of tidal stripping.
+There exist several relevant physi-
+cal time scales that could be chosen for Tloss: (i) or-
+bital time scale: Torbit = 2π/ max{ωt, ωr} with ωt and
+ωr are the instantaneous frequencies of tangential and
+radial motion, respectively (this choice is adopted by
+Yang et al. 98); (ii) the dynamical time scale Tdyn =
+2π
+p
+r3
+t /16GMsub(< rt) [108]. These two time scales are
+related but may differ significantly when the subhalo is
+close to the pericenter of its orbit. In this work, we find
+that the latter results in better fits to measurements from
+our simulations. Thus we will use it as our fiducial choice.
+C.
+Tidal heating
+As a subhalo orbits within its host and loses mass due
+to tidal stripping, its density profile also changes with
+time due to two effects: (i) after some mass is removed
+from the subhalo, it will revirialize and approach a new
+equilibrium with a different density profile; (ii) particles
+in the subhalo gain energy from tidal shocks, also known
+as the tidal heating effect, leading to the expansion of
+subhalo. When the subhalo passes through the pericen-
+ter of its orbit, both tidal stripping and tidal heating are
+strong. The subhalo loses a large fraction of the mass out-
+side the tidal radius and at the same time is heated. As
+the subhalo approaches the apocenter of its orbit, it will
+begin to revirialize, resulting in a less concentrated den-
+sity profile. As the subhalo becomes less concentrated,
+the tidal radius shrinks further and more mass will be
+stripped from the subhalo. The process of revirialization
+is complicated [109]. In the current work, we focus on
+the density profile at successive apocenters for two rea-
+sons. First, the subhalo spends more time near apocenter
+during its orbit through its host. Second, at apocenter,
+the subhalos have had enough time since the strong mass
+loss and heating at pericenter to be revirialized, allowing
+us to apply the heating model proposed in [61, 63].
+In these models of tidal heating, each spherical mass
+shell in the subhalo receives some heating energy result-
+ing in a change in its specific energy changes of ∆ϵ. As a
+result, the mass shell expands from its initial radius ri to
+a final radius rf after revirialization. If no shell crossing
+happens, using the virial theorem and energy conserva-
+tion, we have
+∆ϵ = GMi
+2ri
+−GMi
+2rf
+,
+(36)
+where Mi is the enclosed mass within ri. Note that if
+no shell crossing happens, Mi is unchanged after expan-
+sion by definition. Given the initial density of the mass
+shell, ρi, and the relation between ri and rf from solving
+Eq. (36), the density of the mass shell after reaching new
+equilibrium can be written as
+ρf = ρi
+r2
+i
+r2
+f
+dri
+drf
+,
+(37)
+where we have assumed mass conservation. Knowing the
+final mass profile, we can then compute Vmax and Rmax
+and predict the tidal track for subhalos starting from a
+chosen initial profile.
+To find ∆ϵ, we use the impulse approximation [65, 109]
+and compute the heating rate per unit mass as [61]
+∆˙ϵ(r) = ϵh
+3
+
+1 + (ωpTshock)2−γh r2gabGab,
+(38)
+where ϵh is a coefficient needed to be calibrated to sim-
+ulations, ωp is the angular frequency of particles at the
+half-mass radius of the subhalo, Tshock = rsub/Vsub is the
+time scale of tidal shock, γh is the adiabatic index, gab
+is the tidal tensor, and Gab is the time integral of gab
+[63, 98]:
+Gab(t) =
+Z t
+0
+dt′
+
+gab(t) −βh
+Gab(t)
+Torbit
+
+.
+(39)
+Here, for repeated indices, Einstein summation conven-
+tion is adopted. As in [98], a decaying term −Gab
+Torbit is
+added to the integral (39) to account for the fact that the
+impulse approximation is not valid on time scales larger
+than Torbit when the movement of particles within the
+subhalo are non-negligible. In this work, we introduce
+a new coefficient βh which controls the precise timescale
+for this decaying term.
+The term in the square brackets in Eq. (38) ac-
+counts for the adiabatic correction, i.e.
+the heating
+energy gained by particles with orbital timescale much
+smaller than Tshock is suppressed due to “adiabatic
+shielding” [110–112]. Gnedin et al.
+[109] find γh = 2.5
+for ωpTshock <∼1, while it is shown that γh = 1.5 in the
+regime ωpTshock >∼4. On the other hand, [98] find that
+a value of γh = 0 predicts a Vmax −Mbound relation that
+is in better agreement with high-resolution cosmological
+N-body simulations Caterpillar [45] and ELVIS [44]. In
+this work, we have tried both γh = 2.5 and γh = 0, and
+reach a similar conclusion as [98], i.e.
+γh = 0 results
+in Vmax matching more closely with simulation results.
+This is partially due to the fact that the decaying term
+introduced in Eq. (39) also acts to suppress the heating
+energy.
+As shown in Ref. [67], using Eq. (38) to compute the
+heating energy results in a reasonable match to the tidal
+tracks of NFW subhalos. However, they find that to get
+a more accurate model, one needs to take into account
+the second-order energy perturbations ⟨E2⟩1/2 explicitly.
+The second-order energy perturbation is usually of the
+same order as the first-order term given in Eq. (38), but
+has a different radial dependence [67, 109].
+Following
+[67], we write the total heating energy as
+∆ϵ(r) = ∆ϵ1(r) + ∆ϵ2(r)
+= ∆ϵ1(r) +
+√
+2f2(1 + χv)
+p
+∆ϵ1(r)σ2r(r),(40)
+where ϵ1 and ϵ2 are the contributions from the first-order
+and second-order energy perturbations, f2 is a coefficient,
+
+13
+χv is the position-velocity correlation (see Ref. [109]), and
+σr is the radial velocity dispersion of subhalo prior to any
+tidal heating. Reference [109] shows that χv depends only
+weakly on the density profile, so we fix χv at a typical
+value of −0.333. Any uncertainty of χv is absorbed in
+the coefficient f2.
+In the heating model presented above, we assumed
+that there is no shell crossing. However, this may not
+be valid for all dark matter halos, especially those with
+cored density profiles. From Eqs. (38) and (40), we can
+see that the total heating energy ∆ϵ(r) ∝r at small
+radii.
+For a density profile with an inner logarithmic
+slope of −γ, i.e. ρ(r) ∝r−γ, the gravitational potential
+Φ(r) ∼GM(r)/r ∝r2−γ. Thus if γ < 1 there always ex-
+ist a radius r0 below which ∆ϵ(r) > GM(r)/2r. Accord-
+ing to Eq. (36), mass shells with ri < r0 will then have
+a final radius of infinity, which means that the no shell
+crossing assumption is broken.
+More accurately, shell
+crossing happens when drf/dri < 0, in which case the en-
+closed mass with ri is no longer constant and one needs to
+take into account this in Eq. (36). Solving Eq. (36) with
+shell crossing is complicated. Instead, we keep Eq. (36)
+unchanged, but modify ∆ϵ to avoid shell crossing. Note
+that this does not mean shell crossing does not happen,
+but each mass shell is now interpreted an an effective
+mass shell after the new equilibrium is reached. We first
+compute the ratio
+ξ(ri) =
+∆ϵ(ri)
+GMi/2ri
+.
+(41)
+To avoid drf/dri < 0, we assume that at small radii,
+i.e.
+r < rcrossing, ξ(ri) is constant such that ∆ϵ(ri) is
+proportional to the the gravitational potential:
+∆ϵ(ri) = ξ(rcrossing)GMi
+2ri
+.
+(42)
+To ensure that, after tidal heating, the density profile
+remains continuous at rcrossing, 6 we require that both ξ
+and dξ/dr are continuous at rcrossing or equivalently
+ξ(rcrossing) =
+∆ϵ(rcrossing)
+GM(r < rcrossing)/2rcrossing
+,(43)
+dξ(ri)
+dri
+
+ri=rcrossing
+= 0.
+(44)
+The shell crossing radius, rcrossing, and ξ(rcrossing) are
+uniquely determined by Eqs. (43) and (44).
+Figure 7 shows the ratio ξ as a function of the initial
+radius of mass shells computed from Eqs. (40) and (42)
+compared with that measured from simulations. Here,
+we consider a cored subhalo with (α, β, γ) = (1, 3, 0) and
+Rp/Ra = 2/5.
+As can be seen, the model prediction
+6 From Eqs. (36) and (37), this requires that ∆ϵ is differentiable.
+10-2
+10-1
+100
+101
+ri [kpc]
+10-1
+100
+ξ(ri)
+t = Torbit
+t = 2Torbit
+Model
+Model(monotonic)
+Two −bodyrelaxation
+N −body
+FIG. 7.
+Heating energy ratio, ξ, from our model Eq. (40)
+(solid curve) and that includes the monotonic correction
+Eq. (42) (dashed curves), compared with that measured di-
+rectly from simulations (colored circles). The colored dotted
+curves show the heating energy from two-body relaxation.
+without the monotonic correction (solid curves) overes-
+timates the heating energy ratio at small radii. On the
+other hand, the heating energy measured from simula-
+tions (colored circles) flattens out with decreasing radius,
+which verifies our assumption Eq. (42) (see the dashed
+curves).
+At radii close to the softening length (verti-
+cal line), the effects of two-body relaxation [108] (dotted
+curves) become significant leading to the rise of ξ. Here,
+we compute the heating specific energy due to two-body
+relaxation as
+∆ϵtwo−body(r) = 2αtwo−body
+ln Λ
+N(r)
+v(r)3
+r
+(t −t0),
+(45)
+where αtwo−body is the efficiency of two-body relaxation
+heating, v(r) is the circular velocity, t and t0 are the
+current and initial time, respectively, N(r) is the number
+of particles within radius r, and the Coulomb logarithm
+is computed as
+ln Λ = 1
+2 ln
+
+1 +
+
+
+
+
+r
+max
+
+rsoftening,
+q
+2GMp
+v2
+
+
+
+
+
+2
+.
+(46)
+To compute the contribution of two-body relaxation to
+the heating energy in Fig. 7, we take αtwo−body = 0.006.
+We have also checked the case with γ = 0.5, for which
+similar behavior in ξ is found. For γ ≥1, ξ(ri) is mono-
+tonic, thus no correction is needed, but the two-body
+relaxation heating is also dominated at very small radii,
+leading to the formation of an artificial core in halo cen-
+ter.
+
+14
+D.
+Calibrations
+In the semi-analytic models presented in the previous
+subsection, there are in total four free parameters that
+must be calibrated to simulations. One of these parame-
+ters is αs in the tidal stripping model, the others are the
+parameters ϵh, f2, and βh in the tidal heating model. We
+calibrate these parameters by comparing the predictions
+for Mbound, Vmax and Rmax from our models to the re-
+sults measured from simulations presented in Sec. III. To
+perform this calibration we define a likelihood function
+as
+ln L(Mbound, Vmax, Rmax|α, ϵh, f2, βh)
+=
+−1
+2
+X
+i
+
+
+ 
+M p
+bound,i −Mbound,i
+σM,i
+!2
++ ln
+ 2πσ2
+M,i
+
+
+
+−1
+2
+X
+i
+
+
+ 
+V p
+max,i −Vmax,i
+σV,i
+!2
++ ln
+ 2πσ2
+V,i
+
+
+
+−1
+2
+X
+i
+
+
+ 
+Rp
+max,i −Rmax,i
+σR,i
+!2
++ ln
+ 2πσ2
+R,i
+
+
+, (47)
+where M p
+bound,i, V p
+max,i, and Rp
+max,i are model predictions
+at the ith snapshot. Here, σM,i, σV,i and σR,i represent
+the combined uncertainties in the measurements and the
+model. Given that our models, like any models, are im-
+perfect, we introduce a free parameter R that quantifies
+the model uncertainties and write the total uncertainties
+as
+σ2
+M,i = eσ2
+M,i + (RM p
+bound,i)2,
+(48)
+σ2
+V,i = eσ2
+V,i + (RV p
+max,i)2,
+(49)
+σ2
+R,i = eσ2
+R,i + (RRp
+max,i)2.
+(50)
+Here eσM,i and eσV,i are the Poisson errors measured from
+simulations, and eσR,i is defined as half of the radial bin
+width used for computing Vmax. 7
+We run Monte Carlo Markov Chain (MCMC) simula-
+tions for dark matter profiles with different density slopes
+at small radii, from cored profiles (γ = 0) to very cuspy
+profiles (γ = 1.5). We refrain from performing MCMC
+simulations for all the combinations of (α, β, γ) shown in
+Sec. III as we find that the model parameters are mostly
+sensitive to the inner slope of dark matter halo.
+We
+have checked that our models also work well for other
+choices of the parameter that control the outer profile of
+the subhalos. In the remainder of this section, we set
+(α, β) = (1, 3).
+7 Note that we have performed a supersampling of the subhalo
+profiles, thus the bin width used here is smaller than the original
+radial bin width (see Sec. II C).
+For model parameters {αs, ϵh, f2, βh} we adopt uni-
+form priors. For R, a loguniform prior is used. The priors
+and resulting median values are listed in Table IV. The
+posteriors of model parameters for different dark matter
+profiles are shown in Fig. 8. We find that for γ = 1.5, the
+tidal stripping efficiency parameter αs is unconstrained
+from above. We report the 16th percentile in Table IV as
+a conservative lower bound. In practice, this means that
+our model might have underestimated the tidal radius rt
+in this case such that there is not enough mass outside
+rt to be stripped. Including partial of the contribution
+from the centrifugal force in computing rt, i.e. assuming
+a nonzero value of γs in Eq. (34), may help improve the
+fitting. Nevertheless, our current model already fits the
+bound mass evolution very well for γ = 1.5, see Fig. 10.
+In Fig. 9, we show the predicted tidal tracks for differ-
+ent γ from our best-fit models compared with the results
+from N-body simulations. For the cases with γ = 1 and
+γ = 1.5, our models agree very well with the simulation
+results. For the cases with γ = 0.5 and γ = 0, the agree-
+ment is somewhat worse, but nevertheless captures the
+overall behavior reasonably well. Notably, for the cored
+case (γ = 0), our model reproduces the turnaround of
+the tidal track when the subhalo is heavily stripped.
+In Fig. 10, we also show the bound mass evolution
+for different γ from our best-fit models compared with
+the results from N-body simulations. The corresponding
+density profiles at different times for γ = 1 and γ = 0 are
+shown in Fig. 11.
+Ideally, we would expect that the values of the model
+parameters should be consistent across different dark
+matter profiles, if our model correctly captures the de-
+pendence of tidal stripping and heating on the subhalo
+density profile. However, we find that there does not ex-
+ist a single set of model parameters that fit all the cases
+accurately (see Fig. 8). Thus we report the best-fit pa-
+rameters for each dark matter profile separately. This
+also suggests that there are additional dependencies on
+the inner slope of dark matter halo profiles that are not
+fully captured by our current model. For γ that is not
+listed in Table IV, we suggest doing an interpolation. We
+defer exploration of a universal model to future work.
+V.
+CONCLUSIONS AND DISCUSSIONS
+We have run high-resolution idealized simulations to
+study the evolution of dark matter subhalos under the
+tidal effects from their host. We consider a generalized
+dark matter halo profile controlled by three parameters
+α, β, and γ [see Eq. (8)]. By changing these parameters,
+we can represent a dark matter profile with a flat core
+(γ = 0) or NFW-like cuspy profile (γ = 1). We have run
+simulations with different combinations of these parame-
+ters and found the fitting functions for the tidal track in
+each case. The Vmax −Rmax tracks we find for different
+γ, the inner slope of dark matter profile, are in agree-
+ment with the previous studies by Ref. [53] expect for
+
+15
+TABLE IV. Priors and median values (with 16th and 84th percentiles) for model parameters (rows) for dark matter subhalos
+with different inner slopes (columns).
+Prior
+γ = 0
+γ = 0.5
+γ = 1
+γ = 1.5
+αs
+[0, 20]
+4.4+8.5
+−2.3
+1.06+0.11
+−0.089
+3.93+0.77
+−0.58
+> 16.2
+ϵh
+[0, 6]
+0.262+0.042
+−0.028
+0.166+0.013
+−0.012
+0.0741+0.0052
+−0.0047
+0.0403+0.0093
+−0.0084
+f2
+[0, 2]
+0.21+0.039
+−0.035
+0.166+0.023
+−0.023
+0.547+0.043
+−0.041
+1.04+0.22
+−0.18
+βh
+[0, 4]
+0.37+0.16
+−0.11
+0.0986+0.047
+−0.044
+0.278+0.039
+−0.034
+0.358+0.054
+−0.047
+ln R [−14, 0] −2.13+0.12
+−0.11
+−1.92+0.11
+−0.096
+−2.77+0.085
+−0.08
+2.52+0.08
+−0.077
+5
+10 15
+αs
+3.0
+2.5
+2.0
+lnR
+0.2
+0.4
+0.6
+0.8
+βh
+0.5
+1.0
+1.5
+f2
+0.1
+0.2
+0.3
+0.4
+ϵh
+0.2
+0.4
+ϵh
+0.4
+1.0
+1.6
+f2
+0.1
+0.5
+0.9
+βh
+2.8
+2.0
+lnR
+γ = 0.0
+γ = 0.5
+γ = 1.0
+γ = 1.5
+FIG. 8. Posterior distributions over model parameters for different values of γ.
+the case with a extremely cuspy profile, i.e. γ = 1.5. We
+have checked the convergence of the results for γ = 1.5
+and found that using a global time step size leads to bet-
+ter converged results. Our converged results still show
+some differences from the one in Ref. [53]. We note that
+Ref. [53] uses a global, fixed time step size, similar to
+the global time step size in our convergence tests. We
+find that their time step size may be too large to obtain
+converged tidal track.
+We have also run tests with lower subhalo concentra-
+
+16
+10-1
+100
+Rmax/Rmax, 0
+10-1
+100
+Vmax/Vmax, 0
+Cuspy
+Cored
+GalacticusModel
+N −bodySimulation
+γ = 0
+γ = 0.5
+γ = 1
+γ = 1.5
+FIG. 9. Tidal tracks from semi-analytic models (lines) com-
+pared with N-body simulations (circles). Colors indicate dif-
+ferent values of the inner slope of the density profile, γ, as
+indicated in the figure.
+0
+5
+10
+15
+20
+25
+30
+35
+t[Gyr]
+10-3
+10-2
+10-1
+100
+Mbound/Mbound, 0
+GalacticusModel
+N −bodySimulation
+γ = 0, Rp/Ra = 2/5
+γ = 0.5, Rp/Ra = 1/20
+γ = 1, Rp/Ra = 1/20
+γ = 1.5, Rp/Ra = 1/200
+FIG. 10. Bound mass as a function of time from semi-analytic
+models (lines) compared with N-body simulations (circles).
+Colors indicate different values of the inner slope of the den-
+sity profile, γ, as indicated in the figure. Other parameters in
+the density profile are fixed at (α, β) = (1, 3).
+tion and a host potential that grows with time, see Ap-
+pendix C. While the bound mass of subhalos in these
+cases evolves differently than the fiducial settings (i.e.
+lower concentration subhalos are more influenced by the
+tidal effects), the tidal tracks are only marginally af-
+fected, confirming that the tidal tracks are mostly sen-
+sitive to the bound mass fraction. Furthermore, we find
+that adding a Miyamoto and Nagai disk [113] and Hern-
+quist bulge [72] potential to the host to mimic the Milky
+Way disk and bugle also does not have a significant im-
+pact on the tidal track—the difference from the fiducial
+case is less than 10% (see Appendix D).
+From the simulation data, we measure the density
+transfer function that connects the current density pro-
+file of a subhalo to its initial profile. Similar to previous
+studies [52–55, 95], we find that the transfer function is
+mainly sensitive to the bound mass fraction and is insen-
+sitive to the subhalo orbit. Using a similar fitting formula
+to that proposed in Ref. [52] for the transfer function, we
+find the effective tidal radius, rte, and normalization pa-
+rameter, ft, (see Eq. (23)) and give fitting formula for rte
+and ft as functions of bound mass fraction, see Eqs. (30)
+and (31).
+These transfer function fits can be used to
+model the density evolution of subhalo with a variety of
+density profiles.
+We then present improved semi-analytic models for
+tidal stripping and tidal heating built on our previous
+work [67]. In our previous work [67], the semi-analytic
+models were calibrated only to dark matter halos with
+NFW profiles. In this work, we extend the calibration
+to other profiles. We find that the no shell crossing as-
+sumption in our previous tidal heating model is not valid
+for cored dark matter profiles. To overcome this issue,
+we propose a simple modification to the heating energy.
+The modified model is shown to work well for cored dark
+matter profiles.
+For CDM, it is well known that the dark matter halos
+are well described by the NFW profile.
+But for other
+types of dark matter particle this is not necessarily true.
+For example, for SIDM, due to frequently scattering be-
+tween dark matter particles in the halo center, a constant
+density core can form. At later stages of the evolution of
+SIDM halos, core collapse can happen leading to a very
+cuspy density profile. Core formation can also happen
+in other dark matter models such as fuzzy dark matter
+due to additional pressure from the quantum effects or,
+in CDM models, due to baryonic feedback. Thus con-
+sidering the evolution for different dark matter profiles
+is useful to allow comparison of different dark matter
+models with observations of subhalos. Using the semi-
+analytic models presented in this work will allow us to
+predict the statistical properties of subhalos in different
+dark matter models and distinguish these models by com-
+paring with observations such as the Milky Way satellite
+populations and strong gravitational lenses.
+One limitation of the current work is that we consider
+only one typical host mass of 1012M⊙with NFW profile
+and a fixed subhalo mass of 109M⊙. The concentration
+of the host and subhalo are also fixed.
+Although the
+tidal tracks are not very sensitive to changes in the host
+properties, they have a weak dependence on the concen-
+tration of subhalos [54]. Thus the semi-analytic models
+presented in this work need to be tested against a larger
+set of simulations covering a range of halo masses and
+concentrations.
+It will also be useful to test the cali-
+brated models against cosmological simulations as done
+in [59, 98] and take into account the pre-infall tidal ef-
+fects [114–116]. A more detailed study on this will be
+presented in a forthcoming paper.
+Furthermore, in the current work, we have ignored
+non-gravitational interactions between dark matter par-
+
+17
+10-2
+10-1
+100
+101
+r[kpc]
+104
+105
+106
+107
+108
+109
+1010
+ρ[M⊙kpc−3]
+γ = 1, Rp/Ra = 1/20(cuspy)
+t = 0
+t = Torbit
+t = 2Torbit
+t = 3Torbit
+10-2
+10-1
+100
+101
+r[kpc]
+104
+105
+106
+107
+108
+ρ[M⊙kpc−3]
+γ = 0, Rp/Ra = 2/5(cored)
+t = 0
+t = Torbit
+t = 2Torbit
+t = 3Torbit
+FIG. 11. Density evolution of cuspy (left panel) and cored subhalos (right panel) from semi-analytic models (lines) compared
+with N-body simulations (circles). Colors indicate different times.
+ticles.
+In future works, we will explore the possibility
+to include other effects in different dark matter scenar-
+ios, e.g. enhanced tidal stripping in fuzzy dark matter
+models due to “quantum tunneling” [18, 117], core evo-
+lution [56–60] and ram pressure stripping [118] in SIDM
+model.
+ACKNOWLEDGEMENTS
+X.D. thanks Jorge Pe˜narrubia for beneficial discus-
+sions on initial conditions and simulation with SUPER-
+BOX. X.D. and T.T. acknowledge support from the Na-
+tional Science Foundation through Grant No. NSF-AST-
+1836016 and NSF-AST-2205100, and by the Gordon and
+Betty Moore Foundation through Grant No. 8548. A. N.
+acknowledges support from the National Science Foun-
+dation through Grant No. NSF-AST-2206315.
+Computing resources used in this work were made
+available by a generous grant from the Ahmanson Foun-
+dation.
+Appendix A: Evolution of Rmax and Vmax as functions
+of the bound mass fraction
+In Sec. III, we have shown Rmax versus Vmax tracks for
+different initial subhalo density profiles. In Figs. 12, 13
+and 14, we show Rmax and Vmax as functions of the bound
+mass fraction together with our best fit fitting formula.
+Appendix B: Fitting functions for density evolution
+In Sec. III B, we have shown the best fit parameters
+for the density transfer function for (α, β) = (1, 3) and
+different γ. Best parameters for other combinations of
+(α, β, γ) are shown in Fig. 15.
+Appendix C: Effects of subhalo concentration and
+time-evolving host potential
+To test how subhalo concentration may affect the tidal
+tracks. We run a few tests for subhalos with NFW pro-
+files, i.e. (α, β, γ) = (1, 3, 1) and half of the fiducial con-
+centration.
+As shown in Fig. 17, subhalos with lower
+concentrations (colored dashed curves) are more influ-
+enced by the tidal stripping and have faster mass loss
+compare to the fiducial cases (colored solid curve). But
+the Rmax versus Vmax tracks are only marginally affected.
+A detailed study of an even larger change in subhalo con-
+centrations as done in Green et al. [54] is needed to de-
+termine the possible weak dependence of tidal tracks on
+subhalo concentrations.
+In the fiducial simulations, we have a static host poten-
+tial. However, in the realistic case, the host halo grows
+with time by accreting small halos.
+So we also run a
+test in which the host have a initial mass of 1012M⊙
+(Milky Way size) and its mass grows linearly with time
+and reaches 8×1012M⊙(group size) at the end of the sim-
+ulation. The subhalo has an initial velocity that matches
+the static host case with Rp/Ra = 1/20.
+Again, the
+subhalo has faster mass loss, but tidal tracks are only
+marginally affected, see the black curve (left panel) and
+triangles (right panel) in Fig. 17.
+Appendix D: Effects of galactic disk and bulge
+In the fiducial simulations, we assume the host have an
+NFW profile and neglect any possible contribution from
+the baryons in the halo. To test whether our results are
+
+18
+10-3
+10-2
+10-1
+100
+Mbound/Mbound, 0
+10-1
+100
+Rmax/Rmax, 0
+α = 1, β = 3, γ = 0
+Fiting(thiswork)
+Penarrubia et al. 2010
+Rp/Ra = 2/5
+Rp/Ra = 1/5
+10-3
+10-2
+10-1
+100
+Mbound/Mbound, 0
+10-1
+100
+Vmax/Vmax, 0
+α = 1, β = 3, γ = 0
+Fitting(thiswork)
+Penarrubia et al. 2010
+Rp/Ra = 2/5
+Rp/Ra = 1/5
+10-3
+10-2
+10-1
+100
+Mbound/Mbound, 0
+10-1
+100
+Rmax/Rmax, 0
+α = 1, β = 3, γ = 0.5
+Fitting(thiswork)
+Penarrubia et al. 2010
+Rp/Ra = 1/5
+Rp/Ra = 1/20
+10-3
+10-2
+10-1
+100
+Mbound/Mbound, 0
+10-1
+100
+Vmax/Vmax, 0
+α = 1, β = 3, γ = 0.5
+Fitting(thiswork)
+Penarrubia et al. 2010
+Rp/Ra = 1/5
+Rp/Ra = 1/20
+10-3
+10-2
+10-1
+100
+Mbound/Mbound, 0
+10-1
+100
+Rmax/Rmax, 0
+α = 1, β = 3, γ = 1
+Fitting(thiswork)
+Penarrubia et al. 2010
+Rp/Ra = 1/5
+Rp/Ra = 1/20
+10-3
+10-2
+10-1
+100
+Mbound/Mbound, 0
+10-1
+100
+Vmax/Vmax, 0
+α = 1, β = 3, γ = 1
+Fitting(thiswork)
+Penarrubia et al. 2010
+Rp/Ra = 1/5
+Rp/Ra = 1/20
+10-3
+10-2
+10-1
+100
+Mbound/Mbound, 0
+10-1
+100
+Rmax/Rmax, 0
+α = 1, β = 3, γ = 1.5
+Fitting(thiswork)
+Penarrubia et al. 2010
+Rp/Ra = 1/100(Fiducial)
+Rp/Ra = 1/200(Fiducial)
+Rp/Ra = 1/100(Global∆t)
+Rp/Ra = 1/200(Global∆t)
+10-3
+10-2
+10-1
+100
+Mbound/Mbound, 0
+10-1
+100
+Vmax/Vmax, 0
+α = 1, β = 3, γ = 1.5
+Fitting(thiswork)
+Penarrubia et al. 2010
+Rp/Ra = 1/100(Fiducial)
+Rp/Ra = 1/200(Fiducial)
+Rp/Ra = 1/100(Global∆t)
+Rp/Ra = 1/200(Global∆t)
+FIG. 12. Rmax and Vmax for (α, β) = (1, 3) and different values of γ from N-body simulations using Gadget-4. Solid lines
+show the fitting functions found in this work.
+
+19
+10-3
+10-2
+10-1
+100
+Mbound/Mbound, 0
+10-1
+100
+Rmax/Rmax, 0
+α = 1, β = 4, γ = 0
+Fitting(thiswork)
+Fitting(thiswork, β = 3)
+Rp/Ra = 1/5
+Rp/Ra = 1/20
+10-3
+10-2
+10-1
+100
+Mbound/Mbound, 0
+10-1
+100
+Vmax/Vmax, 0
+α = 1, β = 4, γ = 0
+Fitting(thiswork)
+Fitting(thiswork, β = 3)
+Rp/Ra = 1/5
+Rp/Ra = 1/20
+10-3
+10-2
+10-1
+100
+Mbound/Mboumd, 0
+10-1
+100
+Rmax/Rmax, 0
+α = 1, β = 4, γ = 0.5
+Fitting(thiswork)
+Fitting(thiswork, β = 3)
+Rp/Ra = 1/100
+10-3
+10-2
+10-1
+100
+Mbound/M0
+10-1
+100
+Vmax/Vmax, 0
+α = 1, β = 4, γ = 0.5
+Fitting(thiswork)
+Fitting(thiswork, β = 3)
+Rp/Ra = 1/100
+10-3
+10-2
+10-1
+100
+Mbound/Mbound, 0
+10-1
+100
+Rmax/Rmax, 0
+α = 1, β = 4, γ = 1
+Fitting(thiswork)
+Fitting(thiswork, β = 3)
+Rp/Ra = 1/100
+Rp/Ra = 1/200
+10-3
+10-2
+10-1
+100
+Mbound/Mbound, 0
+10-1
+100
+Vmax/Vmax, 0
+α = 1, β = 4, γ = 1
+Fitting(thiswork)
+Fitting(thiswork, β = 3)
+Rp/Ra = 1/100
+Rp/Ra = 1/200
+10-3
+10-2
+10-1
+100
+Mbound/Mbound, 0
+10-1
+100
+Rmax/Rmax, 0
+α = 1, β = 4, γ = 1.5
+Fitting(thiswork)
+Fitting(thiswork, β = 3)
+Rp/Ra = 1/200(Fiducial)
+Rp/Ra = 1/400(Fiducial)
+Rp/Ra = 1/200(Global∆t)
+Rp/Ra = 1/400(Global∆t)
+10-3
+10-2
+10-1
+100
+Mbound/Mbound, 0
+10-1
+100
+Vmax/Vmax, 0
+α = 1, β = 4, γ = 1.5
+Fitting(thiswork)
+Fitting(thiswork, β = 3)
+Rp/Ra = 1/200(Fiducial)
+Rp/Ra = 1/400(Fiducial)
+Rp/Ra = 1/200(Global∆t)
+Rp/Ra = 1/400(Global∆t)
+FIG. 13. Rmax and Vmax for (α, β) = (1, 4) and different values of γ from N-body simulations using Gadget-4. Solid black
+lines show the fitting functions found in this work. For comparisons, the fitting functions for the same (α, γ), but β = 3 are
+also shown in each panel (light gray lines).
+
+20
+10-3
+10-2
+10-1
+100
+Mbound/Mbound, 0
+10-1
+100
+Rmax/Rmax, 0
+α = 2, β = 3, γ = 0
+Fitting(thiswork)
+Rp/Ra = 1/2.5
+Rp/Ra = 1/5
+10-3
+10-2
+10-1
+100
+Mbound/Mbound, 0
+10-1
+100
+Vmax/Vmax, 0
+α = 2, β = 3, γ = 0
+α = 2, β = 3, γ = 0
+Fitting(thiswork)
+Fitting(thiswork)
+Rp/Ra = 1/2.5
+Rp/Ra = 1/5
+Rp/Ra = 1/2.5
+Rp/Ra = 1/5
+10-3
+10-2
+10-1
+100
+Mbound/Mbound, 0
+10-1
+100
+Rmax/Rmax, 0
+α = 2, β = 4, γ = 0
+Fitting(thiswork)
+Rp/Ra = 1/20
+10-3
+10-2
+10-1
+100
+Mbound/Mbound, 0
+10-1
+100
+Vmax/Vmax, 0
+α = 2, β = 4, γ = 0
+Fitting(thiswork)
+Rp/Ra = 1/20
+FIG. 14. Rmax and Vmax for (α, γ) = (2, 0) and different values of β from N-body simulations using Gadget-4. Solid lines
+show the fitting functions found in this work.
+10-3
+10-2
+10-1
+100
+Mbound/Mbound, 0
+10-4
+10-3
+10-2
+10-1
+100
+rte/rvir, sub
+Thiswork(δ = 3)
+Thiswork(δ = 2)
+γ = 0
+γ = 0.5
+γ = 1
+γ = 1.5
+10-3
+10-2
+10-1
+100
+Mbound/Mbound, 0
+10-1
+100
+ft
+Thiswork(δ = 3)
+Thiswork(δ = 2)
+γ = 0
+γ = 0.5
+γ = 1
+γ = 1.5
+FIG. 15. Best-fit parameters for the density profile as a function of bound mass fraction for (α, β) = (1, 4) and different γ. Left:
+the effect tidal radius in Eq. (23). The filled (open) circles are obtained by fitting Eq. (23) to the density profiles measured
+from simulation assuming δ = 3 (δ = 2). Right: the normalization parameter ft in Eq (23).
+affected by the baryonic potential, we add a Miyamoto
+and Nagai disk potential [113]
+ΦMN = −
+GMMN
+q
+x2 + y2 + (Rd +
+p
+z2
+d + z2)2
+,
+(D1)
+and a Hernquist bulge potential [72]
+ΦHQ = −GMHQ
+R + AHQ
+,
+(D2)
+to the static host potential. For the fiducial host mass of
+1012M⊙, we choose the following parameters in Eqs. (D1)
+
+21
+10-3
+10-2
+10-1
+100
+Mbound/Mbound, 0
+10-3
+10-2
+10-1
+100
+rte/rvir, sub
+Thiswork(δ = 3)
+Thiswork(δ = 2)
+β = 3
+β = 4
+10-3
+10-2
+10-1
+100
+Mbound/Mbound, 0
+10-3
+10-2
+10-1
+100
+ft
+Thiswork(δ = 3)
+Thiswork(δ = 2)
+β = 3
+β = 4
+FIG. 16. Best-fit parameters for the density profile as a function of bound mass fraction for (α, γ) = (1, 0) and different β. Left:
+the effect tidal radius in Eq. (23). The filled (open) circles are obtained by fitting Eq. (23) to the density profiles measured
+from simulation assuming δ = 3 (δ = 2). Right: the normalization parameter ft in Eq (23).
+0
+5
+10
+15
+20
+25
+30
+35
+t[Gyr]
+10-3
+10-2
+10-1
+100
+Mbound/Mbound, 0
+Rp/Ra = 1
+Rp/Ra = 1/5
+Rp/Ra = 1/20
+LowerConcentration
+GrowingHost
+10-1
+100
+Rmax/Rmax, 0
+100
+2 × 10-1
+3 × 10-1
+4 × 10-1
+6 × 10-1
+Vmax/Vmax, 0
+Fitting(thiswork)
+Errani&Navarro2021
+Fiducial
+LowerConcentration
+GrowingHost
+FIG. 17. Bound mass evolution and tidal tracks for NFW subhalos with different concentration (colored lines) and a time-
+evolving host potential (black line). For the case with evolving host potential, the subhalo is initially put on the same orbit as
+the static host case with Rp/Ra = 1/20.
+and (D2) to mimic the Milky Way disk and bulge [71,
+119]:
+MMN = 6.98 × 1010M⊙,
+(D3)
+Rd = 6.0 kpc,
+(D4)
+zd = 1.2 kpc,
+(D5)
+MHQ = 1.05 × 1010M⊙,
+(D6)
+AHQ = 0.46 kpc.
+(D7)
+The subhalo is assumed to have an NFW profile at the
+beginning of the simulation. We choose the ratio of peri-
+center to apocenter distances to be Rp/Ra = 1/50 so
+that the subhalo can enter within the disk radius Rd.
+The subhalo orbital plane is tilted by an angle of π/6
+with respect to the disk plane.
+As shown in Fig. 18, the subhalo has a faster mass
+loss compared to the fiducial “DM-only” simulation. But
+only a small difference (less than 10%) is observed in the
+Vmax versus Rmax track.
+
+22
+0
+5
+10
+15
+20
+25
+30
+35
+t[Gyr]
+10-3
+10-2
+10-1
+100
+Mbound/Mbound, 0
+DMonly
+DM + disk + bulge
+10-1
+100
+Rmax/Rmax, 0
+100
+2 × 10-1
+3 × 10-1
+4 × 10-1
+6 × 10-1
+Vmax/Vmax, 0
+Fitting(thiswork)
+DMonly
+DM + disk + bulge
+FIG. 18. Bound mass evolution and tidal tracks for NFW subalhos with and without the galactic disk and bugle potentials.
+
+23

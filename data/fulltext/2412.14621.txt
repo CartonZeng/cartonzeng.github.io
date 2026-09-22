@@ -1,0 +1,2897 @@
+Diversity and universality: Evolution of dwarf galaxies with self-interacting dark matter
+Zhichao Carton Zeng1,2,3,∗Annika H. G. Peter1,2,4, Xiaolong Du5,6,
+Andrew Benson5, Jiaxuan Li7, Charlie Mace1,2, and Shengqi Yang5,8
+1Department of Physics, The Ohio State University, 191 W. Woodruff Avenue, Columbus, Ohio 43210, USA
+2Center for Cosmology and Astroparticle Physics, The Ohio State University,
+191 W. Woodruff Avenue, Columbus, Ohio 43210, USA
+3Department of Physics and Astronomy, Mitchell Institute for Fundamental Physics and Astronomy,
+Texas A&M University, College Station, Texas 77843, USA
+4Department of Astronomy, The Ohio State University, 140 W. 18th Avenue, Columbus, Ohio 43210, USA
+5 Carnegie Observatories, 813 Santa Barbara Street, Pasadena, California 91101, USA
+6 Department of Physics and Astronomy, University of California, Los Angeles, California 90095, USA
+7 Department of Astrophysical Sciences, Princeton University, 4 Ivy Lane, Princeton, New Jersey 08544, USA
+8 Los Alamos National Laboratory, Los Alamos, New Mexico 87545, USA
+(Dated: September 30, 2025)
+Dark matter halos with self-interacting dark matter (SIDM) experience a unique evolutionary phenomenon,
+in that their central regions eventually collapse to high density through the runaway gravothermal process after
+initially forming a large and low-density core. When coupled with orbital evolution, this is expected to naturally
+produce a large diversity in dark matter halos’ inner mass distribution, potentially explaining the diversity
+problem of dwarf galaxies.
+However, it remains unknown how the diversity in SIDM halos propagates to
+the more easily observed luminous matter at the center of the halo, especially the stellar component. In this
+work, we use idealized N-body simulations with two species of particles (dark matter and stars) to study the
+response of the stellar properties of field and satellite dwarf galaxies to SIDM evolution and orbital effects
+on their halos. Galaxies’ stellar components, including galaxy size, mass-to-light ratio, and stellar velocity
+dispersion, display a much larger scatter in SIDM than the standard cold dark matter model. Importantly,
+we find signs of universality in the evolution pathways, or “tidal tracks”, of SIDM dwarf satellites, which are
+physically interpretable and potentially parametrizable. This type of tidal-track model can be layered onto
+larger-scale, cosmological simulations to reconstruct the evolution of populations of SIDM dwarfs in cases
+where high-resolution simulations of galaxies are otherwise prohibitively expensive.
+I.
+INTRODUCTION
+Self-interacting dark matter (SIDM) has recently raised in-
+terest as an alternative candidate to the standard cold dark mat-
+ter (CDM) paradigm. Particle interactions that are stronger
+than gravity cause efficient heat transfer within dark matter
+halos. This leads to the unique two-phase evolution of SIDM
+halos: core formation (on shorter time scales) followed by
+core-collapse (on longer time scales) [1–4]. SIDM scatter-
+ing first causes thermalization in the halo center, leading to
+a uniform low-density core. The core then serves as a heat
+bath, slowly but endlessly transferring heat to larger radii of
+the halo, where the “temperature” (proxy of velocity disper-
+sion, defined as 𝑘𝑇= 𝜎2
+𝑣where 𝜎𝑣is the velocity dispersion
+in analogy with an ideal gas) remains always lower. Due to
+the negative heat capacity of such self-gravitating systems,
+the central density core becomes counterintuitively hotter and
+smaller via this heat outflow, resulting in dark matter falling
+towards the center, which in turn further strengthens the tem-
+perature gradient. This process is thus self-accelerating, and
+eventually becomes a runaway process known as core-collapse
+(also called gravothermal collapse/catastrophe) [2–8].
+The density of the central core of SIDM halos can there-
+fore naturally span an enormous diversity, when observed at
+different life stages during the core-formation to core-collapse
+∗E-mail: zczeng@tamu.edu
+evolution [9–13]. The core-collapse mechanism of SIDM ha-
+los is thus considered to have to potential to explain recent
+observational anomalies on small scales, which appears to be
+challenging to describe in the CDM paradigm [14–16]. These
+include the “diversity problem” of dwarf galaxies [17–22],
+enhanced galaxy-galaxy lensing cross sections [23–26] and
+ultracompact substructure lenses [27–30].
+However, observations on larger scales set constraints on
+SIDM cross sections that are too small to cause halo core-
+collapse within a Hubble time. On the scales of galaxy clus-
+ters, the SIDM cross section is constrained to ≲O(1) cm2/g
+by central densities [31–34], cluster ellipticity [35–40], and
+galaxy offsets during cluster mergers [41–45]. Consequently,
+additional degrees of freedom, such as velocity-dependent
+SIDM cross sections [10, 12, 28, 46–50] and energy dissi-
+pation during particle scattering events [4, 38, 51–54], have
+been introduced to produce core-collapse in the low-mass ha-
+los that are relevant for the small-scale problems while evading
+cluster-scale constraints.
+Importantly, the speed of core-collapse depends on envi-
+ronment. Core-collapse in SIDM subhalos is driven by the
+heat outflow from subhalo center and can thus be accelerated
+by tidal stripping, which strengthens the subhalo’s tempera-
+ture gradient by removing dark matter from the outskirts [9–
+11, 55–57]. On the other hand, it can be slowed down (or
+even disrupted) by tidal heating and evaporation (also known
+as SIDM ram-pressure, which refers to the dark matter (DM)
+self-interaction between the subhalo and the host [11, 58, 59]).
+These effects inject heat into the subhalo center, causing the
+arXiv:2412.14621v3  [astro-ph.GA]  28 Sep 2025
+
+2
+central core to puff up, thus countering the core-collapse pro-
+cess [11, 12]. Considering the complicated interplay between
+various orbital effects and subhalos’ internal heat transfer, [12]
+has simulated realistic merger trees of host-subhalos systems
+and found that for certain velocity-dependent SIDM models,
+core-collapse does happen in a significant fraction (≳10%)
+of subhalos within the cosmic time, while also satisfying the
+constraints of 𝜎/𝑚≲O(1) cm2/g for cluster-scale velocities.
+[12] also confirmed that such significant core-collapse does
+greatly raise the diversity in subhalos’ inner density/mass as
+well as the inner density slope.
+The next step is to understand how this predicted diver-
+sity in dark matter structure in (sub)halo centers affects the
+visible baryons in the system. How do baryons (specifically
+stars) respond to the SIDM halo evolution, including also the
+complicated environment effects? Exploring the evolution of
+stellar components in the context of SIDM will help to see
+if SIDM can provide a plausible answer to the diversity in
+dwarf galaxies, including the recent discovery of various ex-
+tremes: ultradiffuse [60–64], ultracompact [65–68], DM-free
+[69, 70], and DM-dominant [71, 72] galaxies. However, most
+of the previous works on SIDM core-collapse are in the dark
+matter only context, or at most including a central baryonic
+potential to account for its contracting effect on dark matter
+[50, 73–76]. This is because explicitly including baryons/stars
+in simulations with possible SIDM core-collapse presents a
+tremendous challenge to computational power. Recent con-
+vergence tests of dark matter only simulations show that ≳105
+particles per halo are required to ensure converged evolution in
+the halo’s inner density at late stages of core-collapse [77–79].
+When the task is to resolve stellar components in low-mass
+(sub)halos ≲O(1010)𝑀⊙, for which the stellar mass fraction
+is low ≲O(10−3) [80], it becomes more demanding in parti-
+cle resolution. As such, it is difficult to simulate SIDM dwarf
+galaxies in a cosmological context with full hydrodynamics,
+especially in the context of core0collapse (Cruz et al. in prep.).
+An alternative “tidal track” approach has been developed for
+CDM in previous work to trace the evolution of stellar com-
+ponents at low computational expense[81–83]. This approach
+carefully traces the evolution of single satellite galaxies using
+high-resolution controlled simulations, in which the evolution
+of stellar properties in a tidal field can be more accurately
+tracked than in cosmological simulations.
+The results are
+then used to build parametrized, empirical relations between
+the evolution of stellar properties such as stellar size and the
+mass-to-light ratio, which demands high particle resolution,
+and the evolution of the total (DM+stellar) inner mass, which
+is less demanding in resolution. Such tidal tracks can then
+be applied in larger-scale simulations with lower resolution to
+reconstruct the stellar evolution [84, 85]. In this paper, we
+explore the possibility of building such tidal evolution tracks
+for SIDM cases, following a similar spirit.
+In this work, we examine the dynamical evolution of an
+SIDM dwarf galaxy, both in isolation and as a satellite in
+a host halo, testing multiple SIDM models.
+This work is
+organized as follows: In Sec.
+II we illustrate the setup of
+our controlled simulations, each consisting of a single dwarf
+galaxy-(sub)halo system, composed of two species of parti-
+cles, DM and stars. We also include a detailed convergence
+test regarding particle mass resolution and particle mass ratio
+between the two species, which are the two key parameters
+that can cause spurious effects in the simulation. In Sec. III,
+we show the evolution of dwarf (satellite) galaxies in differ-
+ent SIDM models and orbits, including the evolution of their
+stellar properties in time and a tidal track study that correlates
+with the change in the (sub)halos’ inner mass. We summarize
+and discuss limitations and possible future works in Sec. V.
+II.
+SETUP OF SIMULATIONS
+A.
+Overview
+In this section, we describe how we set up idealized simula-
+tions of an orbiting subhalo with a galaxy embedded in it, using
+two species of particles to trace DM and stars. Importantly,
+we perform a number of convergence tests for our scheme. Al-
+though particular choices are specific to the goals of this study,
+we identify a number of issues that are general and which we
+highlight for the benefit of the simulation community. In Sec.
+II B, we show the results of our convergence tests, which have
+additional implications for choices simulators make for cos-
+mological simulations.
+We aim to trace the dynamical evolution of the stellar com-
+ponent within a typical dwarf (satellite) galaxy in different
+SIDM models. We use the N-body initial condition generator
+SpherIC [86] to set up initial conditions for the “DM+star”
+simulation, where the initial density profiles of DM and stellar
+components are given as input and the initial velocities are cal-
+culated using Eddington inversion [87, 88]. The contribution
+from both DM and stars to the gravitational potential is in-
+cluded, such that the system is in equilibrium at the beginning.
+Because our initial scientific motivation for this study was
+the formation of ultradiffuse galaxies (UDGs) in group-scale
+environments [69, 70, 89, 90], we choose a relatively massive
+dwarf galaxy and its halo as the starting point of our investiga-
+tions. In this context, we use initial conditions that we had in
+hand from [12]. Specifically, we pick one subhalo from a halo
+merger tree of a galaxy-group-sized system, which is generated
+by the galaxy evolution code Galacticus and was one of the
+four realizations used in a recent study of ensemble evolution
+of SIDM subhalos [12]. We select a 𝑀200𝑐= 3.01 × 1010𝑀⊙
+subhalo that forms (defined by the time when its mass reaches
+half its infall mass in Galacticus) at 𝑧∼4 (equivalently
+𝑡=1.5 Gyr since the big bang). The subhalo is chosen such
+that its mass is low enough to be simulated in an analytic host
+(≲0.3% host mass, see [11]), with negligible dynamical fric-
+tion For the reasons we discuss below, lower-mass subhalos,
+which typically have lower stellar mass fraction [80, 91, 92],
+demand much higher resolution for our simulations. We addi-
+tionally pick this subhalo because of its early formation time
+to make sure that it has a long evolution time inside the host
+halo, so that the study of this single satellite can exhaust the
+evolution pathways of satellites with short to long in-orbit
+times. For all DM models, the DM component of the subhalo
+is initialized as a Navarro-Frenk-White (NFW) profile, with
+
+3
+characteristic parameters 𝜌𝑠= 1.45 × 107𝑀⊙/kpc3, 𝑟𝑠= 5.12
+kpc, 𝑀200𝑐= 3.01 × 1010𝑀⊙and 𝑟200𝑐= 37.32 kpc (with the
+critical density corresponding to the beginning of the simula-
+tion 𝑡=1.5 Gyr or 𝑧∼4).
+For the satellite galaxy embedded in the subhalo, we set the
+initial stellar mass as 2.48 × 107𝑀⊙according to the stellar-
+mass-halo-mass relation in [80], with an initial size (half-light
+radius)1 as 0.37 kpc, according to the stellar-size-halo-size re-
+lation in [73]. To account for the diversity in satellites’ initial
+density and to partially compensate for the missing baryonic
+feedback in our DM+star simulations [62, 93, 94], we test two
+scenarios of the initial density profiles for stars, a Hernquist
+[95] profile to represent a cuspy stellar distribution (character-
+istic of massive dwarfs), and a Plummer [96] profile to rep-
+resent a cored distribution (representing the more commonly
+observed properties of classical dwarf galaxies). The corre-
+sponding scale radii for the Hernquist and Plummer galaxies
+are then 𝑟hern =0.15 kpc and 𝑟𝑝=0.28 kpc.
+To trace the evolution of the subhalo and its embedded
+satellite galaxy orbiting in the host halo (the combined object
+consisting of the DM subhalo and its dwarf galaxy will be de-
+noted as “satellite” hereafter, for simplicity), we use the hybrid
+N-body + semianalytical method introduced in [11], which is
+built upon the hydrodynamical code Arepo [97] with an SIDM
+module [46, 98, 99]. The host halo is modeled with an an-
+alytic mass and particle velocity distribution.
+The analytic
+mass profile is needed for the calculation of the gravitational
+force on the satellite. To account for the self-interaction ef-
+fects between the host and the subhalo (the ‘evaporation’), we
+need both the mass distribution and the velocity dispersion of
+dark matter particles within the host. To build such an an-
+alytic distribution of the host given different SIDM models,
+we initialize the host with an NFW profile, evolve it in a sep-
+arate simulation with DM self-interaction for 4 Gyr to reach
+equilibrium, and then measure the resulting density and radial
+velocity dispersion profiles. The NFW initial condition of the
+host has parameters 𝜌𝑠= 3.92×106𝑀⊙/kpc3, 𝑟𝑠= 53.76 kpc,
+𝑀200𝑐= 1.01×1013𝑀⊙and 𝑟200𝑐= 436.5 kpc, corresponding
+to the merger tree at 𝑡= 9 Gyr (𝑧≈0.5). For simplicity and
+better control of the idealized simulations in this work, the an-
+alytic host is static, not growing with time, as in the treatment
+of [11].
+The SIDM models we study in this work are mostly the same
+as in [12], including a constant model 𝜎/𝑚= 6 cm2/g and a
+group of velocity-dependent models, which follow a generic
+form characterized by two parameters 𝜎0 and 𝜔:
+𝜎
+𝑚=
+𝜎0
+[1 + 𝑣2
+rel/𝜔2]2 .
+(1)
+We plot the 𝜎/𝑚−𝑣rel relation for these models in Fig. 1. As
+we will see in later sections, the combination of these {𝜎0, 𝜔}
+models and multiple orbits covers the main evolutionary path-
+1 Note that the “half-light” radius in this work is more precisely “half-stellar-
+mass” radius, since we only have identical star particles in the simulation,
+without differentiating color and luminosity.
+100
+101
+102
+103
+vrel[km/s]
+10−2
+10−1
+100
+101
+102
+σ/m[cm2/g]
+subhalo
+evaporation
+6cm2/g
+σ0 = 50, ω = 50
+σ0 = 50, ω = 100
+σ0 = 100, ω = 50
+σ0 = 200, ω = 50
+σ0 = 200, ω = 200
+FIG. 1: The 𝜎/𝑚−𝑣rel relation for the SIDM models we use
+in this work. The vertical shaded region in yellow indicates
+characteristic orbital velocities of the host, and this is the
+scale relevant for the evaporation of subhalo particles by the
+host. The gray shaded region represents the velocity scale
+relevant for particle scatterings within the subhalo, using an
+empirical relation ⟨𝑣rel⟩≈3.8𝜎𝑣from [12].
+ways of subhalos of SIDM subhalos: cored with and without
+evaporation, and core-collapsed with and without evaporation.
+In this work, we follow [11, 12] to use the (sub)halo’s central
+density as the main tracer of the SIDM core-collapse process.
+At every time step, the local SIDM density of each SIDM
+particle (where ‘local’ is defined by a sphere enclosing its 32
+nearest SIDM neighbors, also known as the SIDM softening
+length) is measured for evaluation of the scattering probability.
+A (sub)halo’s central density is then estimated as the average
+of the highest 50 values of these local densities, denoted as
+𝜌cen50. When 𝜌cen50 reaches five times its initial value, we
+mark this (sub)halo as core collapsed and terminate the simu-
+lation. This choice is a compromise given two considerations.
+On one hand, the computational cost becomes prohibitively
+high for the gravity solver and scattering algorithm to resolve
+the physics in the denser and denser region of the runaway col-
+lapse. Moreover, as the scattering mean-free-path decreases
+and the core-collapse region becomes more fluidlike, new tech-
+niques beyond N-body simulation are required to accurately
+track the physics. On the other hand, as found in [11], or-
+bital effects such as tidal heating and host-subhalo evaporation
+can disrupt the early-stage core-collapse process. If the ter-
+mination density threshold is set too low, it may misclassify
+a galaxy as core-collapsed when its evolution is instead dis-
+rupted by evaporation. In the real physical scenario, however,
+the core-collapse process continues beyond this “5 times” cut-
+off threshold (see [100] for more discussion). We thus note
+that the results of core-collapsed (sub)halos and their stellar
+properties that we present in this work should be viewed as a
+lower limit of the dense state produced by the core-collapse
+process.
+
+4
+B.
+Resolution and mass ratio tests
+In this subsection, we describe the numerical recipe for set-
+ting up an idealized N-body simulation of a stellar system
+embedded in a dark matter (sub)halo, with two types of par-
+ticles: DM and stars. Our goal is to determine how to set up
+the simulations so that the evolution of the half-light radius
+(and thus the stellar properties therein) is accurately resolved.
+We vary two numerical parameters to test the convergence:
+the DM particle resolution, and the mass ratio between dark
+matter and star particles. While it is a conventional practice
+to use a dark matter to baryon (gas/star) particle mass ratio of
+approximately 5:1 following the cosmological energy density
+partition [101–103] (see here for an overview), it has been
+argued that using unequal masses for two species of particles
+can exacerbate the two-body scattering and cause spurious dif-
+fusion in the less massive particles [104, 105]. This leads to
+spuriously larger sizes of galaxies. To explore the size of the
+effect for our simulations, we compare the simulation results
+produced by 5 : 1 and 1 : 1 mass ratios between DM and star
+particles.
+We impose two physically motivated conditions to check
+that the aforementioned spurious effects are minimal. First,
+we consider a galaxy in an isolated CDM halo. The galaxy
+size should remain stable over time, since this galaxy-halo
+system is generated in equilibrium and should therefore not
+evolve. Second, we consider systems such as CDM subhalos
+and both isolated and satellite SIDM halos, which are intrinsi-
+cally expected to evolve over time due to orbital effects, SIDM
+scattering, or both. The lower resolution simulations should
+asympotically converge to the higher resolution ones. We fo-
+cus on two metrics to quantify the evolution of the galaxy: its
+size, as defined by the half-light radius, and its mass, as defined
+by the stellar mass bound to the (sub)halo. In this section, we
+test the combination of three dark matter particle masses and
+two star-to-DM particle mass ratios, as detailed in Table I.
+We consider the collisionless cases first; both isolated and
+orbiting subhalos in CDM. Our results are shown in the time
+evolution plot Fig. 2. We show the results with highest resolu-
+tion in black lines, which is also the default resolution we use
+for the production runs in the results section. We then increase
+the DM particle mass (thus lower resolution) by 5 and 25 times
+respectively, as shown in red and purple lines. We assign star
+particle mass as either equal to DM, in thick lines, or 20% of
+that of DM, in thin lines. The test halos in isolation are shown
+by solid lines. For the orbiting case, for the purpose of testing
+extremes, we put the test halos in the orb4 orbit (see Table
+II), as shown by dash-dotted lines, which is the most plunging
+orbit in our production runs. From top to bottom, we show
+the galaxy half-light radius, stellar mass that remains bound to
+the system, the total (star+DM) bound (sub)halo mass, and the
+enclosed total mass within the initial half-light radius from the
+(sub)halo center. Throughout this work, the stellar half-light
+radius 𝑟half is determined by first identifying the stellar parti-
+cles that remain bound to the (sub)halo with the AHF [106] halo
+finder, then finding the galaxy center by iteratively shrinking
+the sphere that encloses these bound stars, and setting 𝑟half to
+the median value of the star particles’ distance to the galaxy
+1.0
+1.5
+2.0
+2.5
+3.0
+3.5
+Half light radius
+mdm = m0
+mdm = 5m0
+mdm = 25m0
+m * =mdm
+m * =0.2mdm
+m * =mdm
+m * =0.2mdm
+10
+1
+100
+Bound stellar mass
+isolated
+orb4
+10
+3
+10
+2
+10
+1
+100
+Total subhalo mass
+2
+4
+6
+8
+10
+12
+t [Gyr]
+10
+1
+100
+Mtot within rhalf, 0
+FIG. 2: Convergence test for resolution and star-DM particle
+mass ratio with CDM (sub)halos. From top to bottom are the
+time evolution of the 𝑟half of bound star particles, the bound
+stellar mass, total mass within 𝑟200𝑐of the (sub)halo, and the
+total mass within the initial half-light radius 𝑟half,0. Black
+lines (𝑚dm = 𝑚0) are simulations with our highest particle
+resolution, with red and purple lines having 5× and 25× the
+DM particle mass (thus lower resolution). The thick lines
+have equal mass ratio between star and DM particles, and the
+thin lines have a mass ratio of 1 : 5. All the combinations of
+resolution and mass-ratios are listed in Table I. The solid
+lines represent galaxy-halo systems in isolation, and the
+dash-dotted lines are for orb4 subhalos (the most eccentric
+orbit we test in this work, see Table II).
+
+5
+Label
+𝑚dm[𝑀⊙]
+𝑁dm
+𝜖dm[kpc] 𝑚∗: 𝑚dm
+𝑚∗[𝑀⊙]
+𝑁∗
+𝑚dm = 𝑚0
+5 × 103
+8.5 × 106
+0.026
+1:5
+103
+24820
+1:1
+5 × 103
+4964
+𝑚dm = 5𝑚0
+2.5 × 104 1.7 × 106
+0.044
+1:5
+5 × 103
+4964
+1:1
+2.5 × 104
+993
+𝑚dm = 25𝑚0 1.25 × 105 3.4 × 105
+0.075
+1:5
+2.5 × 104
+993
+1:1
+1.25 × 105
+199
+TABLE I: The particle masses and number of particles for different resolution and star-DM particle mass ratio. 𝑚0 is the DM
+particle mass from our highest-resolution simulations and 𝜖dm is the gravitational softening length for DM particles.
+Orbits 𝑅apo/𝑅vir(host) 𝑅apo : 𝑅peri 𝑅apo [kpc] 𝑅peri [kpc] 𝑣0(sub) [km/s]
+orb1
+1
+5:1
+436.5
+87.3
+127.8
+orb2
+0.7
+10:1
+305.5
+30.6
+75.0
+orb3
+0.4
+10:1
+174.6
+17.5
+71.7
+orb4
+0.4
+20:1
+174.6
+8.7
+38.2
+TABLE II: Parameters of orbits we sample in this work. From orb1 to orb4, the host effects get stronger.
+FIG. 3: Stellar density profiles of the isolated CDM halo
+under different resolution and particle mass ratios, at the end
+of the simulation. The resolution and particle mass ratios are
+presented in the same manner as in Fig. 2. The black dashed
+line shows the stellar density profile of the initial condition
+that is the same for all three resolutions. The shaded regions
+mark the radius of three times the gravitational softening
+length of each resolution run. The vertical lines mark the 𝑟half
+of corresponding resolution cases at the end of the simulation.
+center.
+We describe the results of the isolated CDM simulations
+first.
+In the top panel for 𝑟half, galaxies in isolated halos
+(solid lines) increase in size over time, as a result of two-body
+relaxations among particles near the center [104, 107–109].
+Our highest resolution runs (black solid lines) have the lowest
+amount of this spurious diffusion, < 10% increase in half-light
+radius, while the galaxies in the lowest resolution runs (light-
+purple solid lines) puff up by more than a factor of 2. Our
+mid-resolution runs (red solid lines) show a ∼20% increase
+in galaxy size.
+When comparing different particle mass ratios we find that,
+at each resolution, assigning an equal mass ratio among the
+two particle species (stars and DM) produces a more stable
+system with less spurious diffusion than the 1:5 mass ratio
+among stars and DM which is common in cosmological simu-
+lations (see thin vs thick solid lines, all colors/linestyles). As a
+reference, we plot the stellar density profiles of isolated CDM
+systems for each mass resolution and particle mass ratio at the
+end of the simulation in Fig. 3. Here we also include the initial
+stellar profiles (black dotted line), which ideally the end-state
+simulations should still follow if free from numerical artifacts.
+The corresponding half-light radii are shown in the vertical
+lines for each simulation. We can see that nearly all simula-
+tions experience spurious diffusion in the stellar distribution to
+some extent. The high-resolution run with 8.5 × 106 particles
+and equal particle mass suffers the least. The regions shaded
+in different colors in Fig. 3 correspond to where the radii are
+less than three times the gravitational softening lengths2 of
+corresponding resolutions, which is conventionally denoted as
+the “untrustworthy” scale for N-body simulation [107]. The
+high-resolution stellar density profile evolves to be shallower
+within the three-times-softening region, but is robust above
+this scale. The mid- and low-resolution runs show a simi-
+lar behavior, only with slightly worse robustness above their
+three-times-softening scales. This again highlights that the
+required particle resolution should be high enough such that
+the corresponding three-times-softening radius is well below
+the half-light radius of the galaxy.
+For the orbiting systems with CDM, there is now tidal mass
+loss in stellar components, as we show with the remaining
+bound fraction of stellar mass in the second panel of Fig. 2.
+We can see that lower resolution runs have faster stellar mass
+2 We determine the gravitational softening length of DM particles 𝜖dm ac-
+cording to Eqn. (20) and (21) of [110], for the high-resolution run. We then
+scale 𝜖dm by a factor of 51/3 when setting 𝜖∗for stars with 1:5 mass ratio,
+or when scaling down DM to the mid-resolution (251/3 for low-resolution).
+The corresponding 𝜖dm are listed in Table I.
+
+6
+Hernquist I.C. for stars
+Plummer I.C. for stars
+Orbits
+𝜎0 = 200, 𝜔= 50 𝜎0 = 200, 𝜔= 200 𝜎0 = 200, 𝜔= 50 𝜎0 = 200, 𝜔= 200
+isolated
+-
+𝑡cc = 8.7 Gyr
+-
+𝑡cc = 8.7 Gyr
+orb1
+-
+𝑡cc = 7.7 Gyr
+-
+𝑡cc = 7.7 Gyr
+orb2
+𝑡cc = 12.9 Gyr
+-
+-
+-
+orb3
+𝑡cc = 10.3 Gyr
+-
+𝑡cc = 13.1 Gyr
+-
+orb4
+-
+-
+-
+-
+TABLE III: The core-collapse time, 𝑡cc, of the test (sub)halo, combining different SIDM models and orbits. Only the cases that
+core-collapse before the end of the simulation at 𝑡= 13.1 Gyr have a 𝑡cc. Other (sub)halos in this table may eventually
+core-collapse given a longer time, such as the isolated ones, or may never collapse due to the interactions with the host. Apart
+from the two SIDM models in this table, other SIDM models we test in this work have no core-collapse happening in the test
+subhalo.
+loss, because the stellar particles diffuse out to larger radii
+as we have discussed in the isolated cases, and become less
+resistant to tidal fields. Similar to the galaxy size in isola-
+tion, our low-resolution results deviate substantially from the
+high-resolution runs, while the mid-resolution runs indicate
+convergence with the high-resolution runs.
+Comparing the
+choice of 1:1 vs. 1:5 particle mass ratios, we again find better
+converged results with the equal mass ratio. For another met-
+ric, the galaxy size of orbiting systems in the top panel of Fig.
+2, the convergence tests show similar results. Our mid- and
+high-resolution runs are converging to a similar decrease in
+𝑟half, while the low-resolution run still has a comparable 𝑟half
+to its initial condition, despite the significant tidal mass loss.
+The total bound mass (DM+stars) is much less sensitive to
+the resolution than the stellar properties. In the third panel of
+Fig. 2, we show the total bound mass of the (sub)halo. We
+can see that the mid- and high-resolution results are indistin-
+guishable, even when the mass loss is 99.9%, and the low-
+resolution run also shows good convergence until the stripped
+mass reaches more than 99%. This, in contrast with the not-
+as-good convergence we find for stellar properties, highlights
+that parameter choices previously determined to be suitable
+for subhalo-wide properties are not automatically guaranteed
+to be sufficient when the satellite galaxy is to be resolved.
+Given the requirement of high resolution to accurately track
+the evolution of stellar properties as we have just shown, an
+alternative “tidal track” approach has been proposed as a sub-
+stitute for direct simulations with star particles [81, 83]. The
+idea is to use a less demanding quantity (one that is more ro-
+bustly measured when simulated with lower resolution) as a
+proxy to anchor the evolution of stellar properties [84]. Such
+an “anchor” quantity is chosen to be the total enclosed mass
+within the initial half-light radius 𝑟half,0 in [83]. In this work,
+we follow this prescription and explore the tidal tracks for
+SIDM cases.
+Here we examine the convergence results of
+this 𝑀(< 𝑟half,0) in the bottom panel of Fig.
+2.
+We can
+see that for both the isolated and orbiting CDM satellites, the
+low-resolution runs (purple lines) still significantly diverge
+from the high-resolution runs, even though 𝑀(< 𝑟half,0) is ex-
+pected to be a more robust tracer. The mid-resolution runs
+(red lines), however, do achieve better convergence with the
+high-resolution runs (black lines) in the 𝑀(< 𝑟half,0) panel
+than in the 𝑟half panel. For example, the mid-resolution runs
+have a maximum discrepancy of ∼10% (isolated) and ∼20%
+(orb4) in the top 𝑟half panel when compared against the high-
+resolution runs (thick red solid vs.
+thick black solid, and
+thick red dash-dotted vs. thick black dash-dotted lines), while
+the corresponding contrast in the bottom 𝑀(< 𝑟half,0) panel is
+only ∼5% and ∼10% respectively. Considering the tidal track
+scaling relation in [83] is 𝑟half ∼𝑀(< 𝑟half,0)𝛽with 𝛽∼1/3,
+the reconstructed stellar properties would yield even smaller
+errors. Thus we can claim that the proposed tracer 𝑀(< 𝑟half,0)
+is more robust when the particle resolution is reduced, unless
+the resolution is overly low (as in our low-resolution examples).
+We pivot to the SIDM cases in Fig.
+4, to determine if
+scattering changes the resolution criteria.
+Since we have
+concluded from our previous discussion of CDM cases that
+using an equal mass ratio between DM and star particles is
+preferred to avoid spurious mass segregation effects, here
+we only test different resolutions, fixing an equal mass ra-
+tio for all cases. We test three orbits for the SIDM model
+{𝜎0 = 200, 𝜔= 50}: a) isolated, in order to test SIDM ha-
+los in the cored regime; b) orb2, where the subhalo with this
+SIDM model core-collapses; c) orb4, where the subhalo suf-
+fers from extreme mass loss. We find that the main results
+from resolution tests for CDM are still valid for SIDM: a) the
+highest resolution is needed to trace the evolution of stellar
+properties in all orbital cases–the low-resolution case is catas-
+trophically wrong, and the mid-resolution simulation shows
+convergence with the high-resolution; b) the comparison be-
+tween the mid- to high-resolution simulations indicates con-
+vergence in 𝑟half for both the cored SIDM halo in isolation and
+the core-collapsing one on orb2, suggesting that the current
+high-resolution we use for tracing stellar properties should be
+sufficient for the core-collapse regime at least up to our termi-
+nation of the simulation; c) the inner mass 𝑀(< 𝑟half,0) as the
+proposed tracer/proxy for tidal tracks has better convergence
+at lower resolutions compared to the stellar size 𝑟half (e.g., red
+dashed vs. black dashed lines in bottom and top panels); d)
+when the subhalo’s mass loss is extreme, e.g. ≳99.9% in the
+orb4 case in Fig. 4, even the inner mass 𝑀(< 𝑟half,0) can fail to
+remain robust in the mid-resolution run, and high-resolution
+is definitely needed.
+This is relevant for the formation of
+DM-free galaxies that we show in Sec. III B and III C. Note
+that given the non-converging behavior between our mid- and
+high-resolution runs in the extreme orbital mass-loss scenario,
+
+7
+1
+2
+3
+4
+5
+Half light radius
+mdm = m0
+mdm = 5m0
+mdm = 25m0
+mdm = 0.5m0
+10
+1
+100
+Bound stellar mass
+isolated
+orb2
+orb4
+10
+4
+10
+3
+10
+2
+10
+1
+100
+Total subhalo mass
+2
+4
+6
+8
+10
+12
+t [Gyr]
+10
+1
+100
+Mtot within rhalf, 0
+FIG. 4: Convergence test for resolution with
+{𝜎0 = 200, 𝜔= 50} (sub)halos and their galaxies. The panel
+series, colors for different DM resolutions, and line types for
+different orbits are identical to the resolution test figure of
+CDM in Fig. 2. Note that since we have conducted the
+particle mass ratio test for CDM and found equal mass ratio to
+be a better choice, we only test the resolution convergence for
+SIDM here, without further testing the particle mass ratios.
+for this orb4 case with {𝜎0 = 200, 𝜔= 50}, we specifically
+prepare an ultra-high resolution simulation, reducing the par-
+ticle mass further by a factor of two, as shown in the blue lines
+in Fig. 4. The results between our default high-resolution and
+this ultra-high resolution simulations now show good conver-
+gence, indicating that our default choice of 𝑚dm = 𝑚0 in Table
+I is sufficient for the scope of this study. This result, that SIDM
+simulations do not require a higher resolution than CDM, is
+because the self-interaction timescale, 𝑡SI ≈
+𝜆
+𝜎𝑣=
+1
+𝜌(𝜎/𝑚) 𝜎𝑣,
+does not explicitly depend on the particle resolution, unlike
+the gravitational relaxation timescale 𝑡relax ≈
+𝑁𝑝
+8 ln (𝑟half/𝜖soft)
+𝑟half
+𝜎𝑣
+[108].
+Based on the discussion above, we draw the following con-
+clusions from our convergence tests. For dwarf galaxies in
+both CDM and SIDM (cored or core-collapsing) (sub)halos,
+our highest particle resolution “𝑚dm = 𝑚0” (∼107 particles,
+see Table I) is required to trace their evolution accurately.
+Our mid-resolution “𝑚dm = 5𝑚0” (∼2 × 106 particles) shows
+borderline-satisfactory convergence with ∼10% error from
+the high-resolution results for stellar size. An unequal parti-
+cle mass ratio of 1:5 between DM and star particles brings a
+second-order spurious effect on top of insufficient resolution.
+The proposed proxy for tidal track studies [83], the inner mass
+𝑀(< 𝑟half,0) does display increased robustness compared to
+the stellar size 𝑟half when simulated with (slightly) lower res-
+olutions. Therefore, for the rest of this work, we choose the
+highest resolution we tested with equal mass ratio as the default
+choice for all our following production simulations.
+III.
+RESULTS
+In this section, we present the results of satellite galaxy-
+subhalo co-evolution, varying DM models and orbits. We first
+show the time evolution of stellar properties such as the half-
+light radius 𝑟half and the mass-to-light ratio (which we define
+as the inverse of stellar mass fraction) within 𝑟half in Sec. III A
+and Sec.
+III B. Next, we present the tidal evolution tracks
+of these properties, as a function of the total mass enclosed
+in the initial half-light radius 𝑀(< 𝑟half,0) in Sec. III C. As
+we showed in the previous section, this measure of satellite
+evolution is less sensitive to numerical resolution effects. Note
+that the satellites we analyze in Sec. III A to III C are generated
+with the Hernquist profile initial conditions. Comparison of
+the evolution tracks between Hernquist (cuspy) and Plummer
+(cored) stellar initial conditions is included in Sec. III D. We
+also test the robustness of these tidal track results by varying
+the initial stellar mass and size, as shown in section III E.
+A.
+Time evolution: half-light radius
+In this section, we investigate how the size of the satellite
+galaxy 𝑟half evolves in time, as shown in Fig. 5. Through
+the combination of multiple SIDM models (see Fig. 1) and
+orbits (see Table II), we aim to explore the galaxy evolution
+in response to SIDM core-creation to core-collapse processes,
+and also with relatively weaker or stronger tidal/evaporation
+
+8
+effects. The (sub)halos that reaches our core-collapse criterion
+are labelled as ‘c.-c.’ in Fig. 5.
+For the CDM case shown in Fig. 5a, we show differences be-
+tween isolated galaxies and satellites. The isolated galaxy does
+not evolve (except for the < 10% size increase that is caused by
+the lingering spurious diffusion we discussed in the previous
+section), as expected from the equilibrium initial conditions.
+The half-light radii of the galaxies with the largest pericen-
+ters (orb1 and orb2) hardly change, because of the outside-in
+nature of tidal stripping. The tidal radii of these subhalos lie
+outside of the orbits of most of the star particles. For the more
+plunging orbits orb3 and orb4, the stellar mass loss becomes
+more obvious, ∼O(10%), as the mass loss of the whole sub-
+halo becomes extreme (see Fig. 2 for an example, where the
+subhalo has lost > 99% of its initial mass on orb4), and the
+size of the stellar system also shrinks, as expected. Overall for
+these CDM cases, the galaxy half-light radius decreases with
+time, with a monotonically faster pace on orbits with smaller
+pericenters. Note that this behavior is slightly different when
+the star particles are initialized with a cored, Plummer profile,
+for which the tidal heating effect becomes more visible and
+causes the galaxy to puff up first before shrinking. We will
+discuss this further in Sec. III D (see also [83, 111]).
+However, the size evolution of the galaxy in SIDM scenarios
+is more complicated. Below we discuss galaxies in isolated
+SIDM halos first, then move on to satellites. When in isola-
+tion, SIDM halos go through the core-creation to core-collapse
+process without orbital effects. Of the three SIDM models we
+show in Fig. 5, two of the models (6 cm2/g in Fig. 5b and
+{𝜎0 = 200, 𝜔= 50} in Fig.
+5c) have their isolated halos
+(solid lines) still in the core formation state at the end of the
+simulation. The isolated halo with the {𝜎0 = 200, 𝜔= 200}
+(solid line in Fig. 5d) SIDM model reaches our core-collapse
+criterion at 8.7 Gyr (refer to Table III for all core-collapsed
+cases and the corresponding time 𝑡cc). In response, we can see
+that the sizes of the embedded galaxies in these three isolated
+halos (solid lines in Fig. 5b, 5c and 5d respectively) all expand
+first, because the SIDM core-creation makes a less dense halo
+center and shallower potential, and the star particles migrate
+out in adiabatic expansion. The {𝜎0 = 200, 𝜔= 200} isolated
+halo has a faster core-creation stage than the other two SIDM
+models, because the effective cross section for the typical ve-
+locities of our test halo (3×1010𝑀⊙) is larger in this model (see
+Fig. 1), hence the galaxy half-light radius increases faster and
+reaches its maximum at 𝑡∼2 Gyr, while the galaxies in the
+other two models expand slowly to the maximal core toward
+the end of the simulation. After reaching the maximal core,
+for the isolated halo with the {𝜎0 = 200, 𝜔= 200} model,
+the core-collapse process commences and the halo center core
+contracts, during which the galaxy size shrinks in accordance,
+until the halo hits our core-collapse criterion at 𝑡= 8.7 Gyr
+and the simulation is terminated. We find that the galaxy ex-
+pands to ∼1.6 times its initial size 𝑟half,0 at the maximally cored
+stage, and contracts to ∼0.5 time 𝑟half,0 when it is deep in the
+core-collapse phase. The galaxies in the cored isolated halos
+with 6 cm2/g and {𝜎0 = 200, 𝜔= 50} (solid lines in Fig. 5b
+and 5c) also expand ∼1.6 times the original size, but with
+a much longer evolution time. This suggests that there may
+exist universal behavior in the galaxy size evolution during the
+core-expansion stage, as we discuss later in Sec. III C.
+The core-collapsed isolated halo with the {𝜎0 = 200, 𝜔=
+200} model contracts to ∼50% its initial half-light radius, but
+we note that this should be viewed as the lower limit of how
+compact a galaxy can be in this core-collapse case. This is
+because we have to cut off the simulation when a (sub)halo’s
+central density grows to our core-collapse limit (see Sec. II A),
+but in reality the core-collapse should continue to proceed as
+a runaway process. The galaxy should keep contracting be-
+yond that ∼50% point, unless/until the radius scale where
+core-collapse happens is much smaller than the galaxy size.
+Such an example is discussed later in this section. Additional
+techniques/treatments beyond the particle-based N-body sim-
+ulation, such as analytical frameworks [100] or fluid-like simu-
+lations, are needed for later stages of the core-collapse process
+when the scatterings are in the short-mean-free-path regime.
+When SIDM physics within the subhalo is coupled with
+orbital effects from the host halo, the size evolution of the
+galaxy becomes much more complicated. Here we separate
+the discussion of SIDM satellite galaxies into two cases: with
+strong or weak evaporation effects.
+We define the strong
+evaporation case as when the scattering cross section is at
+least ∼O(1) cm2/g at the host halo’s orbital velocity scale
+O(102) ∼O(103) km/s (see Fig. 1 for the evaporation-relevant
+region in the parameter space; see also the Section IV C of
+[12], where the authors varied the cross section only at the
+evaporation-velocity-scale to highlight its strength).
+The weak evaporation case is the case most commonly
+treated in the literature for subhalo evolution (e.g., [9]). For
+the weak evaporation case with {𝜎0 = 200, 𝜔= 50} in Fig.
+5c, the satellite galaxies in the subhalos’ center first follow a
+universal expansion stage caused by SIDM core-creation in the
+halo center, similar to the isolated galaxy-halo case. As dark
+matter is gradually stripped from outer radii, the stellar system
+also starts to lose mass and shrink in size. There are two ma-
+jor differences with respect to the satellites in CDM subhalos:
+the maximum galaxy size before stellar mass loss is larger in
+SIDM cases, because of the SIDM core formation; and the
+speed of size shrinking is faster, because the SIDM core has a
+shallower potential and is less resistant to tidal stripping. As
+a result, we can see the time evolution curves of galaxy 𝑟half
+in Fig. 5c still line up in monotonic order of how close the
+orbits are from the host center, but with a larger spread than the
+CDM case in Fig. 5a. Additionally, the {𝜎0 = 200, 𝜔= 50}
+subhalos on orb2 and orb3 reach the core-collapse stage by
+the end of the simulation, causing contraction in the center of
+the satellite galaxy and thus accelerating the size shrinking in
+addition to the contribution of mass loss. The orb2 and orb3
+subhalos core-collapse faster than the isolated or orb1 subhalo,
+because of the tidal stripping acceleration of the core-collapse
+process [11, 12, 56, 57]. The orb2 and orb3 subhalos also core-
+collapse faster than the orb4 one, which inhabits an even closer
+orbit and experiences stronger tidal stripping. This seemingly
+counter-intuitive, non-monotonic result is because tidal heat-
+ing also becomes more significant with closer orbits, injecting
+heat into the subhalo center and thereby countering the core-
+collapse process. On orb4, the tidal-heating-deceleration out-
+
+9
+weighs the tidal-stripping-acceleration (see Fig. 6 of [11] for
+more examples and discussion). This delay in core-collapse
+for the orb4 case causes its mass loss to become large enough
+that the core never collapses, and it eventually results in a DM-
+deficient galaxy (see Sec. III B for the mass-to-light ratio).
+When the subhalos are orbiting in a strong evaporation field,
+such as the 6 cm2/g and {𝜎0 = 200, 𝜔= 200} models (Fig.
+5b and 5d), we observe a larger diversity in the size evolution
+history of satellite galaxies.
+Following the initial increase
+in size caused by SIDM core-creation, some of the galaxies
+show sharp periodic fluctuations in 𝑟half (orb1 and orb2 in
+Fig. 5b and orb2 in Fig. 5d). This is because evaporation
+is strongest at pericenters (see Fig. 9 of [11] for an example
+of the correlation between evaporation strength and orbital
+distance), which leads to a nearly globally uniform DM mass
+loss from the whole subhalo including in the subhalo center.
+This is unlike tidal stripping, which ‘peels’ DM layer by layer.
+During pericenter passages, the subhalo abruptly loses DM
+mass in its center, and the stellar particles migrate out, leading
+to larger 𝑟half than in the isolated cases.
+This explains the
+step-function-like pattern for orb1 in Fig. 5b, with each abrupt
+increase in half-light radius arising from a pericenter passage.
+For more plunging orbits in a strong evaporation field, the
+stellar size does not show such steady step-like features, only
+a temporary evaporation-induced size-boost followed by size-
+shrinking.
+For example, for orb2 in Fig.
+5b and 5d, the
+evaporation mass loss is even more drastic than orb1 in Fig.
+5b, and the stellar system starts to be stripped by the tidal field
+soon, hence the drop in 𝑟half after two pericenter passages.
+For even more plunging orbits, orb3 and orb4, we can see in
+Fig. 5b and 5d that the satellite galaxy only experiences one
+peak (first pericenter) in 𝑟half from the evaporation size boost,
+before it decreases in size due to stellar mass loss. The speed
+of this size decrease slows down as 𝑟half drops to ∼1/2 of
+the initial value 𝑟half,0. At this point, the DM component in
+the subhalo is nearly all lost and the DM-evaporation has no
+further influence, effectively producing a DM-free galaxy (see
+more discussion in Sec. III B) which becomes more resistant
+to tidal stripping as the outer stars are stripped and only the
+relatively dense and cuspy distribution of stars in the galaxy
+center remains. A supplementary figure that correlates the
+co-evolution of 𝑟half, bound stellar mass and bound total mass
+is attached in Appendix C as Fig.
+18, using the 6 cm2/g
+satellites as an exmple.
+Note that Plummer satellites have
+slightly different evolution histories, as we will discuss in Sec.
+III D.
+The path to core-collapse in subhalos can be diverse and
+complicated, because of the interaction with various host ef-
+fects, as discussed in [11] (see their Fig. 8-11 for examples).
+Next we analyze the corresponding evolution of stellar size
+for these (sub)halos that reach our core-collapse criteria by
+the end of the simulation. There are in total four such cases,
+which we label as ‘c.-c.’ in Fig. 5 and list in Table III: orb2
+and orb3 for {𝜎0 = 200, 𝜔= 50} (weak evaporation), and iso-
+lated and orb1 for {𝜎0 = 200, 𝜔= 200} (strong evaporation).
+In most of these core-collapsed cases, we observe significant
+speed-up in the reduction of 𝑟half, in response to the runaway,
+self-accelerating core-collapse process. The exception is the
+orb3 case of {𝜎0 = 200, 𝜔= 50}, where the runaway fea-
+ture is less obvious. To investigate this exception, we plot the
+DM density profiles of these four core-collapsed subhalos at
+their last snapshots (each corresponds to the 𝑡cc in Table III)
+in Fig. 6a. We can see that the innermost density bins for all
+these (sub)halos have indeed grown to be denser than the ini-
+tial CDM profile, which confirms the core-collapse. However,
+the radial scale that is relevant for the core-collapse physics
+can be different among different cases. For the three cases in
+which we observe the sharp reduction of 𝑟half, their DM core
+size is comparable to 𝑟half. Thus, as the core collapses, the
+stellar component also become more compact because stars
+are gravitationally entrained with the DM. By contrast, the
+orb3 case of {𝜎0 = 200, 𝜔= 50} has a core size of order
+𝑟∼10−2 kpc, about an order of magnitude smaller than the
+stellar size. The distribution of the outer stars is thus not af-
+fected by the DM core contraction happening at much smaller
+radii. This difference in scale arises from mass loss, as shown
+in Fig. 6b. This halo loses much more mass during the or-
+bital evolution than in the other three cases, before it eventually
+core-collapses. Therefore, from this set of comparisons we can
+conclude that when core-collapse happens in a (sub)halo, there
+can be corresponding features reflected in the evolution of the
+embedded galaxy, such as the sharply decreasing 𝑟half (or the
+sharply increasing mass-to-light ratio, as we will show in the
+next section), but only when the radius scale of core-collapse
+is comparable to or larger than the size of the galaxy.
+Here we briefly summarize the main takeaways that we find
+in the time evolution of satellites’ 𝑟half: a) as the SIDM core
+forms and expands, 𝑟half gradually increases to a similar maxi-
+mal amount for all the SIDM models and orbits we have tested
+(when host-evaporation is not present); b) in a non-negligible
+evaporation field, the satellite galaxy further receives a boost
+in size, which is correlated with pericenter passages; this boost
+in 𝑟half may be only temporary, and turn into a sharp decrease
+of 𝑟half later, if the evaporation mass-loss is significant; c) the
+reduction of 𝑟half can be caused by either core-collapse or stel-
+lar mass loss, with different shapes of the evolution curves:
+for the mass loss cases, the rate of decrease in 𝑟half gradually
+slows down and eventually forms stable DM-free galaxies; for
+the core-collapse cases, the rate of decrease in 𝑟half is accel-
+erated over time, unless there is significant mass loss in the
+inner halo that results in the core-collapse region being much
+smaller than the galaxy size.
+B.
+Time evolution: mass-to-light ratio
+In this section, we focus on the time evolution of the satel-
+lite’s mass-to-light-ratio as another possible observable which
+has direct relevance to recently discovered DM-deficient galax-
+ies [69, 70, 112] and DM-dominated ultra-faint dwarfs [113].
+We define the mass-to-light ratio as the ratio between the total
+mass (DM+stars) and the stellar mass within the 𝑟half of the
+satellite galaxy.
+For the CDM (sub)halos in Fig. 7a, we observe a trend simi-
+lar to the evolution of 𝑟half: the galaxy system in isolation stays
+at the initial state, which is expected given our numerical con-
+
+10
+2
+4
+6
+8
+10
+12
+t [Gyr]
+0.5
+1.0
+1.5
+2.0
+2.5
+3.0
+3.5
+4.0
+Half light radius
+CDM
+isolated
+orb1
+orb2
+orb3
+orb4
+isolated
+orb1
+orb2
+orb3
+orb4
+(a)
+2
+4
+6
+8
+10
+12
+t [Gyr]
+0.5
+1.0
+1.5
+2.0
+2.5
+3.0
+3.5
+4.0
+Half light radius
+6 cm2/g
+isolated
+orb1
+orb2
+orb3
+orb4
+orb1 pericenter
+isolated
+orb1
+orb2
+orb3
+orb4
+(b)
+2
+4
+6
+8
+10
+12
+t [Gyr]
+0.5
+1.0
+1.5
+2.0
+2.5
+3.0
+3.5
+4.0
+Half light radius
+c.-c.
+c.-c.
+0 = 200,
+= 50
+isolated
+orb1
+orb2
+orb3
+orb4
+isolated
+orb1
+orb2
+orb3
+orb4
+(c)
+2
+4
+6
+8
+10
+12
+t [Gyr]
+0.5
+1.0
+1.5
+2.0
+2.5
+3.0
+3.5
+4.0
+Half light radius
+c.-c.
+c.-c.
+0 = 200,
+= 200
+isolated
+orb1
+orb2
+orb3
+orb4
+isolated
+orb1
+orb2
+orb3
+orb4
+(d)
+FIG. 5: The time evolution of the stellar half-light radius 𝑟half, normalized to its initial value, for the galaxies initialized with a
+Hernquist distribution. From a) to d) we show four DM models separately: CDM (black), constant cross section 6 cm2/g (red),
+{𝜎0 = 200, 𝜔= 50} (pink) and {𝜎0 = 200, 𝜔= 200} (purple). Different line types represent different orbits, as labelled in each
+panel’s legend. We also label the corresponding (sub)halos that reach our core-collapse threshold by 𝑡= 13.1 Gyr with the
+‘c.-c’ notation in figures. In panel b) we also denoted the pericenter passage time of the orb1 satellites.
+vergence tests in Sec. II B, and the satellites have mass-to-light
+ratio declining over time, at a faster pace for more plunging
+orbits from orb1 to orb4. This is because as star particles are
+gradually peeled off, the satellite’s 𝑟half, within which we cal-
+culate the mass-to-light ratio, shrinks to smaller radii (see Fig.
+5a for a recap), where the stellar density contributes more to
+the total mass density than at larger radii.
+The stellar component in SIDM systems always evolves
+with time, regardless of whether or not the system is isolated.
+During the core-creation phase, both the DM and stellar com-
+ponents in the center expand to larger radii, and also 𝑟half
+increases. The compound result of these effects appears to
+be a 20 ∼30% drop in the mass-to-light ratio within 𝑟half, as
+we can see in the solid lines in Fig. 5b to 5d. The isolated
+galaxies whose SIDM halos do not core-collapse by the end
+of the simulation maintain the mass-to-light ratio at the core-
+creation stage (solid lines in Fig. 5b and 5c), while in the
+core-collapsing case (solid line in Fig. 5d), we can see that
+
+11
+10
+2
+10
+1
+100
+101
+r[kpc]
+102
+104
+106
+108
+1010
+dm[M
+/kpc3]
+Initial Condition
+0 = 200,
+= 200
+0 = 200,
+= 50
+isolated
+orb1
+orb2
+orb3
+(a)
+101
+t[Gyr]
+108
+109
+1010
+M200c[M
+]
+0 = 200,
+= 200
+0 = 200,
+= 50
+isolated
+orb1
+orb2
+orb3
+(b)
+10
+2
+10
+1
+100
+101
+r[kpc]
+102
+104
+106
+108
+1010
+*[M
+/kpc3]
+Initial Condition
+0 = 200,
+= 200
+0 = 200,
+= 50
+isolated
+orb1
+orb2
+orb3
+(c)
+2
+4
+6
+8
+10
+12
+t [Gyr]
+0.5
+1.0
+1.5
+2.0
+2.5
+3.0
+3.5
+4.0
+Half light radius
+isolated
+orb1
+orb2
+orb3
+isolated
+orb1
+orb2
+orb3
+(d)
+FIG. 6: For each of the four (sub)halos that we find core-collapsed (same as the ‘c.-c.’ labelled ones in Fig. 5): a) the DM
+density profile at the core-collapse time; b) time evolution of the bound mass; c) the stellar density profile at the core-collapse
+time; d) the time evolution of (normalized) half-light radius, which is the same as in Fig. 5 but replotted here for convenience.
+In a) and c) we also show the corresponding initial conditions in gray color, as well as the half-light radii in vertical lines. The
+colors representing SIDM models and line types for orbits are the same as in previous figures.
+the mass-to-light ratio is sharply increasing as core-collapse
+happens. This is the result of DM collapse toward the halo
+center during this runaway process. Stars are gravitationally
+entrained toward the center, but in a less intensive manner
+than the DM, which we previously saw in the half-light radius
+evolution (see the previous section).
+For the SIDM subhalos that remain cored, the satellite mass-
+to-light ratio decreases over time as 𝑟half shrinks (see Fig.
+5c) when the evaporation effect is weak (Fig.
+7c).
+When
+the evaporation is non-negligible (orb1 to orb4 in Fig.
+7b
+and orb2 to orb4 in 7d), the reduction of mass-to-light ratio
+becomes even faster as DM is evaporated from the center of
+the subhalos. Thus we see more efficient formation of DM-
+deficient galaxies in Fig. 7b and 7d than Fig. 7c, with the
+mass-to-light ratio falling below 2 (gray lines). Furthermore,
+the satellites under strong evaporation eventually become DM-
+free, as the mass-to-light ratio falls to 1, and are completely
+bound by the self-gravity of stellar components. Note that,
+in our simulations, this is a result only for galaxies with a
+Hernquist initial profile, which is cuspy enough to be self-
+
+12
+2
+4
+6
+8
+10
+12
+t [Gyr]
+100
+101
+Mass-to-light ratio ( < rhalf)
+M * = MDM
+CDM
+isolated
+orb1
+orb2
+orb3
+orb4
+isolated
+orb1
+orb2
+orb3
+orb4
+(a)
+2
+4
+6
+8
+10
+12
+t [Gyr]
+100
+101
+Mass-to-light ratio ( < rhalf)
+M * = MDM
+6 cm2/g
+isolated
+orb1
+orb2
+orb3
+orb4
+isolated
+orb1
+orb2
+orb3
+orb4
+(b)
+2
+4
+6
+8
+10
+12
+t [Gyr]
+100
+101
+Mass-to-light ratio ( < rhalf)
+M * = MDM
+c.-c.
+c.-c.
+0 = 200,
+= 50
+isolated
+orb1
+orb2
+orb3
+orb4
+isolated
+orb1
+orb2
+orb3
+orb4
+(c)
+2
+4
+6
+8
+10
+12
+t [Gyr]
+100
+101
+Mass-to-light ratio ( < rhalf)
+M * = MDM
+c.-c.
+c.-c.
+0 = 200,
+= 200
+isolated
+orb1
+orb2
+orb3
+orb4
+isolated
+orb1
+orb2
+orb3
+orb4
+(d)
+FIG. 7: Similar to Fig. 5, but the time evolution of the mass-to-light ratio within 𝑟rhalf for the galaxies initialized with a
+Hernquist distribution. The mass-to-light ratio is defined as the ratio between the total mass (star+DM) and the stellar mass
+(within the assigned aperture). We label the corresponding (sub)halos that reach our core-collapse threshold by 𝑡= 13.1 Gyr
+with the ‘c.-c’ notation in figures. We also mark the horizontal line of mass-to-light ratio = 2, or 𝑀∗(< 𝑟half) = 𝑀DM(< 𝑟half),
+below which the stellar component outweighs DM, and the satellite can be viewed as a DM-deficient galaxy. When
+mass-to-light ratio drops to ∼1, the satellite is nearly DM-free and becomes a self-bound galaxy/star-cluster.
+bound against the tidal field. We will see in Sec. III D and Fig.
+10c that galaxies with the Plummer stellar profiles will rapidly
+dissolve in the host once their DM is depleted.
+For the SIDM subhalos that undergo core-collapse, the
+mass-to-light ratio within 𝑟half decreases during the core-
+creation then rises as core-collapse is triggered, similar to
+the core-collapsed halos in isolation, in most cases. The un-
+usual case that we discussed in the previous section, orb3 for
+{𝜎0 = 200, 𝜔= 50}, still presents peculiar behavior in the
+mass-to-light ratio, which does not have the sharp increase
+near core-collapse that we see for the other core-collapsing
+subhalos.
+This is again because the radius scale on which
+core-collapse physics is happening for this subhalo is much
+smaller than 𝑟half, as we have shown in Fig. 6. Hence, the
+core-collapse process of this perculiar satellite is not revealed
+in the mass-to-light ratio.
+We briefly summarize our findings in the study of the mass-
+to-light ratio as follows: a) the mass-to-light ratio within 𝑟half
+
+13
+decreases during the SIDM core-formation stage; b) both CDM
+and cored SIDM subhalos have the mass-to-light ratio deceas-
+ing as they lose mass in the tidal field. This decrease can be
+strengthened by a non-negligible evaporation field. c) the only
+case where we find an increasing mass-to-light ratio is when
+core-collapse is triggered. Note that the results we present
+here are for the galaxies initialized with a Hernquist profile.
+We discuss the Plummer profile galaxies further in Sec. III D
+and show their mass-to-light ratio evolution in Fig. 21.
+C.
+Tidal tracks
+In this section, we analyze the evolution of satellite galax-
+ies’ size, mass-to-light ratio, and radial velocity dispersion as
+a function of the total mass enclosed in the initial half-light
+radius 𝑟half,0 instead of time. We choose this metric for two
+reasons: First, we can have a better view of the correlation/co-
+evolution of galaxy properties and SIDM physics, as the change
+in total mass at small radii is mainly caused by DM evolution.
+Second, using our high-resolution, controlled simulations, we
+can examine the potential universality of these “tidal evolution
+tracks”, and thus the possibility of building a relation between
+various galaxy properties and 𝑀(< 𝑟half,0), with the latter be-
+ing less demanding in resolution.
+Such parametrized tidal
+tracks can then be used in larger-scale simulations with lower
+resolution (e.g., cosmological simulations) or analytical frame-
+works [114–116] to anchor/predict the evolution of galaxies.
+These tidal-track types of studies have been conducted in the
+past for satellite galaxies with CDM [81–83, 85, 117, 118],
+with the parametrized relations applied in CDM cosmologi-
+cal simulations to infer statistics of dwarf galaxies [84, 85].
+Exploration of these tidal tracks is of even more importance
+for SIDM, as SIDM simulations incur a higher computational
+cost, especially in scenarios of core-collapse. In this section,
+we showcase a few representative examples of tidal-tracks of
+SIDM satellites in Fig. 8, with a more complete version of all
+simulations shown in Appendix B. We defer a more detailed
+analysis including the parameterization of these tidal tracks to
+future work, where a larger set of simulations will be needed.
+In Fig. 8a, we show the evolution track of 𝑟half. All satellites
+start from the same initial condition labelled by the red dot, at
+(1, 1), since both 𝑟half and the enclosed mass within the initial
+half-light radius 𝑀(< 𝑟half,0) are normalized to their initial
+values. All satellites then share a universal first-stage path in
+the 𝑟half vs. 𝑀(< 𝑟half,0) plane, as highlighted by the thick
+black arrow, showing the self-similarity of SIDM satellites
+during the core-creation phase.
+Afterwards, these satellites bifurcate into either the cored
+branch (green), where eventually 𝑟half decreases and 𝑀(<
+𝑟half,0) decreases; or core-collapse branch (cyan), where even-
+tually 𝑟half decreases and 𝑀(< 𝑟half,0) increases. Depending
+on the evaporation strength, satellites on the cored branch
+can expand further during core-creation and experience an in-
+crease in 𝑟half before decreasing due to stellar mass loss, as
+we highlight with the ‘evaporation region’ in Fig. 8a. This
+evaporation-boosted size corresponds to the peaks in 𝑟half in
+Fig. 5b and 5d.
+Satellites on the core-collapse (cyan) branch reverse the
+evolution direction after reaching the maximal core, marching
+towards the lower-right corner of the 𝑟half vs. 𝑀(< 𝑟half,0)
+diagram. Of all the core-collapsing satellites (see Table III), we
+notice that the isolated case always has the largest 𝑀(< 𝑟half,0),
+since it experiences no mass loss and has the largest central
+region for core-collapse (see also Fig.
+6a).
+Moreover, in
+this diagram, this isolated satellite’s core-collapsing phase is
+nearly completely overlapping with its core-creation phase.
+This suggests that the stars’ response to the DM evolution can
+indeed be modelled as an adiabatic-expansion-then-adiabatic-
+contraction process in future analytical works (see also Zavala
+et al in prep.). The timescales are O(1) Gyr and O(10) Gyr
+for SIDM core-formation and core-collapse respectively, while
+the typical orbital timescales for stars are 2𝜋𝑟half/𝜎𝑣∼O(0.1)
+Gyr, further supporting the feasibility of analytically modeling
+this response process.
+The remainder of the satellites on the core-collapse branch
+are aligned from right to left in the ascending order of mass
+loss within 𝑟half,0. The two core-collapsed ‘typical’ subhalos
+next to the isolated one (the two middle cyan lines in Fig. 8a)
+behave similarly to it, with greater inner total mass and smaller
+𝑟half than the initial condition at the end of the evolution.
+For the most extreme case of mass loss where the subhalo
+still manages to core-collapse, the left-most cyan line in Fig.
+8a which corresponds to orb3 of {𝜎0 = 200, 𝜔= 50}, we
+find 𝑀(< 𝑟half,0) not increasing as drastically as other core-
+collapsing cases. Again, this is because the radius scale of
+core-collapse is much smaller than 𝑟half,0, as shown in Fig.
+6a. Just next to this left-most cyan line in Fig. 8a, we find a
+satellite (orb3 of {𝜎0 = 100, 𝜔= 50}, plotted with the gray
+line) that does not reach our core-collapse criterion by the
+end of the simulation, but also behaves unlike other ‘normal’
+cored satellites that land in the ‘DM-deficient galaxies’ region.
+Instead, it appears rather similar to the left-most cyan line (orb3
+of {𝜎0 = 200, 𝜔= 50}), still proceeding with an early core-
+collapse phase even with a large amount of mass loss, and
+may either eventually core-collapse given a longer evolution
+time, or further lose DM and become a DM-deficient galaxy.
+We thus consider its evolutionary state ‘undetermined’. This
+suggests that this marginal case of satellite may be near the
+boundary that separates the cored branch and the core-collapse
+branch in the diagram of Fig. 8a.
+We show the evolution track of the star particles’ radial
+velocity dispersion within 𝑟half in Fig.
+8b.
+Compared to
+the tidal evolution track of 𝑟half, we can see that the main
+features are similar: a universal core-creation phase for all
+satellites, and then the bifurcation into the cored branch or
+the core-collapse branch.
+A major difference, however, is
+that the overall diversity in the tidal tracks of the velocity
+dispersion appears to be far smaller than that of the 𝑟half, with
+the cored branch and core-collapse branch nearly aligned along
+the same line. This is because the velocity dispersion is more
+directly determined by the enclosed mass. We also find that
+the (sub)halos on the core-collapse branch all have a late-
+time steepening in their slope in the velocity dispersion vs.
+enclosed mass plane in Fig. 8b. This is because the aperture
+for measuring velocity dispersion, 𝑟half, gets noticeably smaller
+
+14
+10
+3
+10
+2
+10
+1
+100
+101
+M( < rhalf, 0)/M( < rhalf, 0, t = 0)
+0.3
+1.0
+3.0
+rhalf/rhalf, 0
+isolated
+subhalos
+Initial condition
+evaporation
+DM deficient satellites
+Core-creation phase
+Cored track
+Core-collapse track
+Undetermined by 13.1 Gyr
+CDM orb4
+(a)
+10
+3
+10
+2
+10
+1
+100
+101
+M( < rhalf, 0)/M( < rhalf, 0, t = 0)
+0.3
+1.0
+radial velocity dispersion ( < rhalf)
+isolated
+subhalos
+Initial condition
+DM deficient satellites
+Core-creation phase
+Cored track
+Core-collapse track
+Undetermined by 13.1 Gyr
+CDM orb4
+(b)
+10
+3
+10
+2
+10
+1
+100
+101
+M( < rhalf, 0)/M( < rhalf, 0, t = 0)
+100
+101
+Mass-to-light ratio ( < rhalf)
+isolated
+subhalos
+Initial condition
+DM deficient satellites
+Core-creation phase
+Cored track
+Core-collapse track
+Undetermined by 13.1 Gyr
+CDM orb4
+(c)
+10
+3
+10
+2
+10
+1
+100
+101
+M( < rhalf, 0)/M( < rhalf, 0, t = 0)
+100
+101
+102
+103
+Mass-to-light ratio ( < rvir)
+isolated
+subhalos
+Initial condition
+DM deficient satellites
+(d)
+FIG. 8: Tidal evolution tracks of: a) the (normalized) half-light radius 𝑟half; b) the (normalized) stellar radial velocity dispersion
+within 𝑟half; c) the mass-to-light ratio within 𝑟half; d) the the mass-to-light ratio within 𝑟200c of the (sub)halo. The x-axis
+tracer/anchor used for these tidal tracks is the total mass within the initial 𝑟half, thus 𝑀(< 𝑟half,0), which is also normalized to its
+initial value. The initial condition in each diagram is labelled by a red dot. The black arrow represents a universal first stage of
+stellar component evolution during the SIDM core-creation phase. The green and cyan lines are evolution tracks of satellite
+galaxies that eventually fall into the cored or core-collapsed branches respectively. The black stars show the tidal track of the
+CDM satellite on orb4, our most plunging orbit. We also note the regions corresponding to the evaporation-induced size-boost
+and the formation of DM-deficient galaxies/star-clusters in the figure. Tidal tracks in this figure are from selected satellite
+galaxies in our simulations, for the purpose of demonstrating the main features.
+than 𝑟half,0, the aperture for enclosed mass in the x-axis. As
+core-collapse reaches late stages, the enclosed mass grows
+faster at the smaller radius 𝑟half than at the larger, fixed radius
+𝑟half,0. Hence, the velocity dispersion within 𝑟half, as a proxy
+of 𝑀(<half), grows faster than 𝑀(<half,0) in the late stages of
+core collapse.
+We show the evolution track of the satellites’ mass-to-light
+ratio within 𝑟half in Fig. 8c and within the (sub)halo’s 𝑟200c
+(only the bound materials are counted) in Fig. 8d respectively.
+The former is more relevant for observations, while the latter
+more relevant for halo-wide statistics that do not depend on
+accurate measurement of the stellar 𝑟half and can thus be more
+robustly measured even in lower-resolution simulations. In
+Fig. 8c, we find a similar trend as for the tidal track of ve-
+locity dispersion in Fig. 8b. After the universal core-creation
+phase, the mass-to-light ratio of the cored subhalos monoton-
+ically decreases until the floor of forming DM-free galaxies
+is reached. This is because the mass loss rate of cored DM
+near the center of subhalos is higher than that of stars, with
+or without evaporation, plus 𝑟half continues to shrink to where
+
+15
+the mass-to-light ratio is initially lower. In the core-collapsing
+(sub)halos, on the contrary, the DM concentrates towards the
+center at a much faster rate than the stars, with the latter only
+dragged to the center as a response to the deepening gravita-
+tional potential caused by DM. Thus, the mass-to-light ratio
+grows monotonically as core-collapse proceeds.
+As shown in Fig. 8d, the mass-to-light ratio within 𝑟200c,
+however, behaves differently. This is because the mass-to-light
+ratio within the tidal radius is less directly correlated with the
+mass change in the inner radius 𝑟half,0. There is no longer a
+universal first stage of evolution during core creation. The
+mass-to-light ratio within 𝑟200c for an isolated system remains
+at the initial value since there is no mass loss on the whole-halo
+scale. For subhalos, the mass-to-light ratio starts to drop as
+the tidal (and evaporation) effects kick in and DM is stripped
+away, when the subhalos can be at different stages in the core-
+creation phase. Thus the subhalos’ tracks in Fig. 8d have
+different “peeling off” points from the isolated case of the
+top horizontal line, which mark the corresponding inner mass
+𝑀(< 𝑟half,0) when tidal effects start to become significant. The
+cored satellites then evolve to become DM-deficient galaxies,
+for which the mass-to-light ratio for the whole subhalo is ∼1,
+similar to Fig. 8c. For the core-collapsing subhalos, as core-
+collapse begins and inner mass 𝑀(< 𝑟half,0) increases, the
+mass-to-light ratio within 𝑟200c does not increase as in the case
+for small radii < 𝑟half, but keeps decreasing. This is because
+the satellites/subhalos always lose mass regardless of whether
+core-collapse happens. Comparing Fig. 8c and 8d, we can see
+that our proposed proxy or ‘anchor’ for fitting/parameterization
+of tidal tracks, the enclosed mass within the satellites’ initial
+𝑟half, does show a tight correlation with properties of stellar
+components which are generally located at similar radii, but is
+not an ideal tracer for the halo-wide properties at large radii.
+Or, vice versa, halo-wide properties such as the total mass loss,
+which has been used as the tracer in modelling CDM subhalos
+[81, 82, 118, 119], may not be a good tracer for what happens
+in the inner subhalo (thus including the satellite galaxies) in
+SIDM cases.
+Apart from the evolution tracks of SIDM (satellite) dwarfs,
+we have also shown the corresponding tidal tracks of the CDM
+satellite on our most plunging orbit orb4 as black stars in Fig.
+8a to 8c. From the much larger span of SIDM stellar properties
+than CDM in all three panels, we can again emphasize on the
+larger diversity of (satellite) dwarfs in SIDM models. The
+universality in CDM tidal tracks, as previously reported in
+[81, 83, 117], thus also display different behaviors from the
+universality we find in SIDM dwarfs.
+In summary, this section showcases the tidal evolution tracks
+of SIDM dwarf satellites. Despite the large span in the values
+of satellites’ stellar properties during the evolution (diversity),
+we find self-similar behaviors in their tidal tracks that can
+potentially be parametrized into fitted relations (universality).
+Each tidal track bifurcates into two branches, depending on
+whether the DM (sub)halo eventually core-collapses or not.
+For the tidal tracks of the mass-to-light ratio and stellar velocity
+dispersion within 𝑟half, we find the two branches are tightly
+aligned along a single line. For the tidal tracks of the stellar
+size 𝑟half, the shapes of the two branches are less self-similar
+and additional parameters must be introduced in future works
+of parameterization: evaporation strength for the cored branch
+and inner mass loss for the core-collapse branch.
+D.
+Hernquist vs. Plummer initial conditions for stars
+In previous subsections, we focused on analyzing systems
+initialized with a cuspy, Hernquist stellar density profile. In
+this section, we explore differences in results produced by
+Plummer initial distributions of stars. Observationally, dwarf
+galaxies are found to have either cored or cuspy stellar density
+profiles [120, 121], hence our choice of simulating both Hern-
+quist and Plummer initial conditions for stars aims to cover
+both of these populations. Note that there is a known, intrinsic
+issue with setting up the initial condition of a Plummer galaxy
+embedded in an NFW halo in equilibrium, which we discuss
+in more detail in Appendix A, including our current solution
+to the problem.
+In Fig.
+9, we show the evolution of density profiles of
+both DM and stellar components of a galaxy-halo system with
+SIDM model {𝜎0 = 200, 𝜔= 200}, for both Hernquist and
+Plummer galaxies. From Fig. 9a to 9c, we show the evolution
+from the initial conditions to core-creation, then core-collapse
+for isolated galaxies. The Hernquist galaxy is always cuspier
+and more concentrated than the Plummer galaxy throughout
+the dark halo evolution, although the half-light radii are nearly
+equal despite the difference in profile shape.
+Differences in the evolution of the stellar component are
+significantly more pronounced for satellites. As the DM is
+gradually stripped away by tidal forces and evaporation, the
+distribution of the stellar components determines whether the
+galaxy can survive in the tidal field (see also [122]).
+The
+Hernquist galaxies, as we discussed in previous sections, are
+able to become self-bound due to their cuspy potentials even
+after the DM is completely removed, thus forming DM-free
+galaxies. Galaxies with cored Plummer stellar distributions,
+which tend to be more common among low-mass dwarfs that
+are less baryon-dominated [120], do not have such a cuspy
+inner density to counter the tidal field, and will be dissolved
+in the host halo once their DM component is depleted. We
+show a comparison of the remnants of Hernquist (at the end of
+simulation) and Plummer galaxies (at the last snapshot before
+complete dissolution) that are after DM-depletion in Fig. 9d.
+We next examine differences in the evolution of satellite
+properties resulting from the to a Plummer profile instead of
+the default Hernquist profile in generating stellar components,
+as summarized below and in Fig. 10:
+• More visible tidal heating (CDM) In Fig. 10a, we show
+the time evolution of 𝑟half for satellite galaxies in CDM
+subhalos, choosing the most plunging orbit orb4 to high-
+light the effects. For the Hernquist case, 𝑟half slowly de-
+creases with time, as the star particles are stripped away.
+For the Plummer case, however, we can see that 𝑟half first
+increases before decreasing again. This is because tidal
+heating causes the Plummer satellite galaxy to puff up.
+The same heating also applies to the Hernquist galaxy,
+but the puffing-up is far less prominent because of its
+
+16
+10
+2
+10
+1
+100
+101
+r[kpc]
+102
+104
+106
+108
+1010
+[M
+/kpc3]
+IC
+DM (Hernquist stars IC)
+Stars (Hernquist stars IC)
+DM (Plummmer stars IC)
+Stars (Plummer stars IC)
+(a)
+10
+2
+10
+1
+100
+101
+r[kpc]
+102
+104
+106
+108
+1010
+[M
+/kpc3]
+core-creation
+DM (Hernquist stars IC)
+Stars (Hernquist stars IC)
+DM (Plummmer stars IC)
+Stars (Plummer stars IC)
+(b)
+10
+2
+10
+1
+100
+101
+r[kpc]
+102
+104
+106
+108
+1010
+[M
+/kpc3]
+core-collapsed
+DM (Hernquist stars IC)
+Stars (Hernquist stars IC)
+DM (Plummmer stars IC)
+Stars (Plummer stars IC)
+(c)
+10
+2
+10
+1
+100
+101
+r[kpc]
+102
+104
+106
+108
+1010
+[M
+/kpc3]
+DM-free galaxies
+Stars (Hernquist stars IC)
+Stars (Plummer stars IC)
+(d)
+FIG. 9: Comparison of Hernquist vs. Plummer galaxies’ DM and stellar density profiles. Panels a) to c) show the snapshots for:
+initial conditions, core-creation stage and core-collapsed stage of the isolated galaxy-halo system with SIDM model
+{𝜎0 = 200, 𝜔= 200}. Panel d) shows the final remnant of cored subhalos when the DM components are fully depleted by the
+tidal field—the Hernquist galaxy can remain self-bound while the Plummer galaxy is unstable in the tidal field. The solid lines
+show DM density profiles and the dashed lines show stellar density. The lines in blue show satellites generated with a Hernquist
+profile, while the yellow lines show Plummer cases.
+cuspy central potential. This tidal heating effect is also
+reported in [83], whose results are in good agreement
+with our Fig. 10a. Note that here we use the CDM case
+to demonstrate the tidal heating effect, because for SIDM
+there is additional physics causing 𝑟half to increase, the
+adiabatic expansion by core-creation and heat injection
+by evaporation, which can be more significant than tidal
+heating in puffing up the galaxy.
+• Increased maximal boost on 𝑟half Because the Plummer
+satellite has a shallower central potential, its stellar com-
+ponent is less bound and receives a larger boost in 𝑟half
+by the evaporation field compared to the Hernquist case.
+In Fig, 10b and 10d, we find that the maximum of 𝑟half
+is about six to eight times the initial value, a factor of
+two boost from the Hernquist case.
+• Not forming stable DM-free galaxies Since the Plummer
+galaxy has a much shallower stellar potential, it is not
+able to hold itself together in a strong tidal field after the
+DM is almost entirely stripped, and thus cannot form
+stable DM-free galaxies, in contrast to galaxies with
+Hernquist stellar profiles.
+We can see the complete
+dissolution of the Plummer galaxies in the density plot
+Fig.
+9d, and also the time-evolution plots Fig.
+10b
+and 10c, where the dissolved Plummer satellites are
+missing from halo finders (thus are no longer present in
+the simulation).
+• Longer time to core-collapse As has been reported in
+
+17
+[50, 74, 76, 123], the existence of a baryonic poten-
+tial can accelerate the core-collapse process of SIDM
+(sub)halos.
+This acceleration is more significant for
+Hernquist galaxies that are cuspier and have deeper po-
+tentials than Plummer galaxies.
+Hence, we observe
+a comparatively longer core-collapse time 𝑡cc in the
+Plummer cases, especially for those that intrinsically
+collapse later and thus rely more on the acceleration
+effect from stars, such as the orb2 and orb3 cases of
+{𝜎0 = 200, 𝜔= 50} in Table III.
+E.
+Tidal tracks with varying initial stellar mass or size
+In Section III C, we showed the tidal evolution tracks of
+a single satellite galaxy evolving with different combinations
+of SIDM models and orbits, but with the same initial stellar
+properties. In this section, we vary the initial conditions of the
+galaxy with three test cases: doubling the stellar mass 𝑀∗while
+using the default initial stellar size 𝑟half; or fixing 𝑀∗while
+changing 𝑟half by a factor of 2 or 1/2. The aim of this section
+is to test the robustness of the tidal tracks that we show in Fig.
+8. Here we show to what extent the previously demonstrated
+universality in tidal tracks is affected when studying different
+galaxies, which is necessary to understand before applying
+the tidal track relations in a more realistic/diverse context of
+galaxy evolution.
+In Fig.
+11a, 11c and 11e, we show the tidal tracks of
+𝑟half for the default galaxy (transparent lines) and its three
+variants (opaque lines): doubled initial 𝑀∗, halved initial 𝑟half,
+and doubled 𝑟half, which we denote as 𝑀∗,0 × 2, 𝑟half,0/2 and
+𝑟half,0 × 2, respectively. Note that for the readability of the
+figures, in this set of comparisons we show only two cases
+of cored subhalos in green, {𝜎0 = 200, 𝜔= 50} on orb4 and
+{𝜎0 = 200, 𝜔= 200} on orb4, and two cases of core-collapsed
+subhalos (‘core-collapsed’ when in the case of default initial
+galaxy) in cyan, {𝜎0 = 200, 𝜔= 200} in isolation and {𝜎0 =
+200, 𝜔= 50} on orb3.
+We see that for the isolated galaxy-halo system (the right-
+most cyan lines), varying the initial 𝑀∗or 𝑟half barely shifts
+the tidal track during the whole process of core-formation to
+core-collapse, as the opaque and transparent evolution tracks
+nearly overlap with each other.
+For satellite galaxies with orbital effects, shown as the other
+three paired cases in comparison in Fig. 11a, 11c and 11e,
+we observe a noticeable shift in the tidal tracks of 𝑟half. When
+the initial stellar potential is more prominent, either with a
+larger stellar mass (𝑀∗,0 × 2) or a more compact distribution
+(𝑟half,0/2), the stellar particles are more bound and thus less
+responsive to the (adiabatic) expansion during core-creation,
+also less susceptible to the late-time tidal stripping. Therefore,
+the range of the fractional 𝑟half during its whole evolution cycle
+is reduced, appearing as a compression in the 𝑟half tidal tracks
+along the y-axis. For the same reason, the mass loss in the
+inner region < 𝑟half,0 is slower, and the tidal tracks of subhalos
+are thus shifted toward larger inner mass (rightward along the
+x-axis).
+In contrast, when the stellar potential is less deep (𝑟half,0×2),
+we see the opposite effect, that the maximal 𝑟half is increased
+and the inner mass loss is more extreme. Another noticeable
+difference caused by this 𝑟half,0 × 2 variant is that there are
+no stable DM-free galaxies as remnants of the tidal evolution.
+Even if the stars have a cuspy initial profile, their distribution
+is too dispersed to bind together the stellar remnants, at least at
+our current resolution limit of the satellite’s innermost region.
+To summarize, we find that variations in satellite galaxies’
+initial stellar properties, such as the mass and size, do affect
+the tidal evolution tracks of the stellar size. However, this effect
+is highly explainable, with the potential of being included in
+future parameterizations of the tidal tracks, perhaps given an
+additional parameter to describe the initial stellar potential.
+We postpone the detailed analysis of this to future works when
+more simulations are available.
+The tidal tracks of the mass-to-light ratio within 𝑟half, unlike
+the stellar size, are more robust when varying the initial stellar
+properties, as we show in Fig. 11d to 11f. Note that in these
+plots, same as in Fig. 8c, we do not normalize the mass-to-
+light ratio to its initial value. Hence, the tidal tracks of the
+mass-to-light ratio for the varied stellar ICs appear in parallel
+with the original tracks instead of overlapping with them. We
+find that the tidal tracks of the mass-to-light ratio are much
+less affected by using different stellar ICs than those of the
+stellar size, suggesting robustness in future works for tidal
+track parameterization. The tidal tracks for the stellar velocity
+dispersion are also tested with these variants of the stellar ICs,
+which we show in Appendix C.
+Apart from the difference in the evolution tracks of the stel-
+lar component itself, varying the initial stellar properties sets
+a different stellar potential at the halo center, thus affecting
+the core-collapse process of the DM component [50, 76, 123].
+In Table IV, we list the core-collapse time of these variant
+cases in comparison to the default stellar IC. Our results qual-
+itatively agree with physical intuition and previous research
+[50, 76, 123], that the core-collapse process is accelerated
+when the stellar potential is deeper, and vice versa. We also
+find that subhalos are more sensitive in their core-collapse
+time to the varied stellar potential than are isolated halos. For
+example, the [𝜎0 = 200, 𝜔= 50] case on orb3 reaches the
+core-collapse threshold at 10.3 Gyr with the default stellar IC,
+but with the “𝑟half,0 × 2” variant it is unable to core-collapse
+before the end of the simulation. This is also shown in Fig.
+11e and 11f, where a cyan-colored tidal track, originally de-
+termined to be on the core-collapse branch, is shifted to the
+cored branch with the “𝑟half,0 × 2” variant. The same variants
+comparison for the isolated [𝜎0 = 200, 𝜔= 200] does not see
+a noticeable difference in the core-collapse time. This is be-
+cause the strength of the stellar potential helps bind the DM in
+the inner region, countering the disruption to the subhalo core-
+collapse from tidal heating and evaporation (see detailed dis-
+cussion in [11]). Although this stellar-potential-back-reaction
+brings more complexity/diversity to the statistics of subhalo
+core-collapse in the presence of stellar particles, we remark
+that it should not require additional fitting parameters for tidal
+tracks. This is because whether or not core-collapse occurs is
+itself always a necessary input to the fitted tidal tracks, dictat-
+
+18
+2
+4
+6
+8
+10
+12
+t [Gyr]
+0.5
+1.0
+1.5
+2.0
+Half light radius
+orb4-CDM-Hernquist
+orb4-CDM-Plummer
+(a)
+0
+2
+4
+6
+8
+10
+12
+t [Gyr]
+1
+2
+3
+4
+5
+6
+7
+8
+Half light radius
+Plummer
+0 = 200,
+= 200
+isolated
+orb1
+orb2
+orb3
+orb4
+isolated
+orb1
+orb2
+orb3
+orb4
+(b)
+2
+4
+6
+8
+10
+12
+t [Gyr]
+100
+101
+Mass-to-light ratio ( < rhalf)
+M * = MDM
+6 cm2/g
+isolated
+orb1
+orb2
+orb3
+orb4
+isolated
+orb1
+orb2
+orb3
+orb4
+(c)
+10
+4
+10
+3
+10
+2
+10
+1
+100
+101
+M( < rhalf, 0)/M( < rhalf, 0, t = 0)
+0.3
+1.0
+3.0
+9.0
+rhalf/rhalf, 0
+isolated
+subhalos
+Initial condition
+Core-creation phase
+Cored track
+Core-collapse track
+CDM orb4
+(d)
+10
+4
+10
+3
+10
+2
+10
+1
+100
+101
+M( < rhalf, 0)/M( < rhalf, 0, t = 0)
+100
+101
+Mass-to-light ratio ( < rhalf)
+isolated
+subhalos
+Initial condition
+Core-creation phase
+Cored track
+Core-collapse track
+CDM orb4
+(e)
+10
+3
+10
+2
+10
+1
+100
+101
+M( < rhalf, 0)/M( < rhalf, 0, t = 0)
+0.3
+1.0
+radial velocity dispersion ( < rhalf)
+Initial condition
+Core-creation phase
+Cored track
+Core-collapse track
+CDM orb4
+(f)
+FIG. 10: Time evolution and tidal tracks of Plummer satellites. a) Time evolution of 𝑟half for the CDM case on orb4 (the most
+plunging orbit); b) Time evolution of 𝑟half for {𝜎0 = 200, 𝜔= 200} subhalos; c) Time evolution of the mass-to-light ratio for 6
+cm2/g subhalos; d) Tidal tracks of 𝑟half for the same subhalos in Fig. 8a; e) Tidal tracks for the mass-to-light ratio; f) Tidal
+tracks of stellar radial velocity dispersion within 𝑟half. The shaded region in d) and e) are where there are less than 10 simulation
+particles (DM+stars) within 𝑟half,0.
+
+19
+10
+3
+10
+2
+10
+1
+100
+101
+M( < rhalf, 0)/M( < rhalf, 0, t = 0)
+0.3
+1.0
+3.0
+rhalf/rhalf, 0
+Initial condition
+rhalf
+default M * , default rhalf
+M * × 2, default rhalf
+M*, 0 × 2
+(a)
+10
+3
+10
+2
+10
+1
+100
+101
+M( < rhalf, 0)/M( < rhalf, 0, t = 0)
+100
+101
+Mass-to-light ratio ( < rhalf)
+Initial condition
+mass-to-light ratio
+default M * , default rhalf
+M * × 2, default rhalf
+(b)
+10
+3
+10
+2
+10
+1
+100
+101
+M( < rhalf, 0)/M( < rhalf, 0, t = 0)
+0.3
+1.0
+3.0
+rhalf/rhalf, 0
+Initial condition
+rhalf
+default M * , default rhalf
+default M * , rhalf/2
+rhalf, 0/2
+(c)
+10
+3
+10
+2
+10
+1
+100
+101
+M( < rhalf, 0)/M( < rhalf, 0, t = 0)
+100
+101
+Mass-to-light ratio ( < rhalf)
+Initial condition
+default M * , default rhalf
+default M * , rhalf/2
+(d)
+10
+3
+10
+2
+10
+1
+100
+101
+M( < rhalf, 0)/M( < rhalf, 0, t = 0)
+0.3
+1.0
+3.0
+rhalf/rhalf, 0
+Initial condition
+default M * , default rhalf
+default M * , rhalf × 2
+rhalf, 0 × 2
+(e)
+10
+3
+10
+2
+10
+1
+100
+101
+M( < rhalf, 0)/M( < rhalf, 0, t = 0)
+100
+101
+Mass-to-light ratio ( < rhalf)
+Initial condition
+default M * , default rhalf
+default M * , rhalf × 2
+(f)
+FIG. 11: Tidal tracks similar to those in Fig. 8, but with varying initial stellar properties, including doubled stellar mass, halved
+and doubled stellar size. The default parameters (which are the same as for our main tidal track results in 8) are shown in
+transparent lines and the variants in opaque lines. The left column shows the tidal tracks for the stellar size, and the right
+column shows the mass-to-light ratio.
+
+20
+ing which branch the tracks fall onto, regardless of how much
+the core-collapse itself is affected by the baryons.
+IV.
+COMPARISON WITH OBSERVED DWARFS
+In this section, we present comparisons between the satellite
+and isolated SIDM dwarfs in our simulations and observed
+dwarfs, as an attempt to explore the potential of SIDM models
+in explaining observational outliers. We show the comparison
+in the stellar mass vs. stellar size plane in Sec. IV A, and in
+the mass-to-light ratio vs. stellar size plane in Sec. IV B.
+A.
+Stellar mass–size plane
+In this section, we focus on the stellar mass–stellar size re-
+lation for these SIDM (satellite) dwarfs during their evolution.
+We show the evolution tracks of the “representative” SIDM
+dwarfs from the previous section in the stellar mass vs. stellar
+size plane in Fig. 12a, then overplot observed dwarf galax-
+ies in Fig. 12b. This aims to take a first demonstrative look
+at how SIDM evolution might explain the lingering diversity
+problem in dwarf galaxies’ size, covering both the ultradiffuse
+and ultracompact populations [60–63, 65, 66, 68, 124, 126].
+For this demonstrative purpose, the observational samples
+we show in Fig. 12b include dwarf galaxies in a variety of envi-
+ronments, from field dwarfs, to satellites of the Milky Way and
+Milky Way-like systems, to the Virgo Cluster. For the dwarf
+galaxies in local environments, we include Local Group satel-
+lites (gray squares) and local field dwarfs (white squares) from
+the Local Volume Database3 [127] and the satellites of Milky
+Way analogs in the Local Volume (blue dots) [124]. For the
+Virgo Cluster dwarf satellites, we include both ultracompact
+dwarfs (UCDs, purple triangles) and extended ultracompact
+dwarfs (eUCDs, orange diamonds) [68, 125]. We find that the
+evolution tracks of these SIDM field and satellite dwarfs can
+easily span the range of the local diffuse dwarfs, even though
+they all start from the same initial condition, without consid-
+ering the variations of the initial stellar distribution prior to
+any SIDM and tidal evolution (see also Sec. III E for more
+discussion).
+The comparison with UCDs and eUCDs is less direct in
+Fig.
+12b, since our choice of the dwarf galaxy is initially
+∼1 dex more massive than the UCDs and eUCDs. However,
+we can still make the attempt. Assuming that the response
+of stellar size to SIDM core-collapse has approximately self-
+similar behavior across different masses of dwarf galaxies, then
+UCD-mass SIDM dwarfs on the core-collapsed branch would
+experience a similar decrease in 𝑟half of about a factor of 2,
+by the point the simulation is terminated. These UCD-mass
+SIDM dwarfs would then partially overlap with the eUCDs
+in the stellar mass–size plane, while it still requires a drop in
+3 https://github.com/apace7/local_volume_database
+10
+1
+100
+M * /M * (t = 0)
+0.3
+1.0
+3.0
+rhalf/rhalf, 0
+isolated
+subhalos
+Initial
+Condition
+evaporation
+Core-creation phase
+Cored track
+Core-collapse track
+Undetermined by 13.1 Gyr
+CDM orb4
+(a)
+105
+106
+107
+108
+M * [M
+]
+10
+2
+10
+1
+100
+rhalf [kpc]
+Initial
+Condition
+Local Group sats.
+Field dwarfs
+Local Volume sats.
+Virgo eUCD
+Virgo UCD
+(b)
+FIG. 12: The evolution of selected field and satellite SIDM
+dwarfs in the stellar mass vs. stellar size plane. Color
+schemes and notations are the same as in Fig. 8. To place the
+evolutionary tracks in context, we also show Local Group
+satellites (gray squares) and local field dwarfs (white squares)
+from the Local Volume Database, satellites of Milky Way
+analogs in the Local Volume (blue dots; [124]), ultracompact
+dwarfs (UCDs) in Virgo (purple triangles; [125]), and
+extended ultracompact dwarfs (eUCD) in Virgo (orange
+diamonds; [68]).
+𝑟half of as much as nearly an order of magnitude to further ac-
+commodate the UCDs. However, we propose a few arguments
+about the feasibility of producing UCDs via the mechanism of
+SIDM subhalo core-collapse, although without further simu-
+lating into the late core-collapse stages (which is intrinsically
+difficult to do):
+
+21
+SIDM model & orbit
+default stellar IC 𝑀∗,0 × 2 𝑟half,0/2 𝑟half,0 × 2
+[𝜎0 = 200, 𝜔= 200] isolated
+𝑡cc = 8.7 Gyr
+8.3 Gyr 8.5 Gyr
+8.7 Gyr
+[𝜎0 = 200, 𝜔= 50] orb3
+10.3 Gyr
+8.1 Gyr 8.5 Gyr
+-
+[𝜎0 = 200, 𝜔= 50] orb4
+-
+7.9 Gyr
+-
+-
+TABLE IV: The core-collapse time, 𝑡cc, of the default (sub)halo-galaxy system and its variants with different initial stellar
+properties, for a variety of SIDM models and orbits. The cases that do not reach the core-collapse threshold are labelled as ‘-’ in
+this table.
+• The contraction of stellar components should continue
+after the termination point of the simulation, because the
+DM core-collapse will continue. This is also expected
+from the late-acceleration feature in the decrease of 𝑟half
+of the core-collapsing dwarf satellites, as we have shown
+and discussed in Fig. 5 (the c.-c. labeled lines).
+• However, this continued 𝑟half contraction, driven by late-
+stage DM core-collapse, should not proceed forever as
+to make 𝑟half arbitrarily small. As we have discussed
+with the “exception” case in Fig. 6, once the collapsing
+core shrinks to be much smaller than 𝑟half, then 𝑟half is
+no longer sensitive to the change in the core-collapse
+density evolution, since the potential at 𝑟half no longer
+deepens. Therefore, we expect that 𝑟half should further
+contract by only a finite amount.
+At this point, it is
+inconclusive whether 𝑟half can reach the UCDs in Fig.
+12b even after the further contraction by late-stage core
+collapse is taken into account.
+• Another ingredient that we have only briefly discussed
+in Sec.
+II B is the two-body gravitational relaxation
+among stellar particles. When the subhalo experiences
+core-collapse, or when the DM is depleted and only a
+self-bound stellar component remains, the stellar parti-
+cles have small 𝑟half and high density. This causes the
+relaxation timescale to reduce to ∼1 Gyr, as we show
+in Fig. 23, which is much shorter than the simulation
+timescale ∼10 Gyr. Thus the relaxation is enhanced
+as core-collapse proceeds, and serves as a numerical ef-
+fect to counter the shrinking of 𝑟half. Hence we expect
+the 𝑟half to be smaller and closer to the UCD range in
+simulations with higher resolution.
+• Another question that needs to be addressed if SIDM
+core-collapse is to explain the UCDs is why the UCDs
+are only found in dense clusters. Since our work uses
+a galaxy-group host halo, the tidal stripping on stars
+may be weaker than in cluster environments, and the
+reduction of 𝑟half may have been underestimated than in
+the case of cluster UCDs.
+Overall, through this first demonstrative comparison in the
+stellar mass–size plane, we find that the diversity driven by
+SIDM physics (and with orbital effects) can easily cover the
+range of normal and diffuse dwarfs, but may have difficulty
+in accommodating the UCDs. We comment that dedicated
+studies into possible formation scenarios of UCDs are needed
+in the future, as an essential prerequisite of a comprehensive
+evaluation of SIDM’s potential to resolve the diversity prob-
+lem. This will also likely require better understanding and
+numerical treatments of the late-stage core-collapsing SIDM
+(sub)halos in simulations.
+B.
+DM-deficient DF2/DF4-like ultradiffuse dwarfs
+We began a discussion in Sec.
+III A to III C of the for-
+mation of DM-free galaxies through enhanced tidal stripping
+on SIDM cores and evaporation, during which the DM com-
+ponent is depleted. However, the remaining self-bound DM-
+free galaxies will be either stable and compact (Hernquist),
+or short-lasting and diffuse (Plummer). This may appear to
+be incompatible with the confirmed DM-deficient dwarfs DF2
+(2.0 × 108𝑀⊙, 2.7 kpc [128]) and DF4 (1.5 × 108𝑀⊙, 2.1 kpc
+[112]), which are reported to have half-light radii ≳2 times
+than the mean stellar mass–size relation. Therefore, here we
+map out the evolution of SIDM dwarfs in the mass-to-light
+ratio vs. 𝑟half plane in Fig. 13, to see if there are any SIDM
+dwarfs that can accommodate both features of such galaxies:
+DM-deficient and diffuse.
+In Fig. 13, we see a few cored Hernquist satellites crossing
+the DF2/DF4-like space (gray shaded region) during their evo-
+lution, with the help of evaporation, while the cored Plummer
+satellites all end up in the DF2/DF4-region before they are
+completely disrupted (which happens rapidly after this point,
+see Fig. 10). Thus we can say that SIDM does show the po-
+tential of explaining the formation of DF2/DF4-like dwarfs,
+as previously proposed by [129, 130].
+The frequency of
+such SIDM tidally-formed DF2/DF4-like satellites is yet to
+be systematically evaluated, which as we have demonstrated
+are highly dependent on the orbit/environment. This, or in
+general, any similar tidal-formation scenarios, cannot be even-
+tually confirmed or eliminated until we have more knowledge
+of the currently poorly-constrained distance and relationship
+(bound or not) between DF2/DF4 and the nearby galaxy group
+NGC1052 [131]. However, the recently reported radial dis-
+tance of 2.1 Mpc between DF2 and DF4 (but not their re-
+spective distances to the NGC1052 group [131]) suggests that
+it would be unlikely that both DM-deficient dwarfs are satel-
+lites of NGC1052. This may therefore slightly favor another
+popular formation scenario, the ‘bullet-dwarf’, which is the
+head-on collision of gas-rich galaxies [132–137], over the
+tidal-disruption scenario we discussed in this work. One possi-
+ble remedy to coordinate the tidal-formation of DF2/DF4-like
+dwarfs with their large radial distance, is to change the bound
+satellites we explore here to high-speed flybys with a close
+
+22
+100
+101
+mass-to-light ratio ( < rhalf)
+0.3
+1.0
+3.0
+rhalf/rhalf, 0
+DF2/DF4-like
+Core-creation phase
+Cored track
+Core-collapse track
+Undetermined by 13.1 Gyr
+CDM orb4
+(a)
+100
+101
+mass-to-light ratio ( < rhalf)
+0.3
+1.0
+3.0
+rhalf/rhalf, 0
+DF2/DF4-like
+Core-creation phase
+Cored track
+Core-collapse track
+Undetermined by 13.1 Gyr
+(b)
+FIG. 13: Evolution tracks of SIDM dwarf galaxies in the
+mass-to-light ratio vs. stellar size plane. The gray shaded
+region approximately marks the parameter space that
+resembles the observed DM-deficient galaxies NGC-1052
+DF2 and DF4. The top panel shows the dwarfs with a
+Hernquist initial density profile while the bottom shows the
+case with a Plummer profile.
+pericenter, which is beyond the scope of this work. In this
+way, the short-surviving problem of Plummer satellites can
+also be automatically reconciled.
+Another interesting point, although slightly off the track of
+the main topic of this manuscript, is that the bullet-dwarf sce-
+nario with CDM is also reported to produce compact instead
+of diffuse DM-deficient dwarfs [135, 136]. It may thus be of
+potential interest to investigate the bullet-dwarf case in SIDM
+models, where the collision progenitors have intrinsically shal-
+lower central potential and may give birth to DM-deficient
+dwarfs that are more diffuse.
+V.
+SUMMARY AND DISCUSSION
+In this work, we trace the evolution of dwarf galaxies with
+different SIDM models and orbits, using controlled simula-
+tions. Our goal is to explore the response of the stellar com-
+ponent of a galaxy to the evolution of the DM (sub)halo, from
+core-creation to core-collapse. Our test (sub)halos are set up
+with two species of particles, dark matter (DM) and stars, with
+the DM component initialized with an NFW profile and the
+stellar component with either a Hernquist (cuspy) or Plummer
+(cored) profile. We first (Sec. II B) quantify the resolution and
+particle mass ratio between DM and stars required to carry
+out this kind of “star+DM” controlled simulations. We find
+that an equal mass ratio between DM and star particles is rec-
+ommended in order to avoid the energy equipartition effect
+caused by mass segregation, which would lead to a spuriously
+increased galaxy size, as also reported in [105, 138].
+As
+for the particle resolution, we find that our highest resolution
+(with ∼107 particles in total, see Table I) is needed in sce-
+narios where a subhalo experiences extreme mass loss and has
+≲10−3 of its initial mass remaining bound, which is relevant
+for the formation of DM-free galaxies in some SIDM cases.
+We then generate production runs of these controlled simu-
+lations of satellite galaxies, combining seven DM models and
+five orbits. We examine the time evolution of these satellites’
+half-light radii and mass-to-light ratios (defined by the ratio
+between total mass and stellar mass) within 𝑟half in Sec. III A
+and III B. The size evolution of dwarf galaxies displays a much
+larger diversity in SIDM cases than in CDM: the core-creation
+process of SIDM halos puffs up the galaxy by ∼50% in 𝑟half,
+which is further boosted to as much as three times (Hern-
+quist; ∼eight times for Plummer galaxies) its initial value
+if there is non-negligible evaporation of the subhalo by the
+host. The cored SIDM subhalos are more susceptible to tidal
+fields, resulting in the stellar components being more easily
+tidally stripped, leading to a drop in 𝑟half following the pre-
+vious expansion, and eventually to the formation of DM-free
+galaxies/star-clusters for Hernquist initial conditions. Galaxies
+with cored (Plummer) stellar profiles are not able to be self-
+bound and will dissolve in the host once the DM component is
+depleted. By contrast, core-collapsing subhalos experience an
+accelerating decrease in their galaxies’ 𝑟half, because the stellar
+components undergo adiabatic contraction in correspondence
+to the collapsing/contracting DM core. The mass-to-light ra-
+tio within 𝑟half decreases (becomes more stellar-dominated)
+with DM core-creation, tidal stripping and evaporation, which
+all lead to more DM than stellar mass loss in the (sub)halo
+center. When core-collapse happens, however, the DM con-
+centrates towards the center through the gravothermal process
+more drastically than do the stellar components, which are
+only pulled by the deepening gravitational potential. Thus, the
+mass-to-light ratio increases. The accelerated size-shrinking
+and mass-to-light ratio increase can be regarded as signs of
+ongoing core-collapse, but they are not as obvious when core-
+collapse happens at radii smaller than 𝑟half (see Fig. 6). This
+happens when a subhalo has experienced a large amount of
+mass loss before core-collapsing.
+In addition to exploring their time evolution, we also link the
+
+23
+stellar properties to the evolution of the total mass within the
+initial half-light radius 𝑀(< 𝑟half,0). This aims to showcase
+the “tidal tracks” [82, 83] for SIDM cases, exploring the possi-
+bility of establishing parametrized relations for reconstructing
+dwarf galaxies’ properties in larger-scale simulations where
+the resolution may not be sufficient or in analytical galaxy
+evolution codes [114, 116]. As shown in Fig. 8 and 10, apart
+from the large diversity produced by SIDM core-formation to
+core-collapse, we do find some universality among the tidal
+evolution tracks of satellite galaxies’ size, mass-to-light ra-
+tio and radial velocity dispersion, which are physically inter-
+pretable and seemingly parameterizable. These SIDM (satel-
+lite) dwarfs thus follow similar evolution tracks, although very
+different (and with larger span) than the CDM tidal tracks.
+It is important to understand the limitations of our controlled
+star+DM simulations, and other intriguing extensions we may
+be able to explore in future works, which we list below:
+• More test cases for parameterizing tidal tracks In this
+work, we demonstrate the potential universality of the
+tidal evolution tracks of dwarf (satellite) galaxies in
+SIDM models, with one test case of subhalo and its
+galaxy orbiting a host. More variants, such as differ-
+ent subhalo masses, different host masses, more SIDM
+models and orbits, need to be tested for robustness and
+generalization, which we postpone to future works.
+• Core-collapse treatment as a lower limit Since we define
+a (sub)halo as core-collapsed and terminate the simula-
+tion once its central density 𝜌cen50 exceeds 5 times its
+initial value, our results in this work should be viewed
+as a lower limit on an SIDM (sub)halo’s inner density.
+The DM mass contraction should continue into the late
+core-collapse stage until triggering the relativistic in-
+stability and then black hole formation (see [100] for
+more discussion). However, the stars may follow a dif-
+ferent path. As we have shown with the “exception”
+case {𝜎0 = 200, 𝜔= 50} on orb3 (see Fig. 5c and 7c),
+the stellar properties within 𝑟half become “decoupled”
+from the core-collapse process, once the core-collapse
+radius falls much below the scale of 𝑟half. Following
+the same logic, the stellar evolution within all core-
+collapsing (sub)halos will eventually become less af-
+fected beyond a certain point, since the collapsing DM
+core keeps shrinking to smaller radii.
+• Stellar stream In this work, we focus on analyzing star
+particles that remain bound to the subhalo, which is ap-
+proximately a spherical overdensity region determined
+by the halo finder AHF. Tidally stripped DM and stars
+form leading and trailing arm-like structures, stretching
+from and co-moving with the subhalo. The morphology
+of these stellar streams can be used to infer the structure
+of their progenitors [139] and constrain DM models.
+Perturbations to stellar streams caused by nearby small
+subhalos are observed as gaps and off-stream spurs as-
+sociated with stellar streams [140], which reveal the
+presence of invisible subhalos and may also be useful
+for inferring their structures. With the growing number
+of stellar streams observed in current and upcoming sur-
+veys [141, 142], it would be important and intriguing to
+theoretically predict properties of stellar streams under
+different SIDM models [143], for which the “star+DM”
+controlled simulations we present in this work may be
+a good start. A demonstrative, visualized animation of
+such stellar streams from our simulations can be found
+here, where we include four different dark matter models
+and put the subhalo on orb2.
+• Star formation The expansion and contraction of star
+particles in response to SIDM core-creation and core-
+collapse, as we show in this work, in principle should
+also apply to gas, which is missing in our simulations.
+This may have interesting implications for the star for-
+mation rate. For example, when core-collapse happens,
+the gas should undergo contraction toward the center
+together with DM and stars, increasing the star forma-
+tion rate. But, on the other hand, the gas would also be
+heated up during this process, countering the formation
+of stars. The overall effect of SIDM physics on star for-
+mation can thus be complicated but intriguing, and may
+display a diversity as well, coupling with the subhalo’s
+orbital history.
+• Dark matter deficient galaxies We have shown that
+SIDM dwarf satellites can easily become DM-deficient,
+due to the relatively fast depletion of the DM component
+in the tidal (and evaporation) field (see also [129, 130]).
+However, the stellar remnants need to have a cuspy, com-
+pact distribution to survive the tidal field, after the DM
+is removed. These stable, DM-free stellar remnants are
+thus different from the recently observed DM-deficient
+galaxies NGC-1052 DF2 and DF4 [69, 70], which are
+reportedly ultradiffuse. Nevertheless, during the evo-
+lution path, we do still find a window in the mass-to-
+light ratio vs. stellar size plane that can satisfy both
+the diffuse and DM-deficient features of DF2/DF4 (see
+Fig. 13). Such DF2/DF4-like dwarfs formed through
+this SIDM-tidal scenario, however, are only expected to
+have these features for a very brief period during their
+life-evolution. They should thus be relatively rare in
+observations, with strong orbit/eniroment dependence.
+Further dedicated studies into the SIDM-driven forma-
+tion of such DF2/DF4-like systems are thus needed,
+testing multiple variants such as the progenitor mass,
+initial stellar density profile, and the dwarf galaxy as a
+bound satellite or a flyby.
+This work serves as part of a series to systematically study
+the stellar response to SIDM halo evolution and subhalo-host
+interactions, revealing both the diversity and the universality in
+SIDM dwarfs’ stellar evolution. Here, we quantitatively show
+that SIDM has the potential to explain the observed diversity
+in dwarf galaxies. In future work, we will parameterize the
+tidal tracks of SIDM dwarfs for general use in the community.
+
+24
+2
+4
+6
+8
+10
+12
+0.5
+1.0
+1.5
+2.0
+2.5
+3.0
+3.5
+Half light radius
+CDM Plummer
+CDM Hernquist
+2
+4
+6
+8
+10
+12
+t [Gyr]
+0.80
+0.85
+0.90
+0.95
+1.00
+1.05
+1.10
+stellar velocity dispersion ( < rhalf)
+FIG. 14: The initial condition issue for the Plummer galaxy.
+The top panel shows the time evolution of the 𝑟half for the
+Plummer (blue) and Hernquist (black) galaxies, where both
+cases are stable in time. The bottom panel shows the stellar
+velocity dispersion within 𝑟half, where we can clearly see a
+sharp drop at the first snapshot for the Plummer case.
+ACKNOWLEDGMENTS
+We thank Stacy Kim, Daneng Yang, Ethan Nadler, Raphael
+Errani, Akaxia Cruz, Hai-bo Yu, Louis Strigari, Joohyun Lee
+and Alexander Knebe for useful discussions.
+Z.C. Zeng is partially supported by the Presidential Fellow-
+ship of the Ohio State University Graduate School. We thank
+the host of the Kavli Institute for Theoretical Physics during
+the darkmatter24 workshop, where most of the authors of this
+work were invited, and the grant NSF PHY-2309135 to KITP
+for this program.
+The simulations in this work were conducted on Ohio Su-
+percomputer Center [144], mostly on the CCAPP condo.
+Appendix A: Initial stellar distribution as a Plummer profile
+In setting up the Plummer galaxies in Sec. III D, we en-
+counter an issue that the initial conditions of the stellar com-
+ponents are not generated in equilibrium as is intended. Here
+we describe the problem, explain the physical reason behind
+it, and describe our temporary fix to it.
+In Fig. 14, we show the time evolution of the Plummer and
+Hernquist galaxies in isolation with a CDM halo component,
+using our highest, converged particle resolution and 1:1 mass
+ratio between DM and star particles (see Sec. II B). In this
+scenario, both cases are expected to stay stable at the initial
+value. We can see in Fig. 14 that the stellar size indeed only
+slightly grows over time (< 10% by the end of the simula-
+tion) for both the Plummer and Hernquist cases, which is not
+a physical effect but lingering numerical issues we discussed
+in Sec. II B. However, the stellar velocity dispersion within
+𝑟half sees a sharp drop of ∼20% at the very first snapshot for
+the Plummer galaxy, which then stays at a plateau afterwards,
+while the Hernquist galaxy has an approximately stable veloc-
+ity dispersion. This strongly suggests that the initial velocity
+distribution of the Plummer case is not compatible with its
+density distribution, leading to this obvious non-equilibrium
+behavior.
+This issue is known and acknowledged by the initial con-
+dition generator SpherIC, with a physically intuitive expla-
+nation that the NFW profile for DM is too steep to hold
+a cored Plummer stellar component.
+A quantitative under-
+standing of this problem starts with the Eddington Inversion
+method [87, 88, 145], which SpherIC uses to calculate the
+velocity distribution, including 1-component (DM-only) or 2-
+component (DM+stars) systems in equilibrium:
+𝑓(𝐸) =
+1
+√
+8𝜋2
+∫0
+𝐸
+𝑑2𝜈
+𝑑Φ2 (Φ −𝐸)−1/2𝑑Φ.
+(A1)
+Here 𝜈is the number density of a species of particles (either
+DM or star), Φ is the gravitational potential and 𝐸is the energy
+of a particle. The distribution function 𝑓(𝐸) ≡𝑑𝑁/𝑑Ω then
+determines the number density of simulation particles in the
+phase space Ω = (®𝑣, ®𝑟). For the case with Plummer stars and
+NFW dark matter, we find that the second order derivative
+𝑑2𝜈
+𝑑Φ2 can become negative at very small radii (≲0.1 kpc for
+our test galaxy-halo system in this work), which then leads to
+the distribution function having negative values at small radii.
+Since the probability of assigning a specific velocity (or energy
+𝐸) cannot be negative, SpherIC complains and uses 𝑓(𝐸) = 0
+at these small radii instead of the calculated negative values.
+We remark that this issue of a negative distribution function
+is intrinsic to setting up a Plummer galaxy in an NFW halo. In
+fact, this incompatibility has been used to rule out cuspy DM
+density profiles in cored low-mass dwarfs [146, 147] (see also
+[148–150]). Hence, we choose a temporary fix for this work.
+First, note that in Fig. 14, the stellar size of the Plummer case
+remains stable in time, despite the problem of non-equilibrium.
+This suggests that the effect of the issue is limited, mostly on
+the calculation relevant to velocity dispersion, such as our tidal
+
+25
+tracks in Fig. 10f. Second, as we can see in the bottom panel
+of Fig. 14, the system can equilibrate soon after the simulation
+begins, with the stellar velocity dispersion barely evolving after
+the first output snapshot. Therefore, we take the first snapshot
+of the Plummer galaxy embedded in an isolated CDM halo as
+the new initial condition for the rest of the tidal track studies
+of the Plummer cases in Sec. III D.
+Appendix B: Tidal tracks for all simulations
+In Section III C, we show only the selected, representa-
+tive evolution tracks of dwarf satellites’ stellar properties un-
+der SIDM halo evolution and orbital effects, with the same
+Hernquist initial stellar distribution as in Section III C, aim-
+ing to showcase a few common and extreme cases (and thus
+the range of ‘diversity’). In this appendix, we present the tidal
+tracks of all individual (sub)halo-dwarf galaxy systems that we
+have simulated in this work, which are combinations of seven
+SIDM models: CDM, 6 cm2/g, {𝜎0 = 50, 𝜔= 50}, {𝜎0 =
+50, 𝜔= 100}, {𝜎0 = 100, 𝜔= 50}, {𝜎0 = 200, 𝜔= 50},
+{𝜎0 = 200, 𝜔= 200}; and five orbits: from isolated to orb4
+(see Table II). We show the tidal evolution tracks for stellar
+size in Fig. 15, for stellar velocity dispersion in Fig. 16, and
+for mass-to-light ratio in Fig. 17.
+Appendix C: Supplementary figures
+• Fig. 18 shows the time evolution of 𝑟half, together with
+the bound stellar mass and bound total subhalo mass
+(star+DM), for satellites with 6 cm2/g on all orbits. This
+supplementary figure aims to help explain the correla-
+tion between these three quantities. Abrupt DM mass
+loss caused by evaporation causes a boost in 𝑟half. How-
+ever, when the DM mass loss becomes extreme, there
+will also be noticeable stellar mass loss, which causes
+𝑟half to decrease again.
+• Fig. 19 shows the effects on the tidal tracks of stel-
+lar velocity dispersion when varying the stellar initial
+conditions, presented in a style similar to Fig. 11.
+• Fig. 20 shows the time evolution of the satellites’ 𝑟half,
+similar to Fig. 5, but here for the galaxies initialized
+with a cored, Plummer density profile. Note that these
+Plummer galaxies do not have a cuspy center to hold
+themselves together in a tidal field, hence they dissolve
+in the host soon after the DM mass loss gets extreme.
+This is reflected by the early termination of the evolution
+curves. For the CDM satellite galaxies with Plummer
+stellar distributions, we find an increase in 𝑟half first
+before decreasing at later times. This is because the tidal
+heating puffs up the subhalo center before tidal stripping
+is able to reach the inner region, as also reported in [83].
+• Fig. 21 shows the time evolution of the Plummer satel-
+lites’ mass-to-light ratio within 𝑟half, similar to Fig. 7.
+• Fig. 22 shows the time evolution of the DM core radius,
+where the core is defined as the region in the DM density
+profile where its slope 𝑑ln 𝜌
+𝑑ln 𝑟> −1.
+• Fig. 23 shows the stellar relaxation timescales for the
+satellites we simulate. The stellar relaxation time is es-
+timated by 𝑡relax ≈
+𝑁𝑝
+8 ln Λ𝑡cross ≈
+𝑁𝑝
+8 ln Λ
+𝑟half
+𝜎𝑣[108], where
+Λ ≡
+𝑏max
+𝑏min =
+𝑟half
+𝜖soft is the ratio between the maximum
+and minimum impact parameters for the two-body grav-
+itational scattering and 𝑁𝑝is the number of particles
+within 𝑟half.

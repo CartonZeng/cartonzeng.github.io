@@ -1,0 +1,1061 @@
+Calibrating the SIDM Gravothermal Catastrophe with N-body Simulations
+Charlie Mace1,2,∗Shengqi Yang3,4, Zhichao Carton Zeng1,2,5, Annika H. G. Peter1,2,6,7, Xiaolong Du3,8, and Andrew Benson3
+1Department of Physics, The Ohio State University,
+191 W. Woodruff Ave., Columbus OH 43210, USA
+2Center for Cosmology and Astroparticle Physics,
+The Ohio State University, 191 W. Woodruff Ave.,
+Columbus OH 43210, USA
+3 Carnegie Science, Observatories, 813 Santa Barbara Street,
+4 Los Alamos National Laboratory,
+Los Alamos, NM 87545, USA,
+5Department of Physics and Astronomy,
+Mitchell Institute for Fundamental Physics and Astronomy,
+Texas A&M University, College Station, TX 77843, USA
+6Department of Astronomy, The Ohio State University,
+140 W. 18th Ave., Columbus OH 43210, USA
+7School of Natural Sciences, Institute for Advanced Study,
+1 Einstein Drive, Princeton, NJ 08540
+8 Department of Physics and Astronomy,
+University of California, Los Angeles, CA 90095, USA
+Self-interacting dark matter (SIDM) theories predict that dark matter halos experience core-collapse in late-
+stage evolution, a process where the halo’s inner region rapidly increases in density and decreases in size. This
+process can be modeled by treating the dark matter as a gravothermal fluid, and solving the fluid equations
+to predict the density profile evolution. This model is incomplete without calibration to N-body simulations,
+through a constant factor 𝛽included in the thermal conductivity for the long-mean-free-path limit. The value
+of 𝛽employed in the gravothermal fluid formalism has varied between studies, with no clear universal value
+in the literature. In this work, we use the N-body code Arepo to conduct a series of isolated core-collapse
+simulations across a range of scattering cross-sections, halo concentrations, and halo masses to calibrate the
+heat transfer parameter 𝛽. We find that 𝛽is independent of cross-section, halo concentration, and halo mass
+for velocity independent elastic scattering cross-sections. We present a model for an effective 𝛽as a function
+of a dimensionless cross-section, to describe halo evolution in the long mean free path limit, and show that it
+accurately captures halo evolution as long as the cross section is not too large. This effective model facilitates
+comparisons between simulations and the gravothermal model, and enables fast predictions of the dark matter
+density profile at any given time without running N-body simulations.
+I.
+INTRODUCTION
+Self-interacting dark matter (SIDM) is a class of dark matter
+models that include interactions between dark matter particles
+[1–5]. These models, which have theoretical motivation from
+particle physics [6–11], may provide solutions to several unre-
+solved contradictions between cold dark matter (CDM) models
+and observational data, such as the diversity problem (CDM;
+[12–19], SIDM; [20–30]) and the cuspy halo problem (CDM;
+[31–36], SIDM; [37, 38]). There are many models for these
+self-interactions, some with elastic scattering and some with
+inelastic scattering. The inelastic models produce their own
+distinct phenomenology [39–41], but for this work we will fo-
+cus solely on the elastic scattering case. In elastic models, the
+additional heat transfer channel provided by self-interactions
+causes the SIDM halos to undergo a time evolution not experi-
+enced by CDM halos, where an initially cuspy halo thermalizes
+and forms an isothermal core with a low, constant density [42].
+The core formation process of an SIDM halo is followed by a
+slow increase in the halo’s core density, a phase called core-
+∗E-mail: mace.103@osu.edu
+collapse. During this phase, the core transfers energy to the
+outer regions of the halo, causing particles to fall into the
+core. This collapse, also called the gravothermal catastrophe,
+is a runaway process that eventually causes a rapid density in-
+crease in the center of the halo [43, 44]. The phenomenon was
+first discovered in the study of globular clusters, where gravi-
+tational two-body scattering of stars provides the heat transfer
+instead of dark matter self-interaction [45], but the gravother-
+mal catastrophe model has found success in describing dark
+matter halos as well.
+The study of SIDM core-collapse depends on reliable N-
+body simulations.
+One use of simulations is to investigate
+how self-interactions influence the formation of substructure
+[24, 25, 28, 46, 47], but N-body simulations are also essential
+to the study of the simplest case of an isolated core-collapsing
+halo. The density profile of such a halo has been shown to
+follow a self-similar time evolution in the regime where the
+mean free path between collisions is much longer than the
+gravitational scale height (the long mean-free-path regime)
+[44, 48–53]. These density profile models, which are found
+from numerical solutions of gravothermal fluid equations, rely
+on a constant factor that must be calibrated using N-body sim-
+ulations [44, 48, 49]. This factor is needed because the con-
+arXiv:2504.13004v2  [astro-ph.GA]  27 Aug 2025
+
+2
+ductivity used in the long mean-free-path gravothermal fluid
+solution is based on the thermal conductivity of a gas, which
+does not include the gravitational dynamics present in a dark
+matter halo [51]. While we do not have an SIDM conductiv-
+ity derived from first principles for the long mean-free-path
+regime, this approximation of using the thermal conductivity
+of a gas has been shown to be accurate up to a constant factor on
+the heat transfer rate [44, 48, 49]. This heat transfer constant,
+referred to as 𝛽in this work but sometimes represented by 𝐶
+in the literature, must be calibrated by N-body simulations.
+The value of 𝛽has been found by multiple studies, and typ-
+ically is in the range 𝛽∈[0.6, 1.0] [48, 49, 51, 54]. While
+this may not seem like a major variation, the rapidly accelerat-
+ing end of the core-collapse evolution means that the density
+profile of deeply collapsed structure has a strong dependence
+on 𝛽, which is inversely proportional to the collapse timescale
+in the long mean-free-path regime [49]. The compactness of
+dark matter subhalos after core-collapse can have a profound
+effect on observable astrophysics, such as image flux ratios in
+substructure lensing, so a more precise understanding of 𝛽and
+why its value may vary is needed.
+In addition to the measured variation in 𝛽, there is also no
+a priori reason to believe the value should be the same for
+all halos.
+The numerical calibration factor appears first in
+the treatment of globular cluster gravothermal catastrophe cal-
+culation, where the process is approximated using equations
+valid for heat transfer in a gas [45]. The calibration can be
+considered a “fudge factor” for this assumption, quantifying
+how close the gravothermal heat transfer rate is to the gaseous
+heat transfer. There is no reason to believe that this approxima-
+tion is equally valid for all dark matter halos, especially as the
+mean free path between collisions varies with halo parameters,
+SIDM cross-section, and even within halos.
+In this work, we propose a model for an effective calibration
+parameter 𝛽eff. This effective calibration includes expected
+heat transfer changes for halos between the short and long
+mean-free-path regimes, allowing our core-collapse models
+to apply to a broader set of scenarios. We then use N-body
+simulations, using the guidance of our previous work to avoid
+numerical errors and non-convergence [55], to calibrate this
+effective calibration across a broad range of halo and SIDM
+parameters.
+In Section II we introduce the framework for this study. This
+includes the gravothermal core-collapse model in Section II A,
+our 𝛽eff model derivation in Section II B, N-body simulations
+in Section II C, and simulation analysis methods in Section
+II D. In Section III we present our simulation analysis, and we
+discuss implications in Section IV.
+II.
+METHODS
+A.
+Heat Transfer Regimes: the Long and Short of It
+One method of modeling SIDM core-collapse is the
+gravothermal fluid model, where the transport equations for
+a spherical, virialized, gravothermal fluid are solved numeri-
+cally, with the assumption that at each step in time the halo
+is in hydrostatic equilibrium. A complete description of these
+equations and how to solve them can be found in [44], but
+our challenge of core-collapse calibration can be understood
+through the energy flux equation:
+𝐿(𝑟)
+4𝜋𝑟2 = −𝜅𝜕𝑇(𝑟)
+𝜕𝑟
+,
+(1)
+where 𝐿(𝑟) is is the luminosity through a sphere at radius
+𝑟, and 𝑇(𝑟) is the local temperature defined by the velocity
+dispersion (𝑇(𝑟) ∝𝑣2
+rms(𝑟)). 𝜅is the conductivity coefficient,
+which describes how effectively heat conducts through the
+halo at any given point in space and time. For SIDM core-
+collapse we assume that all of this heat conduction is from
+the dark matter self-interaction, but other systems (such as
+globular clusters) can have significant heat transfer through
+gravitational interactions [45].
+The conductivity 𝜅is not always calculable from first princi-
+ples, but we can build a model for it by understanding limiting
+cases when our SIDM is more strongly or weakly interacting.
+First we will consider the strongly interacting regime, where
+the mean free path 𝜆of the SIDM scattering (the strength of
+which is determined by the cross-section per unit mass 𝜎/𝑚)
+is much smaller than the size of the system 𝐻(where 𝐻is
+approximately equal to the Jeans length 𝐻≃𝑣2
+rms/𝐺𝜌for
+local mass density 𝜌[56]). We will call this the short mean-
+free-path (smfp) regime. We can define the Knudsen number
+𝐾𝑛≡𝜆/𝐻, and say that we are in the smfp regime when
+Kn ≪1. This means that the typical dark matter particle will
+scatter many times before traversing an entire orbit, and that
+particle’s trajectory will accordingly be dominated by dark
+matter self-interactions rather than gravitational interactions.
+In the smfp regime, we can derive 𝜅smfp from first principles
+using kinetic theory:
+𝜅smfp = 75𝜋
+256
+𝑛𝜆2𝑘𝐵
+𝑡𝑟
+,
+(2)
+with no numerical calibration required [49, 52, 57]. In this
+equation 𝑡𝑟is the local relaxation time for elastic SIDM scat-
+tering, 𝑛is the local dark matter particle number density, and
+𝑘𝐵is the Boltzmann constant.
+The second regime to consider is the opposite of the smfp
+regime, the long mean-free-path (lmfp) regime. In the lmfp
+regime self-interactions are relatively weak, and 𝐾𝑛≫1. In
+this case a typical dark matter particle will traverse the system
+many times between rare scattering events, and that individual
+particle’s motion will be dominated by the gravitational po-
+tential rather than dark matter self-interactions. Unlike 𝜅smfp,
+the lmfp heat conduction has not been derived from first prin-
+ciples. The approach in the literature (first used for globular
+clusters in [45]) has been to make an analogy with the thermal
+conductivity of gases, replacing the time between collisions
+with the relaxation time and the distance between collisions
+with the local Jeans length. We can write 𝜅lmfp as:
+𝜅lmfp = 3𝛽
+2
+𝑛𝐻2𝑘𝐵
+𝑡𝑟
+.
+(3)
+
+3
+TABLE I: Important parameters used in this study.
+Variable Definition
+𝑟𝑠
+The scale radius for the NFW density profile, which we use as the initial condition for our simulations (Equation 6).
+𝜌𝑠
+The scale density for the NFW density profile, which we use as the initial condition for our simulations (Equation 6).
+𝜎/𝑚
+The SIDM scattering cross-section per unit mass, which varies between simulations.
+ˆ𝜎
+The dimensionless SIDM cross-section, calculated from 𝑟𝑠, 𝜌𝑠, and 𝜎/𝑚according to Equation 7.
+𝛽
+The dimensionless parameter used in the lmfp heat transfer (Equation 3).
+𝛼
+The dimensionless parameter connecting the lmfp and smfp heat transfer (Equation 5).
+𝛽eff
+The effective heat transfer parameter we define in this study, related to 𝛽via our proposed models (Equations 15, 14, and 17).
+This has a resemblance to Equation 2, but with the inclusion
+of the parameter 𝛽. The 𝛽parameter is an ad-hoc numerical
+parameter that describes potential deviation between the heat
+transfer in a gaseous system and a gravitationally bound dark
+matter halo.
+In gravothermal collapse studies, it is common to consider
+either the limit 𝜆≪𝐻or 𝜆≫𝐻, placing the halo firmly
+in the smfp or lmfp regime respectively. When a transition
+between the two is necessary, the total heat transfer is typically
+calculated as half of the harmonic mean between the two limits:
+𝜅total =
+1
+𝜅−1
+lmfp + 𝜅−1
+smfp
+.
+(4)
+While this solution smoothly connects the two limits, there is
+no reason to believe the true heat transfer would take this exact
+form. This transition regime prescription can be made more
+general by introducing a free parameter 𝛼, and combining the
+conductivities as:
+𝜅total = (𝜅−𝛼
+lmfp + 𝜅−𝛼
+smfp)−𝛼
+(5)
+[50]. We recover Equation4for 𝛼= 1, andaslongas 𝛼> 0 this
+prescription satisfies the appropriate limits as 𝐾𝑛approaches
+0 or ∞.
+Since the mean free path varies with position and time,
+𝐾𝑛cannot be defined globally for a halo. A halo may begin
+evolution with all particles in the lmfp regime, but as core-
+collapse occurs the dense central core will eventually enter
+the smfp regime. A common initial condition is a Navarro-
+Frenk-White (NFW) halo, a cuspy halo that has been shown to
+fit CDM N-body simulations [58]. The equation for an NFW
+density profile is:
+𝜌NFW(𝑟) =
+𝜌𝑠
+𝑟
+𝑟𝑠
+
+1 + 𝑟
+𝑟𝑠
+2 ,
+(6)
+where 𝜌𝑠and 𝑟𝑠are the scale density and radius parameters re-
+spectively [58]. While 𝐾𝑛will vary throughout an NFW halo,
+we can broadly characterize the initial condition by calculating
+the dimensionless cross-section:
+ˆ𝜎= (𝜎/𝑚)𝜌𝑠𝑟𝑠
+(7)
+where 𝜎/𝑚is the SIDM cross-section per unit mass, and 𝜌𝑠
+and 𝑟𝑠are the NFW scale density and length of the initial
+conditions [49]. A halo with ˆ𝜎< 1 begins evolution with
+most or all of the halo in the lmfp regime, and will eventually
+enter the smfp regime due to core-collapse. A halo with ˆ𝜎> 1
+begins evolution with its center in the smfp regime, and falls
+deeper into it due to core-collapse.
+B.
+𝛽Prediction
+In the lmfp regime (ˆ𝜎≪1), Equations 4 and 5 both simplify
+to 𝜅total ≃𝜅lmfp. This approximation becomes less accurate for
+initial conditions approaching ˆ𝜎= 1, however, as 𝜅smfp has
+an increasing influence on 𝜅total. If we use models calibrated
+to the lmfp regime (which we will in our analysis, see section
+II D), we will naturally find discrepancies in these transition
+regime halos, and these discrepancies could be interpreted as a
+variation in 𝛽. When studying how 𝛽may vary with the SIDM
+cross-section and initial conditions, it is important to account
+for and understand this expected variation.
+To quantify and investigate this effect, we define an effec-
+tive parameter 𝛽eff, which is the value found when fitting an
+N-body simulation to gravothermal fluid predictions for the
+lmfp regime. We find 𝛽eff for a given N-body simulation by
+assuming:
+𝜅total = 𝜅lmfp(𝛽eff).
+(8)
+This equation is accurate in the lmfp limit for 𝛽= 𝛽eff since
+𝜅total ≃𝜅lmfp, and it may also be useful close to ˆ𝜎with an
+appropriately varying 𝛽eff.
+To aide our analysis, we will recast our variables into di-
+mensionless quantities. The heat conductivities (Equations 2
+and 3) can be written in terms of the velocity dispersion 𝑣rms
+and local number density 𝑛[49]:
+𝜅smfp = 2.1𝑘𝐵𝑣rms
+𝜎
+,
+𝜅lmfp = 0.27𝛽𝑛𝑣3
+𝑟𝑚𝑠𝜎𝑘𝐵/(𝐺𝑚),
+(9)
+where 𝐺is Newton’s gravitational constant and 𝑘𝐵is Boltz-
+mann’s constant. For ease of calculation, we will convert the
+heat conduction equations to a dimensionless form ˆ𝜅:
+ˆ𝜅smfp = 2.1ˆ𝑣rms
+b𝜎
+,
+ˆ𝜅lmfp = 0.27 × 4𝜋𝛽ˆ𝜌ˆ𝑣3
+rms ˆ𝜎.
+(10)
+
+4
+Here hatted variables correspond to dimensionless quantities,
+with ˆ𝜌= 𝜌/𝜌𝑠and ˆ𝑣rms = 𝑣rms/
+√︁
+4𝜋𝐺𝜌𝑠𝑟2𝑠.
+1.
+Default heat conductivity model
+As a first approach, we will use the transition regime pre-
+scription of Equation 4 in Equation 8, and calculate the implied
+𝛽eff as a function of 𝛽. Expanding Equation 4 gives:
+ˆ𝜅total =
+1
+ˆ𝜅−1
+lmfp + ˆ𝜅−1
+smfp
+=
+1
+1
+0.27 × 4𝜋𝛽ˆ𝜌ˆ𝑣3rms ˆ𝜎+
+ˆ𝜎
+2.1ˆ𝑣rms
+. (11)
+When the lmfp gravothermal solution is calibrated to an N-
+body simulation as described in Section II D, it can be thought
+of as approximating the “true” heat transfer coefficient 𝛽with
+a perfectly lmfp expression. We now define the effective heat
+transfer as 𝜅lmfp(𝛽eff) = 0.27 × 4𝜋𝛽eff ˆ𝜌ˆ𝑣3
+rms ˆ𝜎, and relate it to
+the exact expression for 𝜅total:
+1
+1
+0.27 × 4𝜋𝛽ˆ𝜌ˆ𝑣3rms ˆ𝜎+
+ˆ𝜎
+2.1ˆ𝑣rms
+= 0.27 × 4𝜋𝛽eff ˆ𝜌ˆ𝑣3
+rms ˆ𝜎. (12)
+Here again, 𝛽is the “true” 𝛽for a lmfp halo, while 𝛽eff is the
+effective calibration value that takes into account the correction
+due to the lmfp to smfp transition. 𝛽= 𝛽eff is true only at
+ˆ𝜎→0. We can now derive the relationship between 𝛽and
+𝛽eff:
+𝛽eff =
+1
+1/𝛽+ 1.6 ˆ𝜌ˆ𝑣2rms ˆ𝜎2 .
+(13)
+The halo central density and velocity dispersion values vary
+throughout the core-collapse process, but the halo spends most
+of its evolution in the cored phase.
+Since our quantity of
+interest is the time the halo takes to core-collapse, we can
+evaluate these parameters in the cored phase for our calculation
+and expect our result to give a reasonable approximation of
+the core-collapse time.
+Any inaccuracies would be in the
+early core formation or late collapse time periods, which are
+much shorter than the cored phase and will likely lead to only
+small errors in the total time. Even if this approximation is
+not accurate, if we can validate the resulting model we have
+a working prediction for core-collapse calibration. Using the
+output gravothermal solution [52], we can calculate the halo
+central density and velocity dispersion at the point where the
+isothermal core is at its largest as ˆ𝜌= 2.2 and ˆ𝑣rms = 0.30.
+Using these values we have:
+𝛽eff =
+1
+1/𝛽+ 0.32ˆ𝜎2 .
+(14)
+Given measurements of 𝛽eff from N-body simulations, we can
+calculate the value of 𝛽. For a simple assumption of 𝛽= 1,
+the effective calibration is only a function of ˆ𝜎:
+𝛽eff =
+1
+1 + 0.32ˆ𝜎2 .
+(15)
+We will test this simple assumption against the case where 𝛽
+is freely fit with our N-body simulations.
+2.
+Generalized heat conductivity model
+As mentioned previously, Equation 4 is not necessarily an
+accurate model for the lmfp-smfp transition regime. We will
+now repeat the previous calculation using the generalized tran-
+sition regime prescription in Equation 5. The effective 𝛽cali-
+bration process becomes:
+
+(3.4𝛽ˆ𝜌ˆ𝑣3
+rms ˆ𝜎)−𝛼+
+2.1ˆ𝑣rms
+ˆ𝜎
+−𝛼−1/𝛼
+= 3.4𝛽eff ˆ𝜌ˆ𝑣3
+rms ˆ𝜎.
+(16)
+The relation between 𝛽eff and 𝛽becomes:
+𝛽eff =
+1
+3.4 ˆ𝜌ˆ𝑣3rms ˆ𝜎
+
+(3.4𝛽ˆ𝜌ˆ𝑣3
+rms ˆ𝜎)−𝛼+
+2.1ˆ𝑣rms
+ˆ𝜎
+−𝛼−1/𝛼
+=
+
+𝛽−𝛼+
+3.15
+ˆ𝜎2
+−𝛼−1/𝛼
+.
+(17)
+In this study we treat 𝛽and 𝛼as free parameters in our fit, and
+test the performance of Equation 17 against N-body simula-
+tions.
+C.
+Simulations
+We simulate isolated, dark matter only, SIDM halos using
+the N-body code Arepo [59] with a previously tested SIDM
+module [60–62].
+Our N-body simulations have three free
+parameters: ˆ𝜎(Equation 7), the initial NFW mass 𝑀200𝑚, and
+the initial NFW concentration 𝑐200𝑚. The subscript 200𝑚here
+represents the mass and concentration definition used, where
+𝑀200𝑚is defined as the mass enclosed within the spherical
+region where the average density is 200 times cosmological
+mean mass density, and 𝑐200𝑚is the concentration within that
+same region. 𝑀200𝑚and 𝑐200𝑚fully determine the halo profile
+just as 𝑟𝑠and 𝜌𝑠do (see Equation 6), and one can derive one
+pair of parameters from the other.
+For our initial conditions, we sample 4 halo masses (ranging
+from 107.5 M⊙to 1013.5 M⊙) and 4 concentrations (ranging
+from 8 to 26). The masses and concentrations are chosen to
+cover a large range of plausible values, starting at dwarf galaxy
+scales and ending at scales of large galaxies comparable to the
+Milky Way [63, 64].
+For each combination of halo mass
+and concentration we run isolated simulations at 6 different ˆ𝜎
+values (ranging from 10−1 to 100.5) by altering the SIDM cross-
+section 𝜎/𝑚. Parameters for the full set of 96 simulations are
+given in Table II.
+Our initial halos are generated using the SpherIC code [65].
+The density profile sampled by SpherIC is based on the NFW
+profile (Equation 6), but is suppressed at large radii to produce
+a finite halo mass. The sampled density profiled is equal to the
+NFW profile at radii less than the virial radius 𝑅200 (defined
+as the radius at which the local mass density is equal to 200
+times the critical density of the Universe), but for 𝑟> 𝑅200 is
+truncated as:
+
+5
+TABLE II: The halo parameters tested in our simulations. Each of the four subtables corresponds to one halo mass, indicated in
+the top left corner. Each row corresponds to one concentration, and each column to one ˆ𝜎value. The number in each cell is the
+SIDM cross-section 𝜎/𝑚(in units of cm2/g) required to get the desired ˆ𝜎at the indicated 𝑀200𝑚and 𝑐200𝑚values.
+𝑀200𝑚= 107.5 M⊙
+ˆ𝜎= 10−1
+ˆ𝜎= 10−0.75
+ˆ𝜎= 10−0.5
+ˆ𝜎= 10−0.25
+ˆ𝜎= 100
+ˆ𝜎= 100.5
+𝑐200𝑚= 8
+369.3
+656.7
+1,168
+2,077
+3,693
+11,680
+𝑐200𝑚= 14
+163.6
+290.9
+517.3
+919.9
+1,636
+5,173
+𝑐200𝑚= 20
+94.49
+168.
+298.8
+531.4
+944.9
+2,988
+𝑐200𝑚= 26
+62.35
+110.9
+197.2
+350.6
+623.5
+1,972
+𝑀200𝑚= 109.5 M⊙
+ˆ𝜎= 10−1
+ˆ𝜎= 10−0.75
+ˆ𝜎= 10−0.5
+ˆ𝜎= 10−0.25
+ˆ𝜎= 100
+ˆ𝜎= 100.5
+𝑐200𝑚= 8
+79.57
+141.5
+251.6
+447.4
+795.7
+2,516
+𝑐200𝑚= 14
+35.24
+62.67
+111.4
+198.2
+352.4
+1,114
+𝑐200𝑚= 20
+20.36
+36.2
+64.38
+114.5
+203.6
+643.8
+𝑐200𝑚= 26
+13.43
+23.89
+42.48
+75.53
+134.3
+424.8
+𝑀200𝑚= 1011.5 M⊙
+ˆ𝜎= 10−1
+ˆ𝜎= 10−0.75
+ˆ𝜎= 10−0.5
+ˆ𝜎= 10−0.25
+ˆ𝜎= 100
+ˆ𝜎= 100.5
+𝑐200𝑚= 8
+17.14
+30.48
+54.21
+96.4
+171.4
+542.1
+𝑐200𝑚= 14
+7.593
+13.5
+24.01
+42.7
+75.93
+240.1
+𝑐200𝑚= 20
+4.386
+7.799
+13.87
+24.66
+43.86
+138.7
+𝑐200𝑚= 26
+2.894
+5.146
+9.151
+16.27
+28.94
+91.51
+𝑀200𝑚= 1013.5 M⊙
+ˆ𝜎= 10−1
+ˆ𝜎= 10−0.75
+ˆ𝜎= 10−0.5
+ˆ𝜎= 10−0.25
+ˆ𝜎= 100
+ˆ𝜎= 100.5
+𝑐200𝑚= 8
+3.693
+6.567
+11.68
+20.77
+36.93
+116.8
+𝑐200𝑚= 14
+1.636
+2.909
+5.173
+9.199
+16.36
+51.73
+𝑐200𝑚= 20
+0.9449
+1.68
+2.988
+5.314
+9.449
+29.88
+𝑐200𝑚= 26
+0.6235
+1.109
+1.972
+3.506
+6.235
+19.72
+𝜌trunc(𝑟) = 𝜌NFW(𝑅200)
+
+𝑟
+𝑅200
+ 𝛿
+𝑒−10
+7
+
+𝑟
+𝑅200 −1
+
+(18)
+with the cutoff slope:
+𝛿= 10
+3 −1 + 3𝑐200𝑚
+1 + 𝑐200𝑚
+.
+(19)
+Based on our findings in [55], we run all simulations with
+𝑁= 106 particles, 𝜂= 0.001 (where 𝜂is the dimensionless
+parameter dictating the timestep size), and softening length 𝜖
+given by
+𝜖(𝑁, 𝑐) = 𝑟𝑠
+h
+ln (1 + 𝑐) −
+𝑐
+1 + 𝑐
+i
+√︄
+0.32(𝑁/1000)−0.8
+1.12𝑐1.26
+(20)
+[24, 66], as these choices resulted in well converged results.
+Each simulation is run into the core-collapse regime, where
+the central density is at least 100𝜌𝑠.
+D.
+Measuring 𝛽
+To measure 𝛽from an N-body simulation, we first compute
+the halo central density as a function of time. To calculate
+the central mass density for a given snapshot, we use the same
+method as [55], which is based on [48].
+This calculation
+assumes the profile within the core radius 𝑟𝑐is an isothermal
+sphere, and finds 𝑟𝑐iteratively using the constraint:
+𝑟𝑐=
+√︃
+𝑣2𝑐/4𝜋𝐺𝜌𝑐
+(21)
+with 𝑣𝑐as the velocity dispersion inside 𝑟𝑐, and the density 𝜌𝑐
+defined as a function of the mass 𝑀(𝑟𝑐) enclosed within 𝑟𝑐:
+𝜌𝑐≡1.10 × 𝑀(𝑟𝑐)
+ 4
+3𝜋𝑟3
+𝑐.
+(22)
+The factor of 1.10 is the ratio between the central density and
+the average density within 𝑟𝑐, and can be found in [48]. To
+calculate 𝑟𝑐we begin with an initial guess and use that value
+to compute 𝑣𝑐and 𝜌𝑐. We then use those values in Equation
+21 to find a new 𝑟𝑐, and iterate until the radius converges.
+Once the central density evolution is computed, we measure
+𝛽eff by fitting our simulation data to the predicted evolution
+found in [52]:
+log 𝜌core =𝐴[log 𝛽eff ˆ𝜎ˆ𝑡−(𝐸+ 3)]2 + 𝐶
++
+𝐷
+𝐸+ 0.0001 −log 𝛽eff ˆ𝜎ˆ𝑡
+(23)
+where A, C, D, and E are constants calibrated to a gravothermal
+fluid solution in the lmfp regime, and ˆ𝑡= 𝑡
+√︁
+4𝜋𝐺𝜌𝑠. We use
+𝐴= −0.1078, 𝐶= −21.64, 𝐷= 21.11, and 𝐸= 2.238 [52].
+This model is valid from core formation until collapse, when
+1.341 < log10(𝛽eff ˆ𝜎ˆ𝑡) < 2.238, and we consider only this
+region of data in our fitting.
+
+6
+0
+50
+100
+150
+200
+eff t
+101
+102
+103
+104
+c/
+s
+= 10
+1.0
+= 10
+0.75
+= 10
+0.5
+= 10
+0.25
+= 100
+= 100.5
+Gravothermal Solution
+FIG. 1: Halo central density evolution for the simulation
+batch with 𝑀200𝑚. The horizontal axis is a dimensionless
+time unit scaled by the best fit 𝛽eff found for each individual
+simulation. Each line color corresponds to one ˆ𝜎value as
+noted in the legend, and the black dashed line is the
+gravothermal solution (Equation 23).
+The gravothermal fluid solution the above model is cali-
+brated to was run with 150 radial bins. Preliminary conver-
+gence tests with up to 300 bins showed small deviations in
+the core-collapse evolution, suggesting there may be numeri-
+cal errors in the solution due to non-convergence. Since the
+difference was small and increasing the bin count was numeri-
+cally costly, we are proceeding in our analysis using the 150 bin
+count and investigating the potential numerical effects further
+for use in future work.
+The model above is calibrated to the lmfp regime, but in our
+study we simulate halos up to ˆ𝜎= 100.5. This allows us to test
+the transition region between long and short mean-free-paths,
+and determine the range of validity for the lmfp solution.
+III.
+RESULTS
+Figure 1 shows the 𝛽eff fitting results for the simulation set
+with 𝑀200𝑚= 1010.5M⊙and 𝑐200 = 26. We choose this case
+as an example, of both the core-collapse process and our 𝛽eff
+fitting process. In this figure we plot the dimensionless central
+density (calculated with Equation 22) against a dimensionless
+time parameter scaled by 𝛽eff. In this figure we can see the
+core-collapse process: the density first falls to a minimum in
+the cored phase, and then slowly increases until suddenly and
+sharply increasing as the core collapses.
+Following Section II D, the best fit 𝛽eff for each individual
+simulation is found by fitting the central density (solid lines, ˆ𝜎
+designated by color) to Equation 23 (dashed black line). The
+only effect of changing 𝛽eff in this figure is scaling the horizon-
+tal axis for an individual simulation, which will align that sim-
+ulation to the gravothermal solution at the correct 𝛽eff. For this
+fit we only consider data after core formation and before critical
+core collapse, by the criterion 1.341 < log10(𝛽eff ˆ𝜎ˆ𝑡) < 2.238.
+This is the effective range of Equation 23, and can be seen as
+the shaded region in Figure 1.
+We can see that for this sample of simulations, the fit is
+reasonably accurate (predicting evolution close to the model
+up until the final rapid stage of core-collapse) for all ˆ𝜎values
+except for the largest, ˆ𝜎= 100.5, which visibly deviates from
+the gravothermal model earlier and more significantly than
+the other simulations. The deviation of the largest ˆ𝜎is not
+surprising, since it is the simulation which is most strongly in
+the smfp regime, while Equation 23 is known only to be valid
+in the lmfp regime.
+Since ˆ𝜎= 100.5 is not well fit by the gravothermal model,
+the 𝛽eff measured from these simulations will not be robust,
+and different values could be found by altering the way in
+which the model is fit to the data. For this reason we will not
+include the 𝛽eff values measured from the smfp simulations in
+the rest of our results, and instead focus on ˆ𝜎≤1.0 where the
+fit is accurate. Figure 1 is an example of only one mass and
+concentration pair, but all other combinations have a similar
+fit accuracy.
+Once 𝛽eff values are measured for all simulations, we use the
+optimize.curve_fit method [67] from the scipy Python
+package [68] to fit Equations 14 (where 𝛼= 1 and 𝛽varies) and
+17 (where both 𝛽and 𝛼can vary) to the data. For this fitting,
+we omit the data at ˆ𝜎= 1, because neither of our models were
+capable of accurately representing it simultaneously with the
+lowest ˆ𝜎data. Since we are using the lmfp heat transfer model
+to construct these fits, it is unsurprising that reaching ˆ𝜎may
+produce behavior we cannot accurately represent.
+Figure 2 shows 𝛽eff measurements as a function of ˆ𝜎for
+all masses and concentrations. For each mass we display the
+Equation 17 best fit as a solid black line, and include the fit
+values panel legends. We also display the fit to Equation 14
+(which fixes 𝛼= 1 but allows 𝛽to vary, as is often done in
+the literature [44, 49]) for each panel as the dashed black line,
+and display fit values in the legends. The dotted black line on
+each panel is Equation 15 where 𝛽= 𝛼= 1, our simplest case
+using the order of magnitude estimate for 𝛽. All fits assume 𝛽
+and 𝛼are constant for each halo mass, and do not vary with
+concentration or ˆ𝜎.
+To evaluate the accuracy of our models, we compute the
+reduced chi-squared test statistic 𝜒2
+𝜈for each combination of
+model (Equation 15, 14, or 17) and halo mass. For our analysis
+we assume the dominant error is the scatter in 𝛽eff between
+different 𝑐200𝑚values, quantified as the standard error of the
+mean. We report 𝜒2
+𝜈values for the Figure 2 fits in the first
+four rows of Table III. These statistics show that Equation 17
+(where we allow both 𝛽and 𝛼to vary as fit parameters) is the
+preferred model in each case (as this model has 𝜒2
+𝜈closest to
+1), although the highest mass may be overfitting.
+Qualitatively, Equations 14 and 17 appear to behave sim-
+ilarly with some small noticeable differences. Equation 14,
+where 𝛼is fixed at 1, matches the ˆ𝜎= 1 data well even though
+these points were not included in the fit. This fit does not
+predict lower ˆ𝜎data well however, leveling out at a 𝛽eff value
+
+7
+0.4
+0.6
+0.8
+1.0
+1.2
+eff
+M = 107.5M
+= 1.0
+= 1.0
+= 0.952
+= 1.0
+= 0.966
+= 0.911
+c200m = 8
+c200m = 14
+c200m = 20
+c200m = 26
+10
+1
+100
+0.4
+0.6
+0.8
+1.0
+1.2
+eff
+M = 109.5M
+= 1.0
+= 1.0
+= 0.927
+= 1.0
+= 0.950
+= 0.923
+10
+1
+100
+0.4
+0.6
+0.8
+1.0
+1.2
+eff
+M = 1011.5M
+= 1.0
+= 1.0
+= 0.924
+= 1.0
+= 0.954
+= 0.889
+10
+1
+100
+0.4
+0.6
+0.8
+1.0
+1.2
+eff
+M = 1013.5M
+= 1.0
+= 1.0
+= 0.928
+= 1.0
+= 0.944
+= 0.898
+FIG. 2: Calibration parameter 𝛽eff as a function of ˆ𝜎for four different initial halo masses. For each mass, the halo concentration
+is displayed by the marker color and symbol. The ˆ𝜎= 1 data, which was not included in the model fitting, is displayed in lower
+opacity. The lines represent our three models. The dotted black line is the simplest case of Equation 15, with 𝛽= 𝛼= 1 and no
+free parameters. The dashed black line is the fit to Equation 14, where 𝛽can vary and 𝛼= 1. The solid black line is the fit to
+Equation 17, Where both 𝛽and 𝛼are permitted to vary. Best fit values for our models are given in the panel legends.
+slightly lower than the data. Equation 14, where 𝛼is allowed
+to vary, shifts to match the low ˆ𝜎data at the expense of ˆ𝜎= 1.
+There is no clear correlation between 𝛽eff and concentra-
+tion, with the exception of the 𝑐= 26 case appearing on the
+extreme end of the range for a given ˆ𝜎. This suggests that
+𝛽eff does not significantly depend on concentration, and that
+the observed variation may be due to realization noise in the
+initial conditions or scattering calculations.
+Considering the possibility that the 𝛽eff variation across con-
+centration values may not be physically meaningful, we can
+calculate the average calibration factor ⟨𝛽eff⟩across concen-
+tration at each 𝑀200𝑚and ˆ𝜎combination. Figure 3 shows
+the variation of this concentration-averaged 𝛽as a function
+of ˆ𝜎, with different halo masses indicated with marker style.
+
+8
+10
+1
+100
+0.6
+0.7
+0.8
+0.9
+1.0
+1.1
+eff
+= 1.0
+= 1.0
+= 0.930
+= 1.0
+= 0.949
+= 0.899
+M = 107.5M
+M = 109.5M
+M = 1011.5M
+M = 1013.5M
+FIG. 3: Calibration parameter 𝛽eff averaged over initial halo
+concentration. The solid line is the best fit Equation 17, with
+fit values 𝛽and 𝛼displayed in the top right corner. The
+dashed black line is the fit to Equation 14, which is the 𝛽eff
+prediction with 𝛼= 1. The dotted black line is the simplest
+case, with 𝛽= 𝛼= 1 and no free parameters.
+TABLE III: 𝜒2
+𝜈values for the fits performed in Figure 2 (top
+four rows) and Figure 3 (bottom row).
+Eqn. 15 Eqn. 14 Eqn. 17
+𝑀200𝑚= 107.5M⊙
+20.6
+3.11
+2.03
+𝑀200𝑚= 109.5M⊙
+204
+12.0
+1.28
+𝑀200𝑚= 1011.5M⊙
+92.0
+6.85
+0.535
+𝑀200𝑚= 1013.5M⊙
+271
+10.9
+0.0321
+All Masses
+335
+6.97
+1.71
+We also fit both Equations 14, 17 with the same method as in
+Figure 2, and display the simple 𝛽= 𝛼= 1 model of Equation
+15.
+The fits in Figure 3 perform similarly to the individual mass
+fits in Figure 2, and 𝜒2
+𝜈values are given in the final row of Table
+III. We see that Equation 15 (dotted black line, 𝛽= 𝛼= 1)
+fails to fit the data, but that the generalized heat conductivity
+(solid black line, Equation 17) works well for ˆ𝜎< 1. The
+intermediate model with 𝛼= 1 but 𝛽allowed to vary finds
+has similar drawbacks as in Figure 2, with difficulty fitting
+both the asymptotic ˆ𝜎≪1 and the bend in measured ⟨𝛽eff⟩
+simultaneously.
+IV.
+SUMMARY AND DISCUSSION
+In this study we investigate the SIDM core-collapse cali-
+bration factor 𝛽, and its potential variation between different
+dark matter halos and SIDM cross-sections. We find that the
+gravothermal model matches N-body simulation results if we
+treat 𝛽as a constant value, but define an effective calibration
+𝛽eff that accounts for expected variation in the heat transfer as
+a function of halo parameter ˆ𝜎. We propose two methods for
+modeling 𝛽eff: Equation 14 which includes 𝛽as the only fit
+parameter, and Equation 17 which also allows the transition
+regime slope 𝛼to vary. We find that:
+• The core-collapse evolution in our N-body simulations
+is accurately modeled by the lmfp gravothermal model
+(Equation 23) when we treat 𝛽and 𝛼as halo independent
+parameters, and compute the 𝛽eff parameter as a function
+of only ˆ𝜎. This method is effective for ˆ𝜎< 1 (see Figure
+3).
+• Our two models for 𝛽eff (Equations 14 and 17) perform
+substantially better than the order of magnitude approx-
+imation (Equation 15), and allowing 𝛼to vary increases
+performance at low ˆ𝜎compared to fixing 𝛼= 1.
+The success of our model for halo independent 𝛽and 𝛼
+values suggests that some of the variation of 𝛽eff values used
+in the literature is due to inaccurate heat transfer in the lmfp to
+smfp transition regime, rather than a variation in the original
+𝛽parameter derived for the lmfp regime in [45]. If a 𝛽fitting
+method assumes the lmfp heat transfer, the value being found
+is what we define as 𝛽eff. Regardless of the reason for the vari-
+ation we find, calibrating a single 𝛽eff value and attempting to
+apply it to different halos will lead to inaccurate results, espe-
+cially in measurements that are sensitive to the core-collapse
+time, like substructure lensing.
+While the calibration variation quantified in this study can
+account for some of the different 𝛽values in the literature, it
+cannot account for all of it. For example, the N-body simu-
+lation of an isolated, core-collapsing, NFW halo presented in
+[48] and further analyzed in [49] reports 𝛽= 0.75. This halo
+has parameters 𝑀200𝑚= 1010.56, 𝑐200𝑚= 9.20, and ˆ𝜎= 0.088,
+placing it well within the range of parameters we tested. Us-
+ing our best fit parameters in Equation 17, we would predict
+𝛽eff = 0.949. When we apply our 𝛽eff fitting method to the
+N-body data used in [48], we find 𝛽eff ≃0.7, which clearly con-
+tradicts our predicted value1. Our simulations were conducted
+with the convergence guidelines developed in our previous
+study [55], suggesting there is a significant different between
+the simulation in [48] and the simulations conducted in this
+study. This difference could be initial conditions, boundary
+conditions, or any number of simulation parameters and meth-
+ods that differ between Arepo and the version of GADGET
+adapted for use in [48].
+1 N-body data acquired in private communication with the authors of [48].
+
+9
+In addition to the potential systematic effects from halo
+initial conditions, boundary conditions, or simulation param-
+eters, there is also further work to be done of the accuracy of
+calibrating 𝛽eff with our method. We assume the scatter in
+𝛽eff values between our simulations at different concentration
+values to be the dominant source of uncertainty when comput-
+ing the statistics in Table III, but we do not account for initial
+condition realization noise or uncertainty in measuring halo
+central density. We run simulations with 106 to try and avoid
+significant realization noise as indicated in our convergence
+testing study [55], but the exact level of variation from this ef-
+fect is unclear without sampling more halos from the specific
+set of initial condition parameters used in this paper. Finally,
+we assume that the scatter in 𝛽eff values between different halo
+concentrations and masses is attributable to random variation,
+but it is possible there is a real systematic dependence on those
+parameters rather than just ˆ𝜎. While that variation appears
+to be small enough to ignore in this study, future more pre-
+cise observational measurements may demand equally precise
+analytical methods, and our method may require adaptation.
+Our results support a fixed value 𝛽and 𝛼for all halos with
+ˆ𝜎< 1, regardless of mass, concentration, or SIDM cross-
+section. The 𝛽eff model of Equation 17 with 𝛽= 0.949 and 𝛼=
+0.899 matches the N-body data simulated across a wide range
+of halo concentrations and masses, suggesting our findings
+can be applied to a diverse set of dark matter halos.
+This
+model for 𝛽eff can be used in the empirical density profile
+discussed in [52] to predict the state of a core-collapsing halo
+as a function of time, without the need to calibrate to costly
+N-body simulations.
+ACKNOWLEDGEMENTS
+We thank Frank van den Bosch, Stacy Kim, Daneng Yang,
+and Manoj Kaplinghat for useful discussions.
+This work was supported in part by a grant from the OSU
+College of Arts and Sciences Division of Natural and Mathe-
+matical Sciences. This work was also supported by grant NSF
+PHY-2309135 to the Kavli Institute for Theoretical Physics
+(KITP). S. Yang acknowledges support from the Director’s
+postdoctoral fellowship funded by the Laboratory Directed Re-
+search and Development (LDRD) program of Los Alamos Na-
+tional Laboratory (LANL) under project No. 20240863PRD2.
+Z.C. Zeng is partially supported by the Presidential Fellowship
+of the Ohio State University Graduate School.

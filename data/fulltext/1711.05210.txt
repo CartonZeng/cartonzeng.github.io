@@ -1,0 +1,675 @@
+Evidence of Neutrino Enhanced Clustering in a Complete Sample of Sloan Survey Clusters,
+Implying P mν = 0.119 ± 0.034 eV
+Razieh Emami,1, 2, ∗Tom Broadhurst,3, 4 Pablo Jimeno,3 George Smoot,5, 6, 7 Raul Angulo,8
+Jeremy Lim,9, 10 Ming Chung Chu,11 Shek Yeung,11 Zhichao Zeng,11, 12 and Ruth Lazkoz3
+1Center for Astrophysics, Harvard-Smithsonian, 60 Garden Street, Cambridge, MA 02138, USA
+2 Institute for Advanced Study, The Hong Kong University of Science and Technology, Clear Water Bay, Kowloon, Hong Kong
+3Department of Theoretical Physics, University of the Basque Country UPV-EHU, 48040 Bilbao, Spain
+4IKERBASQUE, Basque Foundation for Science, Alameda Urquijo, 36-5 48008 Bilbao, Spain
+5 Helmut and Anna Pao Sohmen Professor-at-Large, IAS,
+Hong Kong University of Science and Technology, Clear Water Bay, Kowloon, 999077 Hong Kong, China
+6Paris Centre for Cosmological Physics, APC, AstroParticule et Cosmologie, Universit´e Paris Diderot,
+CNRS/IN2P3, CEA/lrfu, Observatoire de Paris, Universit´e Sorbonne Paris Cit´e,
+10, rue Alice Domon et Leonie Duquet, 75205 Paris CEDEX 13, France
+7Physics Department and Lawrence Berkeley National Laboratory, University of California, Berkeley, 94720 CA, USA
+8Centro de Estudios de F sica del Cosmos de Arag on, Plaza de San Juan 1, 44001 Terue, spain
+9Department of Physics, The University of Hong Kong, Pokfulam Road, Hong Kong
+10Laboratory for Space Research, Faculty of Science, The University of Hong Kong, Pokfulam Road, Hong Kon
+11Department of Physics, The Chinese University of Hong Kong, Shatin, N.T., Hong Kong, China
+12Department of Physics, Ohio State University, Columbus, Ohio 43210, USA
+The clustering amplitude of 7143 clusters from the Sloan Digital Sky Survey (SDSS) is found to increase with
+cluster mass, closely agreeing with the Gaussian random ﬁeld hypothesis for structure formation. The amplitude
+of the observed cluster correlation exceeds the predictions from pure cold dark matter (CDM) simulation by
+≃6% for the standard Planck-based values of the cosmological parameters. We show that this excess can be
+naturally accounted for by free streaming of light neutrinos, which opposes gravitational growth, so clusters
+formed at ﬁxed mass are fewer and hence more biased than for a pure CDM density ﬁeld. An enhancement of the
+cluster bias by 7% matches the observations, corresponding to a total neutrino mass, mν = 0.119 ± 0.034 eV at
+67% conﬁdence level, for the standard relic neutrino density. If ongoing laboratory experiments favor a normal
+neutrino mass hierarchy then we may infer a somewhat larger total mass than the minimum oscillation based
+value, P mν ≃0.056eV, with 90% conﬁdence. Much higher precision can be achieved by applying our method to
+a larger sample of more distant clusters with weak lensing derived masses.
+PACS numbers:
+INTRODUCTION
+The standard picture whereby cosmic structure develops
+gravitationally from a Gaussian random ﬁeld (GRF) predicts
+that the amplitude of clustering should increase steadily with
+density contrast [1–5]. This inherent property of a GRF is
+known as the clustering “bias”, and was ﬁrst employed by [1]
+to explain the approximately factor of three larger correlation
+length of nearby massive galaxy clusters relative to ﬁeld galax-
+ies. Subsequent N-body simulations have fully demonstrated
+that collapsed halos formed from a GRF should be biased in
+this fundamental way [6]. Simulations also predict that the
+clustering bias should increase with redshift as halo abundance
+declines with redshift, particularly for the most massive clus-
+ters. The eﬀect of light neutrinos is to smooth the density
+ﬁeld thereby slowing the growth of structure, thus reducing
+the abundance of clusters [7] while enhancing the clustering
+amplitude relative to a pure CDM density ﬁeld.
+Measuring this fundamental link between halo mass and
+clustering bias has not proven feasible using galaxies. Not only
+are the virial masses of galaxies hard to deﬁne observationally,
+but galaxy correlation functions have been found to depend
+strongly on galaxy type and luminosity with a complexity that
+cannot be simply linked to the growth of structure. In con-
+trast, cluster masses can be directly inferred from gravitational
+lensing and correlate almost linearly with the number of mem-
+ber galaxies, following a clear mass-richness (MR) relation
+[8, 10, 15–17].
+Large surveys are now underway to realize the anticipated
+sensitivity of cluster abundance to the growth of the cluster
+mass function [18], including a predicted small additional sup-
+pression of their numbers by neutrino free-streaming [19–21].
+This suppression is claimed to be close to detection in an initial
+SZ-selected sample of 370 clusters [22] and in combination
+with other methods provides P mν ≲0.14ev ([25, 26]), tight-
+ening the robust 95% upper limit of < 0.25 eV from the pure
+Planck analysis [27]. This claimed improvement over Planck
+rests on uncertain assumptions about the inherent spread in
+mass of strong SZ detected clusters, as cluster collisions com-
+press the gas thereby boosting the SZ signal [29, 30][28].
+Here we develop and apply a clustering based method that
+is sensitive to the eﬀect of neutrinos, using the correlation
+length of optically detected clusters from the thoroughly tested
+and currently largest and most complete survey of SDSS clus-
+ters identiﬁed by the RedMapper team [31–33]. This large
+RedMapper has made redshift complete in our earlier work
+[9, 10] by cross correlation with the BOSS spectroscopic data,
+which includes over 7000 clusters for which precise correlation
+arXiv:1711.05210v3  [astro-ph.CO]  17 Oct 2019
+
+2
+functions have been estimated [9, 10]. The correlation function
+scales as the square of the bias and, as we show here, is already
+sensitive enough to detect the eﬀects of neutrino mass inferred
+from the oscillation experiments of P mν ≃0.056eV.
+We rely on the latest Planck determinations of all the cos-
+mological parameters [46] required here for the theoretical
+calculation of the bias enhancement by neutrinos and for
+the comparison with the MXXL cosmological simulations,
+where for a ﬂat cosmology, ΩΛ = 0.6911, Ωm = 0.3089,
+Ωb = 0.0497, h = 0.6773 and the amplitude of the primor-
+dial power-spectrum As = 2.142 × 10−9, and hence the only
+ﬂexible quantity is the cold dark matter density, deﬁned as,
+Ωc = Ωm −Ωb −Ων, with Ωνh2 ≡(1.015)3/4mν
+94.07 ev . We havIn this
+analysis we examine ﬁrst one species of dominantly massive
+neutrino, corresponding to the standard neutrino hierarchy, and
+then we discuss implications for the inverted hierarchy, which
+may be favored by our results. We emphasis here that we are
+safe from the simulation to simulation scatter discussed by Tin-
+ker [37] owing to the relatively narrow halo mass and redshift
+range that we consider.
+NEUTRINO BIAS ENHANCEMENT FOR CLUSTERS
+We ﬁrst present a consistent formalism for the biasing eﬀect
+of light neutrinos on cluster scales, emphasizing that the cluster
+correlation provides a relatively sensitive way of detecting
+the eﬀect of standard relic neutrinos. We then compare the
+cluster correlation function predicted by our analysis with that
+measured for the galaxy clusters from the SDSS selected in the
+manner described above.
+Theoretical Considerations
+Here we estimate the eﬀect of light neutrinos on the
+correlation function of clusters using the empirically peak
+background split approximation [5], hereafter Sheth-Tormen
+(ST).
+In the ST approach, the bias is deﬁned as,
+bS T ≡aν1 −1
+δc
++
+2p/δc
+1 + (aν1)p ,
+(1)
+here ν1 ≡(δc/σ0)2 where δc refers to the critical over-
+density.
+In addition, σ2
+0
+≡
+ 1
+2π2
+ R
+dkk2P(k)W2(kR) de-
+notes the 0-th spectral moment of the matter power-
+spectrum and we use the top hat ﬁlter function, W(kR) =
+3 (sin (kR) −kR cos (kR)) /(kR)3, as a smoothing factor. We
+use the usual simulation calibrated free parameter preferences,
+a = 0.707, p = 0.3. We compute the 0-th spectral moment of
+the matter power-spectrum as well as the critical over-density.
+The former can be calculated using the matter power spectrum,
+conveniently given by the CAMB code [38, 55].
+To estimate the critical over-density for cluster formation, we
+determine the linearly evolved value of the initial over-destiny
+required to have a collapse at red-shift z. Adopting spherical
+collapse, which is a good estimate for heavy halos, we then
+calculate the evolution of the CDM + Baryon over-density,
+δcb ≡(¯ρcδc + ¯ρbδb) / (¯ρc + ¯ρb) as,
+¨δcb + 2H˙δcb −4
+3
+˙δ2
+cb
+1 + δcb
+−3H2
+0
+2
+(Ωcbδcb + Ωνδν) (1 + δcb) = 0,
+¨R + GM
+R2 + H2
+0
+Ωra−4 +
+ρνpν
+3H2
+0M2
+P
+−ΩΛ
+R + GδMν(< R)
+R2
+= 0,
+(2)
+where ρν = 2
+R
+d3p
+(2π)3
+√
+p2+m2ν
+exp (p/Tν)+1 refers to the neutrino en-
+ergy density and pν = 2
+R
+d3p
+(2π)3
+p2
+√
+p2+m2ν
+1
+exp (p/Tν)+1 denotes
+the neutrino pressure. Here Tν =
+ 1.95491
+a
+
+K is the phys-
+ical temperature. In addition, Ωcb ≡(Ωc + Ωb) a−3, δν ≡
+δMν(<
+R)/
+
+4πR3H2
+0M2
+PΩν
+
+in which
+δMν(<
+R)
+=
+mν
+R
+Vc d3r
+R
+d3q
+(2π)3 f1(q, r, t) refers to the neutrino mass function
+interior to the radius R. f1 is the linear perturbation to the
+neutrino distribution function, f = f0 + f1, which can be calcu-
+lated from the evolution of the radius R, in the absence of the
+neutrino clustering, [40], as,
+f1(r, q, η) = 2mν
+Tν
+Z t
+t0
+dt′
+a(t′)
+exp (q/Tν)
+den  1 + exp (q/Tν)2
+GδM(t′)
+r2
+×
+ 
+α q
+Tν
+−ˆq · ˆr
+! a3(t′)r3
+R3
+Θ
+
+r2 
+1 + q2/T 2
+ν α2 −2q/Tνα
+
+<
+R2(t′)
+a2(t′)
+
++
+Θ
+
+r2 
+1 + q2/T 2
+ν α2 −2q/Tναˆq · ˆr
+
+≥R2(t′)
+a2(t′)
+
+ 1 + q2/T 2ν α2 −2q/Tναˆq · ˆr3/2
+
+.
+(3)
+where δM(t) = M −4π
+3 ¯ρcbR3 and Θ denotes the Heaviside step
+function. In addition, α is deﬁned as α ≡Tν (η −η′) /(mνr)
+and η is deﬁned as, a2dη = dt, note that both r and q are comov-
+ing quantities. These are the set of the diﬀerential equations
+that must be solved together with the evolution of the Hubble
+parameter: H2 = H2
+0
+
+Ωγa−4 + (Ωc + Ωb)a−3 + ΩΛ +
+ρν
+(3M2
+PH2
+0)
+
+We now describe the initial conditions, for which there are
+three independent, relevant quantities, δcb,ini, ˙δcb,ini, aini. The
+ﬁrst determines the collapse redshift that relates to second con-
+dition via: ˙δcb,ini = δcb,ini
+ d ln δcb(t)
+dt
+
+|,ini, where the term in the
+parenthesis is free of any normalization and can be extracted
+from the CAMB code. Initiating the evolution at z ≃200,
+we also read oﬀthe value of the initial scale factor. Using
+the above quantities, we can obtain Rini = ¯Rini
+
+1 −1
+3δcb,ini
+
+and ˙Rini = Hini ¯Rini
+
+1 −1
+3δcb,ini −1
+3H−1
+ini ˙δcb,ini
+
+, where ¯Rini =
+
+3M
+4πρcb,ini
+1/3 depends on the value of the halo mass.
+Next, we compute the evolution of system. The only un-
+known quantity is the redshift of collapse. We treat this as
+a perturbation to an Einstein-de (Ed) Sitter universe with a
+constant critical over-density [41, 42], δc,Ed = 1.68647, by
+truncating the evolution at a redshift once the non-linear over-
+density for any cosmology reaches this number. We then read
+
+3
+oﬀthe linearly evolved over-density at this reference redshift
+as the critical over-density. We checked the robustness of our
+critical over-density by choosing another method in which we
+write the spherical collapse equations in terms of 1/δ instead of
+δ, thus removing the need to specify the actual collapse. Com-
+paring the results of these two methods, we found a diﬀerence
+of only 0.01% thus ensuring that the results are independent of
+the method we use. We now have the information necessary to
+compute the bias for ST.
+5
+10
+20
+30
+r
+£
+h −1 Mpc
+¤
+101
+102
+Ξ(r )
+λ1 ∈[22, 30)
+λ2 ∈[30, 45)
+λ3 ∈[45, 200)
+MXXL clustering
+MXXL abundances
+FIG. 1: Measured correlation functions of ReDMaPPer clusters for 3
+richness ranges, showing clearly the observed amplitude scales with
+mass at almost the same rate as the predicted by the MXXL simulation
+(dotted and dashed curves) conﬁrming directly the fundamental Gaus-
+sian ﬁeld hypothesis for the formation of structure. In detail, when
+averaged, the data lies signiﬁcantly higher than the pure CDM based
+prediction based on a ﬁt to the cluster mass function from MXXL, by
+≃6% (dashed curves).
+N-body Simulation
+Here we check our analytical predictions against our new
+cosmological simulations in the presence of massive neutrinos,
+following the grid-based method described in [11, 12]. We
+combine the GADGET2 N-body code [13] for CDM particles
+and simulate relic neutrinos as a grid-based density ﬁeld, where
+only the long-range force (the PM part) is re-calculated by
+incorporating the eﬀects of neutrinos: δtot = (1−fν)δc+b + fνδν,
+where fν is the mass fraction of cosmological neutrinos, and
+δtot, δc+b and δν are the over-density ﬁelds of, respectively, total
+matter, CDM and baryons, and neutrinos. δν follows the linear
+perturbation theory with the potential provided by all matter,
+whereas δc+b is calculated in GADGET2 and then replaced
+by δtot after we take this weighted average. We iterate to
+advance δν and δtot using the linear perturbation equation and
+GADGET2. We have set up four realizations for each neutrino
+mass, each realization having a box size of 800 Mpc/h and
+5123 simulation particles. The halo catalogues are generated
+by Amiga Halo Finder [14].
+Comparison with Observations
+The carefully constructed and well tested sample of SDSS
+clusters as deﬁned by the RedMapper team [31–33] has pro-
+vided many insights, including accurate lensing and SZ based
+mass-richness relations [10, 17, 43]. Redmapper clusters are
+determined to be complete to z = 0.33 in terms of detectability
+within the SDSS above a minimum richness of λ > 20 over
+this redshift range [31–33]. This claim is strongly supported
+by [9], where the observed numbers of RedMapper clusters are
+proportional to the cosmological volume in the redshift range
+z < 0.33, but above which their numbers markedly decline
+relative to the available volume. Importantly, this volume com-
+plete sample of Redmapper clusters has been made redshift
+complete by [9] for the ﬁrst time, at a level of 97% within the
+above RedMapper limit z < 0.33, by cross correlation with the
+latest SDSS/BOSS spectroscopic redshift surveys, allowing
+correlation functions to be accurately measured on small scales
+using these accurate redshifts [9].
+The 2-point cluster correlation function of this complete
+sample is shown in Figure 1, where it is clear that the ampli-
+tude of this correlation function increases with cluster richness.
+The correlation function has been integrated on small scales
+along the line of sight to account for the well known velocity
+eﬀects that otherwise aﬀect pairwise distance separations. We
+compare this data with the predicted correlation functions from
+the large, MXXL simulation of pure CDM [44]. This simu-
+lation is scaled by the latest Planck cosmological parameters,
+following the prescription of [44], for the same redshift range
+as the complete RedMapper sample, and integrated along the
+line of sight in the same way as the data. Two diﬀerent sets of
+simulation based predictions are calculated, where the lower
+curves shown in Figure 1 are determined by a joint ﬁt to the
+abundance of RedMapper clusters as a function of richness
+whereas the upper curves are ﬁtted to the clustering. For both
+of the above simulations a standard power-law function for
+the mass-richness relation is used for this transformation with
+three free parameters, slope, scatter and the pivot point normal-
+ization (see [9] for details), that are solved for simultaneously
+in comparing the measurements with the MXXL simulation.
+It is clear from the comparison in Figure 1 that the ob-
+served cluster correlations are close to the MXXL predictions
+in slope and amplitude and the scaling with richness shown
+in Figure 1 for the 3 independent richness bins, implying ex-
+cellent agreement with the GRF hypothesis for the origin of
+cosmic structure. In detail we see the abundance-based pre-
+diction (solid curves) is systematically below the data and
+below the cluster-based ﬁt (dashed curves). This mismatch
+was highlighted by [9] without any satisfactory resolution,
+with the diﬀerence between these two mass-richness relations
+found to be mainly in the normalization, with the correlation-
+function based predicted cluster being ≃56% higher in mass,
+
+4
+M200m = 4.7 × 1014M⊙/h, than the abundance-based mean
+cluster mass (3.02 ± 0.11) × 1014M⊙/h. This is a large diﬀer-
+ence in mass and reﬂects the relatively shallow dependence of
+clustering amplitude with cluster mass, so that a signiﬁcantly
+higher mean mass is required to match the observed clustering
+level but corresponds to a much lower cluster abundance as
+the cluster mass function is inherently steep. Furthermore,
+the larger mean mass of the correlation function ﬁt (shown in
+Figure 1) is excluded by the independent weak-lensing based
+mass-richness relation derived by [43] for the same RedMapper
+sample, where the mean mass is just (2.70 ± 0.2) × 1014M⊙/h
+with a 7% estimated uncertainty [43], and therefore consistent
+within 1.3σ with our aforementioned abundance-based zero-
+point mass. This WL based mass is also supported by a new
+mass-richness related analysis performed in [45] who derive
+a mean mass of 3.0 × 1014M⊙/h using WL measurements for
+RedMapper clusters. This agreement of independent weak
+lensing based masses with our abundance-based best ﬁtting
+mean mass further motivates our exploration of the eﬀect of
+light neutrinos: since, as we derived in the previous section,
+an enhancement in bias is expected to be signiﬁcant in terms
+of reconciling our observed mass function with the observed
+correlation function without the need for increasing cluster
+masses.
+We now show how our excess correlation may be explained
+by the neutrino induced bias derived above. The relation be-
+tween the 2-point mass correlation function of collapsed halos
+relates simply to the bias of a GRF via: ξHH(r) ≡b2ξMM(r),
+where ξHH denotes the correlation of the collapsed halos, and b
+is the bias. This relation may be linked to the mass power spec-
+trum via ξMM(r) ≡
+ 1
+2π2
+ R
+dkk2P(k)W(kr), where W(kr) refers
+to the top hat ﬁlter function. Observationally, we estimate
+the above correlation function with the following power-law
+scaling: ξ(r)obs = (r/r0)−γ, of correlation length ro and slope
+of γ = 1.7 ± 0.05.
+To compare the RedMapper observations with theory, we are
+required to use the mass-richness relation. This link is obtained
+simultaneously in the ﬁts, as described in Ref. [9] - where we
+ﬁt the halo mass function from the simulations leaving free
+the 3 parameters of the MR relation, namely the zero point,
+the slope and the dispersion, as shown in ﬁgure 14 of [9]. The
+values of these 3 parameters are in very good agreement with
+those independently derived using lensing, X-ray, and SZ based
+MR relations in Refs. [10, 43]. These independent derivations
+were made subsequent to our work, providing veriﬁcation that
+adds great conﬁdence to our best-ﬁtting neutrino mass.
+We can make a rough consistency check of this result that is
+independent of the simulation based comparison used above by
+looking at the absolute value of r0 from a weak-lensing based
+mass-richness relation for this same cluster sample derived in
+[43]. In order to calculate this quantity, we use the fact that at
+r = r0 the halo-halo correlation function is, by deﬁnition, unity,
+and seek b2
+S T
+ 1
+2π2
+R
+dkk2P(k)W(kr)
+
+= 1 for which we use the
+ST bias as the input. The results are given in Fig. 2. In the left
+panel, we present the relation between the ﬁtted correlation
+length r0 and the halo mass in these sets of simulation, averaged
+over four realisations. To be consistent with the RedMapper
+data, the shown results are also averaged over the redshift
+range of 0.1 to 0.3. In the right panel, we show the analytical
+results the r0. Both the analytical and simulation predictions
+are in close accord. The impact of the massive neutrinos on
+enhancing the halo clustering is clearly seen from these plots.
+The mean observational value (marked in red point) is slightly
+higher than the pure CDM predictions corresponding to the
+range 0.08eV < P mν < 0.13eV.
+Discussion and Conclusions
+We have shown here that even the minimum mass density
+of standard relic neutrinos is expected to enhance the cluster-
+ing length of galaxy clusters by at least 3%, relative to pure
+cold dark matter. This bias induced boost to the clustering of
+clusters is more than an order of magnitude larger than the
+eﬀect of neutrinos on the general power spectrum of galaxies
+because the clustering bias of clusters is approximately three
+times that for galaxies and the correlation function amplitude
+scales as the square of this bias. Furthermore, the sign of this
+boost in the clustering of halos has the opposite sign to the
+usually sought suppression of the matter power spectrum of the
+mass density ﬁeld, which is predicted to “step” down on scales
+below the predicted free streaming scale of ≲100Mpc. This
+enhancement of the halo correlation function is noted in the
+simulations of [59] and also visible in Figure 3 of [60] when
+incorporating light neutrinos.
+The carefully deﬁned RedMaPPer clusters from the SDSS
+with full spectroscopic redshifts by [10] provides a large, com-
+plete sample of clusters with accurate redshifts. Using this
+data we have claimed a 6% bias enhancement of the correla-
+tion length of clusters, corresponding to total neutrino mass of
+P mν = 0.119 ± 0.034eV at 67% conﬁdence level, for the stan-
+dard relic mass density and standard Cosmological parameters.
+This lies well below the robust bound of < 0.24eV from the
+Planck collaboration (2015), and below subsequent claimed
+improvements on this upper limit that incorporate additional
+constraining data from cluster counts [22] and the Lyman-α
+forest [23].
+Finally, in order to make our predictions more robust, we
+have explored the relatively sensitive dependence of neutrino
+mass on Ωm by modifying CosmoMC [54, 55] to include our
+measured correlation length data points with their errors shown
+in Figure 2. The data we used are the ratios between r0 in a
+universe with and without neutrinos. In the case without neutri-
+nos, r0 is calculated assuming independent values of As (where
+As refers to the amplitude of the primordial power-spectrum)
+and Ωch2 than the case with massive neutrinos. This naturally
+increases the error bars compared with the case with similar
+values of As and Ωch2 for the numerator and denominator of r0
+ratio. The likelihood is assumed to be Gaussian. We also use
+the Planck CMB measurements including low-ℓand high-ℓ
+temperature and polarization data. For convenience, the mass
+
+5
+14.2
+14.3
+14.4
+14.5
+14.6
+Log(Mh/M h
+1)
+14
+16
+18
+20
+22
+24
+r0(Mpc/h)
+(Simulation-Observation)
+experimental data
+fit,lcdm
+fit, m = 0.05eV
+fit, m = 0.1eV
+fit, m = 0.15eV
+mean data
+sim,lcdm
+sim, m = 0.05eV
+sim, m = 0.1eV
+sim, m = 0.15eV
+14.2
+14.3
+14.4
+14.5
+14.6
+Log(Mh/M h
+1)
+14
+16
+18
+20
+22
+24
+r0(Mpc/h)
+(Linear theory-Observation)
+experimental data
+lcdm
+m = 0.05eV
+m = 0.1eV
+m = 0.15eV
+mean data
+FIG. 2: (Left) comparison between the correlation length r0 from the simulation and from 3 independent richness bins (green points) and the
+data mean (purple point) as a function of halo mass. The simulation points are shown with diﬀerent colors. (Right) comparison between the
+linear theory and the RedMapper results. The predicted neutrino mass from the linear theory is similar to that from the non-linear simulation,
+with a somewhat weaker mass dependence.
+of the neutrinos is assumed to be entirely one species. Flat
+priors are used for Σmν, Ωch2, and ln(1010As). The other cos-
+mological parameters are ﬁxed: Ωbh2 = 0.02280, τ = 0.066,
+ns = 0.9667, H0 = 67.73 km s−1 Mpc−1. The Gelman and
+Rubin statistics for convergence R −1 is 0.01138. Figure 3
+presents the results of this analysis. Here we present 1σ and
+2σ level contours of the neutrino mass wrt Ωm. The inferred
+neutrino mass is Σmν = 0.119 ± 0.034 eV at 67% conﬁdence
+level.
+At face value, our result is in best agreement with the in-
+verted based hierarchy minimum mass of ≃0.1eV based on
+neutrino oscillation work, and in some tension with the mini-
+mum value for the normal hierarchy of ∼0.056eV at the 95%
+conﬁdence level. If ongoing laboratory results from the NOvA
+and T2K collaborations continue to favor a normal neutrino
+mass hierarchy [53, 56], however, then our result may imply
+a somewhat higher neutrino mass than minimum oscillation
+based value of mν ≃0.056eV. Alternatively, the standard relic
+density underestimates the total cosmological neutrino den-
+sity by a factor of two, implying an additional light neutrino
+contribution. This possibility, however, is not supported by
+measurements of the CMB anisotropy that strictly imply only
+three relic neutrino species [62] as in the Standard Model of
+particle physics.
+We aim to improve upon our result by jointly ﬁtting the
+cluster correlation function enhancement and the cluster abun-
+dance suppression. We will also use the simulations to make an
+assessment of the preferred mass range for constraining relic
+neutrinos, as the halo mass function is so steep (proportional
+to M−4) in the cluster regime that selecting groups > 1013M⊙
+may prove more fruitful than expanding the survey volume.
+An elegant group deﬁnition for the SDSS has been devised
+by Zhao et al [57] for which the mean bias is b ≃2, simi-
+lar to the luminous red galaxy (LRG) mass scale, so that we
+may use these large samples with redshift measurements for a
+signiﬁcant improvement.
+We can also improve upon our precision for P mν by deﬁn-
+ing a more accurate weak lensing based mass-richness relation
+for a representative subset of our complete cluster sample.
+Such work will be possible with the upcoming wide ﬁeld J-
+PAS survey [61], which can go beyond the careful SDSS based
+work of Simet et al (2017) to greater depth and higher angular
+resolution over the Northern sky.
+We can see that pursuing the above practical improvements
+is really well motivated given how close we are already to
+achieving the accuracy required to deﬁnitively distinguish be-
+tween the inverted and normal hierarchies and the fully mass
+degenerate minimum of P mν ≃0.15eV. Furthermore, with
+future data reaching higher redshift we may also examine the
+redshift dependence of the combined correlation amplitude and
+cluster abundance evolution to test whether the lightest relic
+neutrino eigenstate remains relativistic until today.
+Acknowledgments
+We are grateful for useful conversations with Neta Bahcall,
+Andrew Cohen, Daniel J. Eisenstein, Lars Hernquist, Lam
+
+6
+0.306 0.308 0.310 0.312 0.314
+m
+0
+0.05
+0.1
+0.15
+0.2
+0.25
+m (eV)
+3.05
+3.06
+3.07
+3.08
+3.09
+ln(1010As)
+0
+0.05
+0.1
+0.15
+0.2
+0.25
+m (eV)
+FIG. 3: Left: the 1 ans 2σ level contours of Σmν versus Ωm, marginalising over the other relevant cosmological parameters, from our joint
+MCMC analysis. Right: same as left, but with Σmν versus ln(1010As) instead. The inferred neutrino mass is mν = 0.119 ± 0.034 eV at 67%
+conﬁdence level.
+Hui, Francisco-Shu Kitaura, Marilena Loverde, Airam Marcos-
+Caballero, Abraham Loeb, Enrique Martinez, Alberto Rubino,
+Martin Schmaltz, David Spergel, Henry Tye, Jun Qing Xia
+and Francisco Villaescusa. We also thank two anonymous
+referees for their insightful comments. The work of R.E. was
+previously supported by Hong Kong University through the
+CRF Grants of the Government of the Hong Kong SAR under
+HKUST4/CRF/13 and is currently supported by the Institute
+for Theory and Computation at the Center for Astrophysics at
+Harvard University. GFS acknowledges the IAS at HKUST
+and the Laboratoire APC-PCCP, Universit´e Paris Diderot and
+Sorbonne Paris Cit´e (DXCACHEXGS) and also the ﬁnan-
+cial support of the UnivEarthS Labex program at Sorbonne
+Paris Cit´e (ANR-10-LABX-0023 and ANR-11-IDEX-0005-
+02). TJB thanks IAS fr generous hospitality.

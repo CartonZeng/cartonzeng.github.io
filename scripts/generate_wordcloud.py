@@ -258,6 +258,7 @@ REVIEWED_OUT = {
     # -- generic words surfacing in full text ------------------------------
     "time", "half", "radius", "central", "resolution", "inner",
     "isolated", "orbit", "profile", "particle", "initial", "parameter",
+    "remain",              # academic filler ("the remaining …")
 
     # -- fragments of terms that already appear whole ----------------------
     "core", "collapse", "density", "formation",

@@ -1,0 +1,1637 @@
+Convergence Tests of Self-Interacting Dark Matter Simulations
+Charlie Mace1,2,∗Zhichao Carton Zeng1,2, Annika H. G. Peter1,2,3,4,
+Xiaolong Du5,6, Shengqi Yang6, Andrew Benson6, and Mark Vogelsberger7
+1Department of Physics, The Ohio State University,
+191 W. Woodruff Ave., Columbus OH 43210, USA
+2Center for Cosmology and Astroparticle Physics,
+The Ohio State University, 191 W. Woodruff Ave.,
+Columbus OH 43210, USA
+3Department of Astronomy, The Ohio State University,
+140 W. 18th Ave., Columbus OH 43210, USA
+4School of Natural Sciences, Institute for Advanced Study,
+1 Einstein Drive, Princeton, NJ 08540
+5 Department of Physics and Astronomy,
+University of California, Los Angeles, CA 90095, USA
+6 Carnegie Observatories, 813 Santa Barbara Street,
+Pasadena CA 91101, USA
+7 Department of Physics, Massachusetts Institute of Technology,
+77 Massachusetts Avenue, Cambridge, MA 02139, USA
+(Dated: December 17, 2024)
+Self-interacting dark matter (SIDM) theory predicts that dark matter halos experience core-collapse, a process
+where the halo’s inner region rapidly increases in density and decreases in size. The N-body simulations used
+to study this process can suffer from numerical errors when simulation parameters are selected incorrectly.
+Optimal choices for simulation parameters are well studied for cold dark matter (CDM), but are not deeply
+understood when self-interactions are included. In order to perform reliable N-body simulations and model
+core-collapse accurately we must understand the potential numerical errors, how to diagnose them, and what
+parameter selections must be made to reduce them. We use the Arepo N-body code to perform convergence tests
+of core-collapsing SIDM halos across a range of halo concentrations and SIDM cross-sections, and quantify
+potential numerical issues related to mass resolution, timestep size, and gravitational softening length. Our tests
+discover that halos with fewer than 105 simulation particles, a resolution typically not met by subhalos in N-body
+simulations, suffer from significant discreteness noise that leads to variation and extreme outliers in the collapse
+rate. At our lowest resolution of 𝑁= 104 particles, this collapse time variation can reach as high as 20%. At
+this low resolution we also find a bias in collapse times and a small number of extreme outliers. Additionally,
+we find that simulations which run far beyond the age of the Universe, which have been used to calibrate SIDM
+gravothermal fluid models in previous work, have a sensitivity to the timestep size that is not present in shorter
+simulations or simulations using only CDM. Our work shows that choices of simulation parameters that yield
+converged results for some halo masses and SIDM models do not necessarily yield convergence for others.
+I.
+INTRODUCTION
+Self-interacting dark matter (SIDM) is a class of dark mat-
+ter models that include interactions between dark matter par-
+ticles [1–5]. These models, which have theoretical motivation
+from particle physics [6–11], may provide solutions to several
+unresolved contradictions between cold dark matter (CDM)
+and observational data, such as the diversity problem (CDM;
+[12–19], SIDM; [20–27]) and the cuspy halo problem (CDM;
+[28–32], SIDM; [33, 34]). There are many models for these
+self-interactions, some with elastic scattering and some with
+inelastic scattering. The inelastic models produce their own
+distinct phenomenology [35–37], but for this work we will fo-
+cus solely on the elastic scattering case. In elastic models, the
+additional heat transfer channel provided by self-interactions
+causes the SIDM halos to undergo a time evolution not experi-
+enced by CDM halos, where an initially cuspy halo thermalizes
+∗E-mail: mace.103@osu.edu
+and forms an isothermal, low-density, constant density core
+[38]. The core formation process of an SIDM halo is followed
+by a slow increase in the halo’s core density, a phase called
+core-collapse. During this phase the core transfers energy to
+the outer regions of the halo, causing particles to fall into the
+core. This collapse, also called the gravothermal catastrophe,
+is a runaway process that eventually causes a rapid density in-
+crease in the center of the halo [39, 40]. The phenomenon was
+first discovered in the study of globular clusters, where gravi-
+tational two-body scatterings of stars provide the heat transfer
+instead of dark matter self-interaction [41], but the gravother-
+mal catastrophe model has found success in describing dark
+matter halos as well.
+The study of SIDM core-collapse depends on reliable N-
+body simulations. One use of simulations is to investigate how
+self-interactions influence the formation of substructure [24,
+25, 42–44], but N-body simulations are also essential to the
+study of the simplest case of an isolated core-collapsing halo.
+The density profile of such a halo has been shown to follow a
+self-similar time evolution in the regime where the mean free
+path between collisions is much longer than the gravitational
+arXiv:2402.01604v3  [astro-ph.GA]  14 Dec 2024
+
+2
+scale height (the long mean free path regime) [40, 45–50].
+These density profile models, which are found from numerical
+solutions of gravothermal fluid equations, rely on a constant
+factor that must be calibrated using N-body simulations [40,
+45, 46]. This factor is needed as the conductivity used in the
+long mean free path gravothermal fluid solution is based on
+the thermal conductivity of a gas, which does not include the
+gravitational dynamics present in a dark matter halo. While we
+do not have an SIDM conductivity derived from first principles
+for the long mean free path regime, this approximation of
+using the thermal conductivity of a gas has been shown to
+be accurate up to a constant factor on the heat transfer rate
+[40, 45, 46]. This heat transfer constant, referred to as 𝛽in this
+work but sometimes represented by 𝐶in the literature, must
+be calibrated to N-body simulations.
+The use of N-body simulations to understand SIDM core-
+collapse is complicated by numerical errors in these simula-
+tions. There has been extensive study of numerical parameter
+selection in CDM N-body simulations [51–54], and recent
+work has extended this analysis to SIDM [55–58], but how
+these choices fare when self-interactions are included is still
+not fully understood. SIDM simulations may not converge
+for the same parameter choices as CDM, and spurious evo-
+lution that is well understood in CDM may look entirely dif-
+ferent when combined with the core-collapse process. One
+possible difference, for example, is in timestep selection. N-
+body simulations are typically based on symplectic N-body
+algorithms, which do not produce diverging numerical errors
+[59]. The typical prescription for symplectic integration re-
+quires the simulation to operate on a global, time-invariant
+timestep.
+CDM simulations typically employ adaptive and
+variable time-stepping schemes, which permit each simula-
+tion particle to have an independent, time-dependent timestep
+size. This violates the assumptions made when formulating
+a symplectic integrator, which means these simulations may
+suffer from secular energy and momentum error accumulation
+[60, 61]. For CDM this problem is manageable, provided the
+system can be approximated as collisionless [62]. SIDM sim-
+ulations, however, are not collisionless, and may require more
+care in timestep assignment.
+In this work we conduct a detailed study of numerical error
+and parameter selection in SIDM N-body simulations using
+the N-body code Arepo [63] with a previously tested SIDM
+module [64–66]. Our study investigates how three numerical
+parameters (softening length, timestep size, and particle num-
+ber) affect the core-collapse process in constant cross-section
+SIDM, and what values for these parameters provide converged
+results. This investigation is performed for two different halo
+concentrations that are each tested over a two different collapse
+timescales, creating four scenarios. These four cases provide
+insight into how concentration and core-collapse time must be
+considered when selecting numerical parameters. Additional
+factors that may affect the numerical errors, such as alternate
+timestepping schemes, will be studied in future work.
+Two other investigations of SIDM convergence in N-body
+simulations were published shortly after the first version of this
+study was completed [57, 58]. Both our work and [57] inves-
+tigate how SIDM simulations respond to changes in halo con-
+centration, mass resolution, and timestep size, finding similar
+general results. Our work focuses on a wide breadth of con-
+vergence testing, including cross-section variation and fixed
+force softening length variation. For an analysis of other fac-
+tors, such as different scattering implementations and adaptive
+force softening, we direct readers to [57]. The investigation in
+[58] includes the study of additional choices, such as adaptive
+versus fixed timesteps, and the opening criterion in tree-based
+gravitational force evaluations.
+In Section II we outline our simulation strategy, and de-
+scribe the timestepping and gravothermal modeling in more
+detail. Section III presents tests of the initial condition real-
+ization noise, and our primary convergence testing results are
+in Section IV. Our findings and recommendations for param-
+eter selection are summarized in Section V.
+II.
+METHOD
+In this section we provide details on how we run and analyze
+our simulations in Arepo. First we describe the gravothermal
+fluid model that we use in our parameter selection and simula-
+tion analysis, and define important variables we use to describe
+our simulation sets. Next we give details on our timestepping
+algorithm and associated numerical parameters, and describe
+our convergence testing parameter grid. Lastly, we present
+the definitions and rationale behind the central density (which
+serves as a tracer of the core-collapse process) and collapse
+time measurements used in core-collapse analysis.
+A.
+Gravothermal Fluid Modelling
+In this work we often compare our simulations to predictions
+made by gravothermal fluid models. Gravothermal collapse
+can be modeled by treating the dark matter as a fluid, and
+assuming that fluid evolves slowly enough that it remains in
+hydrostatic equilibrium. The fluid equations for the system
+can then be solved numerically, providing a density profile
+prediction as a function of time [40, 45–49, 67]. This predic-
+tion depends on the strength of self-interactions in the halo,
+quantified locally by the Knudsen number 𝐾𝑛≡𝜆/𝐻. Here
+we define 𝜆as the mean free path of self-interactions and
+𝐻is the local Jeans length 𝐻≡2𝜋𝑣/
+√︁
+4𝜋𝐺𝜌, where 𝑣and
+𝜌are the local velocity dispersion and mass density respec-
+tively. The Jeans length is used here since it is the approximate
+size of a self-gravitating system [68], telling us the radial dis-
+tance a given particle will typically traverse in the halo. We
+can approximate the strength of self-interactions globally by
+the dimensionless scattering cross-section ˆ𝜎≡(𝜎/𝑚)𝜌𝑠𝑟𝑠,
+where 𝜌𝑠and 𝑟𝑠are the characteristic density and radius of the
+initial Navarro-Frenk-White (NFW) profile [69] characteristic
+of CDM halos.
+When ˆ𝜎≪1 for a halo, we say it is in the long mean
+free path (lmfp) limit. In this regime, the distance between
+scattering events is much larger than the local Jeans length
+for particles in the halo. This means these particles complete
+many orbits between each scattering event. When ˆ𝜎≫1,
+
+3
+the halo is in the short mean free path (smfp) limit. In this
+regime a particle’s motion is dominated by frequent scatter-
+ing events, causing a more fluid-like behavior. While ˆ𝜎is a
+global parameter that has no dependence on position in the
+halo, 𝐾𝑛will actually depend on the local density, which will
+vary throughout the halo. A typical SIDM halo will have an
+outer region that is in the lmfp regime, and a central core that
+may be in either regime depending on the particular param-
+eters and current stage of core-collapse, which means a full
+gravothermal collapse analysis must consider the intersection
+of the two regimes [50]. The ˆ𝜎variable is an approximate
+metric for whether the halo is generally in the lmfp or smfp
+regime during the core formation phase.
+The calibration parameter 𝛽is introduced in the thermal
+conductivity in the lmfp regime. The heat transfer coefficient,
+also called the conductivity, at a given position in the dark
+matter halo can be written as:
+𝜅lmfp = 3𝛽
+2
+𝑛𝐻𝑘𝐵
+𝑡𝑟
+(1)
+where 𝑛is the local number density, 𝐻is the local Jeans length,
+𝑘𝐵is the Boltzmann constant, and 𝑡𝑟is the local relaxation time
+[41, 46]. The SIDM relaxation time is defined as the mean
+time between collisions for a particle, and can be calculated
+from the local mass density 𝜌, local velocity dispersion 𝑣, and
+cross-section per unit mass 𝜎as𝑡𝑟≡(
+√︁
+16/𝜋𝜌𝜎𝑣)−1[40]. The
+original derivation of this conductivity for globular clusters in
+[41] was based on heat conduction in a gas, and introduced the
+𝛽parameter (referred to as 𝐶in that work) to account for any
+discrepancy in the approximation caused by the gravitationally
+bound orbits of stars.
+Solving the fluid equations in the lmfp regime yields the
+following model for the halo central density:
+log(𝜌𝑐/𝜌𝑠) = 𝐴(log(𝛽ˆ𝜎ˆ𝑡) −(𝐸+ 3))2 + 𝐶
++
+𝐷
+(𝐸+ 0.0001 −log(𝛽ˆ𝜎ˆ𝑡)0.02
+(2)
+where 𝐴= 0.05771, 𝐶= −21.64, and 21.11, and 𝐸= 2.238
+are dimensionless parameters fit to the numerical result, and ˆ𝑡is
+a dimensionless time parameter defined as ˆ𝑡≡𝑡
+√︁
+4𝜋𝐺𝜌𝑠. This
+model includes 𝛽as a free parameter, which must be calibrated
+to N-body simulations as it has not been derived from first
+principles. Further details of this core-collapse model can be
+found in Appendix A of [49].
+Throughout this work we compare N-body central density
+evolutions to the gravothermal prediction Equation 2, which
+relies on the calibration parameter 𝛽. We calibrate 𝛽individ-
+ually for each set of physical parameters using our simulation
+data to compare our simulations to the fluid model. Since
+Equation 2 is based on the lmfp regime there is no guarantee
+it will describe the full range of dark matter halos included
+in this study, but after 𝛽calibration we find the agreement
+close enough for our purposes. Calibrating to the lmfp solu-
+tion when some of our simulations could have a substantial
+smfp contribution to the heat transfer means our 𝛽values may
+not necessarily represent the “true” value, and are instead only
+effective 𝛽values for this particular method of calibration.
+Readers should be cautious when comparing our values to
+other values in the literature, as the effects of calibrating in
+this intermediate regime are not yet well understood. In future
+work, we will perform a systematic calibration of 𝛽across a
+range of halo parameters and SIDM parameter space, and test
+where this model fails.
+B.
+Timestepping
+There are two timestep assignments used in our Arepo
+simulations: the acceleration-based timestep and the SIDM
+timestep. The values for these timesteps are evaluated for each
+particle whenever a new step is taken, and that particle uses
+the smaller value of the two.
+The acceleration-based timestep:
+𝛿t𝑎=
+√︄
+2𝜂𝑟soft
+|a|
+.
+(3)
+is based on the gravitational acceleration a of the particle, and
+the particle’s softening length 𝑟soft. This assignment decreases
+the timestep for rapidly accelerating particles to reduce nu-
+merical error. The dimensionless parameter 𝜂is selected as
+needed to scale the timestep size, with a default value of 0.025
+in the GADGET-4 documentation1, which uses the same d𝑡𝑎
+definition as AREPO [61]. This default value is not guaranteed
+to provided converged results, but our preliminary investiga-
+tions find that it is sufficient for CDM simulations of our halos.
+The 𝜂parameter is one of the three numerical parameters we
+vary in this work.
+The SIDM timestep in Arepo is designed to limit the SIDM
+scattering probability per timestep to a chosen threshold. This
+is meant to avoid multiple scatterings within a timestep, which
+would raise issues of time-ordering the scattering events, as
+well as provide computational challenges in processor com-
+munication in parallel computing environments. Arepo im-
+plements SIDM timesteps as:
+𝛿tSIDM =
+DtimeFac
+¯𝜌× (𝜎/𝑚) × 𝜎𝑣
+(4)
+where 𝜎𝑣is the local velocity dispersion, ¯𝜌is the local mat-
+ter density, 𝜎/𝑚is the self-interaction cross-section per unit
+mass, and DtimeFac is a normalization parameter that we set
+to 0.0025. DtimeFac is the mean probability for a particle
+to scatter within the time interval 𝛿𝑡SIDM, so adhering to this
+timestep sets a rough limit on the scattering probability any
+particle will experience during a timestep. Our default value
+limits this probability to 0.25%, but in late stages of core-
+collapse we relax this restriction to allow the probability to
+1 Available at https://wwwmpa.mpa-garching.mpg.de/gadget4/
+
+4
+reach up to roughly 2.5%. The local matter density ¯𝜌is mea-
+sured for each particle by locating the 32 nearest neighbours,
+and calculating the density of the sphere centered on the test
+particle that encloses all 32. The original SIDM module of
+Arepo only allows 𝛿tSIDM to drop so far, holding it constant
+after a minimum value is reached [64]. We have modified our
+version to continue with increasingly small timesteps, allowing
+our simulation to reach more advanced stages of core-collapse
+(see [24] for more details).
+In this work we only investigate the influence of the 𝜂and
+𝑟soft parameters in core-collapse. A more detailed timestep-
+ping analysis, which may consider alternative timestep def-
+initions and the adjustment of DtimeFac (which represents
+the scattering probability limit), could play a role in nu-
+merical convergence and is a topic for future investigation.
+An additional parameter we do not vary is the numerical
+parameter that controls the gravitational tree opening angle
+(ErrTolForceAcc), for which we use a value of 10−3.
+C.
+Convergence Testing Grid
+To rigorously test core-collapse in Arepo, we design a
+grid of physical and numerical parameter values to simu-
+late.
+We use the NFW profile, a cuspy halo defined as
+𝜌NFW(𝑟) = 𝜌𝑠/( 𝑟
+𝑟𝑠(1 + 𝑟
+𝑟𝑠)2), for our initial density profile,
+as this has shown to fit CDM simulations well [69]. An NFW
+initial condition with SIDM has three physical parameters to
+adjust: virial mass (𝑀200𝑚), concentration (𝑐200𝑚), and the
+self-interaction cross-section per unit mass (𝜎/𝑚). The sub-
+script 200𝑚here represents the mass and concentration def-
+inition used, where 𝑀200𝑚is defined as the mass enclosed
+within the spherical region where the average density is 200
+times cosmological mean mass density, and 𝑐200𝑚is the con-
+centration within that same region. To limit the degrees of
+freedom in our simulation grid, we fix the halo virial mass at
+𝑀200𝑚= 1010.5 𝑀⊙, which is typical of low-mass field dwarf
+irregulars [70, 71].
+An extension of this study to different
+𝑀200𝑚values may be tested in a future work, in particular
+lower masses which are characteristic of subhalos.
+Fixing the mass leaves concentration and cross-section as
+our adjustable parameters. To ensure our results are robust to a
+wide variety of halo structure, we test the halo concentrations
+of 10 and 50, which cover two ends of a large concentration
+range. Our halo mass of 𝑀200𝑚= 1010.5 𝑀⊙has a median
+predicted halo concentration 𝑐200𝑚= 19 at 𝑧= 0 [72], which
+is contained within our tested interval.
+Now that the mass and concentration are accounted for, our
+final variation is in the scattering cross-section. Instead of us-
+ing two fixed values of 𝜎/𝑚in our halo grid, we instead adjust
+the cross-section as needed in order to produce two fixed values
+of collapse time. We make this choice because our preliminary
+testing indicated there may be numerical errors that depend on
+simulation length, rather than the value of 𝜎/𝑚. These two
+concentrations and two collapse times produce four combina-
+tions of physical parameters, which can also be represented
+by their four unique values of ˆ𝜎, falling between 0.00827 and
+7.03. These values sample across the smfp and lmfp regime
+transition. The three simulations falling in the lmfp regime
+will make our findings valuable for 𝛽calibration, which must
+be done to establish a consistent heat transfer model that can
+be used for all values of ˆ𝜎. The one simulation in the smfp
+regime is useful as a test of the N-body simulator, which should
+produce valid results regardless of the scattering regime.
+To tune the cross-section to any particular collapse time, we
+use the following prediction:
+𝑡𝑐=
+
+
+150
+𝛽
+1
+ˆ𝜎
+1
+√
+4𝜋𝐺𝜌𝑠
+if ˆ𝜎< 0.1
+3.58 × 108 
+𝜎/𝑚
+cm2/𝑔
+−0.74 
+𝑀200𝑚
+𝑀⊙
+−0.24
+𝑐−2.67
+200𝑚Gyr
+if ˆ𝜎> 0.1.
+(5)
+The first collapse prediction is equation 4 in [46], which
+has been calibrated to halos with ˆ𝜎< 0.1. In our parameter
+selection we use a fiducial 𝛽value of 1.0.
+The precise 𝛽
+value is not important since the collapse time predictions do
+not need to be precise, as long as the true collapse times lie
+in the two desired regimes. The second case is equation 9 in
+[24], which has been calibrated to ˆ𝜎> 0.1. We find that the
+predicted collapse times reasonably match the actual collapse
+times observed in the most converged simulations.
+Using this collapse time prediction, we calculate four cross-
+sections by pairing the two halo concentrations with the two
+collapse times of 9 Gyr and 225 Gyr. These choices of collapse
+time, like those for concentration, represent the extreme ends
+of a large range of values. The 9 Gyr collapse time will result in
+a halo that undergoes significant gravothermal collapse within
+the age of the universe, while the 225 Gyr case results in much
+more gradual evolution. The 225 Gyr case is also chosen to
+have a similar collapse time as the NFW halo tested in [45],
+which has been the basis of recent 𝛽calibration [46]. The
+four physical scenarios generated from the concentration and
+collapse time choices are shown in Table I, and throughout
+this work we identify the combinations of physical parameters
+using their concentration value and estimated collapse time in
+Gyr as shown in the leftmost column of Table I.
+Figure 1 shows a comparison of our four physical parameter
+choices to other studies in the literature. We compare to the
+NFW halo simulation in Koda & Shapiro’s gravothermal fluid
+study [45], as well as the recent publications by Palubski et al.
+[57] and Fischer et al. [58] that investigate numerical errors
+in core-collapse simulations. Our study spans a wide range
+in ˆ𝜎, which allows us to show how numerical errors behave
+in different scattering regimes. The studies by Palubski et al.
+
+5
+TABLE I: The four simulation batches used in the Arepo
+convergence testing. This table lists the name, initial
+concentration, estimated collapse time, scattering
+cross-section, and ˆ𝜎for each batch.
+Simulation 𝑐200𝑚𝑡𝑐(Gyr) 𝜎/𝑚(cm2/𝑔)
+ˆ𝜎
+C10T9
+10
+9
+1892
+7.03
+C10T225
+10
+225
+17.65
+0.0656
+C50T9
+50
+9
+5.688
+0.267
+C50T225
+50
+225
+0.1764
+0.00827
+and Fischer et al. probe relatively low and high mass halos
+respectively, as well as the halo concentration range within our
+parameter grid. Our C10T225 halo has physical parameters
+comparable to the Koda & Shapiro’s simulation, which has
+been used to calibrate the gravothermal fluid 𝛽parameter.
+For each of these four physical scenarios we run 36 sim-
+ulations, varying over a grid of values in the non-physical
+parameters particle number (𝑁), timestep accuracy (𝜂), and
+softening length (𝑟soft). For 𝑁we use the values 104, 104.25,
+104.5, 104.75, 105, and 106. The closely packed values from
+104 to 105 give a detailed picture of the resolution dependence,
+while the jump to 106 tests whether or not the 105 results are
+reasonably converged. For 𝜂we use the default value of 0.025,
+and extend downwards by factors of 5 to 0.005 and 0.001. The
+𝑟soft values are based on a standard softening length, depending
+on particle count 𝑁and halo concentration 𝑐:
+𝜖(𝑁, 𝑐) = 𝑟𝑠
+h
+ln (1 + 𝑐) −
+𝑐
+1 + 𝑐
+i
+√︄
+0.32(𝑁/1000)−0.8
+1.12𝑐1.26
+. (6)
+This standard softening value is designed to be large enough
+to avoid spurious two-body gravitational scattering and small
+enough that the gravitational force is not over-smoothed in
+CDM simulations [24, 54]2. We determine this standard value
+for each resolution and concentration combination, and then
+vary the softening using fixed multipliers on 𝜖. The values we
+test are 10−0.4𝜖(𝑁, 𝑐), 𝜖(𝑁, 𝑐), 100.4𝜖(𝑁, 𝑐), and 100.8𝜖(𝑁, 𝑐).
+For each value of resolution and concentration, we generate
+initial conditions using the SpherIC code [73]. The initial
+particle positions and velocities are drawn from an NFW dis-
+tribution with an isotropic velocity dispersion. To keep the
+halo mass finite, our initial density profile is truncated at the
+virial radius using an exponential cutoff as presented in [74].
+Core-collapse occurs in a relatively small central region com-
+pared to the halo’s virial radius, so we expect that the details
+of our truncation will not affect our results [49]. The manner
+of truncation may be more important for simulations of non-
+isolated halos, which may be tidally stripped to smaller radii
+[24, 44].
+2 This particular softening criterion was developed for subhalos, not the
+isolated halos simulated in this work. Since we will be varying the softening
+length over an order of magnitude in this investigation, we find this softening
+assignment to be an acceptable starting point.
+10
+2
+10
+1
+100
+101
+( /m)
+srs
+10
+20
+30
+40
+50
+c200m
+C10T9
+C10T225
+C50T9
+C50T225
+Koda & Shapiro
+Palubksi et al.
+Fischer et al.
+This work
+9.25
+9.50
+9.75
+10.00
+10.25
+10.50
+10.75
+11.00
+log10(M200m)
+FIG. 1: A comparison of physical halo parameters used in
+this work to other studies[45, 57, 58]. The four physical cases
+in this work are identified by the names listed in Table I.
+𝑀200𝑚, 𝑐200𝑚, and ˆ𝜎for the three other works were
+calculated using their reported initial 𝑟𝑠and 𝜌𝑠values.
+D.
+Analysis
+To calculate the central mass density for a given snapshot,
+we adopt the method used in [45]. This calculation assumes
+the profile within the core radius 𝑟𝑐is an isothermal sphere,
+and finds 𝑟𝑐iteratively using the constraint:
+𝑟𝑐=
+√︃
+𝑣2𝑐/4𝜋𝐺𝜌𝑐
+(7)
+with 𝑣𝑐as the velocity dispersion inside 𝑟𝑐, and the density 𝜌𝑐
+defined as a function of the mass 𝑀(𝑟𝑐) enclosed within 𝑟𝑐:
+𝜌𝑐≡1.10 × 𝑀(𝑟𝑐)
+ 4
+3𝜋𝑟3
+𝑐.
+(8)
+The factor of 1.10 is the ratio between the central density and
+the average density within 𝑟𝑐, and can be found in [45]. To
+calculate 𝑟𝑐we begin with an initial guess and use that value
+to compute 𝑣𝑐and 𝜌𝑐. We then use those values in Equation
+7 to find a new 𝑟𝑐, and iterate until the radius converges.
+This method uses as many particles as possible to calculate
+the central density without extending beyond the core radius.
+Methods using fixed numbers of particles risk underestimating
+the density by using a core radius that is too large, and require
+the number of particles being considered to be fine-tuned. A
+downside of our method is that, for low-resolution halos, a
+solution to Equation 7 is not guaranteed. When this occurs,
+the simulation resolution is too low to consistently resolve
+the core regardless of definition. We found in our analysis
+that nearly all snapshots had solutions to Equation 7.
+All
+exceptions were for 104 particle simulations, none of which
+missed enough points that the central density evolution was
+unclear. In figures, missing points are filled by interpolating
+between the neighboring points, using an exponential function
+that is linear in the semi-log plotting space.
+
+6
+To measure the collapse time of a simulation, we first smooth
+the central density evolution.
+We use a simple smoothing
+method, where each central density measurement is averaged
+with the two adjacent points in time. We then find the time
+at which this smoothed central density evolution first exceeds
+20𝜌𝑠. This threshold is chosen because it is far enough along
+the core-collapse timeline that simulations with different col-
+lapse rates are distinguishable from one another, and after
+this point they all evolve similarly as the collapse rate sharply
+increases. Using a higher value would require additional com-
+putation time as scattering events become more frequent. We
+found that adjusting the central density threshold by a factor
+of order unity did not substantially alter the relations found in
+this study. Our method is more direct than other collapse time
+measurements in the literature, which measure it based on the
+core’s relaxation time [45] or the Knudsen number [46]. We
+use the collapse time to compare numerical parameter choices
+within this work, not to compare with other works, so this
+difference in definition does not limit our analysis.
+III.
+REALIZATION NOISE
+Before we can interpret the convergence testing results, we
+need to understand the effect of realization noise on our simu-
+lations. Realization noise is introduced into our simulations in
+two ways: initial conditions and scattering. The initial condi-
+tion noise is introduced when we sample an analytical density
+profile to produce a halo of discrete particles. Sampling using
+different random seeds, even if the NFW parameters do not
+change, can produce slightly different distributions of simula-
+tion particles. If these fluctuations are large enough they could
+affect the halo evolution, including the collapse time.
+Scattering noise is associated with a different random seed,
+which is used to generate random numbers used in the SIDM
+scattering algorithm.
+These numbers are compared to the
+scattering probability to determine which particle pairs have
+scattering events. Different scattering seeds may produce dif-
+ferent scattering rates at important stages of core-collapse,
+which could affect the collapse time.
+In this study we do not directly vary the scattering seed,
+only the initial condition seed. Changing the initial condition
+seed produces an entirely new set of particles that are sorted
+onto the processors in a different order. This means that for two
+different initial condition realizations, the same scattering seed
+will produce two independent scattering histories. Our results
+in this section therefore include the effects of both scattering
+and initial condition noise, but do not study the two separately.
+To study realization noise we run multiple simulations with
+the same softening and 𝜂, but with differently seeded random
+initial conditions, as a function of the total number of particles
+in the simulation. We use equation 6 for the softening and set
+𝜂= 0.005. These choices are based on preliminary testing
+that showed reasonable convergence when these values are
+selected, and are further justified in section IV.
+In Figure 2, we show the results of our tests for the C50T9
+halo. Selecting the C50T9 case shows the behavior of a halo in
+the lmfp region that is collapsing on a cosmological timescale.
+We display the evolution of the halo central density divided
+by the initial NFW scale density (𝜌𝑐/𝜌𝑠) for three different
+numbers of SIDM particles in the initial conditions: 𝑁= 104,
+𝑁= 105, and 𝑁= 106. The evolution of 𝑁= 104 particle
+simulations has significant scatter, with typical collapse times
+varying between 4 and 8 Gyr, and extreme outliers taking even
+longer to collapse. The 𝑁= 105 and 𝑁= 106 realizations have
+less scatter, with the 𝑁= 105 collapse times varying between
+6 and 8 Gyr and the 𝑁= 106 collapse times closely distributed
+at around 8 Gyr. In Figure 3 we show the same analysis for
+C10T225, as a slowly collapsing halo with different initial con-
+ditions may have a different pattern of realization noise. This
+figure shows similar results, with the lowest resolution suffer-
+ing from overwhelming realization noise and extremely slowly
+collapsing outliers. Similar analyses of C10T9 and C50T225
+find that these features are generic to all initial conditions and
+cross-sections that we have tested.
+In both Figures 2 and 3, the initial energies are typically
+below the expected value at the highest resolution. The size
+of the offset is smaller than 1%, and is likely not a concern
+for this study. This small discrepancy may be due to changes
+to the potential energy introduced by gravitational softening
+[75].
+From these examples we see that 104 particles is insuffi-
+cient to consistently resolve the core-collapse process in this
+case. In addition, the 𝑁= 104 cases suffer from a small num-
+ber of slowly collapsing outliers and a cluster of realizations
+with slightly accelerated evolution. While there is collapse
+time scatter in the 𝑁= 105 realizations, they are more evenly
+distributed around the expected evolution.
+The slowly collapsing 𝑁= 104 outliers in C50T9 and
+C10T225 have one characteristic in common: these simu-
+lations all have initial total energies (defined as the summed
+kinetic and potential energies of all simulation particles) that
+are lower than all of the other realizations, as shown in the bot-
+tom left panels of Figures 2 and 3. Since the total energy of the
+system is negative, 𝐸𝑖/𝐸𝑁𝐹𝑊< 1 implies 𝐸𝑖> 𝐸𝑁𝐹𝑊. This
+indicates a halo with less tightly bound particles, either from
+a less concentrated halo (as particles are spread out, the nega-
+tive gravitational potential energy gets larger and approaches
+zero), or from a halo with higher velocity particles. In this
+work the outliers are caused by low magnitude values of the
+gravitational potential energy, not large kinetic energies. It
+is possible that the particles in these realizations are slightly
+less concentrated than ideal NFW case, and consequently take
+longer to experience core-collapse.
+To explore the bias in collapse time as well as the scatter,
+we show both as a function of particle number for all our
+halos in Figure 4. This figure includes the other two halos
+in Table I, and additional resolutions between 104 and 105.
+The C10T9 halo, with ˆ𝜎= 7.0462, is in the smfp regime
+and therefore is not well represented by the gravothermal fluid
+model discussed in section II. Despite this, we fit the collapse
+time and present the associated value of 𝛽.
+The absolute
+value of this fit is less physically meaningful than those for the
+other three halos, but still provides a useful reference point to
+analyze collapse time scatter. Each data point and associated
+error bar in Figure 4 represents 10 realizations of that halo
+
+7
+0
+2
+4
+6
+8
+Time (Gyr)
+100
+101
+c/
+s
+N = 104
+0
+2
+4
+6
+8
+Time (Gyr)
+N = 105
+0
+2
+4
+6
+8
+Time (Gyr)
+100
+101
+c/
+s
+N = 106
+(a)
+0.90
+0.95
+1.00
+1.05
+1.10
+Ei/ENFW
+0.94
+0.96
+0.98
+1.00
+1.02
+1.04
+1.06
+Ei/ENFW
+0.97
+0.98
+0.99
+1.00
+1.01
+1.02
+1.03
+Ei/ENFW
+(b)
+FIG. 2: Realization noise tests for C50T9 (ˆ𝜎= 0.2664) at three different resolutions. a) The central density evolution. The bold
+black line is the gravothermal model with 𝛽= 0.9385, and each other line represents an individual realization. b) The initial
+total energy of each realization relative to the expected NFW total energy. Each realization has the same line coloring in the top
+and bottom panels. Two outliers in the 𝑁= 104 case are shown in bold in both panels for emphasis.
+0
+50
+100
+150
+200
+250
+Time (Gyr)
+100
+101
+c/
+s
+N = 104
+0
+50
+100
+150
+200
+250
+Time (Gyr)
+N = 105
+0
+50
+100
+150
+200
+250
+Time (Gyr)
+100
+101
+c/
+s
+N = 106
+(a)
+0.90
+0.95
+1.00
+1.05
+1.10
+Ei/ENFW
+0.94
+0.96
+0.98
+1.00
+1.02
+1.04
+1.06
+Ei/ENFW
+0.97
+0.98
+0.99
+1.00
+1.01
+1.02
+1.03
+Ei/ENFW
+(b)
+FIG. 3: Realization noise tests for C10T225 (ˆ𝜎= 0.0657) at three different resolutions. Panel organization is the same as in
+Figure 2. The bold black line is the gravothermal model with 𝛽= 1.162.
+
+8
+104
+105
+106
+N
+0.4
+0.6
+0.8
+1.0
+1.2
+1.4
+1.6
+tc(N) / tc(106)
+= 0.2643
+C10T9 (
+= 7.0462)
+104
+105
+106
+N
+= 0.9385
+C50T9 (
+= 0.2664)
+104
+105
+106
+N
+= 1.162
+C10T225 (
+= 0.0657)
+104
+105
+106
+N
+0.4
+0.6
+0.8
+1.0
+1.2
+1.4
+1.6
+tc(N) / tc(106)
+= 0.984
+C50T225 (
+= 0.0083)
+FIG. 4: Collapse time statistics as a function of resolution for all realization noise tests. The points are the median collapse time
+𝑡𝑐(𝑁) from simulations, scaled by the best-fit collapse time 𝑡𝑐(106) from the gravothermal model calibrated to 𝑁= 106. The
+error bars are the median absolute deviation of 𝑡𝑐(𝑁) at each value of 𝑁. Each panel shows results from one halo in Table I, and
+displays the best fit 𝛽for that case in the upper right corner.
+at the specified resolution.
+To minimize the effect of the
+extreme outliers at low resolution, the points in this figure
+are the median collapse time and error bars are the median
+absolute deviation. For most cases, the median collapse time
+is consistent across resolutions and is more tightly distributed
+as the resolution increases.
+There are, however, important
+exceptions to this trend.
+Halos C50T9 and C50T225 have consistently short collapse
+times at the lowest resolution.
+This suggests that collapse
+times in low resolution halos in this case are not only noisy,
+but are not centered on the converged result. The collapse
+time of halo C50T9 converges by 𝑁= 104.25, but the collapse
+times of halo C50T225 increase through all of the resolutions
+we have tested. This suggests that the C50T225 halo has not
+converged by 𝑁= 105, and may not be converged even at
+𝑁= 106. Higher resolution tests of C50T225 are numerically
+expensive, and the halo may be too difficult to resolve to be of
+use in simulation work until this problem is remedied.
+The last step before we can interpret our convergence test-
+ing results is to determine to what precision we can measure
+collapse time for a given simulation. In Figure 5 we show the
+error bars, Σ, used in Figure 4, defined as the median absolute
+deviation divided by the median collapse time, as a function of
+particle count. From these data we see that the collapse times
+in our highest resolution simulations can be considered to have
+a precision of 3%, while our lowest resolutions can have un-
+certainties as high as 20%. We also find that the collapse time
+scatter is well described by the power law Σ ∝𝑁−0.58 with
+the constant of proportionality for our work depending some-
+what on the specific scenario, ranging from 101.192 to 101.928.
+The exponent on 𝑁and the normalization exponent were both
+found by averaging the values found when fitting each scenario
+individually, and the range in the normalization is the standard
+deviation from those individual values.
+From these data we have found that simulations with 104
+particles suffer from significant realization noise, to the point
+where any individual 𝑁= 104 halo cannot be a reliable rep-
+104
+105
+106
+N
+10
+2
+10
+1
+MAD/med
+= 101.56 ± 0.368 × N
+0.58
+C10T9
+C50T225
+C10T225
+C50T9
+FIG. 5: The fractional scatter of the collapse times shown in
+Figure 4 as a function of 𝑁. Different scenarios from Table I
+are distinguished by color and marker style. The power law
+fit given in the lower left corner is shown by the central black
+line, and the uncertainty in the normalization constant is
+represented by the shaded region.
+resentation of a larger population of similar halos, and even
+an ensemble may have a biased average collapse time. Ad-
+ditionally, we have found that 𝑁= 104 halos are sensitive to
+the initial total halo energy, with low energy magnitudes cor-
+relating with collapse times much longer than the rest of the
+population. We have also found currently unexplained sys-
+tematic effects at low resolutions, with the extreme case of
+
+9
+C50T225 not converging in collapse time by a resolution of
+𝑁= 105. All of these findings suggest that a halo must have at
+least 105 particles to produce a reliable collapse time. Lower
+resolutions have collapse time uncertainties rising above 10%,
+extremely slowly collapsing outliers, and in some cases a me-
+dian collapse time that disagrees with the converged result.
+Our data also suggest that C50T225, our high concentration
+and low cross-section case that is firmly in the lmfp regime
+with ˆ𝜎= 0.0083, suffers from further numerical error that
+persists until higher resolutions than 𝑁= 105 with our current
+softening and 𝜂choices.
+IV.
+CONVERGENCE TESTING
+Having quantified the realization noise, we can analyze the
+main convergence test results following the grid described in
+section II C. First we show the central density evolution across
+the numerical parameter grid for two sample halos and identify
+important variation in the collapse time as a function of 𝑟soft
+and 𝜂individually. Subsequently, we consider summary data,
+to further quantify these trends across all halos.
+Figures 6 and 7 show convergence testing results for halos
+C50T9 and C10T225 respectively, the same halos shown in
+Figures 2 and 3. The central density plots are arranged in a grid
+according to their softening length and 𝜂values, and different
+resolutions are distinguished by color. Following our guidance
+from section III, when generating 𝑁= 104 initial conditions
+we have required that the initial total energy is within 5% of
+the expected analytic NFW energy. This prevents our analysis
+from including an extremely slowly collapsing outlier.
+We first consider the effect of softening on convergence.
+We use Equation 6 as the default value, 𝜖(𝑁, 𝑐), of the soften-
+ing length, and test softenings scaled up and down from this
+default. In these tests, oversoftening manifests as a delayed
+core-collapse which is more significant at lower resolutions.
+This can be seen in both Figures 6 and 7, where large softening
+values (the two rightmost columns) show delayed central den-
+sity evolution even for large particle counts. This effect occurs
+in both simulations, but is more severe for C10T225. On the
+other hand, under-softening leads to the opposite effect, but
+only for low particle resolution. Due to the higher magnitude
+of error and prevalance at even the highest resolutions, over-
+softening is a much more severe problem for convergence than
+undersoftening.
+To quantify the effect of softening on convergence, Figure
+8 shows a more detailed comparison of softening, resolution,
+and collapse time, and includes the C10T9 and C50T225 data.
+Each panel shows the collapse time as a function of parti-
+cle count for one of our halos from Table I, and the different
+symbols and colors show softening length choices. All sim-
+ulations represented in this figure are for 𝜂= 0.005. Some
+simulations did not core-collapse in the time given, and are
+represented as unfilled markers at the end of their run. The
+maximum simulation time varies between panels based on
+how numerically expensive the simulations are, as well as the
+expected collapse time value. For all halos except C50T225,
+the collapse time at high resolution converges reasonably for
+𝑟soft values of 10−0.4𝜖(𝑁, 𝑐), 100𝜖(𝑁, 𝑐), and 100.4𝜖(𝑁, 𝑐).
+Simulations with 100.8𝜖(𝑁, 𝑐), our most oversoftened cases,
+produce consistently delayed collapse even at 𝑁= 106. The
+standard softening choice (100𝜖(𝑁, 𝑐)) and the undersoften-
+ing value (10−0.4𝜖(𝑁, 𝑐)) appear to be largely insensitive to
+resolution for 𝑁> 104, while the moderate oversoftening
+case (100.4𝜖(𝑁, 𝑐)) displays delayed collapse at resolutions
+up to and including 𝑁= 105.
+Moderate undersoftening
+(10−0.4𝜖(𝑁, 𝑐)) produces similar collapse times as the stan-
+dard softening in all cases except C50T225. The C50T225
+halo does not display any of the trends discussed above, and
+the different softening values do not produce consistent re-
+sults at our highest tested resolution. The standard softening
+case suffers from accelerated collapse at low resolutions. This
+accelerated collapse is consistent with the C50T225 panel in
+Figure 4, where we observed the same effect. Surprisingly,
+the moderate oversoftening case has the least variation with
+resolution in the C50T225 simulations, with resolutions above
+𝑁= 104 collapsing near the expected rate.
+Next, we consider the effect of the choice of the time step
+size for convergence.
+Here, we focus on the default time
+step parameter 𝜂, where smaller values of 𝜂produce smaller
+timesteps for all particles as shown in equation 3. For the
+long collapse time results in Figure 7, larger values of 𝜂cause
+the central regions of the halo to collapse more rapidly than
+with smaller values. This is most clear in the second column
+from the left, where the standard softening length is used.
+Decreasing 𝜂from the default value of 0.025 to 0.005 increases
+the core-collapse timescale by roughly 40%, while further
+decreasing 𝜂to 0.001 results in a smaller additional increase,
+bringing the total increase to 65%. The problem is less severe
+for shorter, cosmological timescales. Figure 6 shows no sign
+of this 𝜂dependence, with 𝜂= 0.025 appearing sufficient for
+a converged core-collapse time.
+Some odd behavior appears at small softening (leftmost col-
+umn) in Figures 6 and 7, in particular for the lowest resolution
+𝑁= 104. These simulations agree with the converged result
+for large 𝜂, but have accelerated collapse times for smaller 𝜂.
+In Figure 6 this effect is small and vanishes at 𝑁= 104.25, so it
+is easily attributed to the realization noise shown in Section III.
+Figure 7 shows a stronger trend however, with the 𝑁= 104.25
+simulation also experiencing accelerated collapse at small 𝜂.
+Even with this stronger trend, we suspect the realization noise
+is the dominant effect in this counterintuitive variation. Ad-
+ditional realizations for each of these 𝜂values ware required
+to distinguish between a shot-noise effect and any true depen-
+dence on 𝜂at small softening and resolution, and this may be
+explored in future work.
+Figure 9 shows how the choice of 𝜂influences the halo
+evolution. Each column shows a different halo from table I,
+with the top row plotting the central density evolution and the
+bottom row plotting the energy error. Different resolutions
+are represented by the line color, while 𝜂values are distin-
+guished by the line style. The central density evolution of the
+quick collapse cases, C10T9 and C50T9, have no significant
+dependence on 𝜂in the range we tested. In contrast, the slow
+collapse cases show strong dependence on the choice of 𝜂, with
+smaller values leading to longer core-collapse times. In both
+
+10
+2
+4
+6
+8
+10
+12
+100
+101
+c/
+s
+rsoft = 10
+0.4 (N, c)
+N = 106.0
+N = 105.0
+N = 104.75
+N = 104.5
+N = 104.25
+N = 104.0
+2
+4
+6
+8
+10
+12
+rsoft = 100.0 (N, c)
+2
+4
+6
+8
+10
+12
+rsoft = 100.4 (N, c)
+2
+4
+6
+8
+10
+12
+= 0.025
+rsoft = 100.8 (N, c)
+2
+4
+6
+8
+10
+12
+100
+101
+c/
+s
+2
+4
+6
+8
+10
+12
+2
+4
+6
+8
+10
+12
+2
+4
+6
+8
+10
+12
+= 0.005
+2
+4
+6
+8
+10
+12
+Time (Gyr)
+100
+101
+c/
+s
+2
+4
+6
+8
+10
+12
+Time (Gyr)
+2
+4
+6
+8
+10
+12
+Time (Gyr)
+2
+4
+6
+8
+10
+12
+Time (Gyr)
+= 0.001
+FIG. 6: Convergence testing results for halo C50T9. Each panel shows the central density evolution at various resolutions.
+Panels in the same column share the same softening parameter, and panels in the same row share the same 𝜂, as labeled on the
+top and right sides of the figure respectively. The 𝑁= 106 simulation line is bold in each panel. The horizontal dashed lines
+mark 𝜌𝑐/𝜌𝑠= 20, our core-collapse threshold, and the vertical dashed lines mark the core-collapse time of our 𝑟soft = 𝜖(𝑁, 𝑐),
+𝜂= 0.001, 𝑁= 106 case.
+of the slow collapse cases the default value of 𝜂= 0.025 is
+insufficient, with collapse times differing from the converged
+case by as much as a factor of 4, but even the smallest value
+of 𝜂= 0.001 may not be sufficient in all cases. The C10T225
+simulation has a longer collapse time when using 𝜂= 0.001
+compared to 𝜂= 0.005 at both resolutions shown, which means
+an 𝜂smaller than 0.001 may be needed for convergence. The
+C50T225 case fares better than C10T225, with 𝜂= 0.005 and
+𝜂= 0.001 showing similar evolutions. The 𝑁= 105 data
+do not match the 𝑁= 106 data however, suggesting higher
+resolution sensitivity than the short collapse simulations.
+The 𝜂dependence in the central density evolution is tracked
+well by the energy error, with larger 𝜂values accumulating
+larger errors. The C10T9 case shows small amounts of energy
+error accumulation, with most energy errors being dominated
+by random noise rather than secular growth. The C50T9 case
+shows clear error growth for large 𝜂, but the central density
+evolution is unchanged. The slow collapse cases have larger
+energy error magnitudes and clear secular growth, correspond-
+ing to their significantly 𝜂-dependent central density evolution.
+As a rough estimate, the central density appears to track the
+converged evolution as long as the energy error magnitude
+stays below 1%. It is possible that the energy error is propor-
+tional to the number of timesteps, explaining why long sim-
+ulations experience greater error than ones on cosmological
+timescales.
+The correlation between 𝜂dependence, energy error growth,
+and collapse time suggests a connection between these char-
+acteristics. While a detailed analysis of this connection will
+be discussed in future work, the results shown here indicate
+that secular energy error growth can be a tracer for this partic-
+ular numerical effect. These data also suggest that simulations
+with long collapse times are more susceptible to this acceler-
+ated collapse. Despite their numerical issues, long collapse
+times are important. Their performance can help diagnose the
+origins of numerical error that may play a role in shorter simu-
+
+11
+50
+100
+150
+200
+250
+100
+101
+c/
+s
+rsoft = 10
+0.4 (N, c)
+N = 106.0
+N = 105.0
+N = 104.75
+N = 104.5
+N = 104.25
+N = 104.0
+50
+100
+150
+200
+250
+rsoft = 100.0 (N, c)
+50
+100
+150
+200
+250
+rsoft = 100.4 (N, c)
+50
+100
+150
+200
+250
+= 0.025
+rsoft = 100.8 (N, c)
+50
+100
+150
+200
+250
+100
+101
+c/
+s
+50
+100
+150
+200
+250
+50
+100
+150
+200
+250
+50
+100
+150
+200
+250
+= 0.005
+50
+100
+150
+200
+250
+Time (Gyr)
+100
+101
+c/
+s
+50
+100
+150
+200
+250
+Time (Gyr)
+50
+100
+150
+200
+250
+Time (Gyr)
+50
+100
+150
+200
+250
+Time (Gyr)
+= 0.001
+FIG. 7: Convergence testing results for halo C10T225. All lines and markers are the same as in Figure 6.
+104
+105
+106
+N
+0.0
+0.5
+1.0
+1.5
+2.0
+tc(N) / tc(106)
+= 0.2643
+C10T9 (
+= 7.0462)
+rsoft = 10
+0.4 (N, c)
+rsoft = 100.0 (N, c)
+rsoft = 100.4 (N, c)
+rsoft = 100.8 (N, c)
+104
+105
+106
+N
+= 0.9385
+C50T9 (
+= 0.2664)
+104
+105
+106
+N
+= 1.162
+C10T225 (
+= 0.0657)
+104
+105
+106
+N
+0.0
+0.5
+1.0
+1.5
+2.0
+tc(N) / tc(106)
+= 0.984
+C50T225 (
+= 0.0083)
+FIG. 8: Collapse time as a function of resolution and softening length, with 𝜂= 0.005. Each panel shows a different scenario
+from Table I, and different softening lengths are distinguished by color and marker style. In the same manner as Figure 4, the
+horizontal dashed line represents the expected collapse time using 𝛽values fit in Section III, which are displayed in the top right
+corner of each panel. Unfilled markers represent the lower bound on collapse time for simulations that never reached the
+core-collapse threshold.
+
+12
+100
+101
+c/
+s
+C10T9
+= 0.001
+= 0.005
+= 0.025
+N = 105
+N = 106
+C50T9
+C10T225
+100
+101
+c/
+s
+C50T225
+0
+2
+4
+6
+8
+10
+Time (Gyr)
+10
+6
+10
+5
+10
+4
+10
+3
+10
+2
+10
+1
+Fractional Energy Error
+0
+2
+4
+6
+8
+10
+Time (Gyr)
+0
+50
+100
+150
+200
+250
+Time (Gyr)
+0
+50
+100
+150
+200
+250
+Time (Gyr)
+10
+6
+10
+5
+10
+4
+10
+3
+10
+2
+10
+1
+Fractional Energy Error
+FIG. 9: Central density and absolute fractional energy error evolution as a a function of 𝜂, shown for 𝑁= 105 (red) and 𝑁= 106
+(blue). Each column shows a different scenario from Table I, with the top panels displaying the central density evolution and the
+bottom panels the energy error evolution. Each panel shows 𝜂= 0.001 (solid), 𝜂= 0.005 (dashed) and 𝜂= 0.025 (dotted). All
+simulations shown use 𝑟soft = 𝜖(𝑁, 𝑐) as defined in Equation 6.
+lations, making them important for N-body algorithm building
+and testing. While our results so far show that the timestep
+size matters less for cosmological collapse than longer collapse
+times, further tests of short collapse times are needed to con-
+firm our results are converged. These tests include varying the
+scattering probability limit by altering DTimeFac (Equation
+4), and the use of other timestep definitions.
+V.
+SUMMARY AND DISCUSSION
+In this work, we perform numerical tests of self-interacting
+dark matter halos using the Arepo N-body code. These tests
+study the influence of several numerical parameters and ran-
+dom initial condition noise on the core-collapse process. The
+effect of realization noise is studied by selecting reasonable
+𝑟soft and 𝜂values based on preliminary convergence investiga-
+tions, and generating 10 initial conditions for each resolution,
+with each realization using a different random seed. In ad-
+dition to these realization noise studies, we create a grid of
+numerical parameter values, varying particle count, softening
+length, and timestep size, and study the effect that each com-
+bination of values had on the halo’s central density evolution.
+This process is repeated for four cases, consisting of combina-
+tions of two initial halo concentrations and two core-collapse
+times. Different collapse times for halos with identical concen-
+trations are generated by changing the scattering cross-section.
+From the results of these convergence tests, we find that our
+parameter selection in the realization noise investigation was
+reasonable.
+Based on these studies, we identify several numerical effects
+that can be mitigated through informed parameter choices.
+• Resolution and realization noise: When generating ran-
+dom initial conditions using SpherIC, halos with parti-
+cle counts of 104 suffer from significant scatter in evo-
+lution times (Figures 2 and 3), as well as occasional
+outlier realizations that collapse much more slowly than
+the typical case. These outlier cases in our study are
+correlated with initial halo energies that are low in mag-
+nitude, suggesting a sensitivity to halo energy at low
+resolutions. The realization noise problem persists until
+a resolution of 105 particles, where most simulations ap-
+pear to converge and have significantly reduced scatter in
+core collapse time (Figure 4). Our C50T225 case (high
+concentration, slow collapse) has not converged at this
+resolution, though, prompting caution when simulating
+similar halos. The 𝑁= 105 requirement is of partic-
+ular importance for simulations including substructure,
+which may include subhalos that are not sufficiently
+well-resolved to accurately resolve gravothermal core-
+collapse.
+• Gravitational softening: We find that Equation 6, the
+CDM softening length presented by [54], is an appro-
+priate softening choice in all cases tested.
+Selecting
+softening lengths larger than given in Equation 6 leads
+to a delayed collapse process (Figure 8). The magnitude
+of this collapse delay depends on the resolution, with
+higher resolution simulations being more resilient to the
+effect. Lowering the Equation 6 softening value by a
+factor of 10−0.4 does not substantially alter the halo evo-
+lution, suggesting that oversoftening is more of a con-
+cern than undersoftening. While this prescription for
+gravitational softening works well for our isolated halo,
+it is not immediately clear how to proceed in cosmo-
+
+13
+logical simulations that include many halos of varying
+mass and concentration. We expect that each individ-
+ual halo would perform well with softening assigned by
+Equation 6, making a global softening treatment diffi-
+cult. Additionally, simulations including substructure
+present additional complications in softening length se-
+lection, as subhalos lose mass over time due to tidal
+effects.
+• Timestep size: Simulations that run far longer than the
+age of the Universe are sensitive to the 𝜂parameter,
+which scales the simulation’s gravitational acceleration-
+based timestep. Using the timestep definition in Equa-
+tion 3, a value of 𝜂= 0.025 is sufficient for short simu-
+lations, but when simulating beyond the age of the Uni-
+verse this value leads to energy non-conservation and an
+altered central density evolution (Figure 9). This error
+typically manifests as an accelerated core-collapse, but
+the C50T225 simulation is once again an outlier, with
+one high resolution simulation of that halo instead suf-
+fering from a significantly delayed collapse. The effects
+of a large 𝜂value are also more severe for lower resolu-
+tions, adding another dimension to parameter selection.
+The cause of this error is not yet understood, but will
+be studied in future work. While the cause is not clear,
+the change in the total system energy consistently traces
+the issue and can be used as a diagnostic. We find that
+selecting 𝜂= 0.005 significantly reduces the error in our
+long simulations compared to using 𝜂= 0.025, but may
+not be fully converged, even with 𝑁= 106 particles.
+Throughout our convergence testing, the C50T225 case is a
+consistent outlier that struggles to converge with every numer-
+ical parameter. With its high concentration 𝑐200𝑚= 50 and
+lengthy 225 Gyr collapse time, this case does not represent
+a typical halo in realistic cosmological simulations. While
+this halo is an extreme case, a more subtle instance of these
+errors may be present in more common regions of the parame-
+ter space, making a thorough understanding of Arepo’s limits
+important.
+The reason for the C50T225 non-convergence is not clear,
+but there are some possibilities. This case has the most sig-
+nificant difference between the characteristic timescales for
+gravity and scattering; the high concentration leads to large
+accelerations and short gravitational timesteps in the center
+of the halo, while the low cross-section causes large intervals
+of time between scattering events. Since Arepo adopts the
+smaller of the acceleration timestep and SIDM timestep, this
+leads to timesteps with very low scattering probabilities. This
+difference can be seen in the small value of ˆ𝜎= 0.00827,
+which tells us that this halo is deep in the lmfp regime, where
+gravitational interactions vastly outweigh scattering events.
+Hypothetically this regime should be straightforward to simu-
+late as it is the closest case to CDM, but these results suggest
+a numerical issue in the Arepo scattering algorithm when the
+gravitational and scatterng characteristic times are very dif-
+ferent. We plan a more detailed investigation of this error in
+future work, where we investigate the cause and determine if
+it is specific to Arepo.
+The other recent works shown in Figure 1 share some of
+our findings. Palubksi et al. discovered similar energy non-
+conservation as our study, and found that selecting a stricter
+collision probability limit (DTimeFac) and a small timestep
+parameter (𝜂) alleviates the issue [57]. Fischer et al. also
+discovered an energy error, and finds that switching to a fixed
+timestep value and using a smaller gravitational tree opening
+angle (ErrTolForceAcc) reduces the issue [58]. The success
+of fixed timestepping in Fischer et al. suggests that the energy
+error may indeed be caused by the non-symplectic nature of
+an N-body simulation with scattering events, which was one
+of the concerns motivating this work.
+By quantifying the above numerical effects in SIDM N-
+body simulations using Arepo, future studies can identify and
+avoid similar complications. More important than any spe-
+cific guidance on parameter selection given here is the demon-
+stration that the introduction of self-interactions into N-body
+simulations changes the behavior of numerical errors, and that
+parameter choices suitable for CDM may no longer provide
+converged and useful results. Further work is needed to fully
+understand how to select numerical parameters in SIDM N-
+body simulations. In particular, the causes and behavior of the
+𝜂dependence discovered in this work must be fully understood
+so that we can confidently say we have converged results for
+long simulations. The extent of these effects in halo substruc-
+ture must also be explored, so that we can assess the accuracy
+of cosmological simulations that suggest SIDM as a solution
+to the halo diversity problem. Lastly, the studies done in this
+work would benefit from a detailed comparison of Arepo and
+other N-body codes, to determine to what extent these issues
+are code-dependent. Until there is a more detailed understand-
+ing of these errors and their causes, N-body SIDM simulators
+must systematically check that their choices of parameters are
+sufficient to produce the desired level of convergence for each
+specific application.
+ACKNOWLEDGMENTS
+We thank Akaxia Cruz, Tom Quinn, Igor Palubski, Manoj
+Kaplinghat, and Moritz Fischer for useful discussions and
+feedback.
+This work was supported in part by the NASA Astrophysics
+Theory Program, under grant 80NSSC18K1014, and by a grant
+from the OSU College of Arts and Sciences Division of Natural
+and Mathematical Sciences. Z.C. Zeng is partially supported
+by the Presidential Fellowship of the Ohio State University
+Graduate School. The simulations in this work were conducted
+on Ohio Supercomputer Center [76], mostly on the CCAPP
+condo.
+This research was supported in part by grant NSF
+PHY-2309135 to the Kavli Institute for Theoretical Physics
+(KITP)
+DATA AVAILABILITY
+The N-body simulation snapshots generated in this work
+are available in the Dryad online data repository [77]. This
+
+14
+public datasets includes central density evolution data, as well
+as N-body particle data. To meet the storage constraints of the
+repository we omit some snapshots of the 𝑁= 106 simulations,
+and all of the realization noise simulations in section III. More
+complete data may be available on request to the authors.
+Appendix A: C10T9 and C50T225 Convergence Tests
+The C10T9 and C50T225 equivalents of Figures 6 and 7
+were omitted from the main text for brevity. Here they are
+included to show to full range of simulations completed as
+part of this work.
+Figure 10 shows the convergence tests for the C10T9 halo.
+This figure shows the same trends as Figure 6, including the
+lack of 𝜂dependence at any softening length.
+Figure 11 shows the convergence tests for the C50T225
+halo. Due the higher computational cost of this halo at high
+resolutions and low 𝜂values, the 𝑁= 105, 𝜂= 0.001,
+𝑟soft = 100𝜖(𝑁, 𝑐) case is used instead of 𝑁= 106 for the
+collapse time reference line. Some expected trends are visible
+in this figure, such as the delayed collapse at large softening
+lengths. We also see a general trend of collapse acceleration
+at low 𝜂values, which is more significant for low resolutions.
+There are, however, significant outliers to these trends. As
+discussed in the context of Figure 9, the 𝑁= 106 simulation
+for 𝜂= 0.025 and 𝑟soft = 100𝜖(𝑁, 𝑐) is not accelerated as are
+most of the other large 𝜂simulations, but instead significantly
+delayed.
+We also see that when large 𝜂is combined with
+oversoftening (𝜂= 0.025 and 𝑟soft = 100.8𝜖(𝑁, 𝑐)) low reso-
+lution data not only suffers delayed collapse, but forms very
+low density cores that are not expected from the gravothermal
+fluid model. Another unusual effect apparent in this figure is
+seen in the undersoftened simulations (𝑟soft = 10−0.4𝜖(𝑁, 𝑐)),
+which show delayed core-collapse at low resolutions and large
+𝜂. These unexplained trends may show the interplay of mul-
+tiple numerical errors, causing unexpected behavior and non-
+convergence.

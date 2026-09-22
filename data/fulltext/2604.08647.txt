@@ -1,0 +1,2528 @@
+Bypassed Core Formation in Milky Way-Mass SIDM Halos: Implications for the Local Group
+Past-Pericenter Scenario
+Zhichao Carton Zeng1,∗Odelia V. Hartl1, Louis E. Strigari1, Annika H.
+G. Peter2,3,4, Xiaolong Du5,6, Charlie Mace2,3, and Andrew Benson5
+1Department of Physics and Astronomy,
+Mitchell Institute for Fundamental Physics and Astronomy,
+Texas A&M University, College Station, Texas 77843, USA
+2Department of Physics, The Ohio State University,
+191 W. Woodruff Ave., Columbus OH 43210, USA
+3Center for Cosmology and Astroparticle Physics,
+The Ohio State University, 191 W. Woodruff Ave.,
+Columbus OH 43210, USA
+4Department of Astronomy, The Ohio State University,
+140 W. 18th Ave., Columbus OH 43210, USA
+5 Carnegie Observatories, 813 Santa Barbara Street,
+Pasadena CA 91101, USA
+6 Department of Physics and Astronomy,
+University of California, Los Angeles, CA 90095, USA
+(Dated: September 17, 2026)
+We consider a scenario in which the Milky Way (MW) and M31 have had a previous pericentric passage,
+and investigate its compatibility with self-interacting dark matter (SIDM). Using initial conditions sampled
+from Local Group (LG) analogues in the IllustrisTNG simulation, we perform controlled re-simulations of
+the MW-M31 orbit, evolving the system under both standard cold dark matter (CDM) and various SIDM
+cross-sections. We find that the deep baryonic potential of the MW preconditions the halo’s thermal structure,
+establishing an initial negative temperature gradient. This drives SIDM halos to bypass the standard core-
+formation phase and enter immediate core-collapse, resulting in monotonically increasing central densities. In
+full orbital simulations, the compact stellar component (disk/bulge) of the MW analog remains robust against
+tidal disruption for pericenter distances as close as 𝑟peri ≲20 kpc during an encounter at cosmic time ∼8
+Gyr. The diffuse stellar halo is comparatively more susceptible, facing disruption for 𝑟peri ≲100 kpc. Our
+results demonstrate a dichotomy in structural evolution: the compact disk/bulge is sensitive to intrinsic SIDM
+thermodynamics but dynamically robust against the pericenter encounter, whereas the diffuse stellar halo is
+largely independent of the specific SIDM model but more vulnerable to orbital tidal disruptions.
+I.
+INTRODUCTION
+The Local Group (LG) is defined as the approximately spher-
+ical volume with a ∼1 Mpc radius centered on the Milky Way
+(MW)–M31 barycenter. Estimates of the LG mass lie in the
+range ∼2–4 × 1012 M⊙, which is dominated by the mass
+contained within the MW and M31 [1–4]. In addition to the
+MW and M31, the LG contains dozens of less luminous dwarf
+galaxies, bound to either the MW, to M31, or to the LG as a
+system [5]. Because of its proximity, individual stars within
+galaxies in the LG are resolved, allowing a unique window
+into the kinematics, formation, and dark matter properties [6].
+The classical model for the formation of the LG is that the
+MW and M31 first formed with initial conditions given by the
+Hubble flow, then detached and have been on a first-infalling,
+radial approaching orbit. Recent Gaia and HST measurements
+have provided an important insight into this simple scenario
+and to the 3D nature of the MW–M31 orbit [7, 8]. In par-
+ticular, the preference for a non-negligible tangential velocity
+has challenged the long-standing model of a pure MW–M31
+∗E-mail: zczeng@tamu.edu
+radial orbit [9]. The existence of a tangential velocity not only
+provides clues as to the past history of the orbit, it also has in-
+teresting implications for the future evolution of the LG [10].
+Given the measured kinematics, there is a wide range of
+possible orbits, and in fact, it has been recognized that a past
+pericentric passage is consistent with the data [11]. Such a
+model has been long ago speculated, and has recently been
+re-considered in the context of MW and M31 mass measure-
+ments [12]. Though not often discussed in the literature, a
+previous MW–M31 pericentric passage may leave observa-
+tional imprints on the MW and M31. However, because there
+are no significant tidal shocks observed in the LG, a very close
+pericentric passage between the galaxies in the recent past is
+unlikely.
+In addition, such an event may be impacted by the nature
+of dark matter, in particular whether it is a standard cold dark
+matter (CDM) model, or if dark matter is self-interacting. Self-
+interacting dark matter (SIDM) can lower the central density of
+halos through particle scattering and subsequent thermaliza-
+tion, leading to the formation of constant-density cores [13].
+In the absence of strong baryonic contraction, this would ren-
+der the MW (and M31) central potentials shallower, potentially
+making the galaxies more susceptible to tidal disruption during
+the pericenter passage. Beyond gravitational tides, the direct
+arXiv:2604.08647v2  [astro-ph.GA]  15 Sep 2026
+
+2
+scattering between MW and M31 dark matter particles, a pro-
+cess known as ‘evaporation’ [14–20], can unbind dark matter
+from the halos, exacerbating the disruption. These factors mo-
+tivate a detailed exploration of the compatibility between the
+LG past-pericenter scenario and SIDM physics.
+SIDM has undergone a recent renaissance, driven by the pre-
+diction of a two-phase evolutionary track: halos may evolve
+from a lower-density, cored configuration (core formation
+phase) to a cuspy, ultra-high-density state (core collapse phase)
+[21–23]. This mechanism naturally generates significant di-
+versity in central halo densities, a variance further amplified
+by the hierarchical assembly of subhalos within host halos
+[18, 19, 24–32].
+Consequently, SIDM offers the potential
+to explain a series of emerging observational anomalies on
+small scales, including the diversity problem of dwarf galax-
+ies [33–35], the presence of individual ultra-dense perturbers
+in strongly lensed systems [29, 36–41], statistical excess in
+galaxy-galaxy lensing signals [42–44], dense low-mass per-
+turbers affecting stellar streams [45–47], and the formation of
+high-redshift supermassive black holes beyond the Eddington
+limit [22, 48–52].
+Conversely, existing constraints on the self-interaction
+cross-section ≲O(1) cm2/g are derived primarily from galaxy
+clusters, whose characteristic velocities ≳1000 km/s (cluster
+central density [53–56]; cluster ellipticity [57–59]; DM-galaxy
+offset and halo survival after cluster mergers [14, 60–63]; see
+Table I in [64] for an overview). Fewer studies exist at the
+Milky Way mass scale compared to dwarfs or clusters [65–
+68]. This is partly because the stellar-to-halo mass ratio peaks
+at this scale [69, 70], introducing a strong degeneracy between
+baryonic physics and SIDM physics. Recent hydrodynami-
+cal simulations suggest that at this mass scale, baryons can
+deepen the potential, causing SIDM halos to contract rather
+than form cores [66, 68, 71], complicating the interpretation of
+isolated MW-like systems. Studies placing SIDM within the
+full dynamical environment of the Local Group remain even
+scarcer. This work therefore serves as a diagnostic study of
+MW-system evolution within the unique context of the Local
+Group environment, utilizing the past-pericenter scenario to
+leverage potential constraining power on SIDM models.
+In this paper, we perform a detailed analysis of the MW-
+M31 pericentric passage scenario. We start from cosmological
+initial conditions for a LG analogue system with kinematics
+consistent with the observed LG. We extract the initial con-
+ditions of these analogs to perform controlled, idealized re-
+simulations, isolating the binary system from large-scale cos-
+mological perturbations. By populating these halos with both
+dark matter and stellar particles, we study the co-evolution of
+the dark matter halo and the stellar components. This approach
+allows us to systematically evolve the MW and M31 analogs
+under various self-interacting dark matter (SIDM) models, iso-
+lating the gravitational interplay between SIDM dynamics and
+stellar potentials from complex hydrodynamical feedback pro-
+cesses. We thereby identify specific observables sensitive to
+the pericentric passage and quantify their dependence on the
+underlying dark matter physics.
+This paper is organized as follows.
+In Sec.
+II, we out-
+line the selection criteria for LG analogs in TNG300-1 that
+exhibit a past pericenter and select the optimal candidate for
+high-resolution follow-up. In Sec. III, we simulate the MW
+analog in isolation to characterize the interplay between SIDM
+dynamics and baryonic potential depth. Specifically, we exam-
+ine the evolution of compact (disk/bulge) versus diffuse (stel-
+lar halo) stellar distributions under different cross-sections,
+independent of environmental tidal effects. In Sec. IV, we
+model the full LG interaction, evolving both the MW and M31
+analogs simultaneously across a range of SIDM models. We
+utilize these controlled simulations to quantify the tidal dis-
+ruption experienced by the MW analog as a function of the
+minimum past pericenter distance.
+Finally, in Sec.
+V, we
+summarize our conclusions and discuss pathways for future
+investigation.
+II.
+METHODS
+A.
+Sample selection of LG analogs
+The sampled LG analogs selected for re-simulation in this
+work are drawn from the Illustris TNG300-1 simulation [72–
+74], following the criteria as outlined in [3] and [11]: a) each
+member of the LG analog (the MW and M31 analogs) has
+a B-band magnitude −22.3 < 𝑀𝐵< −19.3; b) the MW–
+M31 analog pairs are approaching each other at 𝑧= 0 with
+𝑣𝑟< 0 km/s; c) the MW-M31 analog pairs have a present-
+day separation 500 kpc < r < 1000 kpc. Of the 597 pairs
+meeting these criteria, 77 (13%) are found to have experienced
+a pericenter passage in the past prior to their current approach
+[11]. This relatively wide range of parameters was chosen
+in order to increase the sample size of LG analogues.
+By
+further inspecting the smoothness of the orbital history, 15
+out of these 77 pairs appear to have evolved in a relatively
+isolated environment (see the green dashed lines in Fig. 1),
+with pericenter distances ranging from 60 to 700 kpc. We
+adopt the properties of these 15 LG analogs from TNG300-
+1 to initialize the idealized simulations described in the next
+section.
+B.
+Idealized simulations of LG analogs
+For each of these 15 LG analogs in TNG, we perform ideal-
+ized simulations of their two constituents (the MW and M31
+analogs) in isolation using Arepo [75] with an established
+SIDM module [16, 76, 77]. In this section, the LG halos are
+composed of dark matter (DM) only at relatively low reso-
+lution with 5 × 105 DM particles in total, with the softening
+length 𝜖assigned according to the recommended criterion in
+[78] to counter artificial disruption. This is because the pri-
+mary objective of this section is to study the orbital evolution
+of the MW–M31 analog pairs, examining to what extent their
+orbits in the idealized simulation (free from the large-scale
+structure present in TNG) can reproduce the TNG orbits with
+the past-pericenter feature. This allows us to identify the ‘best’
+LG analog for further investigations in the next section. The
+
+3
+detailed properties of each LG analog simulated in this section
+are summarized in Table I.
+The MW and M31 analogs’ bound masses 𝑀bound listed in
+Table I are extracted from 𝑧= 0 snapshot of TNG. The corre-
+sponding halo concentrations for all 15 analogs in this section
+are drawn from the empirical mass-concentration relation of
+[79] at each subhalo’s 𝑀bound. We adopt this uniform proce-
+dure because the LG analog members in TNG are identified
+as subhalos, for which individual concentration measurements
+are not provided; concentration is instead reported for Friends-
+of-Friends (FoF) groups. Whether the two galaxies share the
+same final FoF group at 𝑧= 0 can be diagnosed from their
+TNG subhalo IDs in Table I (consecutive IDs indicate a shared
+group). Eight of the 15 past-pericenter analogs (pairs 0, 1, 3,
+4, 5, 6, 8, and 9) share one group and thus only one group con-
+centration; the remaining seven (pairs 2, 7, 10, 11, 12, 13, and
+14) belong to two distinct groups. A consistent, TNG-based
+concentration assignment for every pair is therefore not avail-
+able for this low-resolution orbital-reconstruction survey. The
+macroscopic orbital histories are not highly sensitive to the
+precise central concentration. For the high-resolution follow-
+up in Sec. III and IV, we focus exclusively on pair14. Because
+its two galaxies reside in distinct FoF groups at 𝑧= 0 and
+are the central galaxies of their respective groups, we assign
+each halo the concentration of its host group (𝑐M31 ≈7.4,
+𝑐MW ≈12.1; see Table II), rather than the mass-concentration
+relation [79] used here.
+These properties serve as inputs for the N-body initial con-
+dition (IC) generator SpherIC [80], which creates two spher-
+ically symmetric NFW halos corresponding to the MW and
+M31 analogs. We note a structural difference in mass defini-
+tion: TNG subhalo catalogs provide the total bound masses
+𝑀bound whereas the isolated halos generated by SpherIC fea-
+ture an exponential truncation starting at 𝑟200𝑐. To conserve
+the total mass budget, we rescale the input 𝑀bound in Table I to
+obtain the corresponding 𝑀200𝑐such that the sum of the trun-
+cated virial mass and the extended mass tail equals the original
+TNG value: 𝑀SpherIC
+200𝑐
++ 𝑀SpherIC(> 𝑟200𝑐) = 𝑀TNG
+bound. The two
+independently generated halos are then combined into a single
+IC file for the isolated LG simulation. The initial displace-
+ment and relative velocity of these two halos, as well as the
+starting time of this idealized simulation 𝑡ini, are determined
+via two methods: a) directly obtaining the displacement and
+relative velocity from an early TNG snapshot at the desired
+𝑡ini; b) rewinding the LG analog’s orbit by integrating the two-
+body Newtonian equations of motion (Eqn. 1) backward in
+time from the present-day displacement and relative velocity
+to 𝑡ini. The starting time 𝑡ini of each LG analog is defined as
+the midpoint of the longest smooth, monotonic segment of its
+TNG orbital history. This selection strategy aims to minimize
+random noise in the IC setup arising from local perturbations
+along the TNG orbit. The rewinding approach, stemming from
+the classic Timing Argument (TA) model [81], approximates
+the LG’s orbital motion as that of two point masses under
+Newtonian gravity and cosmic expansion [3, 11, 82, 83]:
+¥xMW = −𝐺𝑀MW𝑀M31 · r
+𝑟3
++ 𝐻2
+0ΩΛxMW
+¥xM31 = 𝐺𝑀MW𝑀M31 · r
+𝑟3
++ 𝐻2
+0ΩΛxM31,
+(1)
+where the relative distance vector r = xM31 −xMW denotes
+the displacement vector between the two galaxies, with xM31
+and xMW being the absolute coordinate vectors of the two
+halos within the TNG simulation box, while 𝐻0 and ΩΛ repre-
+sent the Hubble parameter and dark energy density parameter
+at 𝑧= 0 respectively. As we shall see later in Fig. 1 and
+Fig. 2, this simplified model is generally sufficient when the
+MW and M31 analogs are outside of each other’s virial ra-
+dius. However, when the possibility of pericenter encounter
+is taken into consideration, effects arising from the extended
+halo mass distributions and dynamical friction can become
+significant. Previous studies such as [10, 84] have employed
+a modified Chandrasekhar formula to account for this gravita-
+tional influence on orbital decay. Nevertheless, the (modified)
+Chandrasekhar formalism may still exhibit limited accuracy
+compared to N-body simulations [19], particularly in major
+merger scenarios such as this. Therefore, we should expect
+the orbit analytically calculated via Eqn. 1 to deviate from
+the simulated orbit when the LG undergoes a close pericenter
+passage.
+Figure 1 presents the orbital histories of all 15 LG analogs
+identified with a past pericenter, while Fig. 2 displays three
+representative examples of first-infall systems. In each panel,
+we plot five distinct orbital trajectories. The original TNG
+orbit is shown as a green dashed line. Orbits derived from the
+‘rewind IC’ are depicted in black, while those initialized from
+the TNG snapshot at 𝑡ini (‘TNG IC’) are shown in red. For
+both initialization methods, the solid lines represent the results
+of our N-body simulations, and the dotted lines represent the
+analytical predictions using Eqn. 1. The deviation between
+the solid (simulated) and dotted (analytical) lines quantifies the
+impact of dynamical friction. This effect is particularly signifi-
+cant for cases with a close pericenter in the past, such as ‘pair0’
+and ‘pair14’. Comparing the idealized simulations (black and
+red lines) with the original TNG trajectory (green dashed lines)
+highlights discrepancies between a full cosmological context
+and an isolated environment. These discrepancies likely stem
+from environmental factors absent in the idealized runs, such
+as large-scale structure, other (dwarf) members in the LG
+analogs, the smooth mass accretion of each halo (since our se-
+tups have to assume a fixed 𝑧= 0 mass in IC), or a combination
+of some of these missing ingredients. As such, this compari-
+son can be viewed as a diagnostic for the degree of isolation of
+each LG analog within the TNG simulation [11]. As shown in
+Fig. 2, first-infall analogs generally show good agreement be-
+tween the original TNG orbits and those reconstructed via both
+the ‘rewind’ and ‘TNG IC’ methods. However, among the 15
+LG analogs that have a past pericenter in TNG, we only find
+‘pair0’ and ‘pair14’ using the ‘TNG IC’ method successfully
+capture the qualitative pericenter feature of the TNG orbit (i.e.,
+a deep pericentric bounce), although with slight offsets in the
+exact time and distance. This suggests that the majority of the
+
+4
+0
+2
+4
+6
+8
+10
+12
+14
+Time [Gyr]
+0
+250
+500
+750
+1000
+1250
+1500
+1750
+Separation [kpc]
+Pair 0
+rewind simulations
+rewind analytical
+tngIC simulations
+tngIC analytical
+TNG
+0
+2
+4
+6
+8
+10
+12
+14
+Time [Gyr]
+0
+500
+1000
+1500
+2000
+Separation [kpc]
+Pair 1
+rewind simulations
+rewind analytical
+tngIC simulations
+tngIC analytical
+TNG
+0
+2
+4
+6
+8
+10
+12
+14
+Time [Gyr]
+0
+200
+400
+600
+800
+1000
+1200
+Separation [kpc]
+Pair 2
+rewind simulations
+rewind analytical
+tngIC simulations
+tngIC analytical
+TNG
+0
+2
+4
+6
+8
+10
+12
+14
+Time [Gyr]
+0
+200
+400
+600
+800
+1000
+Separation [kpc]
+Pair 3
+rewind simulations
+rewind analytical
+tngIC simulations
+tngIC analytical
+TNG
+0
+2
+4
+6
+8
+10
+12
+14
+Time [Gyr]
+0
+200
+400
+600
+800
+1000
+Separation [kpc]
+Pair 4
+rewind simulations
+rewind analytical
+tngIC simulations
+tngIC analytical
+TNG
+0
+2
+4
+6
+8
+10
+12
+14
+Time [Gyr]
+0
+200
+400
+600
+800
+1000
+1200
+Separation [kpc]
+Pair 5
+rewind simulations
+rewind analytical
+tngIC simulations
+tngIC analytical
+TNG
+0
+2
+4
+6
+8
+10
+12
+14
+Time [Gyr]
+0
+200
+400
+600
+800
+1000
+Separation [kpc]
+Pair 6
+rewind simulations
+rewind analytical
+tngIC simulations
+tngIC analytical
+TNG
+0
+2
+4
+6
+8
+10
+12
+14
+Time [Gyr]
+0
+250
+500
+750
+1000
+1250
+1500
+Separation [kpc]
+Pair 7
+rewind simulations
+rewind analytical
+tngIC simulations
+tngIC analytical
+TNG
+0
+2
+4
+6
+8
+10
+12
+14
+Time [Gyr]
+0
+200
+400
+600
+800
+1000
+Separation [kpc]
+Pair 8
+rewind simulations
+rewind analytical
+tngIC simulations
+tngIC analytical
+TNG
+0
+2
+4
+6
+8
+10
+12
+14
+Time [Gyr]
+0
+200
+400
+600
+800
+1000
+Separation [kpc]
+Pair 9
+rewind simulations
+rewind analytical
+tngIC simulations
+tngIC analytical
+TNG
+0
+2
+4
+6
+8
+10
+12
+14
+Time [Gyr]
+0
+200
+400
+600
+800
+1000
+Separation [kpc]
+Pair 10
+rewind simulations
+rewind analytical
+tngIC simulations
+tngIC analytical
+TNG
+0
+2
+4
+6
+8
+10
+12
+14
+Time [Gyr]
+0
+200
+400
+600
+800
+1000
+Separation [kpc]
+Pair 11
+rewind simulations
+rewind analytical
+tngIC simulations
+tngIC analytical
+TNG
+0
+2
+4
+6
+8
+10
+12
+14
+Time [Gyr]
+0
+200
+400
+600
+800
+1000
+1200
+Separation [kpc]
+Pair 12
+rewind simulations
+rewind analytical
+tngIC simulations
+tngIC analytical
+TNG
+0
+2
+4
+6
+8
+10
+12
+14
+Time [Gyr]
+0
+200
+400
+600
+800
+1000
+Separation [kpc]
+Pair 13
+rewind simulations
+rewind analytical
+tngIC simulations
+tngIC analytical
+TNG
+0
+2
+4
+6
+8
+10
+12
+14
+Time [Gyr]
+0
+200
+400
+600
+800
+1000
+Separation [kpc]
+Pair 14
+rewind simulations
+rewind analytical
+tngIC simulations
+tngIC analytical
+TNG
+FIG. 1: The orbital histories of all 15 LG analogs in TNG that have a past pericenter [11]. The green dashed lines show the
+original TNG orbit of each LG analog. The black lines show the orbits from the rewound IC. The red lines show the orbits from
+the IC displacements and velocities directly taken from the TNG data at 𝑡ini. For each IC choice, the solid lines show the orbits
+recorded in our idealized simulations, while the dotted lines show the orbits calculated analytically with Eqn. 1. The vertical
+black dotted lines mark 𝑡ini, which is the middle point of the longest smooth segment (enclosed by the two vertical grey dotted
+lines) of the TNG orbits. The time axis represents the time since the Big Bang.
+
+5
+M31 analog
+MW analog
+orbital info in TNG at 𝑧= 0
+alias
+TNG ID
+𝑀bound
+𝑐200𝑐
+TNG ID
+𝑀bound
+𝑐200𝑐
+𝜖soft[kpc]
+𝑀𝑝
+separation [kpc]
+𝑣𝑟[km/s]
+𝑣tan [km/s]
+Past pericenter LG analogs
+pair0
+1297153
+5.6 × 1012
+6.8
+1297154
+5.4 × 1011
+9.0
+0.81
+1.2 × 107
+650.9
+−83.8
+143.7
+pair1
+1305068
+2.5 × 1012
+7.5
+1305069
+1.2 × 1012
+8.2
+0.69
+7.5 × 106
+891.2
+−99.7
+185.8
+pair2
+1432332
+4.1 × 1012
+7.1
+2070493
+6.3 × 1011
+8.8
+0.73
+9.5 × 106
+825.2
+−132.9
+79.1
+pair3
+1501189
+2.3 × 1012
+7.6
+1501190
+6.2 × 1011
+8.9
+0.60
+5.8 × 106
+587.1
+−144.0
+129.0
+pair4
+1541350
+2.5 × 1012
+7.5
+1541351
+4.8 × 1011
+9.1
+0.60
+5.9 × 106
+643.3
+−142.3
+99.5
+pair5
+1546393
+1.6 × 1012
+7.9
+1546394
+5.0 × 1011
+9.1
+0.53
+4.3 × 106
+715.1
+−98.7
+101.0
+pair6
+1629357
+1.6 × 1012
+7.9
+1629358
+4.5 × 1011
+9.2
+0.52
+4.2 × 106
+552.9
+−65.4
+97.8
+pair7
+1654070
+2.7 × 1012
+7.5
+1978541
+7.6 × 1011
+8.7
+0.66
+7.0 × 106
+747.4
+−82.3
+144.6
+pair8
+1668556
+1.0 × 1012
+8.4
+1668557
+6.7 × 1011
+8.8
+0.49
+3.4 × 106
+572.8
+−94.7
+80.3
+pair9
+1717129
+1.1 × 1012
+8.3
+1717130
+3.0 × 1011
+9.6
+0.43
+2.8 × 106
+691.2
+−64.8
+17.1
+pair10
+1831231
+1.3 × 1012
+8.2
+2002567
+9.9 × 1011
+8.4
+0.56
+4.5 × 106
+781.2
+−69.3
+65.8
+pair11
+1903149
+1.0 × 1012
+8.4
+1961840
+8.4 × 1011
+8.6
+0.51
+3.8 × 106
+804.7
+−73.0
+90.2
+pair12
+1936476
+8.5 × 1011
+8.6
+2273413
+3.5 × 1011
+9.4
+0.41
+2.4 × 106
+648.6
+−94.7
+26.7
+pair13
+1964657
+8.6 × 1011
+8.5
+1937742
+8.2 × 1011
+8.6
+0.49
+3.4 × 106
+649.0
+−65.3
+112.5
+pair14
+2116605
+5.0 × 1011
+9.1
+2050295
+4.0 × 1011
+9.3
+0.37
+1.8 × 106
+509.2
+−47.1
+25.0
+First infall LG analogs
+pair0
+1452703
+4.5 × 1012
+7.0
+1932977
+9.2 × 1011
+8.5
+0.79
+1.1 × 107
+913.2
+−161.8
+43.1
+pair1
+1706871
+1.1 × 1012
+8.3
+1706872
+7.6 × 1011
+8.7
+0.51
+3.7 × 106
+527.0
+−116.6
+59.3
+pair2
+1767994
+1.1 × 1012
+8.3
+1767995
+4.8 × 1011
+9.1
+0.47
+3.2 × 106
+549.5
+−90.8
+72.2
+TABLE I: Properties of each LG analog we simulate in Sec. II B. We always choose the more massive halo of the pair to be the
+M31 analog, and the less massive one to be the MW analog. Concentrations 𝑐200𝑐follow [79] at 𝑀bound. The force softening
+lengths 𝜖soft are assigned according to the criterion in [78]. All masses are in 𝑀⊙.
+0
+2
+4
+6
+8
+10
+12
+14
+Time [Gyr]
+0
+200
+400
+600
+800
+1000
+1200
+Separation [kpc]
+Pair 0
+rewind simulations
+rewind analytical
+tngIC simulations
+tngIC analytical
+TNG
+0
+2
+4
+6
+8
+10
+12
+14
+Time [Gyr]
+0
+200
+400
+600
+800
+1000
+Separation [kpc]
+Pair 1
+rewind simulations
+rewind analytical
+tngIC simulations
+tngIC analytical
+TNG
+0
+2
+4
+6
+8
+10
+12
+14
+Time [Gyr]
+0
+200
+400
+600
+800
+1000
+Separation [kpc]
+Pair 2
+rewind simulations
+rewind analytical
+tngIC simulations
+tngIC analytical
+TNG
+FIG. 2: Same as Fig. 1, but for three examples of LG analogs that are on the first infall in TNG.
+past-pericenter LG analogs (13 out of 15) are strongly influ-
+enced by their cosmological environment, preventing accurate
+reproduction of their orbits in an idealized, isolated setting.
+We subsequently focus on ‘pair14’ for the remainder of this
+work, as it offers the highest fidelity reproduction of the TNG
+orbital history in our idealized simulations. Additionally, for
+‘pair0’ and ‘pair14’, the ‘TNG IC’ runs provide a better match
+to the TNG orbit than the ‘rewind IC’ runs. The failure of the
+latter to capture the past pericenter is attributed to the absence
+of dynamical friction in the backward integration to generate
+the initial conditions.
+III.
+SIDM EVOLUTION OF THE MILKY WAY ANALOG
+IN ISOLATION
+Before investigating the full Local Group orbital encounter,
+we first study the co-evolution of the MW analog and its stellar
+components in strict isolation. The aim is to understand the
+mutual effects of the stellar and SIDM components, before
+introducing the complexities of the MW–M31 interaction. We
+note that this approach mirrors the study of isolated SIDM
+dwarfs in [27], where the evolution of dwarf galaxies’ stellar
+properties was explored under different SIDM models, both
+in isolation and in orbits of larger systems. However, a key
+difference here is that the stellar mass fraction of the MW/M31
+analogs is about ∼1 −2%, much higher than that of the dwarf
+system in [27], which accounts for ∼0.06%. While these stel-
+lar mass fractions are typical for their respective mass scales
+(e.g. see Fig. 9 of [70]), this large difference hints that in
+
+6
+MW-sized systems the stellar component plays a more impor-
+tant role in dictating the co-evolution of SIDM and stars. As
+we demonstrate below, the core formation and core collapse
+processes in SIDM halos are highly sensitive to the detailed
+distribution of the stellar component in these MW-sized sys-
+tems.
+Following the discussion in Sec. II B, we focus on simulat-
+ing one specific LG analog, labeled ‘pair14’, selected from the
+past-pericenter sample for the remainder of this work. This
+system was chosen because its orbit in our idealized simula-
+tion provides the best reproduction of the original TNG orbital
+history. The detailed properties of the initial conditions for the
+MW and M31 analogs of ‘pair14’ are listed in Table II. We
+assume an NFW distribution for the DM components of both
+MW and M31 analogs, and Hernquist distribution for their
+stellar components. Similar to [27], we use SpherIC to gen-
+erate the initial condition of this MW analog with two species
+of simulation particles, DM and stars, both of which follow
+spherically symmetric distribution. To minimize the spurious
+heating of the less massive simulation particles caused by mass
+segregation [85–87], we adopt the configuration from [27] (see
+their Fig. 2) to use a 1:1 mass ratio between DM and star par-
+ticles, instead of the baryon-to-DM ratio of 1:5 often used in
+cosmological simulations. Consequently, both the DM and
+stellar particles share an identical mass of 𝑀𝑝= 4.5×105𝑀⊙.
+The isolated MW analog simulated in this section thus con-
+tains a total of ∼8.9 × 105 particles. Following the numerical
+criteria recommended by [88], this resolution safely places
+our setups within the well-converged regime for SIDM core-
+collapse physics, ensuring that the structural evolution remains
+free from severe numerical artifacts.
+We emphasize that given the user-specified density pro-
+files (NFW for DM and Hernquist for stars in this work),
+SpherIC self-consistently calculates the corresponding veloc-
+ity distribution function to ensure the multi-component system
+is initialized in strict dynamical equilibrium. Consequently,
+the inclusion of the central stellar mass does not modify the
+initial DM density profile, but it elevates the central DM ve-
+locity dispersion to support the deepened combined potential.
+As demonstrated by the pure CDM control runs in Fig. 3
+(black datasets), both the enclosed DM masses and the stellar
+half-mass radii remain stable over ∼8 Gyr of collisionless
+evolution, confirming that our initial conditions are free from
+early-stage numerical relaxation artifacts. Following the setup
+in [26], we monitor the progress of halo core collapse by track-
+ing 𝜌cen50, the mean density of the 50 densest particles, at every
+timestep. We define a halo as core-collapsed when 𝜌cen50 in-
+creases by a factor of five relative to its initial value. At this
+threshold, we disable dark matter self-interactions, effectively
+treating the halo as CDM for the remainder of the simulation.
+This intervention is necessary because, as core collapse pro-
+ceeds, the computational cost becomes prohibitive, and the
+validity of the N-body approximation in this regime becomes
+questionable.
+As detailed in Table II, we prepare two distinct configura-
+tions for the MW analog, fixed at the same total stellar mass
+but initialized with different stellar half-mass radii 𝑟half =2.5
+kpc and 20 kpc. This choice is motivated by the structural
+composition of MW-mass galaxies, which typically features a
+compact central component (disk and bulge) and a diffuse ex-
+tended component (stellar halo). While our idealized models
+do not capture the exact morphology of the true Milky Way,
+they serve as representatives of MW-mass systems to explore
+the unique SIDM physics at this mass scale. Thus these two
+types of star distribution serve as extremes to set bounds on the
+dynamical co-evolution of the SIDM and stellar components,
+both in the isolated evolution studied here and the LG peri-
+center scenario discussed in the next section. We emphasize
+that a realistic MW-mass system, in which the majority of the
+stellar mass resides in the disk and bulge [90], corresponds
+more closely to the compact test case (𝑟half =2.5 kpc).
+We present the time evolution of these two test cases of
+the selected MW analog in Fig.
+3, with either a compact
+stellar component (initial 𝑟half = 2.5 kpc) or a diffuse stellar
+component (initial 𝑟half = 20 kpc), evolved under different
+SIDM models. For comparison, a dark-matter-only (DMO)
+simulation of the same system is included as a control baseline.
+In Fig. 4, we provide a detailed analysis of the density, mass,
+and velocity dispersion profiles for these MW analogs at the
+final simulation snapshot. This comparison aims to elucidate
+two key aspects of the co-evolution between the SIDM halo
+and the stellar component: a) how different stellar potentials
+impact the SIDM halo’s transition from core-formation to core-
+collapse, and b) how the evolving SIDM halo reciprocally
+governs the structural evolution of the stellar component.
+A.
+Evolution of DM within 2.5 kpc
+Fig. 3a and 3d show the evolution of the enclosed mass
+of DM within an aperture of 2.5 kpc, corresponding to the
+initial 𝑟half of the compact stellar component. This radius also
+approximately coincides with the typical core size formed in
+the DMO simulations (see Fig. 4a). In the DMO simulations
+(scattered points in Fig.
+3), the enclosed mass within 2.5
+kpc remains constant for CDM, as expected. In contrast, it
+decreases over time for the SIDM models, reflecting the core
+formation process that pushes the DM outward from the halo
+central region. The magnitude of this reduction in DM central
+mass within 2.5 kpc, as well as the DM core density in Fig. 4a
+and 4d, scales with the self-interaction cross section. For the
+MW analog with a diffuse stellar component (thick lines, Fig.
+3d), the central DM mass evolution generally follows the trend
+of the DMO counterparts, with slightly moderated reduction
+over time, since the additional stellar potential counteracts the
+expansion of the SIDM central core. However, for the largest
+cross section of 10 cm2/g (cyan thick line), the central DM
+mass begins to reverse the trend and increase at late times,
+signaling the onset of core-collapse. This accelerated onset
+of core collapse relative to the DMO counterpart (cyan thick
+line vs. cyan dots) demonstrates that the presence of a central
+baryon potential accelerates the collapse process, consistent
+with previous studies [27, 49, 91–94].
+As for the MW analogs with a compact stellar component
+(thin lines in Fig. 3a), however, all SIDM cases deviate from
+their DMO counterparts immediately upon the start of the
+
+7
+𝑀200𝑐[𝑀⊙](DM+star)
+𝑟200𝑐[kpc]
+𝑟𝑠[kpc]
+𝑐200𝑐
+𝑀★[𝑀⊙]
+𝑁DM
+𝑁★
+𝑀𝑝[𝑀⊙]
+𝑟half [kpc]
+𝜖soft [kpc]
+MW analog
+3.04 × 1011
+140.32
+11.57
+12.1
+8.93 × 109
+870573
+19844
+4.5 × 105
+2.5
+0.16
+20
+M31 analog
+3.57 × 1011
+148.17
+20.08
+7.4
+9.99 × 109
+1087371
+22209
+4.5 × 105
+2.7
+0.16
+TABLE II: Initial condition parameters for the ‘pair14’ LG analog, simulated in Secs. III and IV with stellar particles under
+various SIDM models. We note that the total particle mass 𝑀𝑝× 𝑁DM does not strictly equal the DM portion of 𝑀200𝑐due to
+the exponential truncation of the halos at 𝑟200𝑐, which results in an extended mass distribution beyond this radius. Furthermore,
+as detailed in Sec. II B, the 𝑀200𝑐values listed here have been rescaled so that the truncated NFW total mass matches the TNG
+bound mass after subtracting the stellar component; they therefore differ from the entries in Table I. Halo concentrations
+𝑐200𝑐= 𝑟200𝑐/𝑟𝑠are taken from TNG FoF group catalogs at 𝑧= 0 (𝑐M31 ≈7.4, 𝑐MW ≈12.1), rather than from the
+mass-concentration relation used in Sec. II B. The force softening 𝜖soft follows [78]. This choice of mass resolution satisfies the
+convergence criteria for SIDM core-collapse fidelity established in [88, 89].
+8
+10
+12
+14
+Time [Gyr]
+0.5
+1.0
+1.5
+2.0
+2.5
+M( <2.5 kpc) / M( <2.5 kpc, IC)
+DM mass within 2.5 kpc
+CDM
+1 cm2/g
+3 cm2/g
+10 cm2/g
+(a)
+8
+10
+12
+14
+Time [Gyr]
+0.9
+1.0
+1.1
+M( <20 kpc) / M( <20 kpc, IC)
+DM mass within 20.0 kpc
+initial rhalf 2.5 kpc
+DMO
+(b)
+8
+10
+12
+14
+Time [Gyr]
+0.8
+0.9
+1.0
+1.1
+1.2
+rhalf/rhalf, IC
+Half stellar mass radius
+initial rhalf 2.5 kpc
+(c)
+8
+10
+12
+14
+Time [Gyr]
+0.5
+1.0
+1.5
+2.0
+2.5
+M( <2.5 kpc) / M( <2.5 kpc, IC)
+DM mass within 2.5 kpc
+CDM
+1 cm2/g
+3 cm2/g
+10 cm2/g
+(d)
+8
+10
+12
+14
+Time [Gyr]
+0.9
+1.0
+1.1
+M( <20 kpc) / M( <20 kpc, IC)
+DM mass within 20.0 kpc
+initial rhalf 20 kpc
+DMO
+(e)
+8
+10
+12
+14
+Time [Gyr]
+0.8
+0.9
+1.0
+1.1
+1.2
+rhalf/rhalf, IC
+Half stellar mass radius
+initial rhalf 20 kpc
+(f)
+FIG. 3: Evolution of the isolated MW analog with different DM models, including CDM (black), 1 cm2/g (red), 3 cm2/g
+(purple) and 10 cm2/g (blue). The top row shows the evolution of the MW analog with an initial stellar 𝑟half = 2.5 kpc
+(compact-stellar; thin lines) and the DMO case (scattered dots). The bottom row shows the MW analog with 𝑟half = 20 kpc
+(diffuse-stellar; thick lines) and the DMO case. For each row from left to right: the evolution of the enclosed DM mass within
+2.5 kpc 𝑀DM(< 2.5kpc); the evolution of 𝑀DM(< 20kpc); the evolution of the MW analog’s stellar 𝑟half.
+simulation. Across all cross sections (1 cm2/g to 10 cm2/g),
+the enclosed DM mass within 2.5 kpc increases monotoni-
+cally, suggesting that the core formation phase is effectively
+bypassed, with the halo directly entering the core-collapse
+phase. Notably, the 10 cm2/g case reaches our core-collapse
+threshold (𝜌cen50 growing by a factor of 5), within only ∼6
+Gyrs. Apart from the established effect of the baryon potential
+directly accelerating core collapse, which is more prominent in
+these test cases with a compact stellar component, we note that
+a distinct factor contributes to this ‘no-core’ behavior. This
+deep stellar potential boosts the initial velocity dispersion at
+small radii by nearly a factor of two, altering the profile shape
+to establish a negative temperature gradient at the beginning
+of the simulation (see Fig. 4f, and the explicitly plotted initial
+velocity dispersion profiles in Fig. 17). A negative tempera-
+ture gradient is a prerequisite and primary driver for runaway
+gravothermal collapse [19, 21, 23, 25], since it boosts the
+heat outflow in a self-strengthening way. Consequently, as-
+suming dynamical equilibrium in the ICs, these systems with
+a compact stellar component are essentially initialized in a
+thermodynamic state that is already unstable to gravothermal
+collapse.
+This phenomenon of apparently bypassing the SIDM core-
+formation stage, as we have shown, appears to be highly sen-
+sitive to the compactness of the stellar component. While this
+result physically represents MW-mass systems dominated by
+
+8
+100
+101
+102
+r [kpc]
+104
+105
+106
+107
+108
+109
+DM [M
+/kpc3]
+t = 15.00 Gyr
+CDM
+1 cm2/g
+3 cm2/g
+10 cm2/g
+(a)
+100
+101
+102
+r [kpc]
+107
+108
+109
+1010
+1011
+MDM( < r) [M
+]
+initial rhalf 2.5 kpc
+initial rhalf 20 kpc
+DMO
+(b)
+100
+101
+102
+r [kpc]
+104
+105
+106
+107
+108
+109
+star [M
+/kpc3]
+initial rhalf 2.5 kpc
+initial rhalf 20 kpc
+(c)
+100
+101
+102
+r [kpc]
+10
+1
+100
+DM/
+DM(IC)
+2.5 kpc
+20 kpc
+(d)
+100
+101
+102
+r [kpc]
+10
+1
+100
+MDM( < r)/MDM( < r, IC)
+2.5 kpc
+20 kpc
+(e)
+100
+101
+102
+r [kpc]
+40
+60
+80
+100
+120
+3 × 101
+r(DM) [km/s]
+(f)
+FIG. 4: Radial profiles of the (isolated) MW analog at the end of the simulation, with different combinations of DM models and
+stellar IC. a) DM density profiles; b) enclosed DM mass profiles; c) stellar density profiles; d) DM density profiles, normalized
+by IC; e) enclosed mass profiles, normalized by IC; f) DM velocity dispersion profiles. The line colors and line thickness are
+the same as in Fig. 3. The vertical lines in a), b), d) and e) show the initial 𝑟half of 2.5 and 20 kpc, while the vertical lines in c)
+show the final 𝑟half of the corresponding DM models and compact/disperse stellar configurations. In f), the CDM lines (black),
+since they remain nearly unchanged during the collisionless simulation, can be regarded as a proxy for the initial condition
+velocity dispersion. An explicit demonstration of the 𝜎𝑣profiles for ICs is included in Fig. 17.
+a compact disk and bulge with effective 𝑟half ∼2.5 kpc, it con-
+trasts with our previous findings for SIDM dwarf galaxies [27],
+which demonstrate a universal core-formation phase along the
+evolutionary tracks. This discrepancy is likely attributable to
+the significant difference in stellar mass fraction between these
+regimes (dwarf ≲0.1%; MW-like ≳1%). To investigate this
+potential mass dependence, we perform additional simulations
+varying the stellar mass of this MW analog.
+1.
+Further testing the bypassed core-formation with varying stellar
+mass fraction
+We propose that this phenomenon of bypassing the core-
+formation process and having the central DM density nearly
+monotonically increasing over time, even at cross sections as
+low as 1 cm2/g, is likely unique to MW-sized systems. MW-
+sized systems have two characteristics relevant for this matter:
+a) the (central) stellar mass fraction peaks at a halo mass of
+∼1012𝑀⊙, as illustrated in Fig. 5 (see also [69, 70, 95]);
+b) such systems do have compact stellar components (disks
+and bulges), resulting in effective stellar half-mass radii 𝑟half
+comparable to the ‘compact stellar component’ configuration
+modeled here.
+The stellar mass fraction of our ‘pair14’ MW analog is
+shown in Fig. 5, compared against two standard stellar-to-halo
+mass relations (SHMR) from [69] and [70]. The uppermost
+blue point in Fig. 5 indicates the fiducial stellar mass fraction
+of the ‘pair14’ MW analog, derived directly from the TNG
+data. We find that this fiducial stellar mass fraction, with a
+value of 3% at a halo mass of 3 × 1011𝑀⊙, is slightly elevated
+compared to the [70] (also known as the UniverseMachine)
+prediction. However, it remains consistent with the SHMR
+from [69]. Furthermore, observational constraints for the ac-
+tual MW and M31 (also plotted) suggest even higher stellar
+mass fractions. This suggests that the bypassed core forma-
+tion and monotonically increasing central density, observed
+here at cross sections as low as ∼1cm2/g, may be even more
+pronounced in the real LG.
+To determine the lower limit of the stellar mass fraction re-
+quired to sustain this bypassed core formation and thus verify
+the uniqueness of this phenomenon to MW-mass systems, we
+perform a controlled experiment. We run additional isolated
+simulations of this MW analog, fixing its DM mass, halo con-
+centration and stellar half-mass radius (𝑟half=2.5 kpc), while
+scaling the total stellar mass to 2/3 and 1/3 of the fiducial
+value (indicated by the lower blue points in Fig. 5). The initial
+conditions for these variants are regenerated using SpherIC
+
+9
+1010
+1011
+1012
+1013
+1014
+1015
+Halo Mass M200c [M
+]
+10
+3
+10
+2
+10
+1
+M / M200c
+bypass core-formation
+MW
+M31
+Behroozi et al. 2019
+Kravtsov et al. 2014
+MW analog in this work
+Dwarf galaxy Zeng et al. 2025
+FIG. 5: The stellar-mass-halo-mass (SHM) parameter space.
+The default MW analog we simulate in this work is marked
+by the top blue dot, and two variants with 2/3 𝑀★and 1/3 𝑀★
+are shown by the two lower blue dots. Two popular SHM
+relations from [70] and [69] are shown in the black and olive
+lines respectively. The observationally constrained properties
+of the real MW and M31 are shown in purple and pink
+triangles, with MW data taken from [9] (total mass) and [96]
+(stellar mass) and M31 data taken from [9] (total mass) and
+[97] (stellar mass). A dwarf system simulated with a very
+similar approach in [27] but displays a vastly different
+behavior is shown as the red square.
+to ensure dynamical equilibrium.
+Fig.
+6 presents the evolution of the enclosed DM mass
+within 2.5 kpc for these three cases. Compared to the fidu-
+cial MW analog (solid lines), the 2/3𝑀★variant (dashed
+lines) retains the signature of bypassed core formation, with
+𝑀(< 2.5kpc) increasing monotonically over time, albeit at a
+reduced rate. In contrast, the 1/3𝑀★case exhibits a standard
+core-formation phase, similar to the DMO or diffuse-stellar
+scenarios, and consistent with previous studies of SIDM ha-
+los hosting central galaxies [27, 91–94, 98, 99].
+Notably,
+we find that within the physically relevant parameter space
+(𝜎/𝑚≲10 cm2/g), the presence or absence of core formation
+is primarily determined by the stellar mass threshold and shows
+no strong dependence on the specific cross section value. This
+supports our hypothesis that the bypassed core formation is
+driven by the initial configuration of the halo’s DM velocity
+dispersion profile, specifically, the initial negative temperature
+gradient induced by the deep baryon potential.
+One potential alternative explanation to this no-core behav-
+ior is that the core still forms, just at a smaller radius than the
+2.5 kpc aperture. In such a scenario, the monotonic increase
+in 𝑀(< 2.5kpc) would not reflect the evolution of the halo
+center itself, but rather the accumulation of mass at interme-
+diate radii resulting from the outward DM flow during core
+formation (see Sec. III B and [100] for detailed discussion).
+To investigate this possibility, we examine the enclosed mass
+evolution at radii smaller and larger than 2.5 kpc in Appendix
+8
+10
+12
+14
+Time [Gyr]
+0.5
+1.0
+1.5
+2.0
+2.5
+M( < r) / M( < r, IC)
+DM mass within 2.5 kpc
+CDM
+1 cm2/g
+3 cm2/g
+10 cm2/g
+default M
+2
+3 default M
+1
+3 default M
+FIG. 6: The enclosed DM mass within 2.5 kpc for the
+compact-stellar case of the MW analog, similar to Fig. 3a,
+but with varying stellar masses.
+A (Figs. 10 through 12). This analysis, extending down to 1
+kpc, confirms that the fiducial 𝑀★case exhibits no evidence
+of core formation across all tested cross sections. The 2/3𝑀★
+case displays only a mild mass reduction (≲10%, compared
+to ≳40% in DMO) within 1 kpc, suggesting that this con-
+figuration lies near the transition boundary of the bypassed
+core-formation regime in the parameter space of Fig. 5.
+In this subsection, we have explored the phenomenon of
+bypassed core formation in MW-like systems by fixing the
+halo properties while varying the stellar mass (and thus the
+central baryon potential). While it is qualitatively expected
+that this feature becomes more prominent in more massive
+galaxies, our limited simulation suite prevents us from defini-
+tively disentangling whether the stellar mass fraction or the
+total stellar mass is the dominant governing factor. For in-
+stance, it remains to be seen whether cluster-sized systems,
+which possess larger total stellar masses but lower stellar mass
+fractions, exhibit similar behavior. Furthermore, both the DM
+halo concentration and the spatial concentration of the stellar
+mass distribution are likely critical parameters, with the lat-
+ter already demonstrated by the compact versus diffuse stellar
+comparison. For the fiducial DM concentrations adopted in
+pair14 (𝑐MW ≈12.1, 𝑐M31 ≈7.4 from TNG; see Table II),
+we perform a simple sensitivity test in Appendix D in which
+both halos are instead initialized with 𝑐≈9 from the mass-
+concentration relation in [79].
+We find that bypassed core
+formation and the compact vs. diffuse dichotomy in the LG
+runs remain qualitatively unchanged; only the core-collapse
+timescale shifts modestly when the MW concentration is low-
+ered. A comprehensive study spanning this parameter space is
+required to fully characterize the evolutionary tracks of SIDM
+galaxies beyond the bright-dwarf regime explored in [27]. We
+leave such an investigation to future work.
+
+10
+B.
+Evolution of DM within 20 kpc
+To establish a proper baseline for the diffuse-stellar config-
+uration prior to the Local Group encounter, Fig. 3b and 3e
+show the evolution of the enclosed DM mass within 20 kpc.
+This radius corresponds to the initial 𝑟half of the diffuse stellar
+component and lies well outside the central DM density core
+(see Fig. 4a). At this intermediate radius, the dynamical im-
+pact of SIDM differs from the behavior governing the central
+core and is notably less drastic. In the DMO scenarios, core
+formation in the center pushes DM outward. Conversely, at
+larger radii where the temperature gradient is negative (i.e.,
+outside the velocity dispersion peak in Fig. 4f), the negative
+heat capacity of the halo drives an inward gravothermal mass
+flow. The aggregate effect of these two radial bulk motions
+results in a local density enhancement (a ‘bump’) in the DM
+density profile, as evidenced by the DMO cases in Fig. 4d
+(see also Fig. 2 of [100]). This feature is also reflected in
+the normalized enclosed mass profile (Fig. 4e), marking the
+region subject to net mass accumulation due to gravothermal
+infall from the outer halo. This mass excess peaks near 20 kpc,
+coinciding with the chosen 𝑟half of the diffuse stellar compo-
+nent. As the core expansion phase proceeds, this enhancement
+grows, driving a monotonic increase in 𝑀DM(< 20kpc) across
+all SIDM DMO simulations (scattered points in Fig. 3b). For
+the largest cross section 10 cm2/g, this mass increase amounts
+to 10%, a noticeable but subdominant effect compared to the
+drastic evolution occurring within the central 2.5 kpc.
+Comparatively, MW analogs with a diffuse stellar compo-
+nent share the same bump feature in density/mass enhancement
+at 20 kpc, as shown in Fig. 3e and 4e. In contrast, for cases with
+a compact stellar component, the evolution of 𝑀DM(< 20kpc)
+diverges from the DMO baseline (Fig. 3b). While the 1 cm2/g
+and 3 cm2/g cases show a monotonic increase in enclosed mass
+within the central 2.5 kpc, they exhibit negligible change in
+𝑀DM(< 20kpc). Conversely, the 10 cm2/g case (cyan thin
+line), which reaches the core-collapse threshold at 𝑡∼12 Gyr,
+displays a decrease in 𝑀DM(< 20kpc) during the late stages of
+collapse, opposite to the enhancement seen in the DMO and
+diffuse-stellar cases. This trend is also corroborated by the
+density and mass profiles of the final snapshot in Figs. 4d and
+4e. Thus, while core collapse is characterized by significant
+DM mass inflow in the halo center, it concurrently induces a
+net DM mass outflow at intermediate radii (∼20 kpc in this
+MW analog) on the order of a few percent.
+C.
+Evolution of the stellar half-mass radius
+Unlike DM which can have self-interaction, the stars in
+these gas-free simulations behave as collisionless tracers, re-
+sponding purely to changes in the total gravitational potential
+produced by the DM and the stellar mass itself. Therefore,
+the evolution of the stellar half-mass radius 𝑟half serves as a
+dynamical proxy for the mass within 𝑟half. While Sec. III A
+and Sec. III B utilize fixed apertures (set to the initial 𝑟half
+values of 2.5 kpc and 20 kpc) to quantify DM evolution, Fig.
+3c and Fig. 3f illustrate the evolution of the stellar 𝑟half itself.
+As expected, the stellar structural evolution correlates closely
+with the trends observed in the enclosed DM mass.
+In the cases with a compact stellar component (𝑟half = 2.5
+kpc; Fig. 3c), the CDM galaxy remains largely stable, exhibit-
+ing only minor expansion (≲5% by the end of the simulation).
+This slight diffusion is attributable to numerical relaxation ef-
+fects associated with the force resolution limit (see [27], Sec.
+IIB for a detailed discussion). The SIDM galaxies, instead of
+puffing up as seen in the SIDM dwarfs in [27], contract over
+time, with the magnitude of this contraction scaling with the
+SIDM cross section. This behavior mirrors the DM evolution
+within 2.5 kpc (Fig. 3a, solid lines), where the enclosed mass
+increases monotonically across all cross sections, reflecting
+the bypassed core-formation phase.
+However, for the cases with a diffuse stellar component
+(𝑟half = 20 kpc; Fig.
+3f), the 𝑟half evolution is no longer
+governed by the DM in the halo’s central region, but by the
+enclosed mass at larger radii 𝑀(≲20kpc), which corresponds
+to the density/mass ‘bump’ region identified in Sec. III B (see
+Fig. 4d and 4e). As the SIDM core forms and expands in this
+diffuse-stellar case, the DM mass enclosed within this inter-
+mediate region slightly increases, as shown in Fig. 3e. The
+magnitude of this enhancement scales with the cross section,
+reaching ≲10% for 10 cm2/g. Consequently, the stellar 𝑟half
+exhibits a minor contraction on the order of a few percent, as
+shown in Fig. 3f.
+In summary, both the compact and diffuse MW analogs ex-
+hibit a decrease in the stellar half-mass radius 𝑟half as they
+co-evolve with the SIDM halo. While the stellar structural
+evolution tracks the deepening of the DM potential in both
+scenarios, the underlying drivers of the DM mass increase
+differ. In the compact case, the contraction is driven by the
+density increase in the halo center, resulting from the bypassed
+core-formation phase for this MW analog. In the diffuse-stellar
+case, the contraction of 𝑟half is driven by the density enhance-
+ment (or ‘bump’) accumulating outside the SIDM core. Unlike
+the compact case, this mechanism induces only a marginal re-
+duction in 𝑟half. These isolated evolutionary baselines set the
+stage for the following section, where we analyze the evolution
+of these MW analogs within the dynamic environment of the
+Local Group.
+IV.
+THE PAST-PERICENTER SCENARIO OF THE LOCAL
+GROUP
+The evolution of the MW in SIDM models is further compli-
+cated when the Local Group environment is taken into consid-
+eration, particularly in the context of a possible past pericenter
+encounter, as proposed by [11]. This section utilizes ideal-
+ized simulations to investigate this past-pericenter scenario for
+LG analogs and evaluate its compatibility with SIDM con-
+straints. Specifically, we aim to test two key aspects of this
+encounter: the macroscopic orbital evolution of the system
+under different SIDM cross-sections, and the dynamical ro-
+bustness of the central galaxies during a strong pericentric
+passage. For our simulation setup, we adopt the properties
+of the ‘pair14’ LG analog from TNG, of which the MW con-
+
+11
+101
+102
+103
+Orbital distance [kpc]
+rperi = 7.6 kpc
+vtan, ini × 0.2
+vtan, ini × 0.2
+vtan, ini × 0.2
+vtan, ini × 0.2
+rperi = 12.6 kpc
+vtan, ini × 0.5
+vtan, ini × 0.5
+vtan, ini × 0.5
+vtan, ini × 0.5
+rperi = 23.2 kpc
+vtan, ini × 1.0
+vtan, ini × 1.0
+vtan, ini × 1.0
+vtan, ini × 1.0
+rperi = 58.6 kpc
+vtan, ini × 2.0
+vtan, ini × 2.0
+vtan, ini × 2.0
+vtan, ini × 2.0
+rperi = 190.0 kpc
+vtan, ini × 5.0
+vtan, ini × 5.0
+vtan, ini × 5.0
+vtan, ini × 5.0
+rperi = 318.6 kpc
+vtan, ini × 10.0
+vtan, ini × 10.0
+vtan, ini × 10.0
+vtan, ini × 10.0
+0.75
+1.00
+1.25
+1.50
+rhalf/rhalf, initial
+10
+15
+Time [Gyr]
+0.8
+1.0
+1.2
+1.4
+v/
+v, initial
+10
+15
+Time [Gyr]
+10
+15
+Time [Gyr]
+10
+15
+Time [Gyr]
+10
+15
+Time [Gyr]
+10
+15
+Time [Gyr]
+cdm
+s1
+s3
+s10
+FIG. 7: For the compact-stellar case of the MW analog (initial stellar 𝑟half = 2.5 kpc): the time evolution of the LG analog’s
+orbital distance (top row), the MW analog’s stellar 𝑟half (middle row) and radial velocity dispersion within 𝑟half (bottom row).
+Each column represents a variant of the LG analog, where we vary the initial tangential velocity 𝑣tan,ini to manually control the
+pericenter distance. Both the multiplication factor on 𝑣tan,ini and the corresponding 𝑟peri measured in simulation are labeled in
+plot. The green dashed line shows the original TNG orbit of this LG analog, and colored lines represent the simulated orbits
+under different DM models, with color scheme the same as in Fig. 3.
+stituent was simulated in isolation in the preceding section.
+‘pair14’ was selected because, among all LG analogs with a
+past pericenter in TNG, its orbital history is most accurately
+reproduced by our idealized simulations (see Sec. II B). We
+initialize the displacements and relative velocities for the MW
+and M31 analogs using information from TNG snapshots at
+early times instead of rewinding orbits from the present day,
+because the latter generally fails to capture the early pericen-
+ter (see Fig. 1, especially ‘pair0’ and ‘pair14’). We select
+the TNG snapshot corresponding to cosmic time 𝑡= 7.0 Gyr
+(redshift 𝑧∼0.75), extract the initial displacement 𝑟ini, tangen-
+tial velocity 𝑣tan,ini and radial velocity 𝑣rad,ini, and incorporate
+them into the IC for our idealized simulations (for more de-
+tails on selecting the TNG snapshot to extract IC information,
+see Appendix B). By extracting the initial conditions directly
+from TNG, Sec. II B establishes ‘pair14’ as a cosmologically
+motivated baseline, demonstrating that such a past-pericenter
+scenario occurs naturally. Building upon this realistic anchor,
+we now proceed to systematically explore the parameter space
+around this baseline to investigate the dynamical robustness
+of the system. We emphasize that these full orbital simula-
+tions begin from the original, unevolved initial conditions at
+𝑡= 7.0 Gyr. Because the halos are actively evolving under
+SIDM thermodynamics, the pericenter is reached before the
+intrinsic SIDM core-collapse or core-expansion processes are
+fully complete. This allows us to capture the complex, simul-
+taneous co-evolution of SIDM thermodynamics and external
+tidal disruption. We note that the exact structural outcome
+inherently depends on the chosen initial time 𝑡ini, which dic-
+tates the ‘pre-evolution time’ the system undergoes prior to
+the encounter.
+A systematic investigation of how this pre-
+evolution time influences subhalo-host interactions is detailed
+in Appendix E of [19]. In this work, by comparing these full
+orbital runs against the strictly isolated baselines established
+in Sec. III, we can effectively disentangle the tidal encounter
+effects from the intrinsic SIDM evolution.
+A concern regarding this pericenter scenario is the poten-
+tial tidal disruption of the central galaxies. SIDM cores, due
+to the shallower central potentials, could further exacerbate
+this susceptibility. To systematically investigate these effects,
+we vary the initial tangential velocity 𝑣tan,ini by scaling the
+fiducial TNG value by factors of [0.2, 0.5, 1.0, 2.0, 5.0, 10.0],
+thereby controlling the pericenter distance. The primary ob-
+jective of this section is to determine the minimum pericenter
+distance compatible with the survival of the MW analog’s cen-
+tral galaxy (see also [10] for the future-pericenter scenario).
+Following the methodology of Sec. III, for each velocity con-
+figuration, we construct two distinct initial stellar distributions,
+either with an initial 𝑟half of 2.5 kpc or 20 kpc. These config-
+urations are designed to represent the compact disk/bulge and
+
+12
+101
+102
+103
+Orbital distance [kpc]
+rperi = 7.6 kpc
+vtan, ini × 0.2
+vtan, ini × 0.2
+vtan, ini × 0.2
+vtan, ini × 0.2
+rperi = 12.7 kpc
+vtan, ini × 0.5
+vtan, ini × 0.5
+vtan, ini × 0.5
+vtan, ini × 0.5
+rperi = 23.3 kpc
+vtan, ini × 1.0
+vtan, ini × 1.0
+vtan, ini × 1.0
+vtan, ini × 1.0
+rperi = 58.5 kpc
+vtan, ini × 2.0
+vtan, ini × 2.0
+vtan, ini × 2.0
+vtan, ini × 2.0
+rperi = 190.0 kpc
+vtan, ini × 5.0
+vtan, ini × 5.0
+vtan, ini × 5.0
+vtan, ini × 5.0
+rperi = 318.6 kpc
+vtan, ini × 10.0
+vtan, ini × 10.0
+vtan, ini × 10.0
+vtan, ini × 10.0
+0.75
+1.00
+1.25
+1.50
+rhalf/rhalf, initial
+10
+15
+Time [Gyr]
+0.8
+1.0
+1.2
+1.4
+v/
+v, initial
+10
+15
+Time [Gyr]
+10
+15
+Time [Gyr]
+10
+15
+Time [Gyr]
+10
+15
+Time [Gyr]
+10
+15
+Time [Gyr]
+cdm
+s1
+s3
+s10
+FIG. 8: Similar to Fig. 7, but for the diffuse-stellar case of the MW analog with initial stellar 𝑟half = 20 kpc.
+the diffuse stellar halo, respectively, as well as bracketing the
+range of central potential depths contributed by stellar com-
+ponents. To obtain conservative estimates of the disruption
+effects, we treat the less massive MW analog as our primary
+probe of tidal destruction, while fixing the more massive M31
+analog’s stellar distribution to the compact case (𝑟half = 2.7
+kpc). This maximizes M31’s tidal gravitational field while
+making it highly resilient to disruption itself. Because M31’s
+own evolution simply mirrors the behavior of the compact-
+stellar MW cases, we hereafter focus exclusively on the poten-
+tially observable structural changes of the MW analog, whose
+diverse components provide tighter falsifiable constraints for
+this past-pericenter scenario with different SIDM models. We
+upload visualizations of these past-pericenter simulations for
+the readers’ reference1.
+Fig. 7 and Fig. 8 present the time evolution of the MW
+analog’s properties for the compact and diffuse stellar compo-
+nents, respectively. In both figures, the top row displays the
+MW–M31 separation, the middle row shows the MW analog’s
+stellar half-mass radius 𝑟half (normalized to its initial value),
+and the bottom row shows the MW analog’s stellar radial ve-
+locity dispersion 𝜎𝑣within 𝑟half (also normalized). Comparing
+the compact and diffuse stellar configurations at a fixed 𝑣tan,ini,
+the LG orbital history remains virtually identical, indicating
+that the macroscopic orbital trajectories are largely insensitive
+1 Supplementary video URL: https://www.youtube.com/playlist?
+list=PLqe-K0erSag_7dwUKX1om8I1BZUGCEkbJ
+to the internal stellar compactness. In fact, these trajectories
+are also broadly robust against variations in the dark matter
+physics: altering the SIDM cross-section produces noticeable
+deviations only during the closest encounters (𝑣tan,ini ×0.2 and
+𝑣tan,ini × 0.5). In these deep pericentric passages, larger cross-
+sections result in stronger orbital decay. This accelerated decay
+arises because SIDM particle collisions between the MW and
+M31 analogs introduce an effective collisional drag that decel-
+erates the halos [14]. Additionally, SIDM-induced evaporation
+[19, 76] leaves stripped material along the orbital trajectory,
+which further enhances self-friction [101].
+To measure𝑟half and 𝜎𝑣at each snapshot, we utilize all stellar
+particles originally associated with the MW analog in the IC,
+regardless of their boundedness at later times. This is for two
+reasons: a) determining particle membership via halo finders
+is intrinsically difficult during close pericenter passages such
+as those we explore, especially when the two systems have
+similar masses; and b) this provides a conservative analysis,
+since including the unbound star particles will only exaggerate
+the change in the galaxy’s properties. To resolve the pericenter
+distances as accurately as possible, we deliberately increase
+the snapshot output frequency near the expected pericenter
+time, and mark the corresponding pericenter distance 𝑟peri in
+the plots. Lower 𝑣tan,ini scaling factors correspond to lower
+LG angular momentum and thus closer pericenter distances.
+Conversely, in the limit of large 𝑣tan,ini, we expect the MW
+analog’s evolution to converge to the isolated case presented
+in Sec. III.
+For the compact-stellar cases (Fig. 7), within each indi-
+vidual dark matter model, the structural evolution is highly
+
+13
+robust against the encounter kinematics: across the 𝑣tan,ini
+scaling factors of [1.0, 2.0, 5.0, 10.0], the final 𝑟half and 𝜎𝑣
+values remain nearly identical for a given cross-section. Even
+in the 𝑣tan,ini ×1.0 and 𝑣tan,ini ×2.0 runs with the largest SIDM
+cross section of 10 cm2/g, we observe only transient pertur-
+bations in both 𝑟half and 𝜎𝑣during the pericenter passage at
+𝑡∼8 Gyr; however, the system subsequently re-relaxes. This
+suggests that despite a close encounter with the M31 analog
+(𝑟peri ∼20 kpc), the structural evolution of the MW analog
+remains primarily governed by its internal dynamics. Even in
+the extreme case of the closest pericenter (7.6 kpc), we observe
+only percent-level deviations in the evolution of the MW ana-
+log for CDM and 1 cm2/g cases. In contrast, the 3 cm2/g and
+10 cm2/g cases are more strongly affected, as the tidal inter-
+action and evaporation (see more detailed discussion in [19])
+disrupt their ongoing core-collapse process. We caution, how-
+ever, that these results are derived from our simulation setup
+with only DM and stars. The inclusion of gas hydrodynamics
+might fundamentally alter these dynamics.
+In contrast, for the diffuse-stellar cases (Fig. 8), the MW
+analog’s stellar component is significantly more susceptible to
+the pericenter encounter, exhibiting deviations in the final 𝑟half
+and 𝜎𝑣when 𝑟peri ≲60 kpc (corresponding to 𝑣tan,ini × 2.0).
+This differs from the compact-stellar MW analogs for two rea-
+sons: a) the diffuse distribution is designed to represent the
+extended stellar halo with 𝑟half ∼20 kpc, which is inherently
+more susceptible to tidal forces during the encounter; and b)
+the SIDM halo remains in the cored regime (unlike the core-
+collapsing compact-stellar cases; see Sec.
+III A), resulting
+in a shallower central potential that offers less gravitational
+binding.
+Consequently, for cases between 𝑣tan,ini × 0.2 to
+𝑣tan,ini × 1.0, 𝑟half increases and 𝜎𝑣decreases following the
+encounter, driven by the weakening of the central potential.
+Figure 9 summarizes these post-pericenter effects as a func-
+tion of 𝑟peri. For the compact-stellar cases, the structural evo-
+lution is primarily governed by the intrinsic SIDM evolution
+(dependent on cross section), with the past pericenter playing
+a negligible role unless 𝑟peri ≲20 kpc. Conversely, for the
+diffuse-stellar cases, the intrinsic SIDM evolution has min-
+imal impact, with variations in cross section producing only
+percent-level differences in the large 𝑟peri limit. This is because
+the initial 𝑟half of 20 kpc lies well outside the SIDM core, and
+is therefore insensitive to the evolution of the halo center (see
+more detailed discussion in Sec. III B). However, pericenter
+effects become increasingly prominent as 𝑟peri decreases be-
+low ∼100 kpc. Therefore, in a realistic LG past-pericenter
+scenario, we expect the disk/bulge component to remain intact
+unless 𝑟peri ≲20 kpc, whereas the stellar halo would be sus-
+ceptible to disruption for 𝑟peri ≲100 kpc. While larger SIDM
+cross sections may enhance the disruption of the stellar halo,
+they simultaneously drive stronger core collapse in the MW
+center.
+Thus far, our analysis has focused on the post-pericenter
+properties of the MW analog, specifically after the system
+has re-relaxed following the encounter.
+However, the non-
+equilibrium dynamics during this violent encounter, while
+complex and secondary to our primary focus, warrant a brief
+discussion. We utilize the diffuse-stellar case for this illus-
+101
+102
+Pericenter Distance [kpc]
+0.8
+0.9
+1.0
+1.1
+1.2
+1.3
+1.4
+rhalf, final/rhalf, initial
+Compact stellar
+Diffuse stellar
+CDM
+1 cm2/g
+3 cm2/g
+10 cm2/g
+(a)
+101
+102
+Pericenter Distance [kpc]
+0.8
+0.9
+1.0
+1.1
+1.2
+1.3
+v, final/
+v, initial
+Compact stellar
+Diffuse stellar
+CDM
+1 cm2/g
+3 cm2/g
+10 cm2/g
+(b)
+FIG. 9: The pericenter effects on the MW analog’s stellar
+𝑟half (top) and velocity dispersion 𝜎𝑣(< 𝑟half). The solid lines
+show the compact-stellar MW analog, and the dashed lines
+show the diffuse-stellar MW analog. Different colors
+represent different DM models, with the color scheme same
+as in Fig. 3 and also labeled in plot.
+tration, as it provides a cleaner physical picture free from the
+complicating effects of ongoing core collapse. As shown in
+Fig. 8, for cases ranging from 𝑣tan,ini × 0.2 to 𝑣tan,ini × 1.0,
+the stellar 𝑟half exhibits an initial contraction followed by a
+subsequent expansion. Both phases occur in an abrupt, vio-
+lent manner. This behavior contrasts sharply with the smooth
+evolution typical of tidal stripping scenarios, such as those
+observed in dwarf galaxies [27]. In this major-merger, close-
+pericenter scenario, the deepening of the joint gravitational
+potential as the halos overlap leads to a strong compression of
+the MW analog’s central galaxy [102]. This tidal compression
+
+14
+may further facilitate gas condensation and enhance the star
+formation rate [103]. Following compression, the impulsive
+heating from the rapidly changing tidal field during this short
+encounter, also known as tidal shock [104–106], injects kinetic
+energy into the stellar particles, making them less bound. The
+structural response to this shock manifests over a dynamical
+timescale, 𝑡dyn ∼𝑟half/𝜎𝑣∼0.3 Gyr. Consequently, both Fig.
+8 and the visualization movie2 display a delayed ‘explosion’
+or rapid expansion of the galaxies following the pericenter
+passage. Moreover, since the tidal heating rate scales as 𝑟2
+[107, 108], the outer DM halo is more severely affected by
+tidal shocks than the central galaxy. We therefore anticipate
+that the analysis of satellite galaxies in MW analogs could
+yield tighter constraints on the LG past-pericenter scenario.
+We reserve this investigation for future work (Hartl et al. in
+prep.).
+V.
+SUMMARY AND DISCUSSION
+In this work, we investigate Local Group (LG) analogs se-
+lected from the Illustris TNG300-1 simulation, with a specific
+focus on systems exhibiting a past pericenter and the compat-
+ibility of this scenario with SIDM. We performed idealized
+N-body re-simulations of each LG analog (Sec.
+II B), ini-
+tializing the MW and M31 analogs as spherically symmetric
+halos isolated from large-scale structure. Our analysis of the
+orbital histories reveals that only 2 of the 15 LG analogs iden-
+tified with a past pericenter [11] successfully reproduce this
+feature in idealized simulations. This implies that the orbital
+evolution of the majority of past-pericenter analogs is strongly
+influenced by their cosmological environment.
+We subsequently focused on ‘pair14’, the candidate that best
+reproduces the TNG orbit in our idealized setup. Before in-
+troducing the complex dynamics of the MW–M31 encounter,
+we first decoupled the internal SIDM-baryon interplay from
+the external LG tidal forces by analyzing the MW analog’s
+evolution in isolation (Sec. III). The MW analog is populated
+with stellar particles to form a two-species (DM+stars) N-body
+simulation [27], with two types of initial stellar distribution
+considered: a ‘compact-stellar’ case (initial 𝑟half = 2.5 kpc)
+designed to represent the disk and bulge, and a ‘diffuse-stellar’
+case (initial 𝑟half = 20 kpc) representing the stellar halo. This
+allowed us to establish a baseline for the MW analog’s evo-
+lution under different DM models prior to the onset of LG
+pericenter effects.
+For the compact-stellar case (representing the stellar
+disk/bulge), we find that the MW analog’s stellar 𝑟half de-
+creases monotonically over time across all SIDM models, even
+for cross sections as low as 1 cm2/g, which is a trend absent
+in the CDM runs. This contrasts with our previous study of
+SIDM dwarf galaxies [27], which predicted a universal core-
+formation phase characterized by initial expansion prior to
+2 Supplementary video URL: https://www.youtube.com/playlist?
+list=PLqe-K0erSag_7dwUKX1om8I1BZUGCEkbJ
+any subsequent contraction.
+We attribute this to the dense
+central stellar distribution, which imposes an initial negative
+temperature gradient on the dark matter halo, effectively ini-
+tializing the system in a state of ongoing core collapse. Our
+controlled tests with varying stellar masses confirm that this
+purely dynamical phenomenon is highly sensitive to the stel-
+lar mass fraction. Because this fraction naturally peaks at the
+MW mass scale, this bypassed core-formation regime may be
+unique to MW-like systems (see also [66, 68, 71] for comple-
+mentary hydrodynamical studies).
+Conversely, in the diffuse-stellar case (representing the stel-
+lar halo), the system still undergoes minor contraction, but
+through a different mechanism. This occurs because, while an
+SIDM core forms due to the lower stellar concentration, the
+relevant 𝑟half lies outside this core region. At this radius, the
+SIDM enclosed mass profile exhibits a localized enhancement
+(or ‘bump’) resulting from the accumulation of dark matter
+displaced from the expanding core meeting material infalling
+from larger radii due to heat outflow. This leads to a deepening
+potential and, consequently, a slight contraction of the stellar
+halo.
+Building upon the characterization of the MW analog’s evo-
+lution in isolation, we proceed to embed the system within the
+Local Group environment using idealized simulations. Our
+objective is to constrain the minimum allowed past pericenter
+distance compatible with the survival of the MW across dif-
+ferent dark matter models. We modulate the LG pericenter
+by systematically varying the initial tangential velocity be-
+tween the MW and M31 analogs, while holding all other LG
+properties fixed. In the compact-stellar case, we find that the
+MW’s structural evolution is governed primarily by its inter-
+nal SIDM thermodynamics, with pericenter effects becoming
+discernible only for 𝑟peri ≲20 kpc. Conversely, for the diffuse-
+stellar case, the MW proves significantly more susceptible to
+the past pericenter, with encounters of 𝑟peri ≲100 kpc leaving
+distinct imprints on the stellar distribution. Notably, this tidal
+response remains largely degenerate across the tested SIDM
+models 𝜎/𝑚≲10 cm2/g. Therefore, in the absence of a full
+treatment of hydrodynamics, we expect the MW’s disk/bulge
+to be sensitive to the specific SIDM physics but robust against
+pericenter passages > 20 kpc, whereas the stellar halo ap-
+pears relatively insensitive to the SIDM model but is highly
+vulnerable to disruption by pericenter passages < 100 kpc.
+Beyond the scope of the current study, we identify several
+avenues for future research and model refinement:
+• Baryonic physics: In this work, we performed N-body
+simulations containing only DM and star particles, lack-
+ing a hydrodynamical treatment of gas physics. Previous
+studies have investigated the evolution of MW-mass sys-
+tems in SIDM using hydrodynamic simulations, includ-
+ing [71] and [68] with IllustrisTNG (Arepo code; sub-
+grid modeling of stellar feedback), and [66] with FIRE-
+2 (GIZMO code; explicit, burstier stellar feedback). The
+evolution of the central stellar distribution is contributed
+by two competing baryonic mechanisms: adiabatic con-
+traction, which increases the central density driven by
+gas cooling, star formation, and the subsequent steepen-
+ing of the potential; and stellar feedback, which drives
+
+15
+mass outflows and facilitates core formation. Both [71]
+and [68] report a phenomenon similar to that observed
+here: SIDM cores fail to form in MW-mass systems
+in hydrodynamic simulations, a result attributed to the
+interplay between adiabatic contraction and SIDM ther-
+modynamics (see also [109] for similar results on cluster
+scales). In [66], which employs the burstier feedback of
+FIRE-2, MW-mass systems display a slightly more di-
+verse range of central stellar distributions. Notably, our
+work demonstrates that even in the complete absence of
+gas-driven adiabatic contraction, SIDM dynamics alone
+can generate systematically cuspier density profiles in
+MW-mass systems compared to CDM. This suggests
+that the stellar mass fraction and concentration may
+play a more dominant role than active hydrodynami-
+cal processes in driving this ‘bypassed core formation’
+phenomenon, though full hydrodynamical simulations
+remain essential for physical consistency.
+• Stellar geometry: In this work, we model the compact
+stellar component using a spherically symmetric Hern-
+quist profile, rather than a realistic oblate disk geom-
+etry. We argue that this approximation is unlikely to
+qualitatively alter our main conclusions regarding the
+bypassed core-formation phenomenon, for the follow-
+ing reason. The gravothermal fluid model that under-
+pins SIDM halo evolution [21, 23] is formulated under
+spherical symmetry, where the evolution is driven by
+the radial temperature gradient set by the enclosed mass
+profile 𝑀(< 𝑟). Under the assumption that this radial
+driver remains dominant in mildly non-spherical geome-
+tries, we note that a thin exponential disk (scale length
+𝑅𝑑∼2.5 kpc, scale height 𝑧0 ∼0.3 kpc) produces a
+spherically-averaged enclosed mass at small radii com-
+parable to, or exceeding, that of our Hernquist profile,
+owing to the vertical compression of mass into the disk
+midplane.
+This suggests that our setup may provide
+a conservative estimate of the bypassed core-formation
+effect.
+However, we caution that the impact of non-
+spherical potentials — including both the disk geometry
+and the intrinsic triaxiality of dark matter halos — on
+SIDM gravothermal evolution has not been rigorously
+quantified in the literature.
+Furthermore, generating
+dynamically stable ICs for N-body simulations includ-
+ing a disc component remains technically challenging
+[110]. A systematic investigation of these geometric ef-
+fects therefore constitutes an important avenue for future
+work.
+• Satellite galaxies: We have demonstrated that the central
+galaxy of the MW analog remains largely insensitive to a
+potential past pericenter of the LG, provided 𝑟peri > 20
+kpc for the disk/bulge component or 𝑟peri > 100 kpc
+for the stellar halo (see Fig. 9). However, as visual-
+ized in the supplementary video, the outer envelopes
+of the MW’s DM halo undergo significant disruption
+during the encounter.
+This implies that the satellite
+populations and distributions of the MW and M31 may
+place tighter constraints on this past-pericenter scenario,
+or conversely, explain observational anomalies such as
+the anisotropic M31 satellite distribution described in
+[111]. A deeper understanding of these effects requires
+dedicated simulations of dwarf satellites tracking the
+complete merger history of these LG analogs, which we
+reserve for future work (Hartl et al. in prep.).
+• Mass accretion: Due to the idealized nature of our ex-
+perimental setup, we do not model the continuous cos-
+mological mass accretion of the two Local Group con-
+stituents. However, given the relatively late start time
+of the simulations (𝑡ini = 7 Gyr, 𝑧∼0.75), a majority
+(≳70%) final halo mass is typically already assembled
+by 𝑡ini [112–114]. Consequently, the omission of smooth
+mass accretion is expected to have a subdominant impact
+on the evolution of the LG analogs. Nevertheless, this
+simplification may contribute to the residual discrepan-
+cies observed between the re-simulated idealized orbits
+and the original TNG trajectories (e.g., ‘pair14’ in Fig.
+1). On the other hand, initializing the halos with their
+present-day masses at 𝑡ini effectively overestimates the
+depth of the potential wells during the past encounter.
+This approach allows us to evaluate the pericenter ef-
+fects in a conservative manner, as it maximizes the tidal
+forces and the resulting disruption experienced by the
+central galaxy.
+• Gas Dynamics and Tidal Dwarfs: The N-body frame-
+work employed in this study inevitably precludes the
+capture of complex gas-dynamical phenomena rele-
+vant to the past-pericenter scenario. During the close
+approach of the MW and M31 halos, their extended
+gas disks (spanning ∼30 kpc [115, 116]), which are
+significantly more spatially extended than their stellar
+counterparts, become subject to strong tidal elonga-
+tion. This interaction can generate ‘bridge’-like tidal
+structures, serving as potential formation sites for tidal
+dwarf galaxies characterized by low dark matter frac-
+tions and high metallicities [117, 118]. In scenarios in-
+volving the closest pericenter passages, where gas disks
+may undergo high-velocity ≳500 km/s, this mechanism
+could populate the MW-M31 orbital track with a trail
+of dark-matter-deficient dwarfs. This process mirrors
+the ‘bullet-dwarf’ scenario [119–121], which currently
+provides the leading theoretical explanation for the for-
+mation of the dark-matter-deficient galaxies DF2 and
+DF4 [122–124]. We reiterate that a comprehensive un-
+derstanding of these issues requires full hydrodynamical
+simulations. Such simulations are intrinsically complex
+and computationally demanding, placing them beyond
+the scope of this work.
+In conclusion, evaluating the viability of a past-pericenter
+encounter in the Local Group with SIDM requires understand-
+ing the complex interplay between SIDM thermodynamics,
+deep baryonic potentials, and environmental tidal disruption.
+Although our idealized simulations do not include a full treat-
+ment of gas physics, our findings from a pure dynamics per-
+spective imply that the dense baryonic center of the Milky
+
+16
+Way can drive the SIDM halo into a bypassed core-formation
+regime, a phenomenon highly sensitive to the stellar mass frac-
+tion and likely unique to MW-mass systems. This suggests that
+the compact central galaxy would remain highly robust against
+tidal disruption even during close pericentric passages.
+In
+contrast, the diffuse stellar halo and the extended dark matter
+structures are more susceptible to the encounter. Therefore,
+future efforts to distinguish between Cold and Self-Interacting
+Dark Matter in the Local Group must account for this complex
+interplay between thermodynamics, baryonic contraction, and
+environmental disruption.
+ACKNOWLEDGMENTS
+LES is supported by the U.S. DOE Grant DE-SC0010813.
+The simulations in this work were conducted on the Grace
+Cluster of High Performance Research Computing at the Texas
+A&M University.
+Appendix A: Evolution of enclosed DM mass at different radii
+In this appendix, we present the time evolution of the en-
+closed dark matter mass at various finely spaced radii, ranging
+from 1.0 kpc to 25.0 kpc. Figures 10, 11, and 12 illustrate these
+radial mass profiles for the dark-matter-only (DMO) baseline,
+the fiducial compact-stellar case, and the 2/3𝑀★compact-
+stellar variant, respectively.
+As discussed in Sec. III, this detailed radial breakdown ex-
+tends our analysis inward to 1.0 kpc, allowing us to rule out
+the possibility that a smaller core forms unresolved within
+the 2.5 kpc aperture.
+These results confirm that the fidu-
+cial compact-stellar MW analog genuinely bypasses the core-
+formation phase across all central radii. In contrast, the 2/3𝑀★
+case exhibits only a mild mass reduction (≲10%) at the in-
+nermost 1.0 kpc, confirming that it lies near the transition
+boundary of the bypassed core-formation regime.
+Appendix B: Selection of the TNG snapshot as IC
+The initial simulation time 𝑡ini is selected following the gen-
+eral procedure outlined in Sec. II, with an additional refine-
+ment of comparing simulated LG orbits initialized from several
+adjacent TNG snapshots. We empirically identify the optimal
+𝑡ini that balances the fidelity of the re-simulated orbital history
+with the requirement of a negative (approaching) present-day
+radial velocity. As demonstrated in Fig. 13, the precise choice
+of the IC time (and thus the corresponding initial state vectors
+𝑟ini, 𝑣tan,ini and 𝑣rad,ini) can noticeably influence the resulting
+orbital evolution. Consequently, we adopt the snapshot cor-
+responding to 𝑡≈7.0 Gyr, which yields the most consistent
+orbital reconstruction.
+Appendix C: Summary of Simulation Suites
+To provide a self-contained overview of our numerical
+methodology, we summarize the three distinct simulation
+suites in Table III. Because the physical motivations, reso-
+lutions, and initial conditions for orbit reconstruction (Sec.
+II B), isolated co-evolution (Sec. III), and full tidal encounters
+(Sec.
+IV) differ by design, their detailed setups are intro-
+duced sequentially in the main text. This appendix serves as a
+centralized reference, outlining the kinematics, composition,
+target systems, particle resolutions, and the primary scientific
+aim for each simulation phase. For explicit values of individ-
+ual particle masses and force softening lengths, we refer the
+reader to Table I and II in the main text.
+Concentrations are assigned according to the mass-
+concentration relation in [79] for all 15 analogs in Sec. II B,
+but from TNG FoF group catalogs for pair14 in Sec. III and IV
+(see Sec. II B for rationale). Appendix D tests that the main
+conclusions are insensitive to this pair14 choice.
+Appendix D: Robustness to halo concentration assignment
+Our fiducial pair14 simulations in Secs. III and IV adopt
+halo concentrations taken from the TNG FoF group catalogs
+at 𝑧= 0 (𝑐M31 ≈7.4, 𝑐MW ≈12.1; Table II). As discussed
+in Sec.
+II B, the orbital-reconstruction survey instead uses
+concentrations drawn from the mass-concentration relation in
+[79]. Here we perform a simple sensitivity test to verify that
+our main physical conclusions do not depend on this specific
+concentration choice.
+We re-run the isolated evolution (Sec.
+III) and the full
+pair14 Local Group simulations (Sec. IV) with an alterna-
+tive setup in which both halos are initialized using concentra-
+tions drawn from [79] at their respective masses (𝑐M31 ≈9.1,
+𝑐MW ≈9.3). All other IC properties, particle numbers, and
+softening lengths are held fixed. We compare this setup against
+the default TNG-concentration runs for the four DM models
+considered in the main text (CDM and SIDM with 𝜎/𝑚= 1,
+3, and 10 cm2/g).
+For the isolated evolution (Fig. 14), the qualitative behavior
+is unchanged: the compact-stellar MW analog still exhibits
+bypassed core formation and proceeds toward core collapse
+across all SIDM models examined. The only notable quantita-
+tive difference is a modest shift in the core-collapse timescale
+when the MW concentration is lowered from 𝑐≈12.1 to
+𝑐≈9.3, consistent with the known sensitivity of gravothermal
+collapse to halo concentration [19, 23]. For the full LG sim-
+ulations (Figs. 15 and 16), the orbital trajectories are nearly
+identical between the two concentration setups (𝑟peri ≈23.2–
+23.3 kpc for the 𝑣tan,ini × 1.0 case shown). The two structural
+conclusions of the main text remain robust: (i) for the compact
+stellar component, the final 𝑟half and 𝜎𝑣are set primarily by
+intrinsic SIDM thermodynamics rather than by the concen-
+tration choice; and (ii) for the diffuse stellar component, the
+structural properties remain comparatively more sensitive to
+the pericenter encounter while being largely insensitive to the
+specific SIDM cross section. We therefore regard the fidu-
+
+17
+8
+10
+12
+14
+Time [Gyr]
+0.850
+0.875
+0.900
+0.925
+0.950
+0.975
+1.000
+1.025
+1.050
+M( < r) / M( < r, IC)
+CDM
+8
+10
+12
+14
+Time [Gyr]
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1.0
+M( < r) / M( < r, IC)
+1 cm2/g
+8
+10
+12
+14
+Time [Gyr]
+0.2
+0.4
+0.6
+0.8
+1.0
+M( < r) / M( < r, IC)
+3 cm2/g
+8
+10
+12
+14
+Time [Gyr]
+0.2
+0.4
+0.6
+0.8
+1.0
+M( < r) / M( < r, IC)
+10 cm2/g
+MDM( < 1.0kpc)
+MDM( < 1.5kpc)
+MDM( < 2.0kpc)
+MDM( < 2.5kpc)
+MDM( < 3.0kpc)
+MDM( < 5.0kpc)
+MDM( < 10.0kpc)
+MDM( < 25.0kpc)
+FIG. 10: Evolution of the enclosed DM mass at different radii (color scheme as labeled on the right side of the plot), for the
+DMO case of the MW analog in isolation. Each panel show a different DM model, as shown in its title.
+TABLE III: Overview of the numerical simulation suites. Particle masses and softening lengths are given in the main text
+(Secs. II B and III) and in Table II. A simple robustness test of the Pair 14 concentration choice is presented in Appendix D.
+Section Kinematics Composition
+Target System(s)
+Concentration
+Total Particles Main Aim
+II
+Orbital
+DM-only
+15 LG analogs
+Mass-𝑐relation ([79])
+5 × 105
+Orbit reconstruction & candidate se-
+lection
+III
+Isolated
+DM + Stars
+MW analog (pair14)
+TNG catalog
+≈8.9 × 105
+Isolated baselines & SIDM-stellar
+co-evolution
+IV
+Orbital
+DM + Stars
+pair14 (MW & M31)
+same as Sec. III
+≈2.0 × 106
+Orbital encounter & MW structural
+response
+cial TNG-based concentration assignment as adequate for the
+conclusions presented in the main text, while noting that a full
+exploration of the (𝑐MW, 𝑐M31) parameter space is left to future
+work.
+Appendix E: Supplementary figures
+We include additional supplementary figures in this ap-
+pendix.
+
+18
+8
+10
+12
+14
+Time [Gyr]
+0.90
+0.92
+0.94
+0.96
+0.98
+1.00
+1.02
+1.04
+M( < r) / M( < r, IC)
+CDM
+8
+10
+12
+14
+Time [Gyr]
+1.00
+1.05
+1.10
+1.15
+1.20
+M( < r) / M( < r, IC)
+1 cm2/g
+8
+10
+12
+14
+Time [Gyr]
+1.0
+1.2
+1.4
+1.6
+1.8
+M( < r) / M( < r, IC)
+3 cm2/g
+8
+10
+12
+14
+Time [Gyr]
+1.0
+1.5
+2.0
+2.5
+3.0
+3.5
+4.0
+4.5
+M( < r) / M( < r, IC)
+10 cm2/g
+MDM( < 1.0kpc)
+MDM( < 1.5kpc)
+MDM( < 2.0kpc)
+MDM( < 2.5kpc)
+MDM( < 3.0kpc)
+MDM( < 5.0kpc)
+MDM( < 10.0kpc)
+MDM( < 25.0kpc)
+FIG. 11: Same as Fig. 10, but for the MW analog with the default stellar mass and compact distribution (initial 𝑟half = 2.5 kpc).

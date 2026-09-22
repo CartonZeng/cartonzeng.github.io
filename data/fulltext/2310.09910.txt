@@ -1,0 +1,3165 @@
+Till the core collapses: the evolution and ensemble properties of self-interacting dark matter
+subhalos
+Zhichao Carton Zeng1,2,3,∗Annika H. G. Peter1,2,4,5, Xiaolong Du6,7, Shengqi Yang6,13, Andrew
+Benson6, Francis-Yan Cyr-Racine8, Fangzhou Jiang6,9,10, Charlie Mace 1,2, and R. Benton Metcalf 11,12
+1Department of Physics, The Ohio State University, 191 W. Woodruff Ave., Columbus OH 43210, USA
+2Center for Cosmology and Astroparticle Physics, The Ohio State University, 191 W. Woodruff Ave., Columbus OH 43210, USA
+3Department of Physics and Astronomy, Mitchell Institute for Fundamental Physics and Astronomy,
+Texas A&M University, College Station, TX 77843, USA
+4Department of Astronomy, The Ohio State University, 140 W. 18th Ave., Columbus OH 43210, USA
+5School of Natural Sciences, Institute for Advanced Study, 1 Einstein Drive, Princeton, NJ 08540
+6 Carnegie Observatories, 813 Santa Barbara Street, Pasadena CA 91101, USA
+7 Department of Physics and Astronomy, University of California, Los Angeles, CA 90095, USA
+8 Department of Physics and Astronomy, University of New Mexico, 210 Yale Blvd NE, Albuquerque NM 87106, USA
+9 TAPIR, California Institute of Technology, Pasadena, CA 91125, USA
+10 Kavli Institute for Astronomy and Astrophysics, Peking University, Beijing 100871, People’s Republic of China
+12 Dipartimento di Fisica & Astronomia, Universitá di Bologna, via Gobetti 93/2, 40129 Bologna, Italy
+12 INAF-Osservatorio Astronomico di Bologna, via Ranzani 1, 40127 Bologna, Italy
+13 Los Alamos National Laboratory, Los Alamos, NM 87545, USA
+(Dated: September 30, 2025)
+One of the hottest questions in the cosmology of self-interacting dark matter (SIDM) is whether scatterings
+can induce detectable core-collapse in halos by the present day. Because gravitational tides can accelerate
+core-collapse, the most promising targets to observe core-collapse are satellite galaxies and subhalo systems.
+However, simulating small subhalos is computationally intensive, especially when subhalos start to core-collapse.
+In this work, we present a hierarchical framework for simulating a population of SIDM subhalos, which reduces
+the computation time to linear order in the total number of subhalos. With this method, we simulate substructure
+lensing systems with multiple velocity-dependent SIDM models, and show how subhalo evolution depends on
+the SIDM model, subhalo mass and orbits. We find that an SIDM cross section of ≳200 cm2/g at velocity scales
+relevant for subhalos’ internal heat transfer is needed for a significant fraction of subhalos to core-collapse in a
+typical lens system at redshift 𝑧= 0.5, and that core-collapse has unique observable features in lensing. We show
+quantitatively that core-collapse in subhalos is typically accelerated compared to field halos, except when the
+SIDM cross section is non-negligible (≳O(1) cm2/g) at subhalos’ orbital velocities, in which case evaporation by
+the host can delay core-collapse. This suggests that substructure lensing can be used to probe velocity-dependent
+SIDM models, especially if line-of-sight structures (field halos) can be distinguished from lens-plane subhalos.
+Intriguingly, we find that core-collapse in subhalos can explain the recently reported ultra-steep density profiles
+of substructures found by lensing with the Hubble Space Telescope.
+I.
+INTRODUCTION
+Self-interacting dark matter (SIDM) refers to a group of
+dark matter models that allows for self-interactions among
+dark matter particles in addition to gravity, typically in the
+form of localized two-body scatterings [1–5]. Recently, it has
+gained attention as an interesting candidate for dark matter
+[6–16], potentially reconciling the observed larger diversity
+of rotation curves in dwarf galaxies than found in simulations
+with cold dark matter (CDM; [17–24]). SIDM has received
+major interest in its potential to tackle small-scale dark matter
+problems because it has a unique two-phase dark-matter halo
+time evolution. First, the momentum exchange among dark
+matter particles leads to thermalization and thus to an isother-
+mal, cored (constant, non-diverging) density distribution in the
+center of the halo, shallower than its CDM counterpart (first
+invoked in 2000’s for the cusp-core and missing satellite prob-
+lems; [1, 25, 26]). Following this phase, and on a much longer
+timescale, the halo transitions to the core-collapse phase. The
+∗E-mail: zeng.408@osu.edu
+core serves as a heat bath, slowly and continuously transferring
+energy to the outer parts of the halo because of the negative
+temperature gradient in the halo.
+This causes dark matter
+particles in the core to fall towards the halo center, becom-
+ing even hotter than before and thus steepening the negative
+temperature gradient [27]. Through this runaway process, the
+initial core becomes hotter and denser as it gives up heat to
+the halo outskirts, because of this negative heat capacity of
+self-gravitating systems. This second phase of an SIDM halo
+is referred to as the core-collapse or the gravothermal collapse
+process [28], the end state of which is predicted to be possible
+progenitors of supermassive black holes [29–34]. The inner
+density profile of an SIDM halo can therefore possibly span
+a wide range during its evolution, from a shallow core to an
+ultra-high-density core embedded in a steeply cuspy halo.
+However, the timescale for core-collapse can be very long.
+For example, galaxy clusters currently set the most stringent
+constraints on SIDM, based on observations of the central den-
+sities of clusters [35–37], cluster ellipticity [38–43], and clus-
+ter mergers and galaxy offsets [44–48]. The SIDM (constant)
+cross section per unit mass 𝜎/𝑚, which is the key parameter to
+characterize the strength of this self-interaction, is constrained
+arXiv:2310.09910v3  [astro-ph.GA]  28 Sep 2025
+
+2
+to 𝜎/𝑚≲O(1) cm2/g. The core-collapse timescale of typ-
+ical dark matter halos with such cross sections would be at
+least of order O(102) Gyr [11, 49, 50], much longer than the
+Hubble time. Additional degrees of freedom in SIDM mod-
+els are required in order to satisfy both the low cross sections
+preferred by observations at cluster scales and the high cross
+sections that would produce a diversity of density profiles on
+dwarf galaxy scales [8, 10, 16, 51, 52]. A popular choice is to
+make 𝜎/𝑚velocity-dependent [12, 13, 53–57]. A generic fea-
+ture from well-motivated particle physics models is that cross
+section is higher at the velocity scales relevant for dwarf-sized
+halos while insignificant (≤1 cm2/g) at cluster scales. We will
+demonstrate a few of these velocity-dependent SIDM models
+in this work.
+Substructure lensing is another way to probe the density dis-
+tribution in small halos, even smaller than the ones we use for
+dwarf rotation curves. Hence, it potentially has the power of
+distinguishing among velocity-dependent SIDM models. The
+images of strongly lensed objects, either a quasar which has
+four discrete images, or a source galaxy which then has a closed
+shape of a distorted image (Einstein ring), can be perturbed by
+the existence of dark matter substructures (subhalos) near the
+center of the main lens. Properties of dark matter subhalos can
+thus be inferred from the anomalies in these strongly lensed
+images (quasar source – quad lens: [58–66]; galaxy source
+– gravitational imaging: [67–73]).
+Substructure lensing is
+expected to be especially sensitive to core-collapsed subha-
+los, whose ultra-compact nature would produce more high-
+density peaks in the projected density map and thus stronger
+distortion on lensed images. Recent works have demonstrated
+the potential of constraining SIDM with substructure lensing
+[14, 74–77].
+In order to utilize observations to place constraints on SIDM
+models, theoretical predictions of SIDM subhalos need to fully
+and consistently capture the key ingredients driving their evo-
+lution: the heat transfer and self-gravity within a halo while in
+isolation, and the interaction between subhalos and their host
+halos. The physical interactions between subhalos and the host
+include tidal [78, 79] and evaporation effects (also called the
+self-interaction ram-pressure stripping; [11, 80–83]). There
+is a sizable body of work on the evolution of isolated SIDM
+halos until core-collapse, using simulations [49, 84, 85] or less
+costly analytical methods (e.g., the gravothermal fluid model;
+[28, 30, 49, 50, 86, 87]; isothermal jeans modelling; [88, 89]),
+which show good agreement with each other, perhaps up to a
+calibration parameter [90].
+However, there are few predictions for subhalos [57, 82, 91–
+93]. Accurate predictions for small subhalos in massive hosts
+remain a challenge, especially if subhalos enter the core-
+collapse regime. While cosmological simulations that auto-
+matically include all the relevant physics are believed to yield
+the most accurate predictions [12, 16, 39, 53, 54, 94, 95],
+the simulations get prohibitively expensive to resolve the
+106 −107𝑀⊙subhalos expected to be detectable with up-
+coming lensing surveys [96]. Zoom-ins of cosmological sim-
+ulations can focus on simulating a tiny region corresponding
+to an isolated dwarf galaxy [97, 98, Cruz et al in Prep.], but
+also with the disadvantage of lacking host halo environments.
+This challenge of computational affordability becomes even
+more severe when any of the simulated (sub)halos are in the
+core-collapse regime, which requires higher resolution in both
+particle number and time-stepping to ensure accuracy [99–
+101].
+Therefore, in this work we are motivated to design a new
+simulation framework that allows us to simulate a realistic
+population of SIDM subhalos from core-formation to core-
+collapse, with relatively high fidelity and low cost. [11] de-
+scribed and validated a semi-analytical method to track indi-
+vidual subhalos with particles while representing the host as
+an analytic density distribution and semi-analytically calculat-
+ing the host-subhalo evaporative interactions. In this work, we
+extend the method of [11] to incorporate a realistic subhalo
+assembly history in a massive host. We further divide a whole
+merger tree of subhalos into different groups according to their
+masses at infall, and simulate with different mass resolution
+separately, such that the computational cost grows only linearly
+with the number of subhalos.
+This work is organized as follows: in Sec. II we describe
+our simulation framework in detail. In Sec. III, we present
+the SIDM models we study in this work, both a constant cross
+section one and several models with velocity-dependent cross
+sections, as well as the specifics of each realization of sys-
+tem we simulate.
+We present the main results from these
+simulations in Sec.
+IV, with a special focus on probes of
+subhalo core-collapse.
+We describe halo statistics, lensing
+statistics, and an analysis of the interplay of different mech-
+anisms in determining these result using phenomenologically
+tuned velocity-dependent SIDM models. We summarize and
+discuss this work in Sec. V.
+II.
+METHOD
+In this work, we track and study the evolution of a realistic
+population of SIDM subhalos in a typical strong lens system.
+Resolving low-mass subhalos down to ∼108𝑀⊙at infall (thus
+106−107𝑀⊙at the end of the simulation), which is predicted to
+be detectable with upcoming substructure lensing surveys, can
+be very challenging in cosmological simulations. For example,
+to resolve the inner mass distribution of a subhalo whose infall
+mass was 108𝑀⊙at present day (∼107𝑀⊙if the mass loss were
+∼90%) with a thousand-ish particles (generally considered as
+adequate resolution for subhalos; [14, 102, 103]), we would
+require the simulation particle mass to be at most 104𝑀⊙.
+This corresponds to 109 −1010 particles for the group-sized
+system with mass ∼1013𝑀⊙(typical for strong-lens systems;
+[62]). Such a computational cost is prohibitive, especially if
+we want to explore multiple models in the SIDM parameter
+space or simulate multiple realizations to reduce noise in the
+predictions.
+This is the motivation for our hierarchical simulation frame-
+work. We use the N-body simulation code Arepo with its
+SIDM module in this work [53, 81, 104, 105], as well as a
+patch to the SIDM module developed in [11] that allows for
+modelling the host halo analytically while tracking subhalos
+with N-body particles. We further divide subhalos into differ-
+
+3
+ent groups according to their masses at infall and simulate them
+separately with different mass resolution, such that subhalos
+in different infall mass bins have similar numbers of particles.
+We are thus able to scale down the total number of particles
+by two orders of magnitude for the same group-sized system,
+corresponding to a speed boost of about three to four orders of
+magnitude.
+To simulate a realistic population of SIDM subhalos, we
+take analytically sampled merger trees of a group-sized sys-
+tem as input, and generate simulations accordingly using our
+hierarchical framework. The assembly histories of this pop-
+ulation of subhalos are generated by Galacticus 1 [106], as
+we show in Sec. II A. Details of our hierarchical simulation
+scheme are elaborated in Sec. II B. We provide a step-by-step
+procedure for the whole process in Sec. II C.
+A.
+Assembly history with Galacticus
+To get the assembly histories of subhalos, we generate 512
+Monte-Carlo merger trees using Galacticus following the
+algorithm proposed in [107]. The root halo mass is chosen to
+be 1013𝑀⊙. The trees are constructed starting from 𝑧= 0.5, a
+typical redshift of strong gravitational lenses [108], backward
+until the leaf nodes reach the mass resolution 2 × 107𝑀⊙. We
+then select realizations that have a smooth accretion history
+to avoid major mergers with a mass ratio larger than 1 : 10.
+This is to ensure that the host properties can be smoothly
+interpolated along the main branch of the merger tree. We
+note that major mergers can be important in the history of
+lens galaxies, which are mostly ellipticals, but in this work we
+start with easier-to-model systems, and put off the extension
+to major mergers to future works. In total, 37 trees pass this
+selection criteria, and we randomly use 4 of them to generate
+different realizations of simulation in this work.
+The trees
+record the time at which each subhalo enters the host’s virial
+radius. We further compute the formation time of each halo,
+𝑡hf, defined as the time when the halo accretes half of its mass
+at infall.
+Each
+halo
+in
+the
+tree
+is
+assumed
+to
+have
+a
+Navarro–Frenk–White (NFW) profile [109] initially
+𝜌(𝑟) =
+𝜌0
+𝑟/𝑟𝑠(1 + 𝑟/𝑟𝑠)2 ,
+(1)
+with 𝜌0 the characteristic density and 𝑟𝑠the scale radius. The
+virial radius of a halo is defined as the radius enclosing a mean
+density that is Δvir times the critical density of the Universe,
+i.e.
+𝜌(𝑟vir) = Δvir𝜌crit.
+In this work, we take Δvir = 200
+unless otherwise specified2. The halo concentration 𝑐200 ≡
+1 https://github.com/galacticusorg/galacticus
+2 Note that the merger trees are built based on the spherical collapse model
+(including corrections for elliptic collapse). So to be self-consistent, we use
+a slightly different halo mass definition during the merger tree construction:
+𝜌(𝑟vir) = Δvir,m𝜌m with 𝜌𝑚the mean matter density in the Universe. The
+virial density contrast Δvir,m is computed from the spherical collapse model
+[110]. Then we convert the halo mass to 𝑀vir,200 assuming an NFW profile.
+𝑟vir,200/𝑟𝑠is determined following [111] and [112], which set
+the concentration based on the mass accretion history of each
+halo. The host halos we consider in this work have a median
+concentration of 6.7 at 𝑧= 0.5. While the concentration of
+the host evolves with time as it accretes more mass through
+mergers, the concentration of each subhalo is set at the infall
+time.
+To set the initial orbit parameters of subhalos, we randomly
+place the subhalos on the virial sphere of the host assuming
+isotropic distribution at the infall time. The radial and tan-
+gential infall velocity are drawn from the distribution found
+by [113], with the tangential velocity isotropically distributed
+in the plane tangent to the virial sphere. Then the orbits of
+subhalos, characterized by −→𝑥(𝑡infall) and −→𝑣(𝑡infall), are evolved
+backward to the prior formation time 𝑡hf to get the initial con-
+dition −→𝑥(𝑡hf) and −→𝑣(𝑡hf). This is because we initialize subha-
+los with NFW profiles at 𝑡hf and need to simulate them with
+DM self-interaction until 𝑡infall to account for their structural
+evolution prior to infall (see next section for more details).
+We use Euler’s method with a leap-frog integrator to numeri-
+cally calculate this “rewinding” process, with the host poten-
+tial determined by the host mass distribution 𝑀<𝑟,ℎ(𝑡) that is
+measured and interpolated from simulation (with dark matter
+self-interaction when needed; see Sec. II B and Sec. II C for
+more details).
+Throughout this work, we take the cosmological parameters
+from the Planck 2018 results [114]: Ω𝑚= 0.3153, Ω𝑏=
+0.0493, ΩΛ = 0.6847, ℎ= 0.6736, 𝜎8 = 0.8111 and 𝑛𝑠=
+0.9649.
+The initial linear matter power spectrum used for
+building the merger trees is computed from the fitting functions
+given in [115].
+B.
+Hierarchical mass grouping of subhalos
+For each realization of a host halo and its accreted sub-
+halos, we apply two thresholds on the selection of subhalos:
+a mass threshold requiring that a subhalo’s mass at its infall
+𝑀infall ≥108𝑀⊙, and a time threshold requiring that its infall
+time 𝑡infall ≥4 Gyr (0 Gyr being the Big Bang). Subhalos
+within this range of starting masses, which typically experi-
+ence further mass loss during their orbital evolution, are of
+interest for current and upcoming substructure lensing obser-
+vations [96]. The time threshold 𝑡infall ≥4 Gyr is chosen for
+several reasons. First, a simulation start time that is the same
+for all subhalos is advantageous for technical aspects of set-
+ting up the simulation suite. Second, by 𝑡= 4 Gyr, the vast
+majority of subhalos (> 95%) in the merger trees have formed,
+making this a natural choice (see more discussion in Sec. V).
+Third, earlier-accreted subhalos with 𝑡infall < 4 Gyr experience
+more mass loss during their orbital evolution, and so are more
+likely to fall below the detection threshold of substructure lens-
+ing. For a typical main-lens host halo with mass ∼1013𝑀⊙at
+𝑧∼0.5, there are around one to two thousand such subhalos
+that satisfy 𝑀infall ≥108𝑀⊙and 𝑡infall ≥4 Gyr.
+We note that these selection criteria, while specific for this
+work and application to substructure lensing, can be more
+general with this simulation framework.
+For example, the
+
+4
+mass threshold can be arbitrarily lower since the complexity
+of our hierarchical framework scales linearly with the number
+of subhalos.
+The infall time threshold can be omitted, at
+the cost of dividing subhalos into multiple simulations that
+have different start times (see Sec. V for more discussion), in
+the situation where early accreted subhalos are more likely to
+survive, such as when they are populated with stellar particles
+and thus have a deep baryonic potential.
+To reduce the computational cost, we introduce a hi-
+erarchical simulation scheme to divide these subhalos
+into different groups, according to their masses at infall:
+[108, 108.2)𝑀⊙, [108.2, 108.5)𝑀⊙, [108.5, 109)𝑀⊙, [109, 1010)𝑀⊙
+and relatively heavy subhalos with masses ≥1010𝑀⊙. Dif-
+ferent mass-groups under this splitting consume similar CPU
+hours, hence the total computational cost is more controllable.
+We generate separate simulations for each infall-mass group
+of subhalos, with different mass resolution, such that the total
+computational time grows in linear order of the threshold
+of the subhalo mass function when we try to resolve small
+subhalos each with at least O(104) particles each at infall.
+The first four groups all have masses of individual subhalos
+less than 0.1% of the host, thus we can neglect the spatial
+perturbation of the host caused by these subhalos or the
+dynamical friction on the subhalos (see [11] for a detailed
+discussion). For these cases, we simply simulate the host halo
+with an analytic mass distribution. For the group of subhalos
+more massive than 1010𝑀⊙at infall, though, we simulate
+a live host together with the subhalos, since the dynamical
+friction on the subhalos by the host is no longer negligible.
+We follow the method of simulating SIDM subhalos around
+an analytic host that is implemented in [11], where both
+the tidal effects and the host-subhalo evaporation are self-
+consistently included.
+However, unlike in [11] where the
+analytic host mass distribution is static over time, the host
+distribution is time-varying, reflecting its mass accretion over
+time. For a host halo within an SIDM Universe, we need to
+include in its time evolution not only its mass increase history
+as output from Galacticus, but also the evolution due to dark
+matter self-interaction, which generally leads to core-creation
+in its center. Therefore, we set up isolated, host-only simu-
+lations at 𝑡= 4, 5, 6, 7, 8, 9 Gyr, with NFW initial conditions
+and halo parameters from Galacticus, and follow the setup
+of [11] to simulate each with dark matter self-interaction for 4
+Gyrs, until the equilibrium is reached. As the host halo keeps
+its mass growth, the whole halo does not stay in perfect equi-
+librium. However, the most noticeable difference between an
+SIDM halo and a CDM halo is in the inner structure, which
+reaches equilibrium on a relatively short timescale and does
+not change much with the subsequent mass accretion. Thus,
+we consider the treatment of the host in SIDM equilibrium as
+an appropriate approach. The mass and velocity distribution of
+these host halos are then measured and interpolated among dis-
+crete radial bins and time stamps to build the properties of the
+analytic host at any time and radius: density 𝜌ℎ(𝑟, 𝑡), enclosed
+mass 𝑀<𝑟,ℎ(𝑟, 𝑡), and radial velocity dispersion 𝜎𝑣,ℎ(𝑟, 𝑡).
+One source of deviation of our treatment of the host from
+a cosmological simulation is that we use an NFW profile near
+the virial radius of the host. Recent work shows that a halo’s
+density profile steepens relative to NFW at radii within but
+close to the virial radius [116, 117]. We argue that it does not
+have a big impact on the properties of subhalos, since both
+the tidal effects and evaporation are of low strength at such
+distance from the host center, and is something we can change
+in future work.
+We further divide the subhalos based on their potential
+for mass loss.
+Subhalos that have plunging orbits or
+orbit the inner part of the host for a long time (‘heavily-
+stripping orbits’,
+referred to as h.s.o through the rest
+of the paper) potentially have more dramatic mass loss
+than other subhalos with ‘ordinary’ orbits (or o.o.
+for
+short).
+This requires more particles to properly resolve
+the severely stripped subhalo after its evolution in the host.
+For the four groups of small subhalos with infall masses
+[108, 108.2)𝑀⊙, [108.2, 108.5)𝑀⊙, [108.5, 109)𝑀⊙, [109, 1010)𝑀⊙,
+we select such subhalos and generate high-resolution sim-
+ulations, separate from their main groups. Our selection is
+based on two criteria: a) the subhalo’s peri-center is closer
+than 50 kpc from the host center, or b) the subhalo spends
+more than 2 Gyrs inside a radius of 200 kpc between 𝑡= 4
+to 9 Gyr. Subhalos in this ‘h.s.o.’ class with higher particle
+resolution represent about 20% of the whole population. For
+the subhalo group with the largest infall masses ≥1010𝑀⊙,
+which are simulated together with a live host, we do not have
+such separate high-resolution runs.
+We conducted a detailed convergence test to estimate the
+resolution needed for each infall-mass group of subhalos (Ap-
+pendix A). We summarize the resolution results in Table I, in
+the form of the minimum number of particles needed per sub-
+halo at the beginning of the simulation 𝑡= 4 Gyr, such that the
+subhalo’s density/mass profile is converged at radii ≳100 pc,
+where we conduct analysis on subhalos’ properties. For exam-
+ple, for the low-resolution group of subhalos with infall mass
+between 108 and 108.2𝑀⊙, we find that a minimum of 2 × 104
+particles is needed to track a subhalo’s evolution accurately.
+Thus, the simulation particle mass is 𝑚𝑝= 108𝑀⊙/(2 × 104)
+for this group.
+We find that the minimum resolution depends on the mass of
+subhalos and SIDM models. Unlike CDM halos that are self-
+similar and thus scale-free, SIDM halos have an extra length
+scale – the core radius or approximately the 𝑟1 radius [6, 89],
+within which the particles experience at least one scattering
+during the simulation.
+For CDM halos, approximately the
+system size 𝑟vir (and all length scale) scales with 𝑀1/3
+vir . For
+SIDM halos, the approximate core size 𝑟1 can be roughly
+estimated with the solution of 𝜌(𝑟1)𝑣rel(𝑟1) 𝜎
+𝑚= 1/Δ𝑡, where
+𝜌is the local density, 𝑣rel is the mean relative velocity and Δ𝑡
+is the halo lifetime. When the halo scales down in mass, its
+velocity dispersion also decreases, thus 𝑟1 is a smaller fraction
+of 𝑟vir than for more massive halos. In other words, the scaling
+relation 𝑟1 ∝𝑀𝛾
+vir has 𝛾< 1/3 (also see [35]). Thus for a
+smaller halo, its core mass is also a smaller fraction of the halo
+mass 𝑀vir, and we need to invest more simulation particles
+to make sure we can properly resolve the cored region. This
+highlights that a mass resolution that is converged for a certain
+mass range of halos and fixed SIDM model is not automatically
+guaranteed to be good enough for another system or SIDM
+
+5
+Mass group [dex 𝑀⊙]
+Const. 𝜎/𝑚
+𝑣-dependent
+[8.0, 8.2)
+o.o. : 2 × 104; h.s.o. : 1.2 × 105 o.o. : 2 × 104; h.s.o. : 8 × 104
+[8.2, 8.5)
+o.o. : 2 × 104; h.s.o. : 1.2 × 105 o.o. : 2 × 104; h.s.o. : 8 × 104
+[8.5, 9.0)
+o.o. : 2 × 104; h.s.o. : 1.0 × 105 o.o. : 2 × 104; h.s.o. : 8 × 104
+[9.0, 10.0)
+o.o. : 2 × 104; h.s.o. : 8 × 104
+o.o. : 2 × 104; h.s.o. : 8 × 104
+≥10.0
+2 × 104
+2 × 104
+TABLE I: Minimum number of particles needed to correctly resolve the evolution of subhalos’ density profile, for each
+infall-mass group. For example, for the infall-mass group of [108, 108.2𝑀⊙) subhalos that are on ordinary orbits (o.o.) with a
+constant cross section model, we deploy a mass resolution of 𝑚𝑝= 108/(2 × 104) = 5 × 103𝑀⊙. See Appendix A for more
+details. ‘o.o.’ and ‘h.s.o.’ are abbreviations for ordinary orbits and heavily-stripping orbits.
+model.
+Subhalos have different formation times, which affects how
+much they evolve before infall onto the host. The time span
+between their formation and infall is the time they evolve in
+isolation, which sets the density profile of these subhalos when
+host effects kick in [83]. To include the effect the of subhalos’
+different formation times, we further split the subhalo mass
+groups into four subsets, according to their respective forma-
+tion times. We assign the simulation starting time 𝑡ini as the
+ensemble binned formation time 𝑡ini = 𝑡hf = 0.5 Gyr to sub-
+halos forming between 0 and 1 Gyr, 𝑡hf = 1.5 Gyr to subhalos
+forming between 1 and 2 Gyr, 𝑡hf = 2.5 Gyr to subhalos form-
+ing between 2 and 3 Gyr, and 𝑡hf = 3.5 Gyr to subhalos forming
+between 3 and 4 Gyr. For the subhalos that form later than
+4 Gyr but still infall by the end of the simulation, we enforce
+the latest time bin 𝑡hf = 3.5 Gyr to be their formation time, so
+that they can co-evolve with other subhalos in the simulation.
+The initial position and velocity of each subhalo at the starting
+time are calculated by rewinding its position and velocity at
+infall, as generated by Galacticus, back in time as described
+in Sec. II A. These subsets of simulations are simulated until
+𝑡= 4 Gyr, and then merged back again as the initial conditions
+for the main simulations of each group, which start from 𝑡= 4
+Gyr and ends at 𝑡= 9 Gyr.
+It is important to track the core-collapse in subhalos on-the-
+fly with the simulation, for both physical and computational
+reasons. On the physics side, the methodology of represent-
+ing dark matter with macro N-body particles itself becomes
+questionable when a (sub)halo’s core-collapse process starts
+and its central region reaches the frequent scattering, fluid-
+like short-mean-free-path regime. On the computational side,
+as the (sub)halo’s central density gets exponentially higher
+and higher in the runaway process, the simulation timestep
+𝛿𝑡needed to resolve scattering in the central region becomes
+smaller and smaller, because the pairwise scattering proba-
+bility 𝑃∝𝜌𝑣rel 𝜎
+𝑚𝛿𝑡needs to be always smaller than 1 to
+be physical. Thus as the (sub)halo core-collapses and dark
+matter accumulates at the halo center, it becomes expensive
+to continue the simulation. Therefore, it is essential to track
+core-collapse in subhalos on-the-fly.
+Similar to [11], at every timestep, we measure the local
+SIDM density of each simulation particle, and mark the av-
+erage of the top 50 of these local densities as 𝜌max50, as the
+tracer of subhalo core-collapse3. When 𝜌max50 reaches 5 times
+its initial value, at least one subhalo is deep into the core-
+collapsing phase, with central density at least 5 times its initial
+condition. This ‘5 times’ criterion is chosen to ensure that
+a core-collapsing subhalo has a high enough central density
+such that its core-collapse will not be disrupted by evapora-
+tion induced by the host halo at a later time. Here we refer to
+the results from [11], where only in one rare case have they
+observed a subhalo whose central density increased by a fac-
+tor of ten but was temporarily disrupted, before it eventually
+core-collapsed at a later time (see the thin orange line in Fig.
+9 of [11]). In [11], since the simulation setup is targeting a
+single subhalo, they can simply terminate the simulation when
+the central density threshold is reached. Because we simulate
+ensembles of subhalos in this work, we adopt a different pro-
+cedure to handle core-collapse. When 𝜌max50 increases by a
+factor of five in the simulation, we identify the subhalo which
+most of the top 50 particles with largest local SIDM densi-
+ties are associated with at the beginning of the simulation,
+and turn off the dark matter self-interaction for the whole sub-
+halo, switching all of its particles to CDM. The dense center
+of this subhalo ceases core-collapsing since the gravothermal
+process is frozen. We note that with this ‘freezing’ treatment,
+the central density/mass of the core-collapsed subhalo in our
+simulation only serves as a conservative, lower limit.
+The
+SIDM scattering remains ‘on’ for all subhalos other than those
+reaching this criterion. 𝜌max50 is reset each time a subhalo
+reaches this criterion, such that it can be reused to trace the
+core-collapse process of other subhalos.
+In this work we design this hierarchical simulation scheme
+to simulate a realistic population of SIDM subhalos, grouping
+subhalos according to their mass at infall. This scheme allows
+us to resolve small subhalos at a much higher resolution than
+cosmological simulation in a short amount of computational
+time, but at the cost of missing part of the interaction among
+subhalos from different mass groups. As we demonstrate in
+Appendix B, this tradeoff does not statistically impact the evo-
+lution of subhalos. We present a step-by-step walkthrough and
+a flowchart of our simulation scheme in next section.
+3 The choice of the ‘top 50’ tracer is a trade-off between the computational
+(and RAM) cost and the random noise in particles’ local densities, following
+the same treatment in [11]
+
+6
+C.
+Step-by-step procedures
+Fig. 1 shows a flowchart of our set-up procedure for the sim-
+ulations. We start from the merger tree catalogues generated
+by Galacticus, presented as the pink box in the lower left
+corner of Fig. 1. Then we rewind subhalos’ information at in-
+fall along the red dashed line back to their different formation
+times. The pre-evolution simulations of each subhalo [mass,
+orbit, 𝑡hf] group are then started at 𝑡hf and ended at 4 Gyr, as
+boxed in the upper chunk of Fig. 1. The main simulations of
+subhalo [mass, orbit] groups are then run from 4 Gyr to 9 Gyr
+in the lower chunk of Fig. 1.
+Preparation of the analytic host:
+• Get the virial mass 𝑀200𝑐, virial radius 𝑅200𝑐and scale
+radius 𝑟𝑠of the host halo at any time from Galacticus;
+and the virial mass, virial radius, scale radius, 3-d po-
+sitions and 3-d velocities of the subhalos at their infall.
+See Sec. II A for setup details of Galacticus.
+• To model the gravitational potential and evaporative
+effects from the host, generate six simulations of iso-
+lated host halos with initial conditions that follow NFW
+profiles, using the characteristic parameters 𝑀200𝑐(𝑡),
+𝑅200𝑐(𝑡) and 𝑟𝑠(𝑡) of the host halo at 𝑡= 4, 5, 6, 7, 8, 9
+Gyr respectively. The simulations are run with dark mat-
+ter self-interaction for each SIDM model until it reaches
+thermal equilibrium inside the center (about 4 Gyrs).
+• Measure the density profiles 𝜌ℎ(𝑟), enclosed mass pro-
+files 𝑀<𝑟,ℎ(𝑟) and velocity dispersion profiles 𝜎𝑣,ℎ(𝑟)
+for the SIDM host halo at six different times.
+Inter-
+polate among these six discrete times to get 𝜌ℎ(𝑟, 𝑡),
+𝑀<𝑟,ℎ(𝑟, 𝑡) and 𝜎𝑣,ℎ(𝑟, 𝑡) at any time 𝑡that is between 4
+and 9 Gyrs. This concludes all the information we need
+to build an analytic, smooth host that evolves with time.
+Dividing subhalos into multiple groups:
+• The whole population of subhalos with infall mass
+larger than 108𝑀⊙are divided into five groups:
+[108, 108.2)𝑀⊙, [108.2, 108.5)𝑀⊙, [108.5, 109)𝑀⊙,
+[109, 1010)𝑀⊙and above 1010𝑀⊙, which are denoted
+as {𝑀sub}𝑖.
+• For each subhalo, the coordinates and velocity at infall,
+®𝑥infall and ®𝑣infall, together with the profiles of the analytic
+host at any given time, are used to analytically calculate
+the subhalo’s orbit. Subhalos in each infall-mass group,
+except for the most massive ones with 𝑀infall ≥1010𝑀⊙,
+are further divided into two sub-groups, according to
+their orbits (o.o. or h.s.o.). We invest more particles in
+h.s.o. subhalos and have a separate high resolution run,
+denoted as {𝑀sub}𝑖,h.s.o., while the o.o. subhalos with
+fewer particles is denoted as {𝑀sub}𝑖,o.o.. Typically the
+number of subhalos in {𝑀sub}𝑖,h.s.o. counts for 10% −
+20% of {𝑀sub}𝑖. The numbers of simulation particles
+we use for each {𝑀sub}𝑖are listed in Table I.
+• Subhalos either from {𝑀sub}𝑖,o.o. or {𝑀sub}𝑖,h.s.o. all
+have a formation time between 0 and 4 Gyrs, then we
+divide them into four sub-groups, according to their for-
+mation times that are binned at an interval of 1 Gyr. For
+example, subhalos within {𝑀sub}𝑖,o.o. and form between
+𝑡= 0 and 1 Gyr are assigned a uniform formation time
+of 𝑡hf = 0.5 Gyr, denoted as {𝑀sub}𝑖,o.o.(𝑡hf=0.5). Each
+subhalo’s initial position and velocity are then deter-
+mined by its analytically rewinded orbit and the binned
+formation time.
+• In short,
+{𝑀sub}𝑖
+=
+{𝑀sub}𝑖,o.o. ⊕{𝑀sub}𝑖,h.s.o.;
+{𝑀sub}𝑖,o.o.
+=
+{𝑀sub}𝑖,o.o.(𝑡hf=0.5)
+⊕
+{𝑀sub}𝑖,o.o.(𝑡hf=1.5)
+⊕
+{𝑀sub}𝑖,o.o.(𝑡hf=2.5)
+⊕
+{𝑀sub}𝑖,o.o.(𝑡hf=3.5)
+Pre-evolution of subhalos:
+• Each {𝑀sub}𝑖,o.o./h.s.o.(𝑡hf) is run as a separate simula-
+tion, which starts at 𝑡hf and ends at 4 Gyr. Subhalos in
+each simulation are initialized with NFW profiles and
+their own parameters 𝑀200𝑐, 𝑅200𝑐and 𝑟𝑠.
+• The {𝑀sub}𝑖with most massive subhalos is not split
+into o.o./h.s.o. runs, but still split into different halo-
+formation-time groups for the pre-evolution. The host
+halo, initialized with its 𝑀200𝑐, 𝑅200𝑐and 𝑟𝑠at 4 Gyr, is
+simulated in an isolated simulation from 0 to 4 Gyr, such
+that it reaches thermal equilibrium and forms a center
+core when subhalos begin infalling.
+• We have in total (4 × 2 + 1) × 4 + 1 = 37 simulations for
+the pre-evolution.
+Main simulation of subhalos:
+• The output snapshots at 𝑡= 4 Gyr from simulations of
+the same {𝑀sub}𝑖,o.o./h.s.o. but four different {𝑡hf} are
+merged into one, serving as the initial condition of our
+main simulation for each group of {𝑀sub}𝑖,o.o./h.s.o.. For
+the group with most massive subhalos, we have five pre-
+evolution snapshots to merge: four from subhalos with
+different halo-formation-time, and another one for the
+isolated host.
+• The main simulation of each {𝑀sub}𝑖,o.o./h.s.o. group is
+then started at 𝑡= 4 Gyr and ended at 9 Gyr.
+The
+o.o./h.s.o. simulations of the four low-mass subhalos
+groups are simulated with an analytical host, while the
+most massive subhalo group does not, since it automat-
+ically includes a live host.
+• The mass growth history of the smooth analytic host
+already automatically includes the infall of subhalos.
+To avoid double counting the contribution of subhalos
+to the host mass, we introduce a time-varying re-scaling
+factor 𝜉to uniformly scale down the density and mass
+profile of the host. 𝜉(𝑡) equals the ratio between total
+mass of subhalos in each group that has infall before 𝑡
+and the mass of the host at 𝑡, and is typically at the level
+of a few percent or below. Since this re-scaling factor
+varies with each {𝑀sub}𝑖,o.o./h.s.o. simulation, the actual
+profiles of the analytic host also vary.
+
+7
+• We have in total 4 × 2 + 1 = 9 main simulations.
+The validation of this hierarchical simulation scheme is pre-
+sented in Appendix B, where we aim to quantitatively show
+that missing the cross-group subhalo-subhalo interaction does
+not have a significant impact on the overall properties of sub-
+halos.
+The softening length of any of the aforementioned
+simulation is set in the same way as of [11] (see their Eqn. 4),
+which follows the criteria from [102] for CDM subhalos to be
+reliably traced. Results from [99] (see also [100, 101]) find
+that these criteria are generally also applicable to SIDM halos.
+D.
+Computational performance
+As we described above and in Table I, the simulation with
+highest mass resolution in our hierarchical framework has a
+particle mass of ∼103𝑀⊙.
+A full simulation in a cosmo-
+logical setup that includes all subhalos and the host with
+total mass ∼1013𝑀⊙would have 1010 particles, while our
+method reduces the total particle number to 108.
+This re-
+sults in the total computational time of ∼10000 CPU hours
+per realization for SIDM models that do not have many core-
+collapsed subhalos, and ∼25000 CPU hours for the SIDM
+model {𝜎0 = 200, 𝜔= 200} (see next section for definition)
+that has most core-collapsed subhalos.
+III.
+SIDM MODELS AND PARAMETER SPACE
+In this work we are interested in simulating SIDM models
+with large enough cross sections (characterized by 𝜎/𝑚) such
+that a non-negligible fraction of the subhalos approach core-
+collapse within the simulation time. To quickly scan and locate
+the relevant cross section parameter space, we adopt the SIDM
+halo time mapping method introduced in [87]. This method
+takes advantage of the degeneracy between SIDM cross sec-
+tion and halo evolution time in the gravothermal fluid formal-
+ism, and can map the gravothermal solution for SIDM halo
+evolution derived with a constant cross section to arbitrary
+velocity-dependent cross section cases. Due to the simplicity
+of the gravothermal fluid formalism, this method is only suit-
+able for modeling isolated and spherically symmetric halos.
+We only consider the “long mean-free-path" regime where the
+self-interaction mean-free-path is longer than the scale height.
+For our model selection exercise, we consider two sub-
+halos with typical initial NFW parameters {𝜌𝑠= 2.11 ×
+107𝑀⊙/kpc3, 𝑟𝑠= 0.707 kpc, 𝑀200𝑐= 1.82 × 108𝑀⊙,
+𝑐200𝑐= 16.97} and {𝜌𝑠= 1.83 × 107𝑀⊙/kpc3, 𝑟𝑠= 1.86
+kpc, 𝑀200𝑐= 2.80 × 109𝑀⊙, 𝑐200𝑐= 16.04}, which belong
+to two infall-mass groups [108, 108.2)𝑀⊙and [109, 1010)𝑀⊙
+respectively.
+Assuming that each halo is free from tidal
+and evaporation effects, we map the parameter space for
+these two halos to core-collapse within the simulation time
+of 9 Gyrs, using a generic velocity-dependent SIDM model
+[16, 75, 82, 86, 87, 118, 119]
+𝜎
+𝑚=
+𝜎0
+[1 + 𝑣2
+rel/𝜔2]2 ,
+(2)
+where 𝑣rel is the relative velocity between two SIDM particles,
+and 𝜎0 and 𝜔are two free parameters to characterize this
+model (denoted as the 𝜎0 −𝜔model hereafter). The core-
+collapse regions in the 𝜎0 −𝜔parameter space for these two
+halos are shown in Fig. 2a in red and yellow. As a reference,
+we also show current constraints on the 𝜎0 −𝜔model in blue
+shades (1𝜎and 2𝜎) from [118], which utilises low-baryon
+rotation curves from isolated galaxies and stellar dynamics of
+and bright cluster galaxies to constrain SIDM. The mismatch
+between the red/yellow shaded regions and the blue shades
+shows that core-collapse is not expected to happen in isolated
+halos with masses in the range [108, 1010]𝑀⊙.
+The shaded regions in Fig. 2a are calculated for isolated
+halos. When halos orbit the group-scale host we consider in
+this paper, we expect the core-collapse region of subhalos to
+be different. On one hand, tidal stripping should accelerate
+core-collapse in subhalos, so the required 𝜎0 for core-collapse
+should be smaller, and the boundary of the core-collapse re-
+gion should be shifted downwards. On the other hand, the
+evaporation, whose strength is characterized by the 𝜎/𝑚at the
+subhalo orbital velocity 𝑣rel ∼102 −103 km/s, can delay or
+even disrupt the core-collapse process. This implies that the
+minimum requirement on 𝜎0 for core-collapse would be higher
+for subhalos for 𝜔≳100 km/s — subhalos must core-collapse
+before they experience strong evaporation. As a result of these
+two effects combined together, we expect the core-collapse
+region of subhalos to be expanded to cover smaller 𝜎0 for
+𝜔≲100 km/s, and lifted to larger 𝜎0 for 𝜔≳100 km/s.
+Hence we sample five {𝜎0, 𝜔} models near the estimated
+core-collapse boundary of subhalos, as shown in the points
+in Fig.
+2a, and generate simulations using the framework
+described in Sec. II. The 𝜎/𝑚−𝑣rel relation of these mod-
+els is shown in Fig. 2b. We also include an SIDM model
+with constant cross section of 6 cm2/g, and a more particle-
+physics-motivated SIDM model from [55] (hereafter denoted
+as Colquhoun21). [55] assumes a Yukawa potential to rep-
+resent the interaction among SIDM particles, in analogy to
+nuclear forces. This Yukawa interaction is characterized by
+the mediator mass 𝑚𝜙, the dark matter particle mass 𝑚𝜒and
+the dark fine-structure constant 𝛼𝜒, which we choose to be 3
+MeV, 190 GeV and 0.057 respectively, such that the 𝜎/𝑚−𝑣rel
+relation is consistent with constraints of cluster-sized sys-
+tems (O(1) cm2/g) while producing an interesting diversity
+for dwarf-sized systems (∼10 cm2/g).
+Recently, [120] reported that the recently observed nano-
+Hertz stochastic gravitational wave background by Pulsar Tim-
+ing Arrays (PTA) can be explained by the first-order phase
+transition of an MeV scale mediator for dark matter self-
+interaction. The corresponding parameter space of velocity-
+dependent SIDM favored by PTA results (see Fig. 1 of [120])
+covers the main models we choose in this work (five 𝜎0 −𝜔
+models and Colquhoun21).
+IV.
+RESULTS
+In this section, we explore properties of the subhalos in dif-
+ferent SIDM models, with implications for substructure lens-
+
+8
+Infall mass groups
+Orbit groups
+⊗
+⊗
+thf groups
+thf ∈[0, 1) Gyr
+thf ∈[1, 2) Gyr
+thf ∈[2, 3) Gyr
+thf ∈[3, 4] Gyr
+Input from
+Galacticus:
+−→x , −→v , Mvir at each
+subhalo’s infall
+Time
+0.5 Gyr
+1.5 Gyr
+2.5 Gyr
+3.5 Gyr
+4 Gyr
+9 Gyr
+Analytic host: ρh(r, t = 4), Mh(<r, t = 4), σvh(r, t = 4)
+Merge thf groups
+Infall mass groups
+Orbit groups
+⊗
+Analytic host: ρh(r, t), Mh(<r, t), σvh(r, t)
+Checking simulated infall
+with input, see Fig. D2
+Infall mass groups
+Orbit groups
+⊗
+Merge for lensing analysis
+Pre-evolution
+Mainsimu-
+lation
+simulation
+Analytical cal-
+culation
+FIG. 1: The workflow chart of our hierarchical simulation framework. See Sec. II B and II C for details.
+ing. We use Amiga Halo Finder (AHF; [121]) to identify
+the subhalos in our simulation, and analyze the evolution of
+subhalos with their averaged inner masses in Sec. IV A and
+with their averaged logarithmic slope of inner density profile
+in Sec. IV B. The averaged inner mass and inner slope serve
+as two statistical probes for core-collapse in subhalos. In Sec.
+IV C, we repeat the same analysis in Sec.
+IV A and IV B,
+but using toy SIDM models designed with special features,
+which allows us to carefully look into the interplay of relevant
+physical processes in driving the evolution of subhalos. We
+use the lensing code GLAMER [122, 123] to generate smoothed
+2D-projected density maps from our simulation particle data,
+and conduct analyses relevant for lensing in Sec. IV D. In
+Sec. IV E, we compare the core-collapse time and fraction of
+subhalos and their counterparts in isolation, to highlight the
+difference between subhalos and field halos, which could po-
+tentially be used in the future to break degeneracies in SIDM
+parameter space. In Sec. IV F we show the variance of subhalo
+properties among realizations of merger systems.
+A summary table of the number and fraction of subhalos that
+reach our core-collapse threshold in each infall-mass group and
+each SIDM model is provided in Table II.
+A.
+Evolution of subhalos’ central mass
+In this subsection, we focus on using the central mass of sub-
+halos to track the evolution of subhalos in the host, under the
+coupled effects of gravity and dark matter self-interaction. The
+most prominent feature of core-collapse in an SIDM (sub)halo
+is dark matter increasingly concentrating at the halo center.
+Thus, the enclosed mass within a small aperture near the cen-
+ter grows with time in the core-collapse phase. A (sub)halo
+still in the core-formation stage has a much lower central mass,
+and a CDM (sub)halo has a central mass between that of core
+and core-collapsed.
+Here we choose an aperture of 200 pc for the measurement
+of a subhalo’s ‘inner’ mass. This aperture is chosen in order
+
+9
+0
+1
+2
+3
+4
+log(
+/[km/s])
+2
+1
+0
+1
+2
+3
+4
+log(
+0/m/[cm2/g])
+108M
+ core-collapse
+109.5M
+ core-collapse
+Yang2023
+(a)
+10−1
+100
+101
+102
+103
+vrel[km/s]
+10−2
+10−1
+100
+101
+102
+σ/m[cm2/g]
+subhalos
+evaporation
+6cm2/g
+σ0 = 50, ω = 50
+σ0 = 50, ω = 100
+σ0 = 100, ω = 50
+σ0 = 200, ω = 50
+σ0 = 200, ω = 200
+Colquhoun21
+(b)
+FIG. 2: a) Parameter space of the 𝜎0 −𝜔velocity-dependent SIDM model. The core-collapse region for two typical isolated
+halos with masses 108𝑀⊙and 109.5𝑀⊙are shown in the red and yellow shaded regions. The parameter space constrained by
+isolated galaxies and bright cluster galaxies from [118] is shown in the blue region. We sample five 𝜎0 −𝜔models in this work,
+shown as the scattered dots, for reasons described in the text. b) The 𝜎
+𝑚−𝑣rel relation of the main SIDM models we use in this
+work, including the five 𝜎0 −𝜔models, a constant cross section of 6 cm2/g and a Yukawa interaction model from [55]. We also
+highlight the relative velocity scales most relevant for subhalos’ internal heat transfer and host-subhalo evaporation in the gray
+and yellow shaded regions. Subhalos’ 𝑣rel is characterized by ⟨𝑣rel⟩= 𝐶𝜎𝑣, where 𝜎𝑣is the typical range of 1-d velocity
+dispersion of particles for that subhalo mass group and 𝐶≈3.8 (see Sec. IV C for details). The subhalos’ gray region is further
+divided by vertical dashed lines for the four low-infall-mass subhalo groups [108, 108.2)𝑀⊙, [108.2, 108.5)𝑀⊙, [108.5, 109)𝑀⊙
+and [109, 1010)𝑀⊙. The evaporation-relevant 𝑣rel are subhalos’ orbital velocities. An alternate version of b) showing 𝑣rel × 𝜎
+𝑚is
+provided in Fig. 15a.
+Mass group [dex 𝑀⊙]
+[8.0, 8.2)
+[8.2, 8.5)
+[8.5, 9.0)
+[9.0, 10.0)
+≥10.0
+SIDM models / orbits
+o.o
+h.s.o
+o.o
+h.s.o
+o.o
+h.s.o
+o.o
+h.s.o
+𝜎0 = 50, 𝜔= 50
+0
+0
+0
+0
+0
+1, 0.5%
+0
+0
+0
+𝜎0 = 50, 𝜔= 100
+0
+0
+5, 0.4%
+3, 1.2%
+12, 1.3%
+13, 6.3%
+4, 0.8%
+6, 6.2%
+0
+𝜎0 = 100, 𝜔= 50
+3, 0.2%
+13, 3.8%
+25, 2.0%
+15, 6.1%
+10, 1.1%
+20, 9.8%
+1, 0.2%
+5, 5.2%
+0
+𝜎0 = 200, 𝜔= 50
+312, 21.9% 91, 26.8% 162, 13.1% 59, 23.9% 130, 13.7% 55, 26.8%
+15, 2.9%
+14, 14.4%
+0
+𝜎0 = 200, 𝜔= 200
+573, 40.2% 40, 11.7% 304, 24.6% 40, 16.1% 351, 37.1% 54, 26.0% 220, 42.6% 19, 19.6% 34, 28.8%
+Colquhoun21
+0
+0
+0
+0
+0
+0
+0
+0
+0
+window1
+112, 30.8%
+7, 9.6%
+75, 25.5% 16, 24.2% 116, 47.0% 26, 54.2% 42, 30.1%
+5, 27.8%
+0
+window2
+143, 39.3% 15, 20.5% 71, 24.1% 20, 30.3% 46, 18.6% 23, 47.9%
+0
+3, 16.7%
+0
+window3
+0
+0
+0
+0
+16, 6.5%
+3, 6.3%
+48, 35.0%
+3, 16.7%
+0
+z3
+24, 6.6%
+1, 1.4%
+22, 7.5%
+3, 4.5%
+22, 8.9%
+5, 10.4%
+1, 0.7%
+2, 11.1%
+0
+z8
+1, 0.3%
+0
+10, 3.4%
+0
+10, 4.1%
+0
+1, 0.7%
+0
+0
+TABLE II: Number and fraction of core-collapsed subhalos in each infall mass group and each SIDM model, in the format of
+𝐴, 𝑋%, where 𝐴is the number of subhalos that experience core-collapse before the end of the simulation at 𝑡= 9 Gyr and 𝑋is
+the percentage of core-collapsed subhalos at 𝑡= 9 Gyr. All four realizations are stacked together in this table for the {𝜎0, 𝜔}
+and Colquhoun21 model (upper part of this table, see Fig. 2b and Sec. III), while we only have one realization for the window
+function and z-type models (lower part, see Fig. 7a and Sec. IV C for descriptions). ‘o.o.’ and ‘h.s.o.’ are abbreviations for
+ordinary orbits and heavily-stripping orbits.
+
+10
+FIG. 3: The relation between subhalos’ inner mass (within 200 pc) and virial mass, at the end of the simulation. The main
+scatter plot shows the normalized inner mass 𝑀inner(< 0.2 kpc)/Mvir and virial mass 𝑀vir of each subhalo, of different SIDM
+models. The subhalos that reach our critetion of core-collapse are labelled with squares, and others with dots. The top and right
+shoulder panels shows the probability distribution of 𝑀vir and 𝑀inner/𝑀vir respectively. An animated movie of the full time
+evolution of this plot is uploaded to video1. Another evolution movie with inner radius defined by 2% of each subhalo’s virial
+radius instead of a fixed 200 pc is shown in video2. We refer the readers to Table II for detailed core-collapse statistics of each
+model and mass-group.
+to strike a balance between a small radius to represent the
+center of subhalos, where we expect most interesting physics
+of SIDM to happen, and an adequate amount of particles (≳50
+particles for the massive [109, 1010)𝑀⊙and 𝑀sub ≥1010𝑀⊙
+groups of cored subhalos, which are most limited by particle
+resolution in the inner region). In Fig. 3 we show a scatter
+plot of this inner mass 𝑀(< 200 pc) as a fraction of virial
+mass for each individual subhalo, at the end of the simulation
+𝑡= 9 Gyr. We label the subhalos that have core-collapsed
+according to the criterion described in Sec. II B with squares,
+and the subhalos that have not core-collapsed with circles.
+In the shoulder plots, we show the probability distribution
+function (PDF) of the subhalos’ virial mass 𝑀vir (x-axis) and
+of the inner masses 𝑀(< 200 pc) (y-axis).
+Note that the
+PDF of 𝑀vir looks different from the subhalo mass function
+in cosmological simulations because we impose a cutoff on
+subhalos’ infall-mass rather than present-day mass.
+From the scatter plot, we confirm that our labeling crite-
+rion successfully picks out the core-collapsed subhalos, which
+form a visible outlier cluster in the 𝑀inner −𝑀vir space. The
+{𝜎0 = 200, 𝜔= 50} (violet) and {𝜎0 = 200, 𝜔= 200} (pur-
+ple) models yield core-collapse in a large fraction of subhalos,
+as also indicated in Table II. The {𝜎0 = 100, 𝜔= 50} (or-
+ange) and {𝜎0 = 50, 𝜔= 100} (brown) models lead have a
+small number of core-collapse cases, while the subhalos in
+the other velocity-dependent SIDM models are not much dis-
+
+11
+tinguishable from CDM (black). The constant cross section
+of 6 cm2/g (red) has subhalos lower in both inner mass and
+virial mass compared to CDM, because of the host-subhalo
+evaporation.
+We find that core-collapse also imprints itself in the shoul-
+der plots.
+In the top shoulder panel, we find that most of
+SIDM models we study share a similar subhalo mass function
+at 𝑡= 9 Gyr. The outliers are the subhalo mass function for the
+constant cross section of 6 cm2/g and {𝜎0 = 200, 𝜔= 200},
+where evaporation leads to visible mass loss. Thus, the sub-
+halo mass function is more strongly influenced by evaporation
+rather than core collapse. By contrast, the right shoulder panel,
+showing the distribution of subhalos’ inner mass relative to the
+total mass, is more sensitive to core collapse. Compared to
+CDM, the PDF of 6 cm2/g is shifted as a whole towards lower
+𝑀inner, as all subhalos in this model are still in the core for-
+mation phase. By contrast, the models showing significant
+core collapse in the subhalos, the {𝜎0 = 200, 𝜔= 50} (violet)
+and {𝜎0 = 200, 𝜔= 200} (purple), not only show a boost
+of subhalos with high inner mass, but also an overall broader
+distribution of 𝑀inner/𝑀vir, representing a larger diversity of
+subhalos. The tail toward low mass ratios indicates a popu-
+lation of subhalos in the core-formation regime. The other
+velocity-dependent SIDM models show a slightly larger di-
+versity of subhalo mass ratios than CDM, with a lower peak
+and broader width in the PDF of 𝑀inner/𝑀vir.
+We show a
+time-evolution movie of the 𝑀inner −𝑀vir plot in Appendix D.
+We show the time evolution of the averaged subhalo inner
+mass in Fig. 4. The subplots a) to d) in Fig. 4 show the
+evolution of 𝑀(< 200 pc) averaged over all subhalos in each
+infall-mass group and over four realizations, regardless of the
+subhalos’ orbits. The {𝜎0 = 200, 𝜔= 50} (violet) and {𝜎0 =
+200, 𝜔= 200} (purple) models have the highest fraction of
+core-collapsed subhalos, and so their averaged 𝑀(< 200 pc)
+significantly outpace their CDM counterparts (black) at late
+times in the three lowest infall-mass groups.
+However, for
+the large infall-mass group 𝑀infall = [109, 1010)𝑀⊙, only the
+purple model has a large fraction of core-collapsed subhalos.
+The {𝜎0 = 200, 𝜔= 50} violet model experiences a drop
+in cross section for massive subhalos relative to the {𝜎0 =
+200, 𝜔= 200} purple model (see Fig. 2b). On the whole, the
+subhalos for the other velocity-dependent SIDM models are
+largely in the core-formation regime, or are only just entering
+core-collapse near 𝑡= 9 Gyr, as indicated by the fact that
+their enclosed masses lie below CDM, gradually ticking up by
+the end of the simulations. The model with a constant cross
+section of 6 cm2/g shows that the subhalos are monotonically
+decreasing in central mass/density, as a combined result of the
+core-forming stage and the relatively strong evaporation effect
+from the host halo. The Colquhoun21 model follows a similar
+trend as this constant SIDM model. The key differences are
+that the mass loss in the central region is more gradual than
+in the constant cross section case, and one starts to see early
+signs of core-collapse by the flattening trend of inner mass by
+the end of the simulation. These results are consistent with the
+scatter plot in Fig. 3.
+The diversity in the scatter plot is also revealed in the scatter
+in the central mass evolution. In Fig. 4e, we show the 68%
+percentile scatter of the subhalos’ central masses for selected
+SIDM models. The {𝜎0 = 200, 𝜔= 50} model (violet) ex-
+hibits increasing diversity over time, spanning a wide range of
+central mass at late times — from about a factor of 2 smaller
+(cored) to a few times larger (core-collapsed) than the scatter
+in the CDM case shown in the black shaded region. The con-
+stant cross section with 𝜎/𝑚= 6 cm2/g also shows a large
+scatter in subhalo central mass/density (red shaded region), but
+mostly the subhalos have lower central masses than their CDM
+counterparts, which is again because of the strong evaporation.
+To investigate the role of orbits in subhalos’ evolution, we
+split the subhalos’ central mass evolution by orbital type in
+Fig. 4f. We plot the average evolution of o.o. subhalos with
+dashed lines and h.s.o. ones with dotted lines. We notice that
+h.s.o. CDM subhalos lose only slightly more mass relative to
+the o.o. ones, due to tidal heating and stripping. However,
+the h.s.o. subhalos simulated with a constant cross section of
+6 cm2/g lose much more mass even at early times, because
+of the additional strong evaporation. The effect of orbits on
+the Colquhoun21 model in cyan color is between the two DM
+models, with evaporation not as strong as the 6 cm2/g case but
+still significant.
+The evolution of subhalos in the velocity-dependent models
+of {𝜎0 = 200, 𝜔= 200} (purple) and {𝜎0 = 200, 𝜔= 50} (vi-
+olet) with significant core-collapsing subhalos is more compli-
+cated. Previous work by [124] and [8] have argued that the core
+collapse will be accelerated by tidal stripping, which steepens
+the negative temperature gradient in the subhalo. However,
+[11] find that the host-subhalo evaporation may delay or even
+halt core-collapse. The overall effect of the host on subhalo
+evolution can thus be complicated. In Fig. 4f, we can see
+that h.s.o. subhalos have accelerated core-collapse with the
+{𝜎0 = 200, 𝜔= 50} (violet) model but experience decelera-
+tion with the {𝜎0 = 200, 𝜔= 200} (purple) model. This is
+because the cross section of the violet model starts to drop
+for velocities larger than ∼20 km/s (see Fig.
+2b), and is
+only ≲𝑂(1) cm2/g for the orbital-scale relative velocities
+100 −1000 km/s relevant for host-sub evaporation. Thus, for
+this model, the evaporation is weak and the overall effect of the
+host is to accelerate core-collapse by tidal stripping. There are
+two competing effects for the other model. The cross section
+for the {𝜎0 = 200, 𝜔= 200} (purple) model starts to drop for
+velocities ≳200 km/s, which means a larger cross section for
+the subhalo mass range [108.5, 109)𝑀⊙we show in Fig. 4f
+than the violet model. It leads to a higher rate of core collapse
+for massive subhalos. This model also has a cross section of
+≲𝑂(10) cm2/g for evaporation-related velocities. Unlike the
+violet model, evaporation plays a larger role in subhalo evo-
+lution than tidal effects, leading to an overall deceleration in
+subhalo core-collapse.
+From Fig. 4f we can see the coupling between SIDM mod-
+els, subhalo mass and orbits can be diverse and complicated.
+We will further investigate the role of host effects in driving
+subhalo core-collapse in the next sections.
+
+12
+4
+5
+6
+7
+8
+9
+t [Gyr]
+2
+3
+4
+M(< 200 pc)[106M⊙]
+Minfall = [108.0, 108.2)M⊙
+CDM
+6 cm2/g
+(a)
+4
+5
+6
+7
+8
+9
+t [Gyr]
+2
+3
+4
+M(< 200 pc)[106M⊙]
+Minfall = [108.2, 108.5)M⊙
+σ0 = 50, ω = 50
+σ0 = 50, ω = 100
+σ0 = 100, ω = 50
+(b)
+4
+5
+6
+7
+8
+9
+t [Gyr]
+3
+6
+10
+M(< 200 pc)[106M⊙]
+Minfall = [108.5, 109.0)M⊙
+σ0 = 200, ω = 50
+σ0 = 200, ω = 200
+Colquhoun21
+(c)
+4
+5
+6
+7
+8
+9
+t [Gyr]
+3
+6
+10
+20
+M(< 200 pc)[106M⊙]
+Minfall = [109.0, 1010.0)M⊙
+(d)
+4
+5
+6
+7
+8
+9
+t [Gyr]
+2
+3
+4
+M(< 200 pc)[106M⊙]
+Minfall = [108.2, 108.5)M⊙
+68% percentile
+(e)
+4
+5
+6
+7
+8
+9
+t [Gyr]
+2
+3
+4
+M(< 200 pc)[106M⊙]
+Minfall = [108.5, 109.0)M⊙
+all
+o.o.
+h.s.o.
+(f)
+FIG. 4: Time evolution of the averaged mass of subhalos within an aperture of 200 pc. Panels a) to d) show different infall-mass
+groups. Panel e) shows the 68% scatter of the inner mass of selected models. Panel f) further distinguishes suhalos on different
+orbits (ordinary orbits ‘o.o.’ or heavily-stripping orbits ‘h.s.o.’). SIDM models have different averaged inner mass at 𝑡= 4 Gyr
+because of their evolution prior to the 4 Gyr shown on the plots.
+B.
+Evolution of subhalos’ density slope
+Another feature of core-collapse is that the slope of the
+density profile 𝛼4 steepens significantly outside the core, far
+steeper than in CDM. A recent study [125] finds that the slope
+of a subhalo at roughly 150−500 pc (see their Fig.2) , called the
+‘region of maximum observability’, can be robustly measured
+with lensed arcs from strong lensing observations (see also
+[126] and [127] for robust subhalo probes from lensing), thus
+having the potential of distinguishing different DM models.
+Here, we present the averaged logarithmic slope 𝛼of subhalos’
+density profiles at specific radii to track subhalos’ evolution.
+We expect 𝛼to be a function of position with respect to
+halo center as well as time, motivating us to consider the
+slope at specific radii. CDM halos with NFW profiles have
+𝛼= −1 in the center, smoothly transitioning to 𝛼= −3 as
+the radius increases.
+SIDM halos have cored centers with
+𝛼= 0, transitioning to 𝛼= −3 at outer radii. As core-collapse
+4 defined by the scaling between density and radius 𝜌(𝑟) ∝𝑟𝛼, or 𝛼(𝑟) =
+𝑑log 𝜌/𝑑log 𝑟for a local measurement near 𝑟, where the ‘local’ is defined
+by ± 50 pc in this work. See Fig. 5
+kicks in, the SIDM core contracts, and the transition region
+effectively extends to smaller radii. Thus the time evolution
+of the slope 𝛼at a fixed aperture near the center of a subhalo
+should become more negative (steeper slope) as the subhalo
+starts to core-collapse. We show the averaged 𝛼of subhalos
+in Fig. 5, in the same style as the previous plot of subhalos’
+central mass panels. Panels a) to d) show the averaged 𝛼of
+each infall-mass group of subhalos, and panel e) demonstrates
+the scatter in 𝛼. Panel f) shows the contribution of different
+orbits in the evolution of 𝛼.
+Note that for the four infall-
+mass groups, we use different radii for measurement of 𝛼
+(200 pc, 200 pc, 200 pc and 300 pc for the four infall-mass
+groups, as specified in Fig. 5), because the simulations of
+more massive subhalos have more massive particles and lower
+spatial resolution, which limits our ability to measure the slope
+at small radii. These radii are within or close to the reported
+‘region of maximal observability’ according to [125]. We note
+that since we fix the aperture of 𝛼measurement for each mass
+group, it is the relative behaviour of 𝛼among dark models that
+matters, rather than the magnitude.
+In the a) to d) panels of Fig. 5, we find that the averaged
+𝛼of CDM subhalos remains nearly unchanged. The constant
+cross section model with 𝜎/𝑚= 6 cm2/g (red) is still at an
+
+13
+4
+6
+8
+t [Gyr]
+−1.8
+−1.6
+−1.4
+−1.2
+−1.0
+α [200 pc]
+Minfall = [108.0, 108.2)M⊙
+CDM
+6 cm2/g
+(a)
+4
+6
+8
+t [Gyr]
+−1.4
+−1.2
+−1.0
+−0.8
+α [200 pc]
+Minfall = [108.2, 108.5)M⊙
+σ0 = 50, ω = 50
+σ0 = 50, ω = 100
+σ0 = 100, ω = 50
+(b)
+4
+6
+8
+t [Gyr]
+−1.50
+−1.25
+−1.00
+−0.75
+−0.50
+α [200 pc]
+Minfall = [108.5, 109.0)M⊙
+σ0 = 200, ω = 50
+σ0 = 200, ω = 200
+Colquhoun21
+(c)
+4
+6
+8
+t [Gyr]
+−1.50
+−1.25
+−1.00
+−0.75
+−0.50
+α [300 pc]
+Minfall = [109.0, 1010.0)M⊙
+(d)
+4
+6
+8
+t [Gyr]
+−2.0
+−1.5
+−1.0
+−0.5
+α [200 pc]
+Minfall = [108.2, 108.5)M⊙
+68% percentile
+(e)
+4
+6
+8
+t [Gyr]
+−1.50
+−1.25
+−1.00
+−0.75
+−0.50
+α [200 pc]
+Minfall = [108.5, 109.0)M⊙
+all
+o.o.
+h.s.o.
+(f)
+FIG. 5: Time evolution of the average slopes of subhalos’ density profiles, measured at a certain aperture of 𝑅± 50 pc near the
+subhalo center, where 𝑅is specified in each subplot. a) to d) are the average slopes in each infall-mass group, regardless of the
+subhalos’ orbits. In e) we show the scatter of the slopes in shaded region, for selected SIDM models. f) shows the slope
+evolution as a function of subhalos’ orbits (classified as either ordinary orbits (o.o.) or heavily-stripping orbits (h.s.o.)).
+early stage of core expansion at the end of the simulations,
+with the slope increasing (becoming less negative) over time.
+The velocity-dependent models {𝜎0 = 50, 𝜔= 50} (blue)
+and Colquhoun21 (cyan) are also in the core-expansion phase
+with an increasing (or, at most, starting to flatten) slope. For
+the three low infall-mass groups in Fig. 5a to Fig. 5c, the
+subhalos simulated with {𝜎0 = 100, 𝜔= 50} (orange) and
+{𝜎0 = 50, 𝜔= 100} (brown) models have decreasing 𝛼by the
+end of the simulation, indicating that a few subhalos are core-
+collapsed. By contrast, for the {𝜎0 = 200, 𝜔= 50} (violet) and
+{𝜎0 = 200, 𝜔= 200} (purple) models, we see the signature
+of core collapse in the fast-dropping 𝛼.
+For the subhalos
+with infall mass between 109 and 1010𝑀⊙, however, even the
+{𝜎0 = 200, 𝜔= 50} model only has a mild decreasing trend
+in 𝛼. Only the {𝜎0 = 200, 𝜔= 200} (purple) model still has
+a large fraction of core-collapsed subhalos, as indicated with
+the rapid drop in 𝛼as a function of time. This is consistent
+with what we found with the central enclosed masses in the
+previous section.
+We show the 68 percentile scatter of subhalos’ inner slopes
+of selected SIDM models in Fig. 5e. Again, we can see the
+{𝜎0 = 200, 𝜔= 50} model has the largest and most rapidly
+increasing scatter in 𝛼, since there are large populations of
+both core-collapsing and core-forming subhalos. The scatter
+in 𝛼of the other DM models remains nearly unchanged with
+time, even for the 𝜎/𝑚= 6 cm2/g model that displays an
+increasing scatter over time in inner mass in Fig.
+4e (red
+line). The explanation for this is that the drop of inner mass
+of 𝜎/𝑚= 6 cm2/g subhalos in Fig. 4e results from both core-
+formation and evaporation, the latter tightly correlated with
+orbits. For the evolution of 𝛼, though, evaporation does not
+play as significant a role, since it causes nearly equal mass
+loss at all subhalo radii and only indirectly contributes to the
+core-formation by making the central potential shallower. As
+a result, the 𝛼evolution in the 𝜎/𝑚= 6 cm2/g model is not as
+strongly affected by the diversity in orbits as the inner mass is,
+keeping the scatter in 𝛼relatively constant.
+To investigate the role of different orbits in driving the evo-
+lution of 𝛼, in Fig. 5f we show 𝛼as a function of orbital
+type. For the CDM subhalos (black), the o.o. subhalos’ slopes
+remain roughly constant, while the h.s.o. ones are slightly
+steepened. The latter is a result of the fact that the h.s.o. sub-
+halos lose more mass during close pericenter passages, and
+the transitioning radius from 𝛼= −1 to 𝛼= −3 shifts to
+smaller radii (see also [78, 128, 129]). The h.s.o. subhalos
+show slightly faster growth in 𝛼than the o.o. ones for the
+constant cross section 6cm2/g case (red), because the strong
+evaporation causes extra mass loss and shallower potential in
+subhalo center, which adds to the core expansion. For the
+Colquhoun21 model (cyan) that has relatively weak evapora-
+
+14
+3.0
+2.5
+2.0
+1.5
+1.0
+0.5
+0.0
+0.5
+[200 pc]
+0.0
+0.5
+1.0
+1.5
+2.0
+2.5
+3.0
+PDF of 
+Infall mass [108.0, 108.2)M
+CDM
+6 cm2/g
+0 = 200,
+= 200
+0 = 200,
+= 50
+all
+o.o.
+h.s.o.
+Zhang2023 CDM
+Zhang2023 HST
+FIG. 6: The probability distribution of the inner slope 𝛼for
+the infall-mass group [108.0, 108.2). We find that the
+ultra-steep inner density profiles in subhalos reported in [130]
+can be explained by core-collapse in SIDM subhalos. The
+lines have the same meaning as in Fig. 5f. ‘o.o.’ and ‘h.s.o.’
+are abbreviations for ordinary orbits and heavily-stripping
+orbits.
+tion and core-collapse in subhalos just about to kick in at the
+end of the simulation, similar to the CDM case, the stronger
+tidal field for h.s.o. subhalos causes slightly more negative 𝛼
+than the o.o. ones.
+The effects of evaporation are apparent in the two models
+with strong core-collapse shown in the figure.
+The {𝜎0 =
+200, 𝜔= 50} (violet) case’s h.s.o. subhalos grow a steeper
+averaged 𝛼than the o.o.
+ones, due to the acceleration of
+core-collapse by stronger tidal stripping. However, the {𝜎0 =
+200, 𝜔= 200} (purple) model, although having the largest
+core-collapse fraction, shows that h.s.o. subhalos are delayed
+in core-collapse because the strong evaporation overcomes the
+acceleration by tidal stripping from the host.
+The subhalos’ averaged inner slope 𝛼tell a story that is
+consistent with the observations of subhalos’ central mass,
+as described in Sec. IV A and the summary Table II. With
+upcoming substructure lensing observations, the inner subhalo
+slopes could be promising as an avenue to setting constraints
+on SIDM models (also see Sec. IV D).
+Excitingly, [130] analyzed 13 strongly lensed images by
+Hubble Space Telescope, measuring subhalos with masses
+similar to the ones in our simulation.
+They found a much
+steeper overall inner slope than expected for CDM subhalos
+— even with extreme tidal truncation (see Fig. 6 of [130]).
+As shown in Fig. 6, we find that this may be explained by
+core-collapse in SIDM subhalos. The probability distribution
+of 𝛼for our two models with highest core-collapse fraction
+peak at the steep slope reported in [130]. However, there are
+two key differences between our results and their measure-
+ment.
+First, we use a fixed aperture (200 pc for the infall
+mass group 108 −108.2𝑀⊙shown in Fig. 6), while their radial
+range for the slope measurement can vary for each subhalo
+(called Maximal Observability Region; see [125]). On the
+other hand, the distribution of 𝛼of our CDM subhalos does
+overlap with the CDM lensing mocks in [130], suggesting that
+our results should be comparable. Second, there is not much
+mass information for the subhalos in the 13 images in [130]
+available yet, while in our analysis we have to select subhalos
+within a certain infall-mass group for comparison. Thus, the
+comparison shown in Fig. 6 serves as a first demonstration
+that SIDM core-collapse is a promising explanation for the
+observed ultra-steep density profiles in substructure lensing.
+More careful investigations are needed to test this intriguing
+hypothesis.
+C.
+Phenomenological SIDM models
+In previous sections, we found that the interplay of com-
+peting physical processes have complicated effects on subhalo
+evolution. In order to explore and disentangle the effects on
+subhalo evolution, in this section we deploy several toy SIDM
+models with velocity-dependent features selected to highlight
+specific physics. We choose two categories of phenomeno-
+logical models here, as shown in Fig. 7a. We call them the
+‘window-function type’ and ‘z-type’ because of their shapes
+in cross-section–velocity space. Both the window function
+and z-type are variations of the {𝜎0 = 200, 𝜔= 50} model
+(violet).
+The ‘window function’ models (olive, grey and light blue
+colors in Fig. 7a) are meant to mimic resonances. They have
+the same constant 𝜎/𝑚= 200 cm2/g, but for a narrow and
+different range of relative velocities. The cross section drops
+to zero when 𝑣vel is outside the specified velocity window.
+These window functions test the halo-mass filtering of core-
+collapse for resonances.
+Although these window functions
+serve as toy models in this work, they provide insights to more
+realistic velocity-dependent SIDM models with complicated
+resonance peaks, such as the Colquhoun21 model (cyan color
+in Fig. 2b; [55]) or in [76]. We explain the technical choice
+for the shape later in this section.
+The ‘z-type’ models explore evaporation. They follow the
+base model of {𝜎0 = 200, 𝜔= 50} until the cross section
+drops to 8 cm2/g (z8, lime color in Fig. 7a) or 3 cm2/g (z3,
+yellow color), remaining constant at increasing velocities. The
+relevant velocity scale for evaporation is the relative velocity
+between the subhalo and host, O(100) −O(1000) km/s. [11]
+showed that for SIDM with constant cross section, the host-
+subhalo evaporation is almost always strong enough to prevent
+core-collapse in subhalos (see their Fig. 12). Here we test
+evaporation in the context where the cross section relevant for
+heat transfer within the subhalo is much higher than the cross
+section relevant for evaporation.
+As shown in Fig.
+7a, the ‘window2’ model (grey) has
+𝜎/𝑚= 200 cm2/g for 𝑣rel in the range [20, 40] km/s, ‘win-
+dow3’ has the same cross section in [50, 80] km/s, while
+‘window1’ covers a broader range of velocities [25, 60] km/s
+and has a less sharp decay outside of the window. As a ref-
+erence, we mark the typical 1-d velocity dispersion of each
+
+15
+10−1
+100
+101
+102
+103
+vrel[km/s]
+10−1
+100
+101
+102
+σ/m[cm2/g]
+σ0 = 200, ω = 50
+window1
+window2
+window3
+z3
+z8
+(a)
+4
+6
+8
+t [Gyr]
+−1.50
+−1.25
+−1.00
+−0.75
+α [150 pc]
+Minfall = [108.0, 108.2)M⊙
+all
+o.o.
+h.s.o.
+(b)
+4
+6
+8
+t [Gyr]
+−1.4
+−1.2
+−1.0
+−0.8
+α [200 pc]
+Minfall = [108.2, 108.5)M⊙
+(c)
+4
+6
+8
+t [Gyr]
+−1.5
+−1.0
+−0.5
+α [200 pc]
+Minfall = [108.5, 109.0)M⊙
+(d)
+4
+6
+8
+t [Gyr]
+−1.2
+−1.0
+−0.8
+−0.6
+−0.4
+α [300 pc]
+Minfall = [109.0, 1010.0)M⊙
+(e)
+4
+6
+8
+t [Gyr]
+−1.50
+−1.25
+−1.00
+−0.75
+−0.50
+α [150 pc]
+Minfall = [108.0, 108.2)M⊙
+all
+o.o.
+h.s.o.
+(f)
+FIG. 7: The time evolution of subhalos’ average inner slope, as in Fig. 5, but for the phenomenological SIDM models in Sec.
+IV C. Panel a) shows the 𝜎
+𝑚−𝑣rel relation of the phenomenological models, including window functions and z-type ones.
+Panels b) to e) show the evolution of averaged inner slope 𝛼for subhalos in four different infall-mass groups, with the window
+function SIDM models. Panel f) shows the evolution of 𝛼for z-type models for the lowest infall-mass group [108, 108.2)𝑀⊙. In
+panels b) and f) we also show the contribution by different orbits (ordinary or heavily-stripping).
+Mass group [dex 𝑀⊙] typical 1-d 𝜎𝑣[km/s] window1 [25, 60] km/s window2 [20, 40] km/s window3 [50, 80] km/s
+[8.0, 8.2)
+6.4 – 7.1
+✓
+✓
+-
+[8.2, 8.5)
+7.2 – 8.6
+✓
+✓
+-
+[8.5, 9.0)
+9.2 – 11.8
+✓
+yes but not many
+-
+[9.0, 10.0)
+13.2 – 20.8
+✓
+-
+✓
+TABLE III: This table summarizes the typical velocity scales for each infall-mass group of subhalos, and whether the subhalos
+typically core-collapse (with fraction ≳20%) for each window-function SIDM model (marked with a check). Note that the 1-d
+𝜎𝑣of each mass group is shown as a range, because the subhalo mass and concentration in each group span a range. Here we
+show the ±1𝜎range of the max 1-d velocity dispersion for each CDM subhalo at 𝑡= 4 Gyr (see Fig. 19). The results of whether
+subhalos core-collapse in each window-type SIDM model correspond to Fig. 7b to Fig. 7e and Table II.
+infall-mass group of subhalos in Table III, as well as whether
+each mass group sees a large fraction (>10%, see Table II) of
+subhalos core-collapsing. The time evolution of average sub-
+halos’ inner slope 𝛼of each infall-mass simulation and SIDM
+model is shown in Fig. 7b to Fig. 7e, where we can clearly see
+that these window functions work as a filter to pick out only
+a certain mass range of subhalos for core-collapse. Window1
+covers the broadest range of velocities, so a large fraction of
+subhalos core-collapse in all the infall-mass groups.
+Win-
+dow2 favors relatively low velocities, yielding clear signs of
+core-collapse in the [108, 108.2)𝑀⊙and [108.2, 108.5)𝑀⊙mass
+groups. However, the evolution of the inner slope 𝛼diverges
+from window1 (and is more similar to the 𝜎−𝜔model in violet
+color) for the [108.5, 109)𝑀⊙and [109, 1010)𝑀⊙mass range.
+Window3 favors relatively large velocities. While the inner
+slope 𝛼hardly evolves for the smallest mass bins we consider
+(similar to CDM), it evolves rapidly for the massive subhalos
+in the [109, 1010)𝑀⊙infall mass bin.
+A key question for this core-collapse mass filtering is how to
+quantify the relation between a subhalo’s typical velocity (1-d
+velocity dispersion 𝜎𝑣; another alternative is the maximum
+circular velocity with 𝑣max ≈𝜎𝑣/0.64, see [86]) and the char-
+acteristic velocity relevant for scattering calculations, ⟨𝑣rel⟩.
+In other words, how to translate between the velocity scale
+
+16
+of the halo and the velocity-dependent cross section plot, Fig.
+2b? If particle velocities are Maxwell-Boltzmann distributed,
+one can show that ⟨𝑣rel⟩= 2.26𝜎𝑣. However, this is almost
+certainly not the right mapping. As shown in [86] and [87],
+what matters is the heat conductivity of the halo, which is a
+fifth order term of the velocity scale (see Eqn. C2).
+Here we use the window-type models to empirically estimate
+the relation between ⟨𝑣rel⟩and 𝜎𝑣. We choose the maximal
+𝜎𝑣to characterize each subhalo, as shown in Fig. 19a, and
+assign its 1𝜎scatter among CDM subhalos to be the range
+of typical 𝜎𝑣for each infall-mass group, as listed in Table
+III. This is because the self-interaction leads to thermaliza-
+tion in halo center, with a nearly uniform velocity dispersion
+close to the maximal 𝜎𝑣of the CDM initial condition of the
+halo. Assuming a linear relation ⟨𝑣rel⟩= 𝐶𝜎𝑣, we can use
+the simulation results of which infall-mass bins of subhalos
+core-collapse in each window-model to estimate a range of 𝐶.
+For example, in Table III (and also Fig. 7b), we can see that the
+subhalos in the [108, 108.2)𝑀⊙infall mass group, whose CDM
+typical 1-d velocity dispersion ranges in 6.4-7.1 km/s, have a
+high core-collapse fraction for the window2 model that oper-
+ates between 20-40 km/s. Subhalos in this mass group must
+have ⟨𝑣rel⟩overlapping with the velocity window 20-40 km/s
+for core-collapse to happen. This means the highest velocity
+dispersion with a multiplication factor 𝐶must exceed the low-
+end of the velocity window, i.e. 7.1𝐶> 20, and the lowest
+velocity dispersion with 𝐶must be smaller than the high-end
+of the velocity window, i.e. 6.4𝐶< 40, where we find a first
+estimated range 2.8 < 𝐶< 6.3. Similarly, we can estimate
+a range of 𝐶from the combination of each infall-mass bins
+and window-models. Combining all these estimated ranges
+of 𝐶, we estimate 3.0 < 𝐶< 4.2. We show in Appendix C
+that an intermediate value 𝐶≈3.8 is in remarkable agreement
+with analytical results from gravothermal method. We com-
+ment that this estimate is specific for the window-type models
+presented here, and may be different for other models.
+In Fig. 7b, we distinguish the subhalos according to their
+orbits. Surprisingly, we find an overall deceleration of core-
+collapse for subhalos on heavily-stripping orbits even though
+the tidal fields are stronger, in the cases of window1 and win-
+dow2 (statistics can also be found in Table II). Since these
+window functions have only narrow ranges and operate only
+for 𝑣rel < 100 km/s, the host-subhalo evaporation is negligible
+([11]; see also Fig. 5f). Therefore, this overall deceleration
+of subhalo core-collapse with stronger tidal fields is counter-
+intuitive.
+To understand why this happens, we must explore tidal ef-
+fects in tandem with heat transfer in the subhalo. [11] separates
+the tidal effect into tidal heating and tidal stripping. The for-
+mer injects heat globally into the subhalo with the work done
+by tidal forces [131, 132], while the latter strips away dark
+matter mostly from the outer part of the subhalo when the
+work done by tidal forces exceeds the binding energy. Tidal
+heating may heat up the center of the subhalo and delay core-
+collapse, but only near the pericenter (see Fig. 9 of [11] for an
+example). However, tidal stripping indirectly accelerates the
+core-collapse process by steepening the negative temperature
+gradient in the subhalo. For the window function cross sec-
+tions, the delay in subhalo core-collapse due to tidal heating
+remains since it is purely a gravitational effect. However, the
+acceleration from tidal stripping depends on both the tempera-
+ture gradient and on the cross section relevant for conduction.
+Because the particle velocities in the halo outskirts are low
+relative to the halo centers, the scattering cross section may be
+effectively zero if the velocity falls out of the operating range
+of the window-model, even if it is high in the halo center where
+the typical particle relative speeds are higher. This can quench
+the core-collapse process since the outward heat transfer is not
+efficient. This scenario is to some extent similar to another
+example shown in [133] (see their Sec. 4.3 and Fig. 8), where
+they find the core-collapse of an isolated halo is delayed by
+turning off the self-interaction outside the center of the halo.
+We comment that simulating the window function models is
+currently very time consuming, which is a key driver for why
+we show only one realization per model in this section. The
+high computational cost is because we have to enforce small
+timesteps to avoid underestimation of scattering probability
+caused by the non-smooth nature of the window function mod-
+els. The SIDM-based timestep of each simulation particle in
+Arepo is determined by 1/[𝜌𝜎𝑣𝜎
+𝑚(𝜎𝑣)], where 𝜌is the local
+density (‘local’ defined by the 32 nearest neighbors, as men-
+tioned before), 𝜎𝑣is the locally averaged velocity dispersion,
+and the velocity-dependent cross section 𝜎
+𝑚(𝑣rel) is calculated
+using 𝜎𝑣. Here the velocity dispersion instead of the actual
+mean pairwise velocity is used because the latter is a O(𝑁2)
+calculation while the former is O(𝑁), and they are of the same
+order of magnitude. Thus, using 𝜎𝑣to determine the timestep
+is usually a fair estimate. This scheme generally works well,
+but for the window function type of SIDM models, feeding
+the averaged 𝜎𝑣into 𝜎
+𝑚(𝑣rel) sometimes leads to zero when
+𝜎𝑣is outside of the window, even if the actual probability of
+scattering is not zero. As a result, sometimes the timestep for
+a particle can be too big and lead to an unphysical probability
+(> 1) for pairwise scattering. We apply a temporary patch by
+enforcing a large enough, constant 𝜎
+𝑚when determining the
+timestep, at the cost of much longer simulation time. Identify-
+ing methods to efficiently handle resonances in cross sections
+will be important for future work.
+Finally, to highlight the effect of evaporation, we inves-
+tigate the ‘z-type’ cross sections.
+The evolution of these
+subhalos’ inner slope is shown in Fig.
+7f, for the mass
+group of [108, 108.2)𝑀⊙.
+Only one mass group is shown
+here because all the mass bins show the same behavior. The
+strength of the host-subhalo evaporation increases in the order
+of {𝜎0 = 200, 𝜔= 50} (violet), z3 (yellow) and z8 (lime). The
+violet model has a small cross section (≲1 cm2/g, sharply
+dropping) in the velocity range of O(100)–O(1000) km/s,
+while z3 and z8 have 3 cm2/g and 8 cm2/g respectively. As
+a result, we can see that the rate and fraction of subhalo core-
+collapse is delayed by the extra evaporation in the z3 and z8
+cases. Moreover, the averaged 𝛼of the h.s.o. subhalos of z3
+and z8 indicate that they remain in the maximally cored stage.
+Thus, with even a constant cross section as small as 3 cm2/g,
+evaporation causes core-collapse to be substantially delayed.
+The destruction of core-collapse is slightly weaker for more
+massive subhalos, because their fractional inner mass loss is
+
+17
+less than low-mass subhalos for the same evaporation strength,
+as can be seen in Table II. For h.s.o. subhalos with infall-mass
+bins from [8.0, 8.2) to [8.5, 9.0), the core-collapse fraction of
+the {𝜎0 = 200, 𝜔= 50} model stays constant at ∼25%, but
+for the z3 model it increases from 1.4% to 10.4%. This set
+of z-type toy models sheds light on velocity-dependent SIDM
+models that have a mild/slow drop in cross section as 𝑣rel in-
+creases, showing that it may greatly decrease the likelihood
+and rate of core-collapse in low-mass subhalos.
+In this section we test a few phenomenological SIDM cross
+sections, namely the window functions and z-types, and show
+their implications for subhalo core-collapse.
+The window
+models are proxies for resonances. They serve as mass fil-
+ters where core-collapse only happen in subhalos in a certain
+range of (infall-)mass. The z-type models highlight the effects
+of evaporation on delaying or preventing core-collapse. Even
+cross sections of O(1) cm2/g on the orbital-velocity scale can
+lead to significant evaporation effects. Simplified as they are,
+these phenomenological models provide insights to more re-
+alistic, physically motivated, and complicated SIDM models.
+D.
+Lensing predictions
+In this section, we present subhalo statistics that are relevant
+for substructure lensing, including the projected mass density
+one-point function and the lensing power spectrum.
+For our calculations, we use the lensing tool Glamer
+[122, 123] to smooth the masses of simulation particles into
+a pixelized map and calculate the lensing convergence 𝜅.
+Here, 𝜅is the 2-d projected mass density Σ normalized by
+Σcrit ≡𝑐2𝐷𝑠/4𝜋𝐺𝐷𝑑𝑠𝐷𝑑, with 𝐷𝑠, 𝐷𝑑and 𝐷𝑑𝑠being the
+(angular) distance of the source to observer, lens to observer,
+and lens to source respectively.
+The smoothing length in
+Glamer is chosen to enclose 32 of a particle’s nearest neigh-
+bors, the same as for the SIDM smoothing procedure in Arepo.
+Without loss of generality, we choose the redshift of the main
+lens to be 𝑧= 0.5, which corresponds to the 𝑡= 9 Gyr ending
+time of our simulation, and the redshift of the source to be
+𝑧= 4. We use the resolution of 2048×2048 pixels in the map
+for calculation of the projected mass density, which is well-
+resolved. We generate 64 projections for each simulation to
+reduce noise (see [134] and [135] for discussion on projection
+variance). For each projection, we only consider the simula-
+tion particles that lie within a cylindrical aperture of 25 arcsec
+(∼150 kpc) from the center of the host (main lens), since the
+substructure lensing is most sensitive to subhalos located near
+the host center. A typical Einstein radius 𝜃𝐸of a group-sized
+system has the range 1 ∼8 arcsec when a central galaxy is
+included [134, 136], and for cluster-sized systems it increases
+to 10 ∼30 arcsec [137, 138]. We use a relatively big aper-
+ture for lensing analysis in this section mainly for more robust
+statistics, since a smaller aperture yields to larger noise. We
+have also tested two smaller apertures of 6.25 arcsec and 2.5
+arcsec, shown in Sec. IV F. We only include particles that are
+bound to subhalos at the end of the simulation (including the
+most massive subhalos with 𝑀infall > 1010𝑀⊙that are simu-
+lated with a live host), as determined by the halo finder AHF.
+This is in correspondence with typical observation pipelines of
+substructure lensing [64, 68], of which one of the key steps is
+to reconstruct and remove a smooth mass distribution that rep-
+resents the main lens. Because our simulations do not contain
+line-of-sight structures, we cannot include any in our conver-
+gence maps, even though they are expected to contribute to the
+lensing signal [77, 139–143].
+An example of the convergence (normalized projected den-
+sity) map of several DM models is shown in Fig. 8. Com-
+pared to the CDM case, both the 6 cm2/g model and the
+{𝜎0 = 200, 𝜔= 200} model have subhalos experiencing
+strong evaporation effects, hence their subhalos appear to be
+smaller (less massive). The {𝜎0 = 200, 𝜔= 200} model also
+has denser centers in some subhalos because of core-collapse.
+In contrast, the {𝜎0 = 200, 𝜔= 50} model that also has a sig-
+nificant fraction of core-collapsed subhalos does not appear to
+have the same feature of denser centers in this 2D map, because
+core-collapse only happens in relatively low-mass subhalos for
+this model (see more discussion later in this section).
+We show the probability distribution function (PDF) of
+the substructure lensing convergence 𝜅sub (the 𝜅evaluated
+with dark matter particles that are bound to any subhalos)
+in the top row of Fig.
+9.
+The PDFs of 𝜅sub of all SIDM
+models (also known as the 1-point function), calculated with
+scipy.stats.gaussian_kde, are shown in Fig. 9a. We
+plot the ratio of these PDFs for {𝜎, 𝜔} and Colquhoun21
+models relative to CDM in Fig.
+9b, and the ratio of the
+phenomenological models from Sec. IV C relative to CDM
+in Fig. 9c. For SIDM models with significant host-subhalo
+evaporation, such as the constant cross section of 6 cm2/g, and
+the {𝜎0 = 200, 𝜔= 200}, z3 and z8 models, the abundance of
+low-𝜅sub pixels is boosted and the abundance of high-𝜅sub pix-
+els is decreased (except when core-collapse comes into play,
+e.g. the {𝜎0 = 200, 𝜔= 200} in purple color). This is because
+the strong evaporation removes DM from subhalos globally,
+shifting the distribution toward low column-density.
+On the other hand, evidence for core-collapse is difficult to
+discern from the 𝜅sub 1-point function. We find that for the
+models {𝜎0 = 200, 𝜔= 50} (violet) and window2 (grey) that
+have a significant fraction (> 10% of total) of core-collapsed
+subhalos (see Table II), there is no visible sign of core-collapse
+at the high-𝜅sub end. Their 𝜅sub PDFs are overall similar to
+the CDM case, except for a sharp drop at the highest 𝜅sub
+bins (see Fig. 9b and Fig. 9c). By contrast, for the other
+three models that also have a large number of core-collapsed
+subhalos, {𝜎0 = 200, 𝜔= 200} (purple), window1 (olive)
+and window3 (light blue), we find a sharp increase in the
+PDF at high 𝜅sub. The difference between the former models
+and the latter is that the former only have core-collapse in
+relatively low-mass subhalos (≤109𝑀⊙), while the latter see
+core-collapse in massive ones. Since 𝜅is a projected density,
+in evaluating the line-of-sight integral, not only the 3D density
+of a subhalo’s matters, but also its size (i.e. the length that the
+column density is integrated along). Thus the highest 𝜅sub bins
+are dominated by the most massive subhalos. Therefore, we
+can conclude that the 𝜅distribution is sensitive to core-collapse
+in massive subhalos, but not in low-mass ones.
+The bottom panels of Fig. 9 show the substructure lensing
+
+18
+-6.2
+0.0
+6.2
+X[arcsec]
+-6.2
+0.0
+6.2
+Y[arcsec]
+CDM
+10
+3
+10
+2
+10
+1
+100
+sub
+(a)
+-6.2
+0.0
+6.2
+X[arcsec]
+-6.2
+0.0
+6.2
+Y[arcsec]
+6 cm2/g
+10
+3
+10
+2
+10
+1
+100
+sub
+(b)
+-6.2
+0.0
+6.2
+X[arcsec]
+-6.2
+0.0
+6.2
+Y[arcsec]
+0 = 200,
+= 200
+10
+3
+10
+2
+10
+1
+100
+sub
+(c)
+-6.2
+0.0
+6.2
+X[arcsec]
+-6.2
+0.0
+6.2
+Y[arcsec]
+0 = 200,
+= 50
+10
+3
+10
+2
+10
+1
+100
+sub
+(d)
+FIG. 8: Lensing convergence maps within an aperture of 6.25 arcsec from the host center. Subhalos for both the 6 cm2/g and
+{𝜎0 = 200, 𝜔= 200} models (red and purple in Fig. 2b) experience evaporation from the host halo, thus many of the subhalos
+are less massive than CDM, having lower 𝜅sub (in fact, these two models are the only ones that have visible difference in subhalo
+mass function than CDM, see the upper shoulder subplot in Fig. 3). On the other hand, the {𝜎0 = 200, 𝜔= 200} model has a
+significant fraction of core-collapsed subhalos, leading to higher convergence in some subhalos’ center than CDM. The
+{𝜎0 = 200, 𝜔= 50} model (violet) also has significant core-collapse, but only in relatively low-mass subhalos, hence its
+convergence map is similar to that of CDM.
+power spectrum, which is the 2-point correlation function of
+𝜅sub in 𝑘-space. Here we find that the signature of subhalo
+core-collapse is more visible than in the 1-point function of
+𝜅sub, and even better, has a dependence on the wave number
+𝑘.
+In principle, this may allow us to infer at what size or
+mass scale the subhalos core-collapse. For example, the three
+models that lead to core-collapse in low-mass subhalos (see
+Table II), {𝜎0 = 200, 𝜔= 50} (violet), {𝜎0 = 100, 𝜔= 50}
+(orange) and window2 (grey), show 𝑃sub(𝑘) beginning to ex-
+ceed CDM at 𝑘∼2 −3 kpc−1, increasing until 𝑘∼10 kpc−1.
+The window3 model (light blue), which only produces core-
+collapse in massive subhalos with 𝑀infall ≥109𝑀⊙, starts to
+have stronger clustering than CDM at 𝑘∼1 kpc−1, reaching
+a turning point at 𝑘∼7 kpc−1, before decreasing at smaller
+scales. The window1 (olive) and {𝜎0 = 200, 𝜔= 200} (pur-
+ple) models that have core-collapse in both low-mass and mas-
+sive subhalos show 𝑃sub(𝑘) exceeding CDM monotonically
+from relatively large scales 𝑘≲1 kpc−1 to smaller scales
+𝑘∼10 kpc−1. The other SIDM models with subhalos mostly
+still in the core-formation stage, such as {𝜎0 = 50, 𝜔= 50}
+(blue) and Colquhoun21 (cyan), correspondingly have lower
+𝑃sub(𝑘) at small scales of 𝑘≳1 kpc−1. If evaporation is sig-
+
+19
+10−7
+10−5
+10−3
+10−1
+κsub
+0.0
+0.2
+0.4
+0.6
+Probability Distribution
+CDM
+6 cm2/g
+(a)
+10−7
+10−5
+10−3
+10−1
+κsub
+10−1
+100
+101
+PDF normalized by CDM
+σ0 = 50, ω = 50
+σ0 = 50, ω = 100
+σ0 = 100, ω = 50
+σ0 = 200, ω = 50
+σ0 = 200, ω = 200
+Colquhoun21
+(b)
+10−7
+10−5
+10−3
+10−1
+κsub
+10−1
+100
+101
+PDF normalized by CDM
+window1
+window2
+window3
+z3
+z8
+(c)
+10−1
+100
+101
+k[kpc−1]
+10−4
+10−6
+10−8
+k2 × Psub(k)
+(d)
+10−1
+100
+101
+k[kpc−1]
+0.3
+1.0
+3.0
+10.0
+Psub(k) normalized by CDM
+(e)
+10−1
+100
+101
+k[kpc−1]
+0.3
+1.0
+3.0
+10.0
+Psub(k) normalized by CDM
+(f)
+FIG. 9: Convergence probability distribution (top row) and the lensing power spectrum (bottom row) of subhalos. Panel a)
+shows the probability distribution function (PDF) of subhalo convergence 𝜅sub (an alternate version showing 𝜅2
+sub×PDF is shown
+in Fig. 17, which highlights the high 𝜅sub bins that are most relevant for substructure lensing). Panels b) and c) show the PDF of
+𝜅sub of different SIDM models normalized by the CDM results. Panel d) shows the (unitless) subhalo lensing spectrum
+𝑘2𝑃sub(𝑘). Panels e) and f) show 𝑃sub(𝑘) for the SIDM models normalized by CDM results, and grouped in the same way as in
+panels b) and c). Note that since we run four realizations of simulations for the {𝜎0, 𝜔}, constant SIDM and Colquhoun21
+models, and only one realization for the window- and z-type models, b) and c) include the averaged results of four realizations,
+while the rest are from one realization.
+nificant, there is suppression of 𝑃sub(𝑘) at large scales, which
+we find in the constant cross section case of 6 cm2/g (red) and
+the z8 model (lime). The z3 model (yellow), although suf-
+fering from host-subhalo evaporation, manages to produce a
+few core-collapsing subhalos (see Table II). Thus, its 𝑃sub(𝑘)
+is lower than CDM at large scales but grows higher at the
+smallest scales, corresponding to the centers of the low-mass
+subhalos.
+Our results suggest that the 2-point correlation of 𝜅sub is
+a more sensitive probe of core-collapse in subhalos than the
+1-point function, especially for low-mass ones. As shown in
+[144], this 2-point function directly probes the average density
+profile of subhalos at different scales, allowing it to directly
+capture core formation and core-collapse within the ensem-
+ble of subhalos populating a lens galaxy. Once line-of-sight
+halos between the lens source and the observer are included, 2-
+point function anisotropies may provide additional information
+on the velocity dependence of the SIDM cross section [142].
+Although more advanced techniques are needed for constrain-
+ing SIDM models using substructure lensing, such as forward
+modelling [63, 64] or perturbative analyses [145, 146], the re-
+sults presented here shed some insight on how strong lensing
+data analysis could be carried out measure the SIDM cross
+section.
+E.
+Core-collapse fraction of subhalos vs in isolation
+Past work has argued that core-collapse in subhalos can
+be accelerated by tidal stripping [8, 10, 124] or decelerated
+[11] by evaporation. In this section, we assess these effects
+quantitatively by comparing subhalos in simulation to halos
+with identical initial conditions but in isolation. The evolu-
+tion of these isolated halos is analytically calculated by the
+mapping method of the gravothermal model, which utilises
+the self-similarity of SIDM halos to map between different
+
+20
+0
+10
+20
+∆tcore−collapse(isolated −subhalo) [Gyr]
+100
+101
+102
+No. of subhalos
+σ0 = 50, ω = 100
+σ0 = 100, ω = 50
+σ0 = 200, ω = 50
+σ0 = 200, ω = 200
+(a)
+8.0 8.2
+8.5
+9.0
+10.0
+Mvir/M⊙[dex]
+0.03
+0.1
+0.3
+core-collapse fraction
+o.o. subhalos
+isolated counterparts
+of o.o. subhalos
+h.s.o. subhalos
+isolated counterparts
+of h.s.o. subhalos
+(b)
+FIG. 10: Panel a): The distribution of the core-collapse time
+of subhalos and their counterparts in isolation
+Δ𝑡core−collapse(isolated-subhalo), for SIDM models that have
+core-collapsed subhalos by the end of the simulation 𝑡= 9
+Gyr. Positive values indicate that subhalo core-collapse is
+accelerated by the host. An alternate version of this plot, with
+Δ𝑡rescaled as an acceleration or deceleration factor by the
+host field, is attached in Appendix E. Panel b) shows the
+core-collapse fraction (at 𝑡= 9 Gyr) of subhalos for the
+{𝜎0 = 200, 𝜔= 200} model, as a function of subhalos’
+infall-mass and orbits. ‘o.o.’ and ‘h.s.o.’ are abbreviations
+for ordinary orbits and heavily-stripping orbits.
+halos without solving the gravothermal PDEs every time [87,
+see also Sec. III]. The different behavior of field halos and
+subhalos may be used to distinguish between SIDM models.
+We show the distribution of the time difference in core-
+collapse between isolated halos and subhalos Δ𝑡core−collapse in
+Fig. 10a. Note that we only include the subhalos that core-
+collapse before the end of simulation 𝑡= 9 Gyr, because we do
+not run the simulation beyond that time. Thus, Fig. 10a only
+displays the SIDM models where many subhalos core-collapse
+in our simulations. We find that the velocity-dependent models
+that have low evaporation (𝜎/𝑚≲O(1)cm2/g for relative
+velocity 100 −1000 km/s), {𝜎0 = 50, 𝜔= 100} (brown),
+{𝜎0 = 100, 𝜔= 50} (orange), and {𝜎0 = 200, 𝜔= 50}
+(violet), show core collapse accelerated in subhalos relative to
+the field halos.
+However, for the {𝜎0 = 200, 𝜔= 200} model (purple)
+that has large cross sections for both the internal relative ve-
+locities of subhalos (𝜎/𝑚= 200 cm2/g for < 100 km/s)
+and the subhalo orbital velocities (𝜎/𝑚∼O(10) cm2/g for
+100 −1000 km/s), about half the subhalos experience decel-
+erated core collapse. Moreover, the relative core collapse time
+Δ𝑡core−collapse in the range of -5 to 5 Gyr. The magnitude of
+Δ𝑡core−collapse is small compared to other SIDM models, be-
+cause this purple model has the largest effective cross section
+for scatterings inside all subhalos. Of all the SIDM models
+we explore, it yields the shortest overall core-collapse times
+(10-20 Gyr for all field halos).
+To further understand the role of subhalo mass and orbit
+in determining the subhalo core-collapse timescale, in Fig.
+10b we break down the infall-mass and orbit dependence
+of the subhalo core-collapse fraction of the purple model
+{𝜎0 = 200, 𝜔= 200}, at the end of the simulations (𝑡= 9
+Gyr). Other models are not shown in this figure because their
+core-collapse fraction for field halos is small. We find that
+field halos (thin dashed and thin dotted) generally have an
+increasing core-collapse fraction with increasing infall mass.
+The isolated counterparts of h.s.o. subhalos (thin dotted) have
+a slightly higher collapse fraction than the o.o. counterparts
+(thin dashed) because the h.s.o. subhalos tend to have earlier
+formation times. By contrast, o.o subhalos (thick dashed) have
+a higher collapse fraction than h.s.o. subhalos (thick dotted).
+Despite the overall earlier formation time and stronger tidal
+stripping experienced by the h.s.o. subhalos relative to the
+o.o. ones, the h.s.o. subhalos have a noticeably lower core-
+collapse fraction because of the strong evaporation and tidal
+heating near the orbital pericenter.
+When compared to their field counterparts, we find a com-
+plicated dependence of the core-collapse time on both subhalo
+(infall) mass and orbits. For the least massive subhalos with
+infall-mass in range [108, 108.2)𝑀⊙, o.o. and h.s.o. subha-
+los experience accelerated core-collapse.
+For the 𝑀infall =
+[108.2, 108.5)𝑀⊙subhalos, o.o.
+subhalos experience only
+mildly accelerated core-collapse times, and h.s.o. subhalos ex-
+perience delayed core-collapse. For 𝑀infall = [108.5, 109)𝑀⊙
+subhalos, o.o. core-collapse fractions are similar to those in
+the field, but the h.s.o. collapse fraction is lower than in the
+field. For the most massive group 𝑀infall = [109, 1010)𝑀⊙,
+both o.o. and h.s.o. subhalos have lower collapse fractions
+than their isolated counterparts.
+Fig.
+10b shows that the
+subhalo core-collapse fraction does not scale monotonically
+with the strength of the host effects (e.g., the strength of the
+tidal field or evaporation). This complicated interaction comes
+from the competition of at least four physical processes: the
+heat transfer within the subhalo, tidal stripping, tidal heating,
+
+21
+and evaporation [11], each reacting differently to the change
+in subhalo mass or orbits.
+In summary, we show that for SIDM models with no or low
+evaporation (low effective cross section for subhalo orbiting
+velocities), the presence of a host results in a net acceleration
+of core-collapse. However, for SIDM models where evapo-
+ration becomes non-negligible, the evolution of subhalos is
+complicated, and the ensemble properties of the subhalos can
+change dramatically. Intriguingly, this complexity implies a
+high level of diversity in subhalo density profiles and evolu-
+tion. In the future, it will be important to determine whether or
+with what SIDM models the diversity of subhalo density pro-
+files we find in simulations can match the observed diversity
+of galaxy rotation curves.
+F.
+Realization variance
+When connecting simulations to observations, a key ingre-
+dient is to estimate the realization variance from theoretical
+model predictions. Previous work such as [135] find that in
+the specific case of the substructure lensing power spectrum,
+simply using multiple projections of a single population of
+subhalos leads to an underestimate of the variance. In this sec-
+tion, we present the variance among our different realizations
+of simulated subhalo systems, to shed light on the amount of
+data/systems we may need in simulations and observations in
+the future for robust constraints on SIDM.
+We show the averaged inner slope 𝛼of the infall-mass group
+[108.2, 108.5)𝑀⊙for each realization and SIDM model in Fig.
+11a. We find the overall variation of 𝛼between realizations
+is minimal. However, the variance among realizations in the
+substructure lensing power spectrum 𝑃sub(𝑘), as shown in Fig.
+11b, is more significant, even if we have averaged the power
+spectrum over 64 projections to reduce noise. This contrast
+is because the projection aperture within which we measure
+the 𝜅sub map is only 25 arcsec (∼150 kpc), which is about
+1/6 of the host virial radius, while the slope 𝛼is averaged
+over all subhalos (of a certain infall mass group) within the
+host. When we use an even smaller projection aperture of
+6.25 arcsec (∼37.5 kpc) in Fig. 11c or 2.5 arcsec (∼15 kpc)
+in Fig. 11d, the enclosed subhalos become fewer in number,
+and we find a greater variance among realizations, as expected
+(see also Despali et al. 134).
+The power spectrum for the
+smaller aperture also yields to more random noise, making it
+more challenging to estimate a smooth power spectrum at large
+and intermediate scales. However, the signature of frequent
+subhalo core-collapse, as indicated by a boost in the power
+spectrum at smallest scales, is robust.
+V.
+SUMMARY AND DISCUSSION
+In this work, we presented a new hierarchical simulation
+framework for the efficient study of low-mass subhalos in
+SIDM cosmologies. Building on the hybrid method described
+in [11] that tracks a single subhalo with N-body particles and
+semi-analytically calculates interactions with the host, we sim-
+ulate realistic populations of subhalos. To speed up simula-
+tions while achieving high resolution, we divide subhalos into
+different infall-mass groups/bins of simulations with different
+mass-resolution (hence, the ‘hierarchical’ designation). With
+this new framework, we are able to scan through multiple
+SIDM models and realizations, and conduct post-simulation
+analysis in the space of observables, in a reasonable amount
+of computational time.
+Compared to full cosmological simulations, the major ad-
+vantage of this hierarchical simulation framework is that its
+computational time grows only linearly with the subhalo mass
+function. This allows us to study the evolution of even very
+low-mass SIDM subhalos in large hosts with the high resolu-
+tion that is prohibitively costly for cosmological simulations.
+The lowest simulation particle mass (thus highest mass reso-
+lution) in our hierarchical simulation is about 103𝑀⊙in the
+work we presented here (although this can go to much smaller
+masses if tracing much smaller subhalos is desired). However,
+the total number of particles in our simulations is two orders
+of magnitude smaller than it would be for a cosmological sim-
+ulation for the same system, corresponding to a computational
+speed boost of three to four orders of magnitude.
+We use this framework to explore subhalo evolution for
+several phenomenological SIDM models, chosen to span a
+range of cosmologically interesting scenarios. First, we sam-
+ple points from the parameter space of a phenomenological
+𝜎0 −𝜔SIDM model, near the predicted boundary within
+which core-collapse happens in isolated halos of the same
+range of masses and evolution time (Fig. 2a). This class of
+model, featuring a 𝜎∝𝑣−4 scaling at large relative parti-
+cle velocities, is the analytical solution to particle interactions
+in Yukawa-type potential in the Born approximation regime
+[82, 87, 119, 147, 148]. For each of these 𝜎0 −𝜔model and
+another SIDM model with resonant features (Colquhoun21,
+which explores beyond the Born regime of Yukawa-type inter-
+actions; [55]), we generate simulations for four realizations of
+host-subhalo merger trees that are typical for substructure lens
+systems, with a host of 1013𝑀⊙and subhalos down to 108𝑀⊙
+at infall. We run until 𝑡= 9 Gyr (𝑧∼0.5), a typical lens red-
+shift. We summarize the evolution of subhalos in these SIDM
+simulations in the form of core-collapsed fraction in Table II,
+and analyze the evolution of observables: the averaged subha-
+los’ inner mass (Sec. IV A and Fig. 4) and inner slope (Sec.
+IV B and Fig. 5). We find that when a significant fraction of
+subhalos are core-collapsed in an SIDM model, the averaged
+inner mass 𝑀inner grows higher than the CDM counterpart,
+while the averaged inner slope 𝛼becomes more negative. For
+the velocity-dependent SIDM models we select, the subhalo
+mass functions hardly show any visible difference from CDM,
+but the probability distribution of subhalos’ inner mass 𝑀inner
+depends strongly on the DM model (Fig. 3).
+Excitingly, we find a significantly growing diversity of sub-
+halos’ inner mass distribution as core-collapse starts to trigger
+in subhalos, potentially providing solutions to the observed
+diversity in dwarf galaxy internal velocity profiles [17, 18, 20–
+24]. This diversity is linked to subhalos’ orbital histories and
+the strength of SIDM-driven evaporation by the host. By cate-
+
+22
+4
+6
+8
+t [Gyr]
+−1.4
+−1.2
+−1.0
+−0.8
+α [200 pc]
+Minfall = [108.2, 108.5)M⊙
+(a)
+10−1
+100
+101
+k[kpc−1]
+0.1
+0.3
+1.0
+3.0
+9.0
+Psub(k) normalized by CDM
+25 arcsec
+CDM
+6 cm2/g
+σ0 = 50, ω = 50
+σ0 = 50, ω = 100
+(b)
+10−1
+100
+101
+k[kpc−1]
+0.1
+0.3
+1.0
+3.0
+9.0
+Psub(k) normalized by CDM
+6.25 arcsec
+σ0 = 100, ω = 50
+σ0 = 200, ω = 50
+σ0 = 200, ω = 200
+Colquhoun21
+(c)
+10−1
+100
+101
+k[kpc−1]
+0.1
+0.3
+1.0
+3.0
+9.0
+Psub(k) normalized by CDM
+2.5 arcsec
+(d)
+FIG. 11: Realization variance. Panel a) shows the time evolution of subhalos’ inner slope 𝛼, with different realizations of
+merger trees distinguished. Panel b) shows the substructure lensing power spectrum 𝑃sub(𝑘) (normalized by CDM) with a
+projection aperture of 25 arcsec (∼150 kpc) at the end of the simulation. Panel c) and d) are similar to panel b), but with a
+smaller projection aperture of 6.25 arcsec (∼37.5 kpc) and 2.5 arcsec (∼15 kpc) respectively.
+gorizing subhalos by orbits and simulating separately, we find
+that subhalos that are heavily stripped overall have a higher
+core-collapse fraction than subhalos with more typical mass-
+loss histories (and less plunging orbits), when the velocity-
+dependent SIDM model has negligible cross section at veloc-
+ity scales O(100 −1000) km/s relevant for evaporation. This
+result is consistent with the tidal-field acceleration of subhalo
+core-collapse times found by previous works [8, 10, 11, 124].
+However, when the evaporation is non-negligible, such as with
+the {𝜎0 = 200, 𝜔= 200} (purple) model (Fig. 2b), we find that
+core-collapse can be delayed. Qualitatively, our work implies
+that the region corresponding to core-collapse in subhalos in
+the 𝜎0 −𝜔parameter space of Fig. 2a shifts to smaller 𝜎0
+for 𝜔≲O(100) km/s but bigger 𝜎0 for 𝜔≳O(100) km/s
+relative to isolated halos ( so that halos core collapse before
+being accreted).
+Intriguingly, for the two SIDM models with significant core-
+collapse in subhalos, {𝜎0 = 200, 𝜔= 200} (purple) and
+{𝜎0 = 200, 𝜔= 50} (violet), we find that the distribution in
+subhalos’ inner slopes can explain the recently reported ultra-
+
+23
+steep density profiles of subhalos found in substructure lensing
+with 13 Hubble Space Telescope images [130], as shown in
+Fig. 6.
+In addition to these well-motivated velocity-dependent
+SIDM models, we also investigate toy models that are mo-
+tivated by specific velocity-dependent features (see Fig. 7a),
+to explore and highlight the interplay of physical processes in
+driving subhalo evolution. The window-function type of mod-
+els, a simplified version of velocity-dependent SIDM models
+with resonant peaks, work as mass filters that only allow subha-
+los within a specific mass range to core-collapse. If observed,
+this filtering effect can greatly help us constrain physical mod-
+els for SIDM. Interestingly, even though evaporation is neg-
+ligible in these models, we find an exception to the rule that
+tidal fields accelerate subhalo core-collapse in these window-
+function models (see Table II and Fig. 7b). This is because
+tides cause mass loss on the outskirts of subhalos, lowering the
+relative velocities between particles below the velocity range
+relevant for resonant interactions. It effectively shuts down (or
+impedes) heat outflow within the subhalo, without which core-
+collapse cannot proceed. Additionally, tidal heating injects
+energy to the subhalo center, further delaying its core-collapse
+process. These two effects together lead to the reverse of the
+expected tidal-field acceleration on core-collapse process, and
+may have a similar but less extreme outcome when SIDM
+models have resonant peaks in velocity-dependence function.
+To explore the effects of evaporation on core-collapse, we
+design “z-type” models that follow the 𝜎0 −𝜔models below
+a characteristic velocity, and are constant at 𝜎/𝑚∼O(1)
+cm2/g at higher velocities (much higher than the ≲O(0.1)
+cm2/g of the 𝜎0 −𝜔models for characteristic subhalo orbital
+velocities), as shown in Fig. 7a. These models are designed
+to test the destructive effect of evaporation on subhalos core-
+collapse, which has been demonstrated using SIDM with con-
+stant cross sections in [11]. We find that even a relatively weak
+(O(1) cm2/g) cross section at orbital velocity scales is enough
+to significantly reduce the subhalo core collapse fraction.
+In addition to the subhalo slopes relevant for the lensing
+observations of Zhang et al. [130], we explore other model-
+dependent signatures of subhalo core-collapse in substructure
+lensing statistics. We find that the PDF of the lensing conver-
+gence 𝜅sub (the 1-point function) is only sensitive to evapora-
+tion or core-collapse in massive subhalos (≳109𝑀⊙at infall;
+Fig. 9b and 9c). By contrast, the 2-point correlation function
+of the convergence map conveys more information about core-
+collapse. The substructure lensing power spectrum 𝑃sub(𝑘)
+increases when core-collapse kicks off at a scale 𝑘corre-
+sponding to a specific subhalo mass, and grows higher than
+the CDM case when the core-collapse fraction is significant
+(Fig. 9e and 9f). Importantly, evaporation leads to an all-scale
+suppression in the 2-point function. While our preliminary
+analysis of substructure lensing statistics here hints that the
+2-point correlation of the subhalo convergence map maybe a
+sensitive probe of the physics of subhalo core-collapse, more
+advanced techniques, such as forward-modelling [63], will be
+needed for a more quantitative constraint on SIDM parameter
+space with upcoming lensing surveys.
+SIDM models may further be distinguished by their relative
+effects on isolated halos vs. subhalos. For most of the velocity-
+dependent SIDM models we test, subhalos have faster core-
+collapse than isolated halos, consistent with previous work
+[8, 10, 124]. However, when evaporation becomes significant,
+such as in the {𝜎0 = 200, 𝜔= 200} model, we find that
+subhalo core-collapse can either be accelerated or decelerated
+relative to the field (Fig. 10a). The evolution of (sub)halos
+in different environments does not scale monotonically, but
+shows a complicated dependence on subhalo mass and orbits.
+This highlights that the evolution and properties of subhalos
+involves a complicated coupling of heat transfer within the
+subhalo, tidal effects, and host-subhalo evaporation.
+It is important to explore the current limitations of our hier-
+archical scheme, and a path toward improvement. Here we list
+the known components that are missing in our method, which
+do not affect our key results, but which should be addressed in
+future work.
+• Quiescent merger history In this work, we deliberately
+select merger trees with a quiescent accretion history,
+with no major mergers after 𝑡= 4 Gyr. This is for two
+reasons: first, although we have validated our hierar-
+chical framework (see Appendix B), this could change
+when a massive major merger is present (e.g. like the
+LMC in the Milky Way; see [149]). Second, to construct
+an analytic host at any time, we interpolate among the
+measured density and velocity profiles of a simulated
+host halo at a finite number of time steps. An underly-
+ing assumption in this process is that accreted subhalos
+contribute to the mass growth of the host in a smooth,
+spherically symmetric way. This is no longer a valid
+assumption when a major merger happens. Although it
+is beyond the scope of this work to explore in more de-
+tail, a possible extension to include major mergers in our
+framework is to model the massive LMC-like subhalo
+in a similar way as our treatment of the host halo — a
+time-varying analytic density distribution, but also with
+a time-varying center of the potential (see also [150] for
+another possible approach of representing LMC with ba-
+sis function expansions). Since lens galaxies are mostly
+elliptical which likely have major mergers in their past,
+this should be an important next-step.
+• Pre-infall mass loss of subhalos As has been described
+in Sec. II, we rewind the position, velocity and virial
+mass of a subhalo at its infall time back to its formation
+time, to start the ensemble simulations at a single time.
+The rewinding is done analytically, typically guarantee-
+ing that the forward-simulated velocity and position at
+infall time agree with the input ones — but not neces-
+sarily the infall mass. This is because the mass loss of
+subhalos prior to infall is not taken into account during
+the rewinding process. For most subhalos, such pre-
+infall mass loss is not significant [151] because the tidal
+force from the host is still very weak before subhalos en-
+ter the host’s virial radius. Furthermore, tidal stripping
+proceeds outside-in.
+Typically at the first pericenter
+passage, where the tidal radius reaches its minimum,
+a large fraction of mass in the outskirt of subhalos is
+
+24
+tidally stripped, which erases any minor effects from
+the pre-infall mass loss. However, we find that ∼10%
+of subhalos in our simulation sets have a spurious ear-
+lier encounter with the host before their assigned infall
+events (an example is the red line in Fig. 16), which
+causes unwanted extra mass loss prior to infall and a
+mismatch between their infall mass in the simulation
+and the input information from Galacticus. For these
+cases, the actual infall time is much earlier than that
+indicated by the merger trees, thus it may have a minor
+effect on the detailed statistics of subhalos. The incon-
+sistent infall times of these subhalos are mainly due to
+the way we sample the subhalo orbits in Galacticus.
+The distributions of subhalo’s radial and tangential ve-
+locity at infall measured from cosmological simulations
+[113] do not contain the information about the correla-
+tion between subhalo orbits and the merger history of
+the host or the host’s virial radius in the past. Thus for
+a specific realization of merger trees, when we evolve a
+subhalo from the infall time backward, it may already
+fall within the host’s virial radius at an earlier time. In
+this work, since we mainly focus on the relative effects
+of different SIDM models on subhalos, such effect does
+not affect our key results. In the future, this problem may
+be solved with either an updated version of Galacticus
+that takes into account the specific merger history when
+sampling the subhalo orbits or a different rewinding cal-
+culation which enforces that each subhalo approaches
+the host from a large distance.
+• Accommodating subhalos’ formation and infall times A
+weakness of the simulation framework presented in this
+work (or in general any idealized simulations of isolated
+host-subhalos systems), compared with a fully cosmo-
+logical simulation, is that dark matter (sub)halos cannot
+form as a natural result of the growth of the dark matter
+overdensity field, and must be in place from the begin-
+ning of the simulation.
+In a real Universe, subhalos
+form and infall at various times — some subhalos are
+already infalling to the host while some others are not
+yet formed. Thus starting the main simulations at the
+same time can never simultaneously accommodate all
+the subhalos. As a result, an idealized simulation setup
+with a population of subhalos has to choose one dis-
+advantage from the following three: a) having a cutoff
+at subhalos’ infall time, such that all sampled subhalos
+form before this cutoff time and infall after it; b) not ac-
+counting for subhalos’ evolution prior to infall; c) further
+splitting the population of subhalos into more simula-
+tions, each having different starting times characterised
+by subhalos’ formation time. In this work we choose a),
+focusing only on subhalos that infall after 𝑡= 4 Gyr. For
+a simulation scheme with b), all subhalos regardless of
+their different formation times would be initialized at the
+same starting time, earlier than the earliest infall event of
+all subhalos. Such a scheme with b) would work best for
+CDM, of which the (sub)halos’ structure is not expected
+to evolve prior to infall, but not for SIDM, for which
+the (sub)halo’s central densities constantly evolves with
+time. For a simulation scheme with c), subhalos need
+to be further divided into simulations that start accord-
+ing to their different halo formation times. Effectively it
+would be to extend our pre-evolution runs (see Fig. 1) to
+the end of the simulation, without merging the formation
+time bins at 𝑡= 4 Gyr. More subhalo-subhalo interac-
+tions will be missing in simulations with this approach,
+which is shown to be a minimal effect in the validation
+Appendix B, regardless of how many simulations the
+whole population is divided into. Hence we suggest that
+c) might be a better choice for future works.
+• Core-collapse in this work as a lower-limit on subhalos’
+final central density An issue that all SIDM simula-
+tors face is how to treat SIDM when the core enters
+the short mean free path limit during core-collapse. In
+this work, when a subhalo is deep in the core-collapse
+phase (its central density grows 5 times higher than
+the highest density in the initial conditions), we freeze
+the self-interaction of dark matter particles associated
+with that subhalo. Otherwise, the timesteps required to
+simulate interactions become prohibitively small. Most
+of the relevant works on core-collapse of SIDM ha-
+los, using analytical approaches (gravothermal model;
+[49, 50, 87]) or N-body simulations [8, 11, 14, 16], focus
+on the early stage of core-collapse. There is a signif-
+icant need to study of the end-state of core-collapsing
+SIDM halos, with many exciting questions to answer and
+new methods to develop: Will the core-collapse process
+halt with a dense, hot core that loses thermal contact
+with the outer part of the halo because the mean-free-
+path becomes so small?
+Will the core-collapse pro-
+cess quench itself for velocity-dependent SIDM models
+when the contracting core becomes too hot? Will the
+(sub)halo center contract to a supermassive black hole
+[30, 32, 34, 152]? Will the SMBH keep accereting dark
+matter, and if so, at what rate? What is the ‘final’ state
+of a core-collapsed (sub)halo, if there is a stable one?
+While more studies are required to fully understand the
+end-state of core-collapse, our temporary treatment of
+freezing the self-interaction in core-collapsed subhalos
+serves as a conservative lower limit on their central den-
+sity.
+• Baryons In this work, we focused on dark-matter-only
+results, so natural next steps are to include galaxies, ei-
+ther with an additional central galaxy potential to the
+host [32, 119], or also stellar particles to subhalos. With
+an embedded central galaxy, we would be able to gen-
+erate mocks of strongly lensed images using ray-tracing
+simulations, and thus more direct comparison with up-
+coming lensing observations.
+Core-collapse is the most exciting topic in SIDM studies
+today, because it implies that SIDM halos can span an enor-
+mous range in central density. With the hierarchical simulation
+model that we introduced in this paper, we are able to efficiently
+explore core-collapse in a variety of environments, down to ar-
+bitrarily small halo mass, including the effects of evaporation.
+
+25
+The first results of our hierarchical simulation scheme show
+that subhalos span a wide range of central densities and slopes
+for fixed SIDM models, with the speed of core-collapse rel-
+ative to isolated halos depending on a complicated interplay
+of physical processes. Importantly, the velocity dependence
+of the SIDM cross section imprints itself in several metrics
+relevant for substructure lensing. Intriguingly, the slope of
+density profiles of core-collapsed subhalos matches that found
+in a recent analysis of strong lenses [130]. Future work on
+the evolution of subhalos in SIDM cosmologies should fo-
+cus on the detectability of these signatures with current and
+near-future observational facilities.
+ACKNOWLEDGMENTS
+We thank Akaxia Cruz, Ethan Nadler, Yi-Ming Zhong,
+Shin’ichiro Ando, Gemma Zhang and Daneng Yang for useful
+discussions.
+This work was supported in part by the NASA Astrophysics
+Theory Program, under grant 80NSSC18K1014. F.-Y.C.-R.
+acknowledges the support of program HST-AR-17061.001-A
+whose support was provided by the National Aeronautical and
+Space Administration (NASA) through a grant from the Space
+Telescope Science Institute, which is operated by the Associa-
+tion of Universities for Research in Astronomy, Incorporated,
+under NASA contract NAS5-26555. Z.C. Zeng is partially
+supported by the Presidential Fellowship of the Ohio State
+University Graduate School.
+The simulations in this work were conducted on Ohio Su-
+percomputer Center [153], mostly on the CCAPP condo.
+Appendix A: Resolution test
+In Fig.
+12, we show the results of resolution tests
+that we use to determine the optimal resolution for our
+simulations, summarized in Table I. For the tests, we
+sample a subhalo from each of the four infall-mass
+groups
+[108, 108.2)𝑀⊙, [108.2, 108.5)𝑀⊙, [108.5, 109)𝑀⊙,
+[109, 1010)𝑀⊙, and simulate them with the presence of an
+analytic host potential. Four possible scenarios are consid-
+ered, as correspondingly shown in Fig. 12: a) SIDM with
+constant 𝜎/𝑚, subhalos on ordinary orbits; b) SIDM with
+velocity-dependent 𝜎/𝑚, with subhalos on ordinary orbits;
+c) SIDM with constant 𝜎/𝑚, subhalos on heavily-stripping
+orbits; d) SIDM with velocity-dependent 𝜎/𝑚, with subhalos
+on heavily-stripping orbits.
+In this resolution test, we
+choose 𝜎/𝑚= 6 cm2/g as the constant cross section, and
+a 𝜎0 −𝜔model with 𝜎0 = 200 cm2/g, 𝜔= 50 km/s as
+the velocity-dependent cross section. Here when selecting a
+specific ’ordinary orbit’ for subplots a) and b) of Fig. 12 and
+a specific “heavily-stripping orbit" for subplots c) and d), we
+deliberately choose the ones that tend to have more subhalo
+mass loss so that our resolution test is conservative and can
+be generalized to other orbits. For the constant cross section
+of 6 cm2/g, ordinary orbits leads to subhalo mass losses of
+≲90%, and the heavily-stripping orbits lead to mass losses of
+90% ∼99%. For example, the red line in the lower panel of
+Fig. 12 (c) shows a subhalo starting with a mass ∼108.2𝑀⊙
+and ending with < 106𝑀⊙.
+All the simulations in this resolution test are run from 𝑡= 0
+Gyr to 𝑡= 9 Gyr, with a longer evolution time inside the host
+than in our main simulations. This is meant to ensure that the
+mass resolution we choose would produce robust results for
+subhalos on even more extreme orbits.
+To conduct the resolution tests, we first prepare high-
+resolution runs for each subhalo in each scenario as a standard
+for comparison, then gradually reduce the number of particles
+at initialization, until the convergence in high/low resolution
+runs breaks down.
+Our criterion for good convergence re-
+quires that the subhalo’s density/mass profile is in agreement
+with the high-resolution run at radii larger than 100 pc. We
+choose this convergence criterion because in our results sec-
+tions (Sec. IV A and IV B), we measure subhalo statistics at
+radii > 150 pc. The high-resolutions runs are simulated with
+each subhalo having 2 × 105 particles for the ordinary orbit
+and 3 × 105 particles for the heavily-stripping orbit, and the
+low-resolution runs that are well-converged are summarized in
+Table I.
+We find that the primary challenge for particle resolution
+is different in the cases of cored (constant cross section) and
+core-collapsed (velocity-dependent cross sections) subhalos.
+For cored subhalos with constant SIDM cross section, the
+mass loss of subhalos can be extreme, especially on heavily-
+stripping orbits, which makes it difficult to properly resolve
+the subhalo with only a small fraction of remaining particles.
+Empirically, we estimate that ∼1000 particles bound to a
+subhalo at the end of the simulation are needed to track the end-
+state of the subhalo with high fidelity according to the ‘100 pc’
+criterion. For core-collapsed subhalos, however, mass loss on
+heavily-stripping orbits is of less concern, as we can see from
+the comparison of subplots b) and d) in Fig. 12. This arises
+from two physical effects. First, the host-subhalo evaporation
+is weaker for this [𝜎0 = 200, 𝜔= 50] velocity-dependent
+SIDM model whose cross section drops fast at high relative
+velocities, than for constant SIDM cross sections. Second,
+when the center of an SIDM (sub)halo collapses in the runaway
+process, it becomes so dense that tidal stripping from the host
+is less efficient. In this case, the challenge is to resolve the
+ultra-dense, collapsed center of the subhalo. Since we switch
+off the dark matter self-interaction after the core-collapse of
+a subhalo is triggered, the artificial gravitational two-body
+relaxation is a nuisance effect that becomes important, and
+is worse at lower resolution [154]. However, we find that this
+only causes a discrepancy in subhalo profiles in the very central
+region 𝑟≲1%𝑟vir, as shown in subplot b) of Fig. 12, and thus
+does not affect our analysis results in Sec. IV.
+Appendix B: Validation of the hierarchical scheme
+A systematic of our hierarchical simulation scheme is that
+it neglects subhalo-subhalo interactions across different mass
+groups. Here we demonstrate that partially missing subhalo-
+subhalo interactions does not statistically impact the properties
+
+26
+(a) Constant 𝜎/𝑚, ordinary orbit, cored
+(b) Velocity-dependent 𝜎/𝑚, ordinary orbit, core-collapsed
+(c) Constant 𝜎/𝑚, heavily-stripping orbit, cored
+(d) Velocity-depedent 𝜎/𝑚, heavily-stripping orbit,
+core-collapsed
+FIG. 12: Resolution convergence test with constant and velocity-dependent cross section SIDM, on ordinary orbits and
+heavily-stripping orbits (see Sec. II B for the definition of these two categories of orbits). All plots are at the end of the
+simulation 𝑡= 9 Gyr.
+
+27
+106
+107
+108
+109
+Mtot[M
+]
+0.4
+1
+3
+Ratio of subhalo's virial mass
+6 sims / 1 sim
+6 sims + 1010M
+/ 1 sim
+18 sims / 1 sim
+(a)
+102
+103
+radial distance r[kpc]
+0.5
+1
+2
+Ratio of radial distance
+10% error
+20% error
+(b)
+106
+107
+108
+109
+Mtot[M
+]
+101
+102
+Abundance of subhalos
+1 sim
+6 sims
+6 sims+1010M
+18 sims
+poisson error of 1 sim
+(c)
+102
+103
+radial distance r[kpc]
+101
+102
+Abundance of subhalos
+1 sim
+6 sims
+6 sims+1010M
+18 sims
+(d)
+FIG. 13: Validation for our hierarchical simulation scheme using subhalos with infall mass in the range [108, 109]. Three sets
+of simulations are compared here, either all the subhalos simulated in one big simulation, or divided into six simulations (with
+or without adding a 1010𝑀⊙massive subhalo to each of the three o.o. simulations), or eighteen. All subplots show the end of
+the simulation. In a) and b) we show each subhalo’s mass and radius from the host center in these three sets of simulations. In c)
+and d) we show the statistical of mass function and radial distribution. All panels are at the end of the simulation 𝑡= 9 Gyr.
+of subhalos.
+We prepared four sets of simulations, including all subha-
+los from a merger tree that have infall masses in the range
+[108, 109)𝑀⊙. The first has all subhalos in a single simula-
+tion, and its resolution is given by simulation particle mass
+𝑚𝑝= (108/30000)𝑀⊙(comparable to the [108, 108.2)𝑀⊙
+group with o.o.).
+The second follows our hierarchical
+scheme where the subhalos are split into six smaller simu-
+lations, [108, 108.2)𝑀⊙, [108.2, 108.5)𝑀⊙, [108.5, 109)𝑀⊙, on
+either ordinary or heavily-stripping orbits, with resolution as-
+signed the same way as in Table I. The third set is the same
+as the second, but we add a relatively massive subhalo of
+1010𝑀⊙to each of the three o.o. simulations with infall mass
+[108, 108.2)𝑀⊙, [108.2, 108.5)𝑀⊙, and [108.5, 109)𝑀⊙, aiming
+to highlight the possible impact of missing more massive sub-
+halos. Finally, the fourth set of simulations is based on the
+second, but the subhalos in each simulation are further divided
+into three halo-formation-time bins and simulated separately.
+
+28
+We denote these three sets of simulations as 1 sim, 6 sims,
+6 sims + 1010𝑀⊙and 18 sims hereafter. Note that for the
+18 sims set, although we divide subhalos according to their
+formation time, the formation time is not used as the starting
+time of these validation simulations, unlike the pre-evolution
+part of our hierarchical framework described in Sec. II B and
+II C. In the validation simulations for this appendix, these four
+sets of simulations are all started at 𝑡= 4 Gyr, initialized
+with NFW profiles (parameters determined by Galacticus
+merger tree), and ended at 𝑡= 9 Gyr, such that all subhalos
+to be matched and compared among these four setups have
+the same amount of evolution time.
+The SIDM model for
+these simulations is a constant cross section 𝜎𝑚= 6 cm2/g,
+for which the evaporation effect among subhalos is strong and
+can highlight any potential subhalo-subhalo interaction. We
+expect subhalo-subhalo SIDM interactions to be weaker for
+the other models we consider in this paper, since their cross
+sections at subhalo-subhalo pairwise velocities (comparable to
+subhalos’ orbital velocities) are smaller.
+At the beginning of the simulation, 1092 subhalos are ini-
+tialized in each of the four sets of simulations. At the end of
+the simulation, there are around 1060 subhalos left that can be
+matched among these four. We conduct a subhalo-by-subhalo
+comparison, in terms of each subhalo’s virial mass and radial
+distance from the host center, as shown in subplot a) and b)
+of Fig. 13. We find that there are only a few outliers when
+comparing the split 6 sims, 6 sims + 1010𝑀⊙and 18 sims
+against 1 sim. Overall we find that ∼94% of subhalos have a
+mass discrepancy of < 10% and ∼96% of subhalos have a ra-
+dial distance discrepancy < 10%, for all the three hierarchical
+sets against 1 sim. The two fractions are ∼96% and ∼98%
+for the subhalo mass and radial distribution, respectively, for
+error tolerances of 20%. We show the subhalo mass function
+and radial distribution in subplot c) and d) of Fig. 13, where
+again we can see that the overall distribution of subhalos is not
+affected by the missing subhalo-subhalo interaction. Only a
+few subhalos at the very low mass end, which are very heavily
+stripped, show visible scatter among these simulations.
+Furthermore, as a comparison between the two split sets, 6
+sims and 18 sims, we can see that their subhalo mass function
+and radial distribution are nearly identical, and the subhalo-
+by-subhalo trackers also show no sign of any systematic dif-
+ference. This further hints that the missing subhalo-subhalo
+interaction is indeed a minimal effect, since splitting the whole
+population of subhalos into 6 or 18 simulations does not seem
+to matter at all. Any difference between the 1 sim and 6 sims
+or 18 sims are more likely to be caused by resolution and
+realization difference than the missing subhalo-subhalo inter-
+action (recall that 6 sims and 18 sims have the same infall-mass
+binning so the subhalos are identical at the beginning of the
+simulation, but 1 sim have different mass resolution and hence
+also different realization of subhalos), which is also consistent
+with the Poisson error shown in Fig. 13.
+0
+20
+40
+60
+1-d velocity dispersion σv [km/s]
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+Normalized heat conductivity
+/// velocity window
+divided by C=3.8
+subhalos
+window2 20-40 km/s
+window3 50-80 km/s
+FIG. 14: The analytically calculated SIDM heat conductivity
+of the ‘window function’ models, as a function of halo’s 1-d
+velocity dispersion 𝜎𝑣. Results are normalized against the
+heat conductivity of a constant SIDM cross section
+𝜎/𝑚=200 cm2/g, which corresponds to the cross section
+inside the velocity window of the window function models.
+The 𝜎𝑣range for subhalos’ infall mass from 108 to 1010𝑀⊙is
+shaded with gray color. The 𝜎𝑣range corresponding to
+velocity window range divided by 𝐶= 3.8 is shown in
+regions with forward slash.
+Appendix C: Linking a halo’s characteristic velocity for
+self-interaction to velocity dispersion
+We have shown in Sec. IV C that from simulation we es-
+timate 3.0 < 𝐶< 4.2, for the factor 𝐶that characterizes
+the relation between a (sub)halo’s typical velocity relevant for
+self-interaction and maximal 1-d velocity dispersion of a halo’s
+CDM initial condition ⟨𝑣rel⟩= 𝐶𝜎𝑣. In this appendix we ap-
+proach the same question analytically with the gravothermal
+method.
+If we consider the characteristic velocity for heat transfer in-
+side a (sub)halo as the mean value of the particle-particle rela-
+tive velocity, a simple averaging over the Maxwell-Boltzmann
+distribution gives
+⟨𝑣rel⟩=
+∫√︃
+𝑣2
+1 + 𝑣2
+2 −𝑣1𝑣2 cos 𝜃𝑓MB(𝑣1) 𝑓MB(𝑣2)𝑑3𝑣1𝑑3𝑣2
+= 2.26𝜎𝑣,
+(C1)
+where 𝑣1 and 𝑣2 are the velocities of any two scatter-
+ing particles, and the Boltzmann distribution 𝑓MB(𝑣)
+=
+(
+𝑚
+2𝜋𝑘𝐵𝑇)3/2 exp (−𝑚𝑣2
+2𝑘𝐵𝑇) has the temperature 𝑇determined by
+𝜎𝑣=
+√︁
+𝑘𝐵𝑇/𝑚. This factor 2.26 from simple averaging does
+not agree with the result 3.0 < 𝐶< 4.2 from simulation.
+However, [87] argued that the averaged heat conductivity in
+
+29
+the long-mean-free-path regime
+⟨𝜅lmfp⟩∝
+⟨𝑣1𝑣2𝑣3
+12𝜎(𝑣12)⟩
+⟨𝑣1𝑣2𝑣3
+12⟩
+,
+(C2)
+where 𝑣12 is the relative velocity between particle 1 and 2,
+would better characterize the heat transfer for a velocity-
+dependent SIDM model 𝜎(𝑣12). In Fig. 14, we show this
+numerically integrated ⟨𝜅lmfp⟩of window2 and window3 mod-
+els (window1 not used because it has a less sharp drop in cross
+section outside the velocity window, see Fig. 7a), normal-
+ized by the ⟨𝜅lmfp⟩of constant 𝜎/𝑚= 200 cm2/g, as a func-
+tion of the 1-d velocity dispersion 𝜎𝑣. Note that the window
+functions, or in general any functions with step-like features
+in 𝜎(𝑣12) cannot be easily integrated numerically, since the
+integral variables are 𝑣1 and 𝑣2 instead of 𝑣12. Thus we use
+[tanh (𝑣12 −𝑣low)×tanh (𝑣high −𝑣12)+1]/2) to represent win-
+dow functions for this integral, where 𝑣low and 𝑣high are the
+bounds of the velocity window. From Fig. 14, we find that
+this calculation of ⟨𝜅lmfp⟩does successfully predict the corre-
+sponding subhalo mass/𝜎𝑣bins that has strong core-collapse,
+where a window-model that has normalized heat conductivity
+≳0.4 would have noticeable fraction of core-collapse in that
+infall-mass bin.
+Choosing an intermediate value 𝐶= 3.8 from simula-
+tion constrained range 3.0 < 𝐶< 4.2, we plot the range of
+𝜎𝑣= [𝑣low, 𝑣high]/𝐶corresponding to each window model in
+Fig. 14. We can see that the estimated 𝐶= 3.8 from sim-
+ulation correctly picks out the region of relatively high heat
+conductivity ≳0.4. Thus we conclude that both the analytical
+gravothermal approach and the estimated range 3.0 < 𝐶< 4.2
+or 𝐶≈3.8 have correct predictions on the core-collapse mass-
+filtering effect by the window-type models.
+We comment that our finding echoes the conclusion of [86]
+and [87], that it is the heat conductivity averaged over the
+whole (sub)halo that determines the speed of SIDM evolution,
+instead of the cross section at the average relative velocity.
+Appendix D: Animated time evolution of subhalos’ inner mass
+and virial mass
+We compile the time-animated version from 𝑡= 4 Gyr to
+𝑡= 9 Gyr of the 𝑀inner −𝑀vir plot in Fig. 3, in this link,
+and another version where each subhalo’s inner mass 𝑀inner
+is not defined by a fixed aperture 200 pc but a fraction 2% of
+its virial radius at any given time. The latter with the inner
+aperture scaling with subhalo mass may better describe low-
+mass subhalos that experience dramatic mass loss.
+Appendix E: Supplementary figures
+We include variations of some figures in the main text in
+this section, which may be more relevant to other use cases:
+• Fig. 15 shows the cross section of various SIDM models
+used, but in the format of 𝑣rel × 𝜎/𝑚instead of the
+cross section 𝜎/𝑚alone. Since the particle scattering
+rate/probability is proportional to 𝑣rel×𝜎/𝑚, this version
+gives more intuitive understanding of the strength of
+self-interaction at different velocity scales.
+• Fig. 16 shows the validation of our rewinding algorithm,
+that the calculated initial position and velocity of ran-
+domly selected subhalos are correct, since their orbits in
+the simulation can match the input information of infall
+radii and velocities.
+• Fig. 17 is similar to the 1-point function of substructure
+lensing in Fig.
+9a, but the y-axis has an additional
+weight of 𝜅2
+sub that highlights the large 𝜅sub bins, to which
+substructure lensing is most sensitive. For example, the
+strong core-collapse in the {𝜎0 = 200, 𝜔= 200} model
+(purple line) is featured by a sharp increase at high 𝜅sub
+bins, which is not visible in Fig. 9a but does show up in
+Fig. 17 with the additional weight.
+• Fig. 18 is similar to Fig. 10a, but showing the time
+difference for core-collapse in field halos and subhalos
+as an acceleration (positive) or deceleration (negative)
+factor to the core-collapse time of field halos.
+• Fig. 19 shows the 1-d velocity dispersion profiles of
+each CDM subhalo at 𝑡= 4 Gyr. Panel a) shows the
+velocity dispersion near its maximum value for each
+subhalo, and panel b) shows the velocity dispersion in
+center of the subhalo.

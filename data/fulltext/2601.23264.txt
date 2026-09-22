@@ -1,0 +1,1628 @@
+Prepared for submission to JCAP
+MARVELously Dark: the density
+profile evolution of dwarf halos in
+velocity-dependent SIDM
+Anna Engelhardt
+ID
+a,1 Ferah Munshi
+ID
+a Annika H. G. Peter
+ID
+b,c Ethan O. Nadler
+ID
+d Akaxia Cruz
+ID
+e,f Alyson M. Brooks
+ID
+g
+Zhichao Carton Zeng
+ID
+h Thomas R. Quinn
+ID
+i Blake Keith
+ID
+a
+aDepartment of Physics & Astronomy, George Mason University,
+4400 University Drive, MSN: 3F3 Fairfax, VA 22030-4444, USA
+bDepartment of Physics and Center for Cosmology and AstroParticle Physics, The Ohio
+State University,
+191 W. Woodruff Ave., Columbus, OH 43210
+cDepartment of Astronomy, The Ohio State University,
+140 18th Ave. W., Columbus, OH 43210
+dDepartment of Astronomy & Astrophysics, University of California,
+San Diego, La Jolla, CA 92093, USA
+eCenter for Computational Astrophysics, Flatiron Institute,
+162 Fifth Ave, New York, NY 10010, USA
+fDepartment of Physics, Princeton University,
+Princeton, NJ 08544, USA
+gDepartment of Physics & Astronomy, Rutgers, The State University of New Jersey,
+136 Frelinghuysen Road, Piscataway, NJ 08854, USA
+hDepartment of Physics & Astronomy, Texas A&M University,
+400 Bizzell St. College Station, TX. 77843, USA
+iAstronomy Department, University of Washington,
+Box 351580, Seattle, WA, 98195-1580
+1Corresponding author.
+arXiv:2601.23264v3  [astro-ph.GA]  11 Jun 2026
+
+E-mail: aengelha@gmu.edu
+Abstract. Self-interacting dark matter (SIDM) with a sufficiently large cross section has been
+shown to naturally produce constant dark matter (DM) cores, as well as core-collapse, at the
+centers of dwarf halos on cosmic timescales, potentially reducing tensions with observation.
+Here, we present halos from a new dark matter only (DMO) cosmological (SIDM) simulation:
+Ms.Marvel DMO with a velocity-dependent self-interaction cross section with σ/mmax = 50
+cm2/g at vmax = 35 km/s.
+We compare these to the CDM suite of Storm simulations
+including both DMO and dark matter + hydrodynamics runs, in order to test core-formation
+(and core-collapse) across different dark matter models. We show that Ms.Marvel DMO can
+reproduce core slopes consistent with observations of isolated dwarf galaxies and more massive
+(Mvir ≳1010M⊙) CDM dwarf halos that include stellar feedback from the matched CDM run
+(Storm CDM+baryons). We identify nine Ms.Marvel SIDM DMO halos in the core-collapse
+phase of gravothermal evolution with halo masses below 2 × 109M⊙. We find that using the
+inner density slope to measure the core-collapse timescales of Ms.Marvel DMO halos agrees
+well with predicted collapse times estimated with the parametric model for SIDM halos
+introduced by [1]. Additionally, compared to central density, the inner density slope is less
+sensitive to both the radius of measurement and halo merger history. These results indicate
+that the slope of the inner DM density profile more cleanly differentiates core-collapsed versus
+core-forming halos than central density amplitude.
+
+Contents
+1
+Introduction
+1
+2
+Simulations and Methodology
+4
+2.1
+Halo identification and sample
+4
+2.2
+Ms.Marvel DMO
+4
+2.3
+Storm CDM DMO
+7
+2.4
+Storm CDM+baryons
+7
+3
+Results
+8
+3.1
+Core formation in SIDM and CDM simulations
+8
+3.2
+Tracing inner density slope and central density through time
+11
+3.2.1
+Inner density slopes
+13
+3.2.2
+Central densities
+14
+3.3
+Core-collapsed Ms.Marvel DMO halos
+15
+3.4
+Parameterization of gravothermal evolution
+18
+4
+Discussion
+21
+4.1
+A comparison to other SIDM simulations
+22
+4.2
+Tracing inner density slope at different radii
+23
+4.3
+Tracing central density at different radii
+25
+4.4
+Potential kinematic signatures of core-collapse
+26
+4.5
+Tidal effects in SIDM subhalos
+27
+4.6
+Halo mergers and substructure in SIDM halos
+28
+5
+Conclusions
+29
+5.1
+Future work
+30
+A Using central density as a measurement of core-collapse
+31
+B Turndown in Central Density at Late Times
+32
+C Resolution dependence on particle number
+33
+D Density Profiles of Ms.Marvel Halos
+35
+1
+Introduction
+Dwarf galaxies, being the most numerous and dark matter (DM)-dominated systems in the
+universe, have long been a fertile testing ground for the cold dark matter (CDM) paradigm.
+Although the CDM framework has been largely successful in explaining the observed uni-
+verse [see 2], several issues arose when observations and simulations began to thoroughly
+explore the small-scale regime. Contentions such as the “missing satellites” problem [3–5],
+the “too big to fail” problem [6, 7], and the “cusp-core” problem [8–10] all call into question
+the fidelity of both cosmological simulations and the CDM framework itself. These tensions
+are primarily alleviated in the CDM paradigm through the inclusion of baryonic physics,
+– 1 –
+
+with a focus on stellar feedback, in cosmological simulations [11–31]. However, alternative
+DM models, such as self-interacting dark matter (SIDM), remain valid possibilities [32–39].
+Over the past decade, particle physicists have begun studying a broader range of DM mod-
+els, many of which naturally produce self-interactions [40–55]. Thus, the in-depth study of
+dwarf galaxies simulated with alternative DM is complementary to the efforts being made
+by particle physicists to constrain DM models.
+Previous work [56, 57] shows that, in CDM halos, cores are formed and sustained through
+the stellar feedback induced by repeated bursts of star formation. As a result, in low-mass
+halos, which have fewer stars and less extended star formation histories (SFHs), baryonic
+feedback is insufficient to convert cusps into cores. However, [58] and [59] find evidence of
+central density cores in observed dwarf satellite galaxies, with stellar masses of 103−4M⊙
+and 106−8M⊙respectively, from their surface brightness profiles and stellar surface density
+profiles. For low-luminosity galaxies with MB ≳−19, [60] find that dark matter halos prefer
+cored profiles over cusped profiles. Additionally, [61] find evidence of central DM density
+slopes, the slope of the DM density profile at inner radii, that are shallower than predic-
+tions from simulations [62, 63] between stellar masses of 105−8M⊙. The rotation curves of
+observed spiral galaxies may also be more diverse than predictions from CDM simulations
+[64–67], however, [68] find that dwarf galaxies from the MARVELous dwarf simulations are
+capable of reproducing the observed diversity of rotation curves in the ΛCDM paradigm.
+These tensions with the ΛCDM paradigm may be resolved by alternative DM models
+such as SIDM. In SIDM halos, self-scattering among the DM particles causes the central halo
+to dynamically heat, leading to heat inflow towards the center of the halo. The subsequent
+negative heat capacity at the center of the halo causes a runaway gravothermal collapse
+process, with core-collapsed halos becoming denser and cuspier in the central region than
+their CDM counterparts [69–85]. SIDM halos can successfully reproduce the observed diver-
+sity of galactic rotation curves [65, 86–90]. Also, [18] find that observed galaxies are better
+fit by an isothermal core, such as those that are naturally formed in SIDM halos. SIDM
+simulations successfully reproduce the cored DM density profiles of observed bright dwarfs
+[32, 34, 36, 39, 88, 91–96], and reproduce the successes of CDM at galaxy cluster mass scales
+[37, 43]. Also, [18] find that observed galaxies are better fit by an isothermal core, such as
+those that are naturally formed in SIDM halos. SIDM simulations have also been shown
+to successfully match the observed diversity of DM profiles, subhalo mass function, and the
+radial number density of the Milky Ways (MWs) satellite population [78, 90, 97–100]. Fur-
+thermore, the Milky Way and its satellite population can be used to constrain the interacting
+cross section of SIDM [78, 90, 101–104]. For example, [105] find that for interacting cross
+sections σ/m ≲5 cm2g−1 SIDM halos are unable to reproduce the densest ultra-faint and
+classical dwarf spheroidal galaxies in the MW.
+New and upcoming surveys such as the Vera Rubin Observatory (Rubin) and Roman
+Space Telescope will enable observers to probe dark matter abundance and structure through
+strong gravitational lensing as well as improved dwarf galaxy and stellar stream measure-
+ments [106]. The Legacy Survey of Space and Time (LSST) with Rubin will have high enough
+resolution to allow precise measurements of the density profiles and shapes of dark matter in
+dwarf galaxy halos with stellar masses down to 108M⊙based on weak lensing [107, 108] and
+discover many more dwarf galaxies [109] and MW satellites [110]. Additionally, extremely
+large telescopes (ELTs) will allow observers to probe the dark matter-subhalo mass function
+down to halo masses of 106M⊙by targeting the MWs stellar streams and its Galactic accel-
+eration field [111]. Constraints on the halo mass function and precise measurements of the
+– 2 –
+
+DM density profiles of the halos of dwarf galaxies can therefore be used to constrain DM
+models.
+Previous work constrains the interacting cross section for SIDM models by compar-
+ing predictions from simulations with observed galaxies.
+For small cross sections, SIDM
+halos replicate the successful predictions of large-scale structure in the CDM paradigm
+[36, 112, 113], while large cross sections at low velocities naturally create cored and core-
+collapsed central density profiles at dwarf galaxy scales [32, 34, 36, 39, 43, 78, 88, 91–97].
+At galaxy cluster mass scales, studies of the inner DM density profiles of galaxy clusters
+place strong constraints on the interaction cross section for SIDM (σ/m ≲0.1−1.0 cm2g−1);
+[36, 94, 114, 115]. At smaller scales, SIDM has been shown to naturally produce constant
+density cores at the centers of isolated dwarf halos with cross sections ranging from 0.5 −50
+cm2g−1, reducing tensions with the “too big to fail” and “cusp-core” problems [43, 93, 94, 97]
+for classical dwarfs. However, [101] find that the centers of ultra-faints are cusped and rule
+out SIDM models with a constant cross section ≥0.1cm2g−1. These varying constraints
+on the cross section of interaction at different mass scales motivate the study of a velocity-
+dependent cross section of interaction.
+Velocity-dependent SIDM models with gravothermally induced core-collapse may also
+be able to account for the observed diversity of rotation curves of MW satellites [1, 75, 78, 79].
+Recent observations indicate that the the densities of both satellite dwarfs [75] and isolated
+halos [64, 67] are varied. Velocity-dependent SIDM models with sufficiently large interacting
+cross sections at low relative velocities can induce gravothermal core-collapse in ultra-faint
+dwarfs while preserving core formation in classical mass halos. Core-collapse timescales vary
+by halo concentration and can be impacted by tidal effects [80, 116–118]. As a result, SIDM
+models with large cross sections that drive core collapse at low masses produce diverse DM
+density profiles ranging from cored to steeply cusped.
+Previous works use parametric models of gravothermal collapse [1, 119, 120] or ide-
+alized simulations to predict core-collapse times of SIDM halos with various cross sections
+[80, 82, 121]. Additionally, various velocity-dependent SIDM models have been studied in
+cosmological simulations of MW satellites [78, 90, 97–100]. However, this work compares
+core-collapse timescales from a statistical sample of isolated halos with varied merger histo-
+ries from a zoom-in simulation and contextualize our results with predictions from analytic
+calculations. We present a sample of halos from Ms.Marvel DMO, an SIDM cosmological
+volume simulation with a velocity-dependent cross section and a Yukawa potential [42, 122] in
+the classical regime. We contextualize our findings using results from the Storm simulations,
+a suite of matching CDM simulations run with the same initial conditions as the Ms.Marvel
+box. These runs are a combination of dark-matter-only (DMO) simulations and simulations
+run with baryonic components.
+The focus of this paper is to test core-collapse timescales of SIDM halos with a velocity-
+dependent interacting cross section.
+[120] validate the parametric model in cosmological
+simulations of massive (1012−13M⊙) host halos and their surrounding environment, finding
+predictions to be within an agreement of 10% −50% for most (sub)halos.
+Results from
+[90, 100] further test the accuracy of the parametric model by analytically calculating the
+gravothermal evolution of SIDM (sub)halos using matched CDM counterparts in cosmologi-
+cal zoom-in simulations of host halos with masses of 1011, 1012, 1013, and 1014M⊙and their
+satellite populations. They find that the predictions accurately model gravothermal evolution
+through core-collapse. This work will test analytic predictions from the parametric model
+against cosmological simulations of low-mass, dwarf halos in isolated field environments.
+– 3 –
+
+The paper is outlined as follows; in Section 2 we describe the simulations including
+our implementation of relevant baryonic physics and a velocity-dependent SIDM model. We
+show our results in Section 3, provide a detailed discussion in Section 4, and give a brief
+overview of our findings in Section 5.
+2
+Simulations and Methodology
+This work studies the gravothermal evolution of SIDM halos with a velocity-dependent cross
+section of interaction from the zoom-in cosmological simulation Ms.Marvel DMO. We con-
+textualize our findings with results from corresponding CDM simulations, Storm CDM DMO
+and Storm CDM+baryons, to serve as a benchmark comparison. These results focus on dif-
+ferences in core formation timescales and the inner slope of the DM density profiles of dwarf
+galaxies between the two DM models.
+The Ms.Marvel simulation has the same initial cosmological conditions as the Storm
+simulation from the ‘MARVEL-ous Dwarfs” suite [hereafter “Marvel”; 31, 56, 123–128], but
+an alternative DM model. This suite consists of four cosmological zoom-in simulations with
+a WMAP3 cosmology [129] where, rather than simulating individual galaxies, small volumes
+with multiple dwarf galaxies and maximum halo masses of approximately 1011M⊙are sim-
+ulated at high resolution. The high resolution of the simulations coupled with the isolated
+environment make these ideal simulations for studying the evolution of dwarf galaxies in
+relative isolation. We exclude dwarf halos identified as satellites in our sample, minimizing
+the potential gravitational effects of host halos on our sample. However, the halos in our
+sample have varied merger histories, including major and minor mergers or potential fly-by
+interactions that may impact the morphology of halos. For additional details refer to Section
+3.2. The simulations are run with the Nbody+SPH code ChaNGa [130] which utilizes the
+hydrodynamic modules from GASOLINE2 [131, 132].
+2.1
+Halo identification and sample
+The Amiga Halo Finder [AHF; 133] was applied to Ms.Marvel DMO, Storm CDM DMO and
+Storm CDM+baryons to identify DM halos, subhalos, and the baryonic content within. AHF
+utilizes a spherical top-hat collapse technique to calculate each halo’s virial radius and mass.
+These simulations identify the virial radius as the radius at which the halo density is 200
+times the critical density of the universe at a given redshift. Each halo’s virial mass (M200) is
+calculated as the mass contained within the virial radius. We limit our sample of Ms.Marvel
+DMO and Storm CDM DMO halos to halos with a minimum of 104 DM particles, enabling us
+to spatially resolve the inner structure of CDM down to 0.33 kpc. For a detailed discussion on
+resolution see Appendix C Resolved galaxies from Storm CDM+baryons contain a minimum
+of 14 star particles and have resolved star formation histories (SFHs) which extend past 100
+Myr. We consider a sample of 228 halos from the Ms.Marvel DMO simulation, 235 halos
+from the Storm CDM DMO simulation, and 20 galaxies from the Storm CDM+baryons
+simulation. We note that the Storm CDM+baryons contains on the order of 200 resolved
+DM halos, however, many are completely dark and only 20 halos host galaxies with enough
+star particles to be considered resolved. The selected halos do not include satellites.
+2.2
+Ms.Marvel DMO
+Ms.Marvel DMO simulates a 253 Mpc3 volume and uses a DM particle mass of 8070 M⊙with
+a gravitational force resolution of 65 pc [123]. Where 65 pc is half the spline kernel width.
+– 4 –
+
+This high resolution allows DM halos that range in halo mass from M200 ≈8 × 107M⊙and
+contain a minimum of 104 DM particles such that their halo centers are well-resolved prior
+to core-collapse. We show in Appendix C that this particle resolution is sufficient to resolve
+CDM halos with a spatial resolution of 0.33 kpc in accordance with [134].
+However, we
+note that [82] find a minimum requirement of 105 DM particles to fully resolve core-collapse,
+indicating that our SIDM halos in the late stages of gravothermal evolution may be subject
+to resolution effects.
+Here we describe the SIDM model and implementation for the DMO run of Ms.Marvel.
+Our SIDM model is run with a velocity-dependent cross section with a transfer cross-section
+for a Yukawa potential [42, 122] in the classical regime. We present a sample of high-resolution
+simulated dwarf halos, in a full cosmological volume centered on isolated dwarf galaxies. The
+velocity-dependence of our self-interaction cross section is implemented to allow a subset of
+halos to undergo core-collapse within a Hubble time. The velocity-dependence of the cross
+section is parameterized by a maximum interacting cross section divided by the mass of the
+dark matter particle equal to σmax/mχ = 50 cm2/g at a given maximum circular velocity
+vmax = 35 km/s. The cross section at a given maximum circular velocity is tuned such that
+the effective cross section of interaction is on the order of 101 cm2/g for classical dwarfs
+and 102 cm2/g for our lowest-mass ultra-faint dwarfs (UFDs). The implementation of SIDM
+particle physics follows from previous work by [135] and [95]. See Cruz et al.(in prep) for
+additional details on the SIDM model and it’s implementation.
+The transfer cross section of SIDM particles in our simulations is given by the following
+piecewise function from [135]:
+σT =
+
+
+
+
+
+
+
+4π
+m2
+ϕ βln(1 + β−1)
+β ≤10−1
+8π
+m2
+ϕ β2(1 + 1.5β1.65)−1
+10−1 ≤β ≤103
+π
+m2
+ϕ (lnβ + 1 −0.5ln−1β)2
+β ≥103
+
+
+
+
+
+
+
+(2.1)
+where β ≡2αχmϕ/v2
+relmχ, mχ is the DM mass, mϕ is the mass of the light-mediator, v is
+the relative velocity between DM particles, and the coupling αχ is the DM analog of the fine
+structure constant. We show the transfer cross section for our SIDM model implemented
+in Ms.Marvel compared against various velocity-dependent models trained on MW-satellites
+from [136] and SIDM with a constant cross section simulated in both a MW environment
+[136] and isolation [93] in Figure 1. We show velocity-dependent models with solid lines and
+models with constant cross sections with dashed lines. We compare the inner slope of the
+DM density profiles of dwarf halos from the Ms.Marvel simulation against the SIDM models
+from [136] and [93] in Figure 9.
+The SIDM model that we implement in this simulation is a light mediator model with
+elastic scattering. Simulation particle scattering is stochastic with the probability of particle
+collision between two DM particles given as a function of relative velocity and time interval
+at local density with cross section per unit mass of DM interaction:
+P = ρσdmvrel∆t
+(2.2)
+The timestep is adjusted such that the collision probability meets the criterion of ≤.1 per
+timestep, such that for characteristic conditions (the stages of gravothermal evolution prior
+to the core-collapse phase) ρσdmσvel∆t ≤0.1, where σvel is the local velocity dispersion and
+ρ is the local density of each particle. The velocity dispersion is indicative of the temperature
+– 5 –
+
+Figure 1. The effective cross section versus Vmax for Ms.Marvel (black), with comparisons from
+[93] in pink and [136]; SigmaConstant10 (dark red), SigmaVel20 (red), SigmaVel60 (orange red),
+and SigmaVel100 (orange). Velocity-dependent models are shown with solid lines and models with
+constant cross sections are shown with dashed lines.
+We include different models in this plot to
+contextualize our comparison between the inner slopes of the DM density profiles of dwarf halos from
+the Ms.Marvel simulation against halos from [136] and [93] in a later section.
+of DM particles.
+The scattering probability is calculated for each particle with its k = 32 nearest neigh-
+bors with a spline kernel at every time-step. To avoid multiple simultaneous scattering events
+the probability of a particle collision between two DM particles is set to be much smaller
+than once per time step. We then solve Equation 2.2 to set ∆t for the simulation. When DM
+particle collisions occur, the scattering is simulated by a random reorientation in velocity
+in the center-of-mass frame of the collision, with conserved energy and momentum. The
+particle’s new momentum direction is then randomly assigned. As a result, SIDM halos form
+isotropic central cores.
+Modeling DM halos in the advanced stages of core-collapse presents many unique chal-
+lenges to N-body simulations [82–84, 137–139].
+For instance, [121] find that the central
+density of core-collapsed halos increases by at least a factor of 5, necessitating a prohibitively
+small time-step size. In the case where time-steps are too large it is possible for particles to
+undergo multiple scatterings in a single time-step, leading to errors in energy conservation
+[84, 140, 141]. Though [142] show that these errors in energy conservation can be mitigated
+by the implementation of an algorithm that explicitly handles multiple scatterings. These
+issues are most prominent in collapsed halos where extremely high central densities induced
+– 6 –
+
+by the gravothermal catastrophe increase the rate of scattering events. However, [139] find
+that using time-steps which are time symmetric can reduce errors in energy conservation. In
+this work we do not perform special treatment in core-collapsing halos due to the low number
+of dwarfs that reach core-collapse. However, we note that, as a result, the central densities
+reached by core-collapsing halos should be treated as a lower limit.
+Other simulation parameters such as the gravitational softening length and mass res-
+olution of the DM particle can affect core-collapse timescales. Accurately simulating core-
+collapse requires high particle resolution as shown by [82] which find that collapse times
+are subject to resolution effects in halos with fewer than 105 DM particles. They find that
+affected halos have large variations in their collapse times that are slightly biased towards
+longer core-collapse timescales. Similarly, [83] find variations in the collapse times of simu-
+lated SIDM halos on the order of 10% in halos containing as many as 106 particles. [83] also
+find that adaptive gravitational softening artificially accelerates the gravothermal evolution
+by cooling the SIDM halo. [139] suggest that these errors in energy conservation arise from
+gravitational softening lengths which are too small. They find that, if the softening length
+lies within a reasonable range, halo evolution is insensitive to this simulation parameter. The
+gravitational softening length used in this work lies above the minimum recommended thresh-
+old in [134], indicating that halo evolution should be largely insensitive to this parameter in
+the Ms.Marvel simulations.
+2.3
+Storm CDM DMO
+To compare to predictions from CDM, we include a sample from a DMO run of Storm.
+These simulations have DM particle masses of 8070 M⊙, and a force resolution of 65 pc. As
+before, this high resolution allows halos in the range of M200 ≈8 × 107M⊙to 1011M⊙to be
+considered resolved down to 0.33 kpc.
+2.4
+Storm CDM+baryons
+To explore feedback-driven core-formation we include a sample of galaxies from a baryonic
+run of the Storm CDM simulation from the Marvel suite.
+Storm CDM+baryons is run
+with the same initial DM conditions as Storm DMO, but includes baryonic particles and
+additional subgrid physics models for baryonic physics processes such as star formation and
+stellar feedback. These simulations implement gas, initial star, and DM particle masses of
+1410 M⊙, 420 M⊙, and 6650 M⊙, respectively, and have a force resolution of 60 pc. We
+consider galaxies with M∗≳3 × 103M⊙to be resolved.
+Storm CDM+baryons implements superbubble feedback [143] treatment for type II
+SNe, type Ia SNe, and stellar wind. At the time of the supernova, mass, metals and energy
+are directly injected into surrounding gas particles. In the subsequent time-steps, subgrid
+processes for thermal conduction and evaporation regulate the quantity of SN heated gas.
+To treat superbubbles with initial sizes that lie below the gas particle mass resolution of our
+simulations, we adopt a two-phase treatment of gas particles, which includes a hot phase and
+a cold phase. This two-phase treatment allows thermal conduction to take place between
+the hot and cold phases of SNe heated gas particles until the hot phase is no longer very hot
+(∼105K)
+We implement a stochastic star formation recipe with a star formation efficiency which
+is dependent on the local non-equilibrium abundance of molecular hydrogen along with gas
+cooling from [144]. Star formation takes place in particles that are sufficiently cold (T <
+103K) and dense (n > 0.1 amu cm−3) though stars typically form above 100 amu cm−3
+– 7 –
+
+because of the H2 requirement. The probability of a star particle forming within a time ∆t
+is given by:
+p = mgas
+mstar
+(1 −e−c∗
+0XH2∆t/tform)
+(2.3)
+where XH2 is the mass fraction of Hydrogen in the form of H2. In the equation above mgas
+is the mass of the gas particle, mstar is the initial mass of the star particle that forms, and
+tform is the local dynamical time. The star formation efficiency parameter (c∗
+0) is a tunable
+parameter set to 0.1 such that star formation follows the normalization of the Kennicutt-
+Schmidt relation [145]. Star particles represent a population of stars born with a [146] initial
+mass function.
+3
+Results
+We organize this section as follows. In Section 3.1 we measure the inner density slopes of
+halos from all three of our simulations (Ms.Marvel SIDM DMO, Storm CDM DMO, Storm
+CDM+baryons) at redshift zero, then trace both the central densities and inner density slopes
+of these halos through time to study core formation. We isolate a sample of core-collapsed
+SIDM halos from Ms.Marvel DMO in Section 3.2, and identify a threshold for core-collapse in
+Section 3.3. We compare core-collapse timescales with predictions from a parametric model
+of gravothermal evolution [1] in Section 3.4.
+3.1
+Core formation in SIDM and CDM simulations
+As discussed in the introduction, previous works have found that core-formation in ΛCDM
+can be achieved through the inclusion of strong baryonic feedback, while SIDM halos naturally
+produce central density cores. We directly compare core formation between SIDM and CDM
+simulations with our Ms.Marvel DMO and Storm CDM+baryons halos in Figure 2, which
+plots inner density slope against halo mass. We include halos from our Storm CDM DMO
+simulations, whose unaltered DM density profiles serve as a baseline comparison. Ms.Marvel
+DMO halos are represented by circles colored by their z = 0 central density, while Storm
+CDM DMO and Storm CDM+baryons halos are marked by empty squares and purple squares
+respectively. Coloring SIDM halos by their central density illustrates the relationship between
+central density and the slope of the DM density profile at the center of each halo. Central
+density is calculated as the average density contained within a 0.33 kpc radius from the
+center of the halo. We find that above halo masses of ∼1010M⊙, both DM self-interactions
+in SIDM halos and baryonic feedback in CDM halos produce central density cores. At lower
+halo masses, only SIDM halos can form cores.
+We measure inner density slope at 0.33 kpc (∼5× the softening length) by applying a
+linear fit in log-log space to the DM density profile of the halo calculated through pynbody
+[147] between 0.26 and 0.39 kpc.
+1 We chose this radius because it is the smallest radius
+where the DM density profile of the halo remains spatially resolved. We note that we measure
+the slope of the DM density profile outside of the core radius for all but the most massive
+halos in our sample, however, as we show in figure 2 we are still able to differentiate between
+core-forming SIDM halos and core-collapsing SIDM halos at this radius. The DM density
+profiles are calculated from the mass profiles generated by Tangos, a system that creates
+1Measuring at a fixed radius means that the inner density slope is measured at larger distances (with
+respect to the virial radius) as mass decreases. As a result, in Figure 2 the slopes of the density profiles
+steepen with decreasing halo mass.
+– 8 –
+
+Figure 2. Central inner density slope (α) vs DM halo mass colored by central density. Colored
+circles, empty squares, and purple squares represent halos from the Ms.Marvel DMO, Storm CDM
+DMO, and Storm CDM+baryons simulations respectively. Grey points represent observed slopes in
+dwarf galaxies from [149] (square), [150] (up triangle), [61] (down triangle), and [151] (diamond).
+The inner density slope of a smoothed DM density profile is measured between 0.26 and 0.39 kpc in
+each halo. Ms.Marvel halos are colored by corresponding central density, calculated as the averaged
+density within a radius of 0.33 kpc.
+and organizes databases of galaxy and halo properties in simulations [148]. We find that, for
+SIDM halos in particular, this practice best preserves the high central densities of DM at the
+innermost radii. Additionally, compared to a differential measurement of the density profile,
+using enclosed mass at each radial bin to calculate the average density yields less noise.
+The differences in the inner density slopes of low-mass (Mhalo < 1010M⊙) SIDM and
+CDM halos results from how cores are formed differently between these two models of DM.
+Previous work by [56] studying the Storm CDM+baryons simulations, shows that in ΛCDM
+cores are formed and sustained through repeated feedback events. As a result, in low-mass
+halos, which have fewer stars and less extended star formation histories (SFHs), baryonic
+feedback is insufficient to convert cusps into cores. Both [56] and [63] find that the slopes
+of UFDs, which are defined by [63] as galaxies with M∗/Mhalo ≤5 × 10−5M⊙, are indis-
+tinguishable from DMO halos.
+In this work, we define UFDs as halos less massive than
+109M⊙.2
+Figure 2 shows that as halo mass decreases, the inner density slopes of Storm
+CDM+baryons halos become steeper, converging to the NFW profile predicted by ΛCDM
+DMO simulations. In the Storm CDM DMO run, halos remain cuspy at all halo masses,
+2UFDs are typically defined as galaxies with M∗< 105M⊙[10, 152]. [56] find that, in the Storm simulation,
+galaxies at the upper end of the UFD mass range are hosted by halos with M200 ≃109M⊙. These results are
+in agreement with previous published stellar-mass-halo-mass relations [102, 153].
+– 9 –
+
+with inner density slopes ranging between α ∼−1.7 and −1, despite a wide range of central
+densities. In contrast, Ms.Marvel DMO halos form cores through DM self-interactions. We
+find that these Ms.Marvel DMO halos with Mhalo < 1010M⊙produce DM density profiles
+that are significantly more cored relative to Storm CDM+baryons halos of the same mass.
+Because SIDM halos with sufficiently small initial concentrations can have extremely long
+core-collapse timescales, even with large interacting cross sections, we expect that velocity-
+dependent SIDM models that naturally produce cores in the bright dwarf range will also
+produce some cored halos at lower masses.
+Although we find evidence for core formation across the entire mass range of Ms.Marvel
+DMO halos, 9 of the Ms. Marvel DMO halos have steeper inner density slopes, α < −2.0, ex-
+ceeding the steepest measured slope from our Storm CDM DMO counterparts. These steeply
+cusped SIDM halos have increased central densities that in some cases exceed the central den-
+sities of cusped Storm CDM DMO halos, which are over 10 times more massive. We find
+that Ms.Marvel halos are only this steeply cusped at halo masses below Mhalo ≈109M⊙.
+In Section 3.4 we show that halos more massive than Mhalo = 109M⊙have core-collapse
+timescales that exceed a Hubble time and remain cored. These results indicate that both
+the median inner density slope and the scatter in inner density slope as a function of halo
+mass of Ms.Marvel DMO halos exhibit a strong mass dependence, which is expected given
+the implementation of a velocity-dependent cross section in our SIDM model.
+In Figure 2, we compare with observed central DM density slopes (shown in grey) from
+[150], [61] , [151] , and [149]. The observed DM density profiles are calculated from rotation
+curves assembled using gas tracers [151], stellar kinematics [149], or a mix of baryonic com-
+ponents [61, 150]. [151] measure the slope of the density profile between 300-800 pc, while
+[150] and [61] measure slopes between 0.1-0.2 kpc. [150] and [61] calculate the dark matter
+density profile from measurements of the rotation curve using the Poisson equation under the
+assumption of a spherical mass distribution. They trace the motion of the gas component
+and use the Gauses-Hermite polynomial to model the velocity field. The error bar in the rota-
+tion velocities indicates the dispersion of individual velocity values found along a tilted ring.
+[151] extracts rotation curves using DiskFit to model the fields produced from the Palomar
+Cosmic Web Imager data, the error to the fit is represented by errorbars. For dwarf galaxies
+with resolved stellar kinematics and well behaved HI gas rotation curves, [149] jointly model
+the stellar and gaseous kinematics. They use the HI integrated intensity map and a discrete
+set of line-of-sight velocity measurements from 180 member giant branch stars to calculate
+the circular velocity of WLM. [150] and [149] study a set of isolated field dwarfs with lit-
+tle to no gravitational interactions with other galaxies. Both data sets from [151] and [61]
+include dwarf galaxies in a range of environments, however we exclude known satellites for
+an apples-to-apples comparison between observations and the isolated field dwarfs from the
+Ms.Marvel DMO and Storm CDM DMO simulations. SIDM satellites are also subject to host
+halo effects such as tidal and ram-pressure stripping, which can impact their evolution [154].
+For example, tidal interactions have been shown to disrupt the gravothermal evolution of
+simulated SIDM satellites [80, 116–118]. However, [76] and [80] find that tidally stripped
+SIDM halos can also have accelerated core-collapse timescales. In the ΛCDM paradigm tidal
+stripping has been shown to lower the central DM densities, particularly in cored satellites
+[21, 23].
+The substantial differences in the predicted slopes of the DM density profiles at halo
+centers of classical dwarf galaxy mass halos (109M⊙−1010M⊙) could be used to discriminate
+between DM models observationally. Of the 4 lowest-mass observed dwarfs (IC 1613 [61],
+– 10 –
+
+Figure 3. Central inner density slope traced through time for Ms.Marvel DMO halos. Inner density
+slope of a smoothed DM density profile is measured between 0.26 and 0.39 kpc in each halo. Each
+solid line represents one halo, and lines are colored by halo central density at redshift zero. Halos are
+separated into different panels by halo mass measured at redshift zero, decreasing from left to right
+and from top to bottom. The black line represents the average slope traced through time for the
+halos in each mass bin. Magenta lines represent slopes traced through time for Storm CDM+baryons
+halos. Inner density slopes are measured using the same methodology as in Figure 2.
+CVnIdwA [61], DDO 216 [61], and NGC 949 [151]), two are distinctly cuspy while the others
+are more cored, with one positive core slope measurement. Strong, repeated bursts of stellar
+feedback are required to form cores in CDM halos [56, 57], as a result, simulations predict
+that CDM halos in this mass range should have cuspy inner DM density profiles. In other
+words, cored low-mass halos are incompatible with current predictions from ΛCDM simula-
+tions. In contrast, we find that the slopes of Ms.Marvel DMO halos can fall within a range
+of values, from cored to steeply cusped. However, observed isolated dwarfs from [150], [61] ,
+[151] , and [149] do not prefer either DM model shown in this work.
+By measuring the inner density slopes of low-mass dwarfs discovered in new and up-
+coming surveys or finding ways to decrease the uncertainty of this measurement, we have the
+potential to rule out or place constraints on some DM models.
+3.2
+Tracing inner density slope and central density through time
+Tracing inner density slope and central density over time enables us to study the formation of
+cores in Ms.Marvel DMO halos and compare their evolution with their Storm CDM+baryons
+counterparts. Through this process, we can visually identify core-formation and potential
+core-collapse in the Ms.Marvel DMO run. We trace the inner density slopes of each Ms.Marvel
+DMO and Storm CDM+baryons halo in Figure 3 while Figure 5 traces the growth in central
+density between 2.26 and 13.78 Gyr, normalized by each halo’s initial central density for each
+matched run. In Figures 4 and 6 we trace properties from the Storm CDM DMO simulation
+– 11 –
+
+Figure 4. Central inner density slope traced through time for Storm CDM DMO halos. inner density
+slope of a smoothed DM density profile is measured between 0.26 and 0.39 kpc in each halo. Each
+solid line represents one halo, and lines are colored by central density at redshift zero. Halos are
+separated into different panels by halo mass measured at redshift zero, decreasing from left to right
+and from top to bottom. The black line represents the average slope traced through time for the halos
+in each mas bin. Magenta lines represent slopes traced through time for Storm CDM+baryons halos.
+Inner density slopes are measured using the same methodology as in Figure 2.
+to serve as a benchmark comparison. In the following section, we show that SIDM halos form
+central density cores at early times, CDM halos with baryonic feedback form cores in higher
+mass dwarfs at relatively later times, and CDM DMO halos maintain cuspy, NFW profiles
+throughout their lifetimes.
+Figures 3, 4, 5, and 6 are arranged as follows; each figure contains six separate panels
+that are divided into different mass bins, ordered from high to low mass, going from left to
+right and top to bottom. Each solid line represents the smoothed profile of an individual
+halo and is colored by its central density at redshift zero. The bluer lines correspond to
+decreased densities at redshift zero. The central density at redshift zero is calculated using the
+same methodology described in Section 3.1. The black line represents the average evolution
+track for halos in the corresponding mass bin. Plots are smoothed using a low pass infinite
+impulse response (IIR) filter, described by a differential equation which relies on coefficients
+to reject high frequencies and pass low frequencies, reducing signal noise. We design a low
+pass filter using the irfilter function from scipy.signal and apply it to the data set with the
+scipy.signal.filtfilt function.3
+While tracing halo properties through time, we find several examples of halos with inner
+density slopes or central densities that temporarily fluctuate, typically for a few Gyr or less.
+For example, halo 16 from the Ms.Marvel DMO simulation has a inner density slope of around
+3See https://github.com/scipy/scipy/blob/v1.16.1/scipy/signal for more details
+– 12 –
+
+-0.5 for most cosmic time, but between 7.5 and 12 Gyr the slope dips to nearly −2.0. After
+examining the merger trees from each halo with large fluctuations in either inner density
+slope or central density, we find that each of these instances coincided with a merger event.
+Halos with disrupted inner density slopes also show large deviations in central density at the
+same time-step. We conclude that mergers can temporarily alter the DM density profiles of
+DM halos [155–157] for all three simulations; Ms.Marvel SIDM DMO, Storm CDM DMO,
+and Storm CDM+baryons. The effects of these mergers typically do not exceed 2 Gyr and
+can significantly disrupt the centers of DM halos during this time.
+3.2.1
+Inner density slopes
+Separating our sample into different mass bins reveals that the evolution of inner density slope
+is mass-dependent in Ms.Marvel DMO as shown in Figure 3. We find that all Ms.Marvel
+DMO halos, excluding those in the lowest mass bin (Mhalo < 108M⊙), show signs of core-
+formation with central density slopes shallower than a cuspy NFW profile. However, only the
+most massive Ms.Marvel DMO halos form true cores, while halos less massive than 109M⊙
+have cuspier central profiles on average. We define resolved cores and central density cores
+with core radii that are greater than the spatial resolution used in this work. We measure the
+core radius of a halo by fitting the DM density profile with a core-Einasto profile [63]. We find
+that Ms.Marvel halos at higher masses are always cored, as far back as we trace halo proper-
+ties through time. These results indicate that the cores of larger dwarfs (Mhalo > 109M⊙) are
+fully formed within the first 2.26 Gyr of the simulation. Figure 3 indicates that while cores
+form at early times at all halo masses, the average inner density slope reached by redshift
+zero in Ms.Marvel DMO halos decreases with mass.
+We note that by measuring at a constant radius of 0.33 kpc we measure the inner density
+slope of lower mass halos at significantly larger radii relative to their virial radii. For halos
+with masses less than 109M⊙we are likely measuring the inner density slope well outside of
+the core radius and as a result, find that inner density slopes become steeper with decreasing
+halo mass. However, we find evidence that most of these halos are likely still core forming
+by comparing their inner density slopes with the unaltered NFW profiles of Storm CDM
+DMO halos in Figure 4. We show that relative to Storm CDM DMO halos, Ms.Marvel SIDM
+halos are significantly more cored at these lower masses, excepting the cases where the halo
+is undergoing gravothermal core-collapse which we discuss further in Section 3.3.
+We show in Figure 4 that at all halo masses Storm CDM DMO halos maintain cuspy
+central profiles throughout their lifetimes that, on average, have inner density slopes between
+−1.0 and −1.7. Slopes at the shallower end of this range match predictions from the NFW
+profile, however, we also find that a significant population of CDM DMO halos have slopes
+that are steeper.
+We find that, on average, as halo mass decreases inner slopes become
+steeper. At lower halo masses the fixed radius of 0.33 kpc we use to measure slope becomes a
+larger fraction of the scale radius, where the slope of an NFW halo becomes −2. As a result
+we would expect halos at lower masses to have slopes that are steeper than −1.
+We note that even in the highest mass range we identify halos with inner density slopes
+steeper than −1.5. Previous works indicate that the NFW profile may underestimate the
+density of dark matter at the centers of halos [5, 158, 159]. However, N-body simulations find
+a wide range of slopes for the central density cusps of CDM halos, some of which are shallower
+than predictions from the NFW profile [160–162]. Major mergers [163, 164] and rapid mass
+accretion [165] have been shown to transition steeper cusps into cores. Additionally, [166]
+and [167] find that the overall mass accretion history of the halo is a good predictor of the
+– 13 –
+
+slope of the DM density profile.
+We trace inner density slopes of Storm CDM+baryons halos through time (magenta
+lines) in both Figures 3 and 4 to compare core formation timescales in the Ms.Marvel simula-
+tions with results from our baryonic CDM Storm simulation. We find that relative to SIDM
+halos, Storm+baryons halos form cores at later times, only after halos have been subject to
+sufficient repeated rounds of stellar feedback. In accordance with previous results from [56],
+core-formation is mass-dependent in CDM halos, with only the most massive dwarfs forming
+large central density cores. In several of the lowest-mass halos in our sample (∼109M⊙)
+the inner density slopes remain cuspy throughout their lifetimes because the limited stellar
+feedback is insufficient to form central DM density cores. At these halo masses, we find that
+the slope of the inner density profile is indistinguishable from our CDM DMO run of Storm.
+3.2.2
+Central densities
+By tracing the growth in central density over time for Ms.Marvel halos we show that the
+evolution of central density tracks inner density slope and, more broadly, core-formation. In
+Figure 5, the highest-mass and most cored Ms.Marvel DMO halos have large central densities
+at early times that quickly drop to values a fraction of their original value. Most cuspy halos
+(α < −1.0), typically with masses below 5 × 108M⊙, have nearly constant central densities
+throughout their lifetimes. Results from Figure 3 indicate that cores of the more massive
+Ms.Marvel halos (Mhalo > 109M⊙) with the longest core-formation timescales, have well-
+developed cores by 2.26 Gyr. It is possible that the central densities of halos with lower
+masses, which typically form cores faster than halos at higher masses, are relatively constant
+because they have fully formed core at 2.26 Gyr. These results reveal that the evolution of
+central density as well as inner density slope is mass-dependent in Ms.Marvel DMO.
+We note that the mass-dependence of central density may also be impacted by our
+choice to measure both the central densities and the inner density slopes of each halo at a
+fixed radius, regardless of halo mass. When measuring the sizes of cores in these low-mass
+Ms.Marvel DMO halos, we find that only the most massive halos in our sample have core
+radii that are larger than the fixed radius where we measure density slopes. Because the core
+radii of lower-mass halos are smaller than radius of measurement, at these mass scales we
+measure the slope of the profile outside of the central DM density core. As DM halos form
+cores, DM particles are pushed out of the inner parts of the halo to larger radii, increasing the
+density of DM outside of the core. This effect may wash out central density measurements
+taken far enough outside of the central DM density core. By measuring the central density
+and the slope of the density profile of lower mass halos (Mhalo < 109M⊙) at smaller radii
+we could trace their evolution within the core radius, which would potentially reduce mass-
+dependence.
+We find that the evolution of central density closely follows inner density slope for
+CDM halos from Storm CDM DMO and Storm CDM+baryons as well as SIDM halos from
+Ms.Marvel. The Storm CDM DMO halos shown in Figure 6 are centrally dense at all times,
+with very few halos that experience a significant long-term increase or decrease in central
+density. Similarly to low-mass Ms.Marvel DMO halos (Mhalo < 109M⊙), the average central
+density for Storm CDM DMO halos is nearly constant, with a slight increase over time (likely
+a result of fast accretion halo growth dominated by major mergers [168, 169]), independent
+of halo mass. The baryonic CDM halos from our Storm+baryons simulation colored in dark
+blue for both Figures 5 and 6 decrease in central density over time in the highest mass bin
+and show a range of behavior at lower masses. The lowest-mass Storm+baryons halo has a
+– 14 –
+
+Figure 5. Average central density measured within 0.35 kpc traced through time for Ms.Marvel
+DMO halos. Central density is normalized by dividing by the initial central density (ρ0) of each
+halo. Each solid line represents one smoothed halo profile, and lines are colored by central density
+at redshift zero. Halos are separated into different panels by halo mass with mass decreasing from
+left to right and from the top to bottom rows. The black line represents the average densities traced
+through time for the halos in each panel. Magenta lines represent central densities traced through
+time for Storm CDM+baryons halos. Central densities are calculated by taking the average central
+density contained within 0.35 kpc of the halo center normalized by initial central density.
+central density that remain largely constant over time, mirroring the behavior of Storm DMO
+halos. We note that the initial growth in central density and subsequent fluctuations in are
+caused by halo mergers that take place at early times. Between halo masses of 109−10M⊙
+the more massive baryonic CDM halos have decreasing central densities over time, closely
+following the behavior of core-forming SIDM halos from the Ms.Marvel simulation.
+3.3
+Core-collapsed Ms.Marvel DMO halos
+Core-collapsed halos are characterized by an initial core-forming phase, and later undergo
+core-collapse. The core-formation and core-collapse timescales are then dependent on the
+quantity of SIDM self-scattering events. Increasing the size of the cross section leads to more
+frequent scattering events, which has been shown in previous work to cause SIDM halos to
+collapse at earlier times [121]. We analyze the gravothermal evolution of SIDM halos in the
+Ms.Marvel simulation by tracking the distribution of DM at the center of collapsing halos
+over time.
+In Figures 3 and 5, we identify 13 halos with divergent behavior. This subset of halos is
+characterized by density profiles that grow cuspier at late times, while the average Ms.Marvel
+DMO halo grows more cored (at higher masses Mhalo > 109M⊙) or maintains a constant
+central density (at lower masses Mhalo < 109M⊙). In addition to having steeper central
+slopes, these halos are also more centrally dense at late times. Seven halos have particularly
+– 15 –
+
+Figure 6. Average central density measured within 0.35 kpc traced through time for Storm CDM
+DMO halos. Central density is normalized by dividing by the initial central density (ρ0) of each
+halo. Each solid line represents one smoothed halo profile, and lines are colored by central density
+at redshift zero. Halos are separated into different panels by halo mass with mass decreasing from
+left to right and from the top to bottom rows. The black line represents the average densities traced
+through time for the halos in each panel. Magenta lines represent central densities traced through
+time for Storm CDM+baryons halos. Central densities are calculated by taking the average central
+density contained within 0.35 kpc of the halo center normalized by initial central density.
+high central densities, exceeding 5×107M⊙kpc−3, which is approximately twice the average
+central density of our Ms.Marvel DMO halos. These highly centrally dense halos have masses
+≲109 M⊙and display steadily decreasing inner density slopes for the majority of their
+lifetimes. In some cases, inner density slopes reach values as low as −2.5 which is substantially
+lower than −1.9, the steepest slope identified in our sample of Storm CDM DMO halos. The
+steepening of the density slopes of Ms.Marvel DMO halos could result from core-collapse.
+We caution, however, that the resolution limits of the simulations do not permit us to fully
+resolve core-formation in the mass range of the affected halos. We explore this further in
+Figure 7, which isolates a subset of potentially core-collapsed halos.
+In the following section, we define our sample of core-collapsed halos as having inner
+density slopes that are more negative than −2.0 at z = 0.
+We track the gravothermal
+evolution of these Ms.Marvel DMO halos through time in Figure 7 to better illustrate how
+DM behaves at the centers of halos during core-collapse, and measure core-collapse timescales.
+The left panel of Figure 7 traces the inner density slopes of 9 core-collapsed halos over time,
+with each halo colored by its maximum circular velocity. We define our core-collapsed sample
+as halos with slopes which are more negative than −2.0 at redshift zero. We adopt this
+threshold because it is just outside the range of inner density slope values we identified in
+our sample of Storm CDM DMO halos. We further define a core-collapse time, Tc, where
+the inner density slope of the halo first drops below a threshold of −2.0, illustrated by the
+– 16 –
+
+Figure 7. Left panel: Inner density slope measured at 0.33 kpc traced through time [Gyr] for our
+sample of core-collapsed Ms.Marvel DMO halos. Each solid line represents one halo, and lines are
+colored by maximum circular velocity with larger Vmax appearing bluer and lower values appearing
+pinker. Vertical dashed lines intersect with inner slopes at the time when the halo’s inner density
+slope first reaches −2.0 and the halo enters the initial stages of core-collapse. The −2.0 threshold
+of inner density slope is shown by the horizontal gray line. Middle panel: average central density
+enclosed within 0.35 kpc for core-collapsed halos traced through time. Central density is normalized
+by dividing by initial central density. Right panel: Mass enclosed within 0.35 kpc for core-collapsed
+halos traced through time.
+vertical dotted lines. We use this collapse time to mark when the SIDM halo enters the initial
+stages of core-collapse, and is not yet fully core-collapsed. This threshold marks the point
+when an SIDM halo first becomes more steeply sloped than simulated halos from Storm
+CDM DMO. In simulations with fully resolved core-collapse, the inner density slope of a
+fully core-collapsed halo will become significantly steeper than this threshold in both isolated
+gravothermal simulations [69–74, 77–82, 170] and cosmological simulations [74–76, 83, 85,
+94, 170]. We then test how well our measured collapse time compares to predictions from
+analytic models.
+The middle and right-hand panels in Figure 7 measure the amount of DM contained
+within the halo center over time using different properties for direct comparison. The middle
+panel traces a normalized central density using the same methodology as in Figure 5 and
+the right panel traces the total mass contained within 0.35 kpc. Comparing the middle and
+right-hand panels to the evolution of the inner density slope in the left panel clearly shows
+how the slope reacts to increases in the density/mass of DM located at the halo center. As
+expected, we find that the inner density slope is inversely related to the central density, where
+the sharpest decrease in the density slope corresponds to the highest rate of growth in central
+density.
+We find that most core-collapsed halos have fully formed cores by 2.5 Gyr, evidenced
+by their lowered central densities and shallower inner density slopes. Core-collapse occurs
+at a variety of times for Ms.Marvel DMO halos, with halos entering the initial stages of
+core-collapse as early as ∼6 Gyr and some not entering the core-collapse phase until nearly
+the end of the simulation. Additionally, we find that both the central density and enclosed
+mass are good tracers of core-collapse. Specifically, an increase in either of these quantities
+can indicate core-collapse.
+– 17 –
+
+Figure 8.
+Left side: Predicted core-formation timescales (defined as τ = 0.15) plotted against
+halo mass for Ms.Marvel DMO halos.
+Blue squares mark the time when the inner density slope
+of a Ms.Marvel DMO halo first drops below −2.0 while colored circles represent the predicted core-
+formation timescales, calculated analytically from a parametric model [119]. Circles are colored by the
+maximum circular velocity of each Ms.Marvel halo at redshift zero. Black lines link collapse timescales
+from predictions and times measured directly from simulations for the same halo. The purple dashed
+line marks the time of the last simulation snapshot at redshift zero. Right side: Predicted core-collapse
+timescales calculated using Equation 3.1 (from [1, 74, 119]) plotted against halo mass, using the same
+notation as the left side.
+Three of the halos in the core-collapsed sample have a slight decrease in central density
+and enclosed mass at late times. In Appendix B we show that this unexpected turndown
+in DM density results from measuring central density too far outside the halo center. With
+higher spatial resolution, it is possible to more confidently measure halo properties within
+smaller radii. However, we show that the growth of the central density remains mostly stable
+down to one gravitational softening length.
+3.4
+Parameterization of gravothermal evolution
+Following [100], we analytically calculate the core-formation timescale, defined here as the
+full time that the SIDM halo is core-forming, ending at the point where the halo begins to
+undergo core-collapse, using a parametric model. The gravothermal evolution of each halo
+is parameterized by τ ≡t/tcc where t is the formation time of each halo and tcc is the core-
+collapse timescale [74]. Halos with τ < 0.15 are defined as “core-forming” and halos with
+τ > 0.75 are “core-collapsed”. Halos that are core-forming have decreasing central densities
+and halos in the core-collapse phase have central densities exceeding CDM halos [1, 171]. As
+such, the core-formation timescale is calculated as the time it takes for the halo to reach the
+point where τ = 0.75 in its gravothermal evolution. This gravothermal evolution is governed
+by a set of normalized density parameters such that when the halo becomes fully collapsed
+(τ = 1) the scale density grows to be approximately 10 times its initial value [1].
+The formation time t for each halo in Ms.Marvel is computed using a universal halo mass-
+formation time relation defined as when the NFW halo parameters ρs and rs first become
+stable, estimated by its present day halo mass. See Section 3.1 of [119] for more details. To
+analytically calculate the core-collapse timescales we use a parametric model [1, 119, 120],
+which models the gravothermal evolution of SIDM halos from their initial NFW profile. In
+– 18 –
+
+this model the core-collapse timescale [74] is characterized by the following equation;
+tcc = 150
+C
+1
+(σeff/m)reffρeff
+1
+√4πGρeff
+(3.1)
+Where σeff is the effective cross section and C is a constant, calibrated to N-body simulations.
+In this work, we adopt the same value of C = 0.75 used by [119]. We note that a larger
+(smaller) value of C would shorten (lengthen) the core-collapse timescales calculated in this
+work. We define the effective radius (reff), and the density at the effective radius of the halo
+(ρeff) below.
+reff = Rmax
+2.1626,
+ρeff =
+
+Vmax
+1.648 × reff
+2
+× G−1
+(3.2)
+In the case where the DM halo follows an NFW profile the effective density (radius) converges
+to the scale density (radius), see [1] for more details. We calculate the effective cross section
+following work from [137] where we assume that DM particles follow a Maxwell-Boltzmann
+velocity distribution. The following equation assumes a differential cross section of
+dσ
+d cos θ to
+evaluate the cross section
+σeff =
+1
+512v8
+eff
+Z
+dvd cos θ(
+dσ
+d cos θ)v7 sin2 θ exp(−v2
+4v2
+eff
+)
+(3.3)
+where veff ≈0.64 Vmax (maximum circular velocity). The function integrates over the halo’s
+characteristic velocity dispersion and scattering angle between DM particle collisions evalu-
+ated form from 0 to π. For a given halo, we assume a Maxwellian distribution and integrate
+the velocity term from zero to infinity. The relative velocity of DM particles is represented
+by v and θ is the scattering angle in the center of mass frame. The differential cross section
+of SIDM particles in our simulations is approximated by the following equation from [135]
+dσ
+dΩ≈σT
+4π
+β ≲1
+(3.4)
+To apply this differential cross seciton to the equation described in [1] we partially integrate
+the solid angle derivative over dϕ, assuming azimuthal symmetry.
+The parametric model predicts the gravothermal evolution of SIDM halos from the evo-
+lution history of the circular velocities of matched CDM counterparts. The model assumes
+that the mass accretion history of SIDM halos and CDM halos are similar. This assumption
+is primarily violated in subhalos, which are excluded from the halo sample used in this anal-
+ysis. In this work, we study a sample of extremely low-mass SIDM halos from a cosmological
+simulation. Because of the stochastic nature of these simulations, particularly at such low
+masses, we only identify matched CDM halos for a few of the halos in our core-collapsed
+SIDM sample. As a result, we instead analytically calculate collapse timescales from the
+Vmax and Rmax of our SIDM halos at the final time-step in the simulation at redshift zero.
+In this case, the collapse time indicates how much additional evolution past redshift zero are
+required for the halo to become fully core-collapsed. Because we use the analytic collapse
+time to calculate the amount of time required for additional evolution we eliminate the un-
+derlying assumption that the mass accretion histories of SIDM and CDM halos are similar.
+However, this analysis is limited by the resolution of SIDM halos particularly at low
+masses and in the late stages of evolution. As we noted earlier, many of our halos may expe-
+rience artificially elongated collapse times as a result of limited halo resolution. Additionally,
+– 19 –
+
+it is extremely difficult to measure SIDM halos in the later stages of core-collapse. As a result
+we note that our analytically calculated collapse times, particularly at the low-mass end, are
+potentially biased towards longer collapse times.
+Figure 8 validates our measurement of Tc measured from the inner density slopes of DM
+halos. Here we directly compare the core-formation and core-collapse timescales predicted by
+the parametric model [1, 100, 119, 120]. The left side of Figure 8 compares Tc with the pre-
+dicted core-formation timescales. The right side of Figure 8 compares Tc with the analytically
+predicted core-collapse timescale. The figure uses the following legend; blue squares mark Tc
+for our sample of core-collapsed Ms.Marvel DMO halos and circles (diamonds) represent the
+core-formation (collapse) timescales and are colored by maximum circular velocity. Black
+lines link different timescales measured for the same halo. The dashed purple horizontal line
+marks the last timestep of the simulation, equal to the age of the Universe.
+Because the predicted core-collapse timescale is set such that it measures the amount
+of additional time past redshift zero required for the halo to become fully core-collapsed it is
+necessarily offset to longer timescales than the collapse timescale measured from inner den-
+sity slope. We note that SIDM halos experience rapid gravothermal evolution after reaching
+the end of the core-forming phase, and should collapse on short timescales. As a result, the
+core-formation timescale can also be used to indicate the initialization of core-collapse in an
+SIDM halo.
+We find that core-formation and core-collapse timescales are mass-dependent, where
+formation/collapse times increase with larger relative velocities between DM particles and
+decreasing cross-section of interaction. The predicted timescales of Ms.Marvel halos with
+masses greater than 5 × 108M⊙grow steadily with increasing halo mass. Below this thresh-
+old, Ms.Marvel halos have a wide range of potential core-formation/collapse times. We note
+that this behavior is specific to the scattering model used in this work and different cross sec-
+tion models result in distinct patterns. However, at lower masses the gravothermal evolution
+of the halo is greatly influenced by halo concentration accross all SIDM models. As a result,
+for a halo to become core-collapsed within a Hubble time it must not only be low mass, but
+also have a high enough concentration to increase the rate of self-scattering events.
+The lowest mass Ms.Marvel halos have collapse timescales that range in several orders
+of magnitude. This huge scatter in core-collapse time that increases with decreasing halo
+mass may partially result from resolution effects [82, 83]. [82] found that for halos with fewer
+than 105 particles the collapse rate has large variation due to the effects of large discreteness
+noise. Additionally, they found that these outliers in the collapse rate are slightly biased to-
+ward longer core-collapse timescales, which could partially account for the elongated collapse
+rates predicted in some of our analytic calculation in the UFD mass range, where halos may
+contain as few as 104 particles. As a result, in halos with masses below ∼8 × 108M⊙we
+would expect analytically predicted collapse times to be biased toward longer timescales. We
+note that the particle resolution effect is found to impact collapse times on an order of 10’s
+of percent effect [82], indicating that some of the extremely long collapse times measured in
+this work may suffer from additional resolution effects.
+Nonetheless, in Figure 8 we find good agreement between the collapse time directly
+measured from the inner density slopes of Ms.Marvel DMO halos Tc, and analytic calcula-
+tions of core-formation and core-collapse. Despite only identifying 9 halos as core-collapsed
+out of the 24 halos with core-formation timescales shorter than the length of the simulation,
+we successfully find the halos with the shortest core-formation and core-collapse times. Each
+core-collapsed halo has a predicted core-formation time smaller than 10.5 Gyr. In contrast
+– 20 –
+
+9 out of the 24 halos with fully formed cores have core-formation times exceeding 12 Gyr.
+These halos require more than 13 Gyr of additional evolution past the end of the simulation
+to become fully core-collapsed. Compared to the halos we identify as core collapsed, seven
+are predicted to be fully collapsed within 2 Gyr of the last timestep, and all are predicted to
+be fully collapsed within 6 Gyr. We conclude that we are able to successfully identify the 9
+most deeply core-collapsed halos in our sample. The remaining 15 out of 24 halos are likely
+at the onset of core-collapse, however, they are not yet collapsed enough to be detected.
+We find that the analytic core-formation timescales generally have good agreement with
+collapse times measured from the halo’s inner density slope. All halos have Tc that agree
+within 4 Gyr of the analytic prediction for core-formation, with no apparent differences in
+the degree of accuracy between lower and higher mass halos. Measured timescales appear to
+favor times that are slightly longer than the core-formation timescale, with only three halos
+(of the 9 that we identify as core-collapsed) having measured core-collapse times shorter than
+the analytically predicted core-formation time. This means that we identify halos as core-
+collapsed around or shortly after the halo has finished forming its core. These results indicate
+that even in the initial phases of core-collapse, the inner DM density profiles of SIDM halos
+become significantly cuspier.
+Most of the core-collapsed halos are all extremely low-mass (Mhalo ≲2 × 108M⊙) with
+central density cores that are too small to be fully resolved. We speculate that measuring the
+inner density slope closer to the center of these lower mass halos could bring our results into
+closer agreement. However, in this section we do not measure the density slopes inside of 0.33
+kpc, the spatial resolution cut uniformly adopted in this work. In the Discussion section we
+study the effects of measuring the slope of core-collapsed halos at different radii, including
+measuring the density slope within three times the softening length (see Figure 10). For a
+discussion of spatial resolution limits adopted in this work see Appendix C.
+Previous work studying collapse timescales for SIDM halos [80, 82, 121] commonly uses
+the increase or growth in central density as a metric to identify core-collapse timescales. In
+Appendix A we compare our results from this section with a different method for identifying
+halos in the core-collapse phase using measurements of the growth of central density of the
+halo. We find that, for identifying halos that are in the core-collapse phase, central density
+is a less accurate metric than inner density slope. For a more detailed discussion see Figure
+12 in Appendix A and the discussion therein.
+4
+Discussion
+In this paper we study the gravothermal evolution of isolated dwarf halos simulated with
+SIDM by measuring the central densities and inner density slopes of halos from the Ms.Marvel
+simulation. Here we contextualize our results by comparing our simulations with other works
+and discussing the impact of measuring halo properties at different radii. We note that dif-
+ferent papers favor a variety of methodologies for measuring density slope and both observers
+and simulators frequently measure halo properties at different radii, complicating the com-
+parison of our results with previous works. In the following section we discuss how differences
+between simulations, such as SIDM model and environment, can impact the gravothermal
+evolution of SIDM halos. We also measure halo properties across a range of radii, these re-
+sults have important implications for how the definition of core-collapse changes, depending
+on the radius of measurement.
+– 21 –
+
+4.1
+A comparison to other SIDM simulations
+In the following section we compare we compare our Ms.Marvel DMO halos with different
+SIDM cross sections from [93] and [136]. In Section 2 we compare the cross sections from
+this work with the cross sections from [136] and [93] directly (Figure 1), however, Figure 9
+plots the inner density slopes of of SIDM halos from various models against their halo mass.
+Blue points represent Ms.Marvel halos, where inner density slope is calculated using the
+same method described in Figure 2. Grey markers represent the density slopes of observed
+galaxies as described in Figure 2. Pink hexagons represent halos from [93] with a constant
+cross section of interaction of σ = 2 cm2/g. They measure the DM density profile measured
+at 500 pc for two distinct field dwarfs with masses of 1010M⊙and 5 × 1010M⊙. We find
+that, for halos in this mass range, the cross section implemented by [93] is consistent with
+the cross section adopted in this work. This is, perhaps, unsurprising considering that at the
+effective cross section of our velocity-dependent SIDM model lies between 100 and 101 for
+halos in this mass range.
+The results presented from [136] are the average slopes of a sample of satellites of MW-
+mass hosts from the TangoSIDM simulations with masses ranging from 109−9.5M⊙. [136]
+measure the logarithmic density slope by taking a linear fit of the DM density profile between
+1 −3 kpc. The different colors correspond to four unique SIDM models; SigmaConstant10
+(dark red), SigmaVel20 (red), SigmaVel60 (dark orange), and SigmaVel100 (lighter orange).
+SigmaConstant10 is a constant cross section of interaction σ = 10 cm2/g, while the velocity-
+dependent models are characterized by the cross section reached at 10km/s such that, for
+SigmaVel100 σT /mχ = 100 cm2/g. Similarly models reaching 60 and 20 cm2/g at 10 km/s
+are called SigmaVel60 and SigmaVel20, respectively. Figure 1 plots the transfer cross sections
+of out SIDM model and the models from [93] and [136] for a direct comparison. We show in
+Figure 2 that our SIDM model allows us to match observations of central cores in isolated
+field dwarf galaxies in the bright dwarf mass range (Mhalo = 1010−11M⊙). At lower masses,
+a subset of SIDM halos undergo core-collapse, becoming extremely centrally dense to match
+low-mass objects with high central densities [61, 151].
+Similarly to the SIDM model studied in this work, [136] also simulate a light-mediator
+model with a Yukawa potential. However, the differential cross section from the Ms.Marvel
+simulations lies in the perturbative regime (where αχmχ/mϕ < 1), while the Transfer cross
+section in this work considers non-perturbative corrections outside of the regime where the
+Born approximation is valid.
+The cross sections of the SIDM models implemented by [136] are lower than the velocity-
+dependent interaction cross section implemented in Ms.Marvel, however, we find that Tan-
+gosSIDM halos undergo gravothermal collapse at higher masses relative to Ms.Marvel DMO
+halos. We expect that differences in environment may account for the accelerated collapse at
+higher masses in the TangoSIDM simulations. TangoSIDM halos are satellites of a MW-mass
+host while the largest halo simulated in Ms.Marvel is a Large Magellanic Cloud (LMC) mass
+halo. Additionally, we exclude satellites in our sample, meaning that all Ms.Marvel halos pre-
+sented in this work exist in a relatively isolated environment. This speculation is supported
+by [99, 172] who show that core-formation in SIDM halos is dependent on environment. [90]
+find that the rate of core-collapse is also higher in subhalos relative to halos simulated in
+isolation. Additionally, previous work shows that the gravothermal evolution of SIDM halos
+can be accelerated or disrupted by tidal interactions [80, 116–118]. These results underscore
+the importance of studying core-formation in SIDM across a range of environments.
+– 22 –
+
+Figure 9. Central inner density slope (α) vs DM halo mass for SIDM halos from the Ms.Marvel
+DMO run (blue circles), [136] (colored diamonds), and [93] (pink pentagons). Open points are DMO
+runs while filled points are baryonic runs. Grey points represent observed slopes in dwarf galaxies
+from [149] (square), [150] (up triangle), [61] (down triangle), and [151] (diamond). Inner density slope
+is calculated at 0.33 kpc from the DM density profile.
+4.2
+Tracing inner density slope at different radii
+As discussed in the previous section, the DM density profiles of Storm CDM DMO, Storm
+CDM+baryons, and Ms.Marvel DMO halos are not fully resolved at central radii below 0.33
+kpc. This resolution limit severely restricts our ability to study the centers of the lowest-
+mass halos in our sample. Both Figures 2 and 3 demonstrate that the inner density slopes
+of Ms.Marvel DMO halos exhibit a strong mass dependence, where slope decreases with the
+halo mass. We find that low-mass halos (Mhalo < 109M⊙) form cores with sizes well below
+the resolution limits of the simulations. As a result, inner density slope measurements for all
+halos below this mass threshold take the slope of the profile well outside the core radius.
+These results indicate that fully resolving core-formation in UFD-mass halos requires
+extremely high resolution, which would be difficult to achieve in cosmological simulations,
+especially in simulations that incorporate baryonic processes. However, we can still obtain
+information about the centers of these low-mass halos even without fully resolving their cores.
+Our results show clear evidence of core-collapse in halos with halo masses below 2 × 109M⊙.
+Of these nine, the halos with the highest central densities have inner density slopes approach-
+ing −3, far below those predicted by CDM simulations as seen in Figure 2. These slopes also
+deviate from average inner density slope values in their given halo mass bin. We conclude
+that the process of core-collapse impacts the shape of the DM density profile out to much
+larger radii than the core radius. Hence, profile shapes outside of the central DM density
+– 23 –
+
+Figure 10. Left side: inner density slope vs. Tc averaged for nine core-collapsed halos at different
+radii ranging from one softening length at 65 pc (light blue) to 8 times the softening length at 520 pc
+(red). The radius of measurement is colored using the same legend shown on the right-hand side for
+both inner density slope and central density. Lines represent the average inner slope traced through
+time at each radius for the entire sample of core-collapsed Ms.Marvel DMO halos with the shaded
+region corresponding to one standard deviation. Tc is the time relative to core-collapse such that each
+halo’s collapse time is defined as Tc = 0. Core-collapse time is calculated using the same methodology
+as in Figure 7. Right side: Central density normalized by the density of the fully formed core vs.
+Tc. Central densities are measured at the same radii and use the same legend and x-axis as in the
+left-hand side.
+core can still give us insight about the behavior of DM at halo centers.
+To further test how the evolution of the density profiles of core-collapsed halos is im-
+pacted by spatial resolution constraints, we measure inner density slope at different radii for
+our sample of nine core-collapsed Ms.Marvel DMO halos. The left side of Figure 10 plots the
+average density slope measured at different radii, marked by color, over time. We measure
+inner density slopes at 7 different radii ranging from 65 pc (blue) to nearly 500 pc (red)
+for core-collapsed Ms.Marvel DMO halos. Time is measured with respect to core-collapse
+time, where core-collapse time is defined by inner density slope as in Figure 8 with the time
+of core-collapse (Tc) set equal to zero. We define time prior to the onset of core-collapse
+as negative while positive times represent the number of years after core-collapse. Shaded
+regions represent one standard deviation from the mean.
+We choose to study radii ranging from 65 pc to roughly 500 pc to represent a broad scale
+of different spatial resolution limits across simulations and observational data. The smallest
+limit we consider here is the gravitational softening length, while the largest radius is large
+enough to be directly compared with observations. As shown in Appendix B, the growth
+of central density in core-collapsed halos remains stable up to approximately the softening
+length. As a result, we believe that while the regions we study are unresolved within 0.33
+kpc in accordance with stringent resolution restrictions, we expect these trends to be largely
+consistent at higher resolution. Furthermore, without extensive resolution tests trained on
+SIDM halos it is unknown if SIDM simulations face the same resolution issues documented
+in CDM.
+We find that measuring the inner density slope closer to the halo center results in values
+that are more cored. Additionally, we find that at all radii the slopes of Ms.Marvel DMO
+– 24 –
+
+halos are shallowest several Gyr before they begin to collapse. Within one softening length,
+our subsample of Ms.Marvel DMO halos remain cored until they enter the initial stages of
+core-collapse. In contrast, slopes measured outside of this radius steepen during the core-
+forming phase before the halos begin undergoing collapse. The inner density slopes measured
+at radii outside of three softening lengths (180 pc) converge below −2.0 within a couple of
+Gyr after the onset of core-collapse. Inside of three times the softening length we find that
+slopes remain shallower for more extended periods of time, potentially resulting from lowered
+central densities in unresolved halo centers.
+At radii outside of 400 pc we find that inner density slopes start growing shallower
+approximately 1 Gyr after core-collapse. It is reasonable to guess that this behavior might
+be related to the turndown effect that we identify in Figure 7 and discuss in Appendix B.
+However, we show in Figure 7 that the inner slopes of these halos measured at 325 pc don’t
+grow shallower as the central density decreases. This indicates that the slope of the DM
+density profile evolves differently at radii inside and outside of the central DM density core.
+We recommend measuring the slope of the DM density profile at the halo’s core radius. In
+the case that the core radius lies within the resolution limits of the simulation we recommend
+measuring the slope of the profile at the smallest possible resolved radius.
+While our results indicate that the inner density slopes of core-collapsed SIDM halos
+are cusped enough to be distinct from the inner density slopes of CDM halos at a variety
+of radii, it is still difficult to observationally identify core-collapsed halos. This is largely
+because UFDs are extremely low-mass systems, making it hard to resolve their central DM
+density slopes. For instance, [173] find that UFDs can have half-light radii ranging from tens
+of parsecs to several hundred parsecs for galaxies with M∗< 105M⊙in the Local Group. By
+measuring the slope of the DM density profile at larger radii we may be able to probe the
+inner slopes of DM halos at lower masses. We find that even though the measured density
+slope of Ms.Marvel DMO halos in the initial stages of core-collapse depend on the radius
+of measurement, our results converge outside of three times the softening length. This is in
+agreement with previous tests that indicate a convergence radius of 2.8ϵ [174]. We note that
+2.8ϵ is well tested for CDM, but we may be able to resolve lower masses in SIDM simulations
+because SIDM scatter dominates over the spurious two-body gravational interactions. In
+Appendix C we briefly discuss how resolution criteria trained on CDM simulations do not
+account for SIDM self-scatterings and may not be applicable to SIDM simulations. As a
+result, inner density slope remains a valid mechanism for identifying core-collapse out to 500
+pc.
+4.3
+Tracing central density at different radii
+We compare the effect of measuring inner density slope at different radii with central density
+in the right side of Figure 10 by measuring central densities at different radii. Here we plot
+the normalized density measured at different radii separated by color over time. Central
+densities are normalized by dividing by the central density of the fully formed core for each
+halo. We plot the mean of this value for the nine core-collapsing halos over time.
+The right side of Figure 10 demonstrates that the central densities measured at different
+radii diverge as the halo enters the core-collapse stage. When measuring central density at
+radii exceeding 390 pc the average halo only grows to at most twice as centrally dense as its
+initial central density. In contrast, measuring central density at 65 pc results in the central
+density increasing by more than an order of magnitude at the late stage of core-collapse.
+The changes in the growth of central density between different radii are most stark in the
+– 25 –
+
+Figure 11. Left side: the averaged density contained within 50% of a characteristic scale radius
+at redshift zero for Ms.Marvel DMO halos (empty circles), Storm DMO halos (filled triangles), and
+the baryonic run of Storm (filled squares). Each point is colored by the inner dark matter density
+slope, measured using the same methodology as in Figure 2. The filled circles represent SIDM halos
+that we identify as core-collapsed using the criteria from Figure 8. The grey shaded area represents
+a “low resolution” region where for low-mass halos the 50% and 25% fractions of the scale radius
+are smaller than the spatial resolution of the simulation (0.33 kpc). Right side: this figure uses the
+same shared notation from the left-hand side but plots the central density averaged within 25% of
+the characteristic scale radius.
+more advanced stages of core-collapse, however, these differences are apparent even at the
+initialization of core-collapse. Central density grows rapidly within the innermost regions of
+the halo and grows at a slower rate in the outer regions of the halo.
+The changes in the rate of growth in the central density of core-collapsed halos at
+different radii has important implications for identifying core-collapsed halos observationally
+and constraining core-collapse timescales. Firstly, these results indicate that it may be very
+difficult to observationally distinguish collapsed SIDM halos from their cored counterparts
+in the UFD mass range by their central densities. Secondly, when implementing a threshold
+for collapse, it is important to consider at what radii halo properties are measured. We find
+that central density, in particular, is extremely sensitive to radius compared to the slope
+of the DM density profile. We conclude that while central density remains a more direct
+indicator of core-collapse in well-resolved SIDM halos, measuring the inner density slope is
+more accurate in lower resolution simulations and at larger radii of simulated halos.
+4.4
+Potential kinematic signatures of core-collapse
+In Section 4.2, we discuss the viability of identifying core-collapsed halos observationally from
+measurements of their central densities and the inner slopes of their dark matter density
+profiles. However, stellar kinematics may also be used to potentially identify core-collapsing
+SIDM halos. [175] find that in idealized simulations of a halo with M200 = 3×1010M⊙(where
+M200 is the mass of a halo with a radius that is 200 times the critical density) both the half-
+– 26 –
+
+light radius and the mass-to-light ratios within the half-light radius were significantly altered
+by core-collapse. They find that the half-light radius of core-collapsed halos could shrink down
+to half their original radius, while the mass-to-light ratios increased by an order of magnitude.
+We anticipate that hydrodynamic runs of the core-collapsing halos in our sample, which have
+central densities that increase by an order of magnitude within ∼100 −200 pc of the halo
+center, should experience a similarly detectable growth in mass-to-light ratio.
+Figure 11
+plots the averaged central density (ρave) contained within 50% and 25% of a characteristic
+scale radius (rs) for each halo in the Ms.Marvel SIDM DMO, Storm CDM DMO, and Storm
+CDM+baryon simulations. The characteristic scale radius for each halo is determined by
+a best fit to the linear relationship between halo mass and the scale radius of CDM DMO
+halos from the Storm simulations, fit with an NFW profile [12] in log-log space. We find that
+for Storm DMO halos this relationship contains little scatter, making halo mass an excellent
+predictor of the value of the scale radius for an unaltered NFW profile. We note that the
+smallest characteristic scale radius in our sample is equal to 0.65 kpc and, as a result, the
+measurements of the averaged central density for each halo at half the scale radius for all but
+the lowest mass halos in our sample remain well-resolved. We highlight the regions of low
+resolution with grey shaded areas. We caution that our results on the right panel measure
+the central density of each halo within up to ≈0.16 kpc, and note that halos with masses
+Mhalo ≲7 × 108M⊙lie within a region not considered fully resolved by our conservative
+estimates. Therefore, the central densities of the lowest-mass halos in our sample should be
+taken as a lower bound.
+We find that core-collapsing SIDM halos, highlighted as the filled circles while the
+core-forming SIDM halos are marked by empty circles, are more centrally dense than their
+CDM and core-forming counterparts. Measuring at a smaller fraction of the scale radius
+increases the difference between core-collapsing and core-forming SIDM halos, with all core-
+collapsing halos having higher central densities than any other halo in our simulations. The
+core-collapsed halos reach central densities within 25% of the scale radius that are up to
+ten times higher than their CDM counterparts, which marks central density as a promising
+indicator of core-collapse. However, it may be difficult to accurately measure central densities
+within the radii considered here, which are typically on the order of one hundred to a few
+hundred parsecs in halos less massive than Mhalo = 109M⊙. Interestingly, the highest-mass
+SIDM halos appear more centrally dense than the highest-mass CDM halos from the baryonic
+Storm run, though both have similar inner DM density slopes.
+4.5
+Tidal effects in SIDM subhalos
+In this work, we analyze halos simulated in a low-density environment, excluding satellite
+dwarfs from the study. We note that most observed dwarf galaxies, especially in the ultra-
+faint mass range, are satellites in the Local Group. While an in depth study of the impact of
+tidal effects on the gravothermal evolution of SIDM halos is beyond the scope of this work,
+we provide a brief overview here.
+Previous works show that SIDM can suppress the abundance of subhalos through en-
+hanced tidal stripping and tidal disruption of cored halos and evaporation from subhalo–host
+halo interactions [97, 102, 176]. High resolution cosmological simulations of MW-mass halos
+and their environment find that SIDM suppresses the subhalo mass function by up to 50%
+relative to CDM [90]. Similarly, for a cross section of σ/mχ = 2 cm2g−1, [102] find that 56%
+of subhalos were disrupted and erased due to subhalo-host halo interactions. However, [177]
+find that, for σ/mχ = 1 cm2g−1, the predicted substructure abundance of MW satellites is
+– 27 –
+
+very similar between SIDM and CDM. Surveys probing the abundance and structure of the
+MWs satellite population will provide important constraints for the cross section of SIDM
+[78, 90].
+The interaction cross section of SIDM models may also be constrained by the density
+profiles of dark matter halos. Velocity-dependent models with high interacting cross sections
+that induce core-collapse at low masses predict a wide diversity of density profiles. These
+SIDM models produce halos that may explain observations from the very low-concentration
+ultra-diffuse galaxies [89, 141] to extremely concentrated substructures detected by gravi-
+tational imaging [121, 137, 172]. [100] find that, for an SIDM model with strong velocity-
+dependence, high mass SIDM subhalos are cored, while subhalos with Mhalo ≤109M⊙have
+density profiles that range from extremely cored to very cuspy for core-collapsed objects.
+Additionally, they find that cored SIDM halos exist in a much higher abundance in isolation
+compared to satellites. Cored subhalos are more likely to become tidally disrupted [176],
+but the decreased number of cored subhalos is also likely impacted by other factors. The
+gravothermal evolution of SIDM subhalos has been shown to be accelerated by tidal strip-
+ping [76, 77, 80]. Future hydrodynamic SIDM simulations will test whether these models are
+capable of reproducing the tight scaling relations exhibited by dwarf galaxies in the Local
+Group.
+4.6
+Halo mergers and substructure in SIDM halos
+It is predicted that, even at lower masses, dark matter halos may contain additional sub-
+structure in the form of even lower mass subhalos. We exclude all satellites from our analysis,
+focusing on halos that are located in relative isolation and we note that subhalos of most of
+our sample would lie below the resolution of the simulation and remain unresolved. As a re-
+sult, we do not directly test how our results may be impacted by halo substructure, however,
+we briefly discuss it here.
+In Section 3.2 we find that in the 1-2 Gyr immediately following a merger event the
+central densities and inner density slopes of SIDM halos can fluctuate significantly. In Figure
+3 we found cases where the inner slopes of the DM density profile temporarily flattened and
+at other times where the inner slope became steeper after a merger. Additionally, we find
+evidence in Figure 8 that major mergers may delay the onset of core-collapse in SIDM halos.
+These results imply that mergers can temporarily alter the DM density profiles of DM halos.
+Recent work from [178] finds that the gravothermal evolution of SIDM halos is altered by
+halo mergers, where halos with sustained mergers never undergo core-collapse. The impact
+of halo mergers on the density profiles of halos may also be more pronounced in SIDM than
+in CDM. [179] find that SIDM halos contain a higher portion of gravitationally unbound
+particles and that it is easier to unbind particles from SIDM mergers due to the shallower
+potentials of cored SIDM halos relative to cuspy CDM halos.
+Recently, [180] found that dark subhalos can produce fluctuations to the gravitational
+potential of the host halo resulting in dynamical heating of the central regions and a gradual
+expansion over time. This effect is most pronounced in low-mass dwarf galaxies. These re-
+sults assume that dark matter is a collisionless particle. With SIDM halos it is unclear how
+much infalling dark halos would impact the central potential well of the host and it’s inter-
+nal dark matter structure. There are two main differences that could significantly impact
+this process in SIDM. The first is tidal disruption of subhalos: cored SIDM halos are more
+susceptible to tidal disruption than their CDM counterparts [97, 102, 176]. If the subhalos
+become fully disrupted, could their dark matter particles still dynamically heat the center
+– 28 –
+
+of the host halo effectively? The second is that the gravitational potential wells of cored
+SIDM halos are shallower to begin with, which makes them potentially more susceptible to
+additional disturbance by substructures [179]. In this work, we show that major disruptions
+to the centers of SIDM halos can delay the onset of core-collapse, however, disturbances from
+tidal stripping have been shown to accelerate the gravothermal evolution of SIDM subhalos
+[76, 77, 80]. Additionally, [181] find that strong stellar feedback models can delay the onset
+of core-collapse in high concentration halos, while weak feedback mildly accelerates core-
+collapse. [181] also find that, for median concentration SIDM halos, stellar feedback at early
+times can rapidly produce large, shallow cores during the core-formation phase. As a result,
+we expect that the injection of energy through the accretion of dark subhalos at early times
+might similarly accelerate core-formation in SIDM halos and lead to shorter core-collapse
+timescales. We note that this process could also delay the onset of core-collapse in halos that
+have low concentrations, or where the energy injected by subhalo accretion is sufficiently
+large.
+5
+Conclusions
+In this work we explore the distribution of DM at the centers of DM halos from three
+high-resolution, zoom-in simulations run with the same initial conditions: Ms.Marvel DMO
+(SIDM), Storm CDM DMO (CDM), and a hydrodynamic run of Storm (CDM +baryons).
+Our SIDM model implements a velocity-dependent cross section of interaction which pre-
+serves the predictions of CDM at large scales but naturally forms cores at lower masses,
+reducing tensions with the “cusp-core” problem. We analyze the inner density slopes and
+densities at the centers of DM halos at redshift zero, contextualizing our results with obser-
+vations. By tracing these properties through time, we track the evolution of CDM and SIDM
+halos and find evidence of core-collapse in 9 Ms.Marvel DMO halos. We use a parametric
+model of gravothermal evolution to analytically calculate core-formation and core-collapse
+timescales of our Ms.Marvel DMO halos, showing that our identification of core-collapsed
+halos is reasonable. Using these analytic calculations we test different methods of identifying
+core-collapsed SIDM halos and explore their dependence on radius of measurement. Our
+results can be summarized as follows:
+• Between halo masses of 109−10M⊙, predictions from Storm CDM+baryons and Ms.Marvel
+DMO diverge, indicating that we may be able to distinguish between DM models at
+these scales observationally (Figure 2). We find that SN feedback is only effective at
+creating cores in the regime of strong feedback. In contrast, SIDM models can tune
+the cross section of interaction such that SIDM halos are core-forming at lower masses
+relative to current CDM+baryonic simulations. Core-collapsing halos have inner DM
+density slopes that are steeper than −1.9, the lowest slope we measure in any Storm
+CDM DMO halo. Observations of such centrally dense DM halos favor SIDM models
+with high velocity-dependence and may help to rule out CDM.
+• Core-formation takes place on shorter timescales in Ms.Marvel SIDM halos compared
+to Storm CDM halos with baryonic feedback (Figure 3). In our core-collapsed sample
+of halos from the Ms.Marvel DMO simulation, cores initially form during the first 6-8
+Gyr of the halo’s lifetime, and then inner density slopes become steeper at later times
+due to the onset of gravothermal collapse. In contrast, Storm CDM DMO halos are
+generally cuspy throughout their lifetimes (Figure 4).
+– 29 –
+
+• We find that central density traces inner density slope in Ms.Marvel DMO halos (Fig-
+ures 3 and 5) even in the case where the halo has initialized the core-collapse phase
+as shown in Figure 7. As the cores of Ms.Marvel DMO halos begin collapsing, their
+central densities grow to be several times denser and they have increasingly negative
+inner density slopes, exceeding those of their Storm CDM DMO counterparts.
+• Figure 8 indicates that, even in the initial stages of core-collapse, SIDM halos can
+potentially have inner density slopes steep enough to be distinct from CDM.
+• At radii of 0.5 kpc, which are large enough to be resolved by observers, we find that the
+central densities in core-collapsed halos do not grow enough to be identifiable as having
+core-collapsed (Figure 10). Additionally, we find that inner density slope changes less
+with an increasing radius of measurement (Figure 10) and is a more accurate tracer of
+core-collapse than central density (Figure 8). As a result, it may be easier to identify
+core-collapsed halos observationally by the slope of their DM density profiles.
+• We find that it is possible to characterize core-collapse even when the halo’s core is goes
+below than the traditional resolution criterion. The radii of central DM density cores in
+all but the most massive halos from our sample of Ms.Marvel DMO halos are generally
+smaller than three times the gravitational softening length. However, the inner density
+slopes and densities measured at or just above our spatial resolution threshold of 0.33
+kpc still contain information about the behavior of DM at the very center of SIDM
+halos.
+5.1
+Future work
+Comparing observations with hydrodynamic runs of SIDM simulations will provide additional
+insight to the particle nature of DM. As hydrodynamic runs of CDM simulations have shown,
+incorporating baryonic feedback can drastically impact the distribution of DM at the centers
+of halos, particularly those that host bright dwarf galaxies. We will robustly test our velocity-
+dependent SIDM model in future runs with SIDM and baryons. Recent work indicates that
+the inclusion of baryonic feedback may not yield significant differences in the measured inner
+density slopes of Ms.Marvel DMO halos. [86, 182] show that the inner structure of SIDM
+halos is not as sensitive to baryonic physics as CDM for halos ranging in mass between roughly
+1010−13M⊙. Additionally, baryonic feedback processes take place on timescales larger than
+the evolution timescale of isothermal cores formed in SIDM halos, which allows core-formation
+to be dominated by the gravothermal evolution of SIDM halos. However, [183] find that
+baryonic processes do contribute a small amount to establishing the density profiles of SIDM
+halos. Future hydrodynamic runs of Ms.Marvel will test the sensitivity of core formation in
+SIDM halos to baryonic processes as well as their impact on core-collapse timescales.
+It is important to understand the role of baryons in SIDM simulations; for example,
+recent work shows that including baryons can make cores smaller, where these effects are
+most pronounced in baryon dominated galaxies [38, 98, 184]. [185] find that SIDM is more
+robust to the inclusion of baryons than CDM in dwarf galaxies (M∗≈105.7−7.0M⊙), meaning
+that it may be more difficult to constrain uncertain baryonic physics in SIDM simulations.
+This added difficulty indicates that SIDM simulations may also reduce observable differences
+that arise from variations in subgrid modeling. A full understanding of baryonic effects on
+the gravothermal evolution of SIDM halos will be necessary to place constraints on the SIDM
+cross section. Future work will focus on simulating SIDM halos with the inclusion of baryons.
+– 30 –
+
+The predictions made in this work may play a key part in constraining DM models with
+upcoming and current surveys. The timescales of gravothermal core-collapse in SIDM halos
+may also be used in future efforts to constrain the velocity-dependence of the cross section
+of interaction. The velocity-dependence of the interacting cross section for SIDM particles
+can be tuned such that only dwarf halos below a specific mass threshold will undergo core-
+collapse by redshift zero. However, we find that the varied merger histories of SIDM halos
+may impact their gravothermal evolution, with major mergers potentially delaying the onset
+of core-collapse. Some previous work places constraints on the velocity-dependence of SIDM
+using the density profiles of MW dwarf spheroidal galaxies [78, 186, 187].
+As discussed
+previously, environment may impact the gravothermal collapse of SIDM halos [80, 116–118,
+172], indicating that it is necessary to also study the density profiles of isolated dwarfs to
+constrain the velocity-dependence of SIDM.
+A
+Using central density as a measurement of core-collapse
+Previous work studying collapse timescales for SIDM halos [80, 82, 121] commonly uses the
+increase or growth in central density as a metric to identify core-collapse timescales. We
+compare our results from this section with a different method for identifying halos in the
+core-collapse phase using measurements of the growth of central density of the halo. Figure
+12 recreates results from Figure 8, but now compares analytic predictions with a collapse
+time based on the growth in central density. Halos are defined as core-collapsed if they have
+central densities which are 1.5 times their minimum central density averaged within 0.35 kpc.
+We measure the minimum central density of the halo once it has formed a core, making it
+distinct from the halo’s initial central density. We define Tcoll as the time it takes for a halo
+to reach this threshold for growth in central density. We find that 4 of the lowest mass halos
+with core-formation timescales shorter than a Hubble time are not identified successfully.
+Additionally, this method falsely identified two halos with collapse times far exceeding a
+Hubble time. One of these halos has a late-time merger which accounts for the growth halo
+in halo density, indicating that this metric is not robust to halo mergers.
+In the Discussion we show that central density is extremely sensitive to the radius at
+which it was measured, so accuracy will be improved with higher resolution or by eliminating
+lower-mass halos from the sample.
+Figure 12 compares the analytically predicted core-formation and core-collapse timescales
+of Ms.Marvel halos against a core-collapse timescale identified by measuring the growth in
+central density over time. We identify 10 Ms.Marvel halos with central densities that grow
+by a factor of 1.5 over time, including two intermediate-mass halos (Mhalo ∼3 × 108M⊙)
+that finish forming their cores at late times and are not predicted to fully collapse until
+roughly 15 Gyr past the last timestep in the simulation.
+Additionally, we identified the
+7 halos with the shortest core-collapse times with halo masses greater than ∼2 × 108M⊙
+as core-collapsing. This indicates that central density is sensitive to core-collapse in halos
+that are sufficiently massive. However, at lower masses central density measurements falsely
+identify 2 halos with core-collapse times exceeding 20 Gyr as core-collapsing. One of these
+two halos is not predicted to collapse for over 103 Gyr, indicating that the growth in central
+density must be caused by some mechanism other than core-collapse. By tracing this halo’s
+merger history back in time we found that this halo had a late-stage merger that coincided
+with a significant increase in central density. These results show that central density, as a
+marker of core-collapse, is not robust to halo growth through mergers. Additionally, we find
+– 31 –
+
+Figure 12. Left side: Predicted core-formation timescales plotted against halo mass for our sample
+of core-collapsed Ms.Marvel DMO halos. Blue triangles mark the time when the central density of a
+Ms.Marvel DMO halo first reaches 1.5 times its minimum central density averaged within 0.35 kpc,
+while colored circles represent the predicted core-formation timescales, calculated analytically from
+a parametric model. Circles are colored by the maximum circular velocity of each halo. Black lines
+link collapse timescales from predictions and times measured directly from simulations for the same
+halo. The purple dashed line marks one Hubble time. Right Side: Predicted core-collapse timescales
+plotted against halo mass, using the same notation as the left side.
+that this method fails to identify 4 halos found to be core-collapsing in Figure 8. We note
+that all of these halos are UFDs with halo masses Mhalo < 2 × 108M⊙, at these low masses
+the central density increases very little at the radii we measure. We conclude that using the
+growth in central density as a metric to identify core-collapsing halos is less accurate than
+measuring the inner density slope, particularly for the lowest-mass halos in our sample.
+B
+Turndown in Central Density at Late Times
+Figure 13 shows the evolution of the DM density profiles for halos 46, 146 and 164. These are
+the three core-collapsed halos that experience a turndown in central density at late times. In
+the left column of the figure we plot the central density traced through time where the central
+density is divided by initial central density and calculated using the same methodology as in
+Figure 7. The right column tracks the DM density profile of each halo through time, zooming
+in on the inner regions of the halo. The density profile is smoothed by calculating density
+from the mass enclosed profile. The gray shaded area extends out to a radius of 0.33 kpc
+and marks where the profile is considered unresolved. The panels adopt the same color bar
+with pink corresponding to late times and dark blue corresponding to early times.
+In the top left panel of Figure 13 we show that during the initial phases of core-collapse,
+the central density of halo 46 increases rapidly before reaching a plateau at around 10 Gyr.
+Shortly after, we show that the central density begins to decrease. The top right panel of
+Figure 13 shows that this unexpected turndown in DM density results from the process of
+gravothermal core-collapse. As the inner DM halo grows denser and lower in mass, particles
+get kicked out of the halo center in order for it to contract. Because we measure central
+density at a fixed radius, as the halo contracts the central core shrinks to be inside of our
+radius of measurement. This effect could be improved with higher mass resolution of DM
+– 32 –
+
+Figure 13. Left panel: Average central density within 0.35 kpc divided by initial average central
+density traced through time. Dashed black line is the raw profile while the solid line is smoothed.
+Right panel: Zoomed in DM density profiles plotted at different time-steps colored by time, with dark
+blue corresponding to early times (high z) and pink corresponding to late times (low z). The gray
+shaded region marks the region where the profile is unresolved, at radii less than 0.33 kpc. Halos 46,
+148, and 164 are plotted in the top, middle, and bottom rows respectively.
+particles. At the innermost regions of the halo profile the central density continues increasing
+up to redshift zero. However, central density is defined in this work as the averaged density
+of the DM halo within 0.33 kpc of the halo center. At this radius, the density of the DM
+halo begins to decrease at late times in halos that have entered late stages of core-collapse.
+We suggest that by increasing the mass resolution of our SIDM particles, we could more
+confidently resolve the inner regions of our DM halos and measure central density at smaller
+radii.
+Similarly, we conclude from the middle and bottom rows of Figure 13 that the turndown
+in central densities of halos 146 and 164 results from the same phenomenon demonstrated
+previously in halo 46.
+C
+Resolution dependence on particle number
+Simulations face various challenges accurately resolving the centers of ΛCDM halos within
+one to a few times the softening length. For example, dynamical heating of DM particles at
+the centers of halos causes slopes of central DM density profiles to become artificially shallow
+– 33 –
+
+Figure 14. Left side: Number of DM particles enclosed within a radius of R (kpc) plotted against
+density contrast measured at that radius for Storm CDM DMO halos. Dark blue, purple, and pink
+points represent the number of particles enclosed within 0.30, 0.33, and 0.39 kpc respectively. The
+black line indicates the quantity of particles necessary to resolve a CDM halo for a given density
+contrast as described by [134]. We note that [134] implement a CDM-based resolution criteria which
+may have limited applicability in SIDM simulations. Right side: Number of DM particles plotted
+against density contrast for Ms.Marvel SIDM DMO halos.
+at these radii. However, [134] demonstrate that for CDM simulations it is important to also
+consider the number of DM particles enclosed within a given radius and at a given density
+contrast. They found that CDM halos with too few particles at their centers have artificially
+low central densities. These artificially low central densities could result in shallower central
+inner density slopes, making halos appear cored when they are not. The following section
+tests the limits of spatial resolution in our simulations and justifies our adoption of r = 0.33
+kpc as the smallest central radius that remains resolved for the CDM halos in our sample.
+All Storm CDM DMO halos in our sample are well resolved within 0.33 kpc. We find
+that, when applying the same resolution criteria trained on CDM simulations to SIDM halos,
+the full sample of Ms.Marvel DMO halos only become resolved at radii equal to or greater
+than 0.39 kpc. We identify resolved halos using criteria from [134] in Figure 14, which plots
+the number of DM particles against the density contrast at a given radius for each Storm
+CDM DMO or Ms.Marvel DMO halo. The density contrast ( ρ(r)
+ρcrit ) is found by dividing the
+DM density by the critical density of the universe, while the number of DM particles enclosed
+within this given radius is plotted along the y-axis. Dark blue, purple, and pink points rep-
+resent measurements for each halo within 0.30 kpc, 0.33 kpc, and 0.39 kpc, respectively.
+The black line marks the minimum number of particles required for a halo to become fully
+resolved for a given density contrast according to the criteria of [134]. Resolved halos lie
+above this threshold and unresolved halos lie below. We derive this threshold by plotting
+a straight line in log-log space between 100 particles with
+ρ(r)
+ρcrit = 104.5 and 3000 particles
+with
+ρ(r)
+ρcrit = 106 [134]. Using this criterion, we find that only 39 of our 235 Storm CDM
+DMO halos remain unresolved within 0.30 kpc. We note that for Ms.Marvel DMO halos, the
+relationship between the number of DM particles and the density contrast is more scattered
+relative to their CDM counterparts, and a larger number of halos are unresolved down to
+smaller radii. Despite these key differences, the majority of Ms.Marvel DMO halos are also
+resolved within 0.33 kpc.
+– 34 –
+
+Figure 15. Left panel: the DM density profiles of Halo 1 from the Ms.Marvel DMO simulation (the
+most massive halo in our sample) traced through time. The radius is normalized by the virial radius
+at each timestep and the evolution over time is illustrated by color, with pink profiles corresponding
+to earlier times and darker blue profiles corresponding to late times. Middle panel: the DM density
+profile of the most massive halo that we identified as undergoing core-collapse in our sample. Right
+panel: a small halo that follows the average evolution track of core-forming SIDM halos in this mass
+bin.
+The resolution criteria published by [134] are derived using CDM simulations, meaning
+that they do not consider how SIDM self-scattering may affect the number of DM particles
+or the density within the centers of resolved halos. Without extensive resolution tests, it is
+difficult to anticipate whether the same resolution criteria used in CDM simulations apply
+to Ms.Marvel DMO halos. Because our entire sample of Storm CDM DMO halos is fully
+resolved down to 0.33 kpc, we chose to adopt a universal spatial resolution limit of 0.33 kpc
+for their Ms.Marvel DMO counterparts. Furthermore, SIDM halos in the advanced stages of
+core-collapse face additional resolution challenges [121] and in these cases the central density
+reached by the halo should be understood as a lower limit.
+Previous literature has already shown that modeling SIDM halos in the advanced stages
+of core-collapse poses many challenges [82–84, 137–139]. Some works have already introduced
+recommendations for DM particle mass resolution [82, 83], gravitational softening lengths
+[139], and time-stepping [139] which reduce errors in energy conservation and core-collapse
+time. Future work extensively testing the resolution limits of simulated SIDM halos will
+improve the implementation of SIDM models in simulations and reveal how simulation pre-
+scriptions impact the behavior of SIDM halos.
+D
+Density Profiles of Ms.Marvel Halos
+In Figure 15 we show three density profiles from the Ms.Marvel DMO simulation to illustrate
+how the density profiles of SIDM halos evolve over time across different mass ranges. Halo
+1 is the most massive halo in our sample of Ms.Marvel halos and is core-forming at redshift
+zero. We see that in the left-most panel this halo forms its core at early times and has a
+lowered central density. Halo 46 is a medium-mass halo in our sample, but is the highest-mass
+halo that we identify as having entered the core-collapse phase. We see in the middle panel
+that this halo begins forming a core before initializing core-collapse and becoming extremely
+centrally concentrated at late times. In the right-most panel we show the evolution of halo
+157, a low-mass halo from our sample that is core-forming at late times. We see that the
+central core of this halo remains much smaller and less pronounced than more massive halos,
+however, it is much less centrally dense and cuspy than the core-collapsed halos.
+– 35 –
+
+Acknowledgments
+A.C.E. is supported by the National Aeronautics and Space Administration Future Investi-
+gators in NASA Earth and Space Science and Technology (FINESST) (22-ASTRO22-0096).
+FDM and BV acknowledge support from NSF grant PHY2013909.
+FDM is grateful for
+the hospitality of Perimeter Institute where part of this work was carried out. Research
+at Perimeter Institute is supported in part by the Government of Canada through the De-
+partment of Innovation, Science and Economic Development and by the Province of Ontario
+through the Ministry of Colleges and Universities. This research was also supported in part
+by the Simons Foundation through the Simons Foundation Emmy Noether Fellows Program
+at Perimeter Institute. This research was supported in part by grant NSF PHY-2309135 to
+the Kavli Institute for Theoretical Physics (KITP). AMB acknowledges support from NSF
+grant AST-2306340, and by grant FI-CCA-Research-00011826 from the Simons Foundation.
+AHGP acknowledges support from NSF grants AST-2008110 and AST-2510899. Some of the
+simulations were performed using resources made available by the Flatiron Institute. The
+Flatiron Institute is a division of the Simons Foundation. This work used Stampede2 at
+the Texas Advanced Computing Center (TACC) through allocation MCA94P0181642 from
+the Advanced Cyberinfrastructure Coordination Ecosystem: Services & Support (ACCESS)
+program, which is supported by U.S. National Science Foundation grants 2138259, 2138286,
+2138307, 2137603, and 2138296.

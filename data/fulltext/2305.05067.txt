@@ -1,0 +1,1572 @@
+MNRAS 000, 1–15 (2023)
+Preprint 9 August 2024
+Compiled using MNRAS LATEX style file v3.0
+A quantitative comparison between velocity dependent SIDM cross
+sections constrained by the gravothermal and isothermal models
+Shengqi Yang,1,2⋆Fangzhou Jiang, 1,3† Andrew Benson,1 Yi-Ming Zhong,4,9 Charlie Mace,5,6,7
+Xiaolong Du,8,1 Zhichao Carton Zeng,5,6,7 Annika H. G. Peter,5,6,7,10 Moritz S. Fischer11,12
+1Carnegie Observatories, 813 Santa Barbara Street, Pasadena, CA 91101, USA
+2Los Alamos National Laboratory, NM 87545, USA
+3Kavli Institute for Astronomy and Astrophysics, Peking University, Beijing 100871, People’s Republic of China
+4Kavli Institute for Cosmological Physics, University of Chicago, Chicago, IL 60637, USA
+5Department of Physics, The Ohio State University, 191 W. Woodruff Ave., Columbus, OH 43210, USA
+6Department of Astronomy, The Ohio State University, 140 W. 18th Ave., Columbus, OH 43210, USA
+7Center for Cosmology and AstroParticle Physics, The Ohio State University, 191 W. Woodruff Ave., Columbus, OH 43210, USA
+8Department of Physics and Astronomy, University of California, Los Angeles, CA 90095, USA
+9Department of Physics, City University of Hong Kong, Tat Chee Avenue, Kowloon, Hong Kong SAR, China
+10School of Natural Sciences, Institute for Advanced Study, 1 Einstein Drive, Princeton, NJ 08540
+11Universit¨ats-Sternwarte, Fakult¨atf¨ur Physik, Ludwig-Maximilians-Universit¨at M¨unchen, Scheinerstr, 1, D-81679 M¨unchen, Germany
+12Excellence Cluster ORIGINS, Boltzmannstrasse 2, D-85748 Garching, Germany
+Accepted XXX. Received YYY; in original form ZZZ
+ABSTRACT
+One necessary step for probing the nature of self-interacting dark matter (SIDM) particles with
+astrophysical observations is to pin down any possible velocity dependence in the SIDM cross
+section. Major challenges for achieving this goal include eliminating, or mitigating, the impact
+of the baryonic components and tidal effects within the dark matter halos of interest—the ef-
+fects of these processes can be highly degenerate with those of dark matter self-interactions at
+small scales. In this work we select 9 isolated galaxies and brightest cluster galaxies (BCGs)
+with baryonic components small enough such that the baryonic gravitational potentials do not
+significantly influence the halo gravothermal evolution processes. We then constrain the pa-
+rameters of Rutherford and Møller scattering cross section models with the measured rotation
+curves and stellar kinematics through the gravothermal fluid formalism and isothermal method.
+Cross sections constrained by the two methods are consistent at 1σ confidence level, but the
+isothermal method prefers cross sections greater than the gravothermal approach constraints
+by a factor of ∼3.
+Key words: cosmology: dark matter - galaxies: haloes - galaxies: dwarf
+1
+INTRODUCTION
+Dark matter is a necessary ingredient to the Standard Model of Cos-
+mology. Yet its particle nature remains mysterious. Self-interacting
+dark matter (SIDM) is an alternative theory to the standard cold
+collisionless dark matter (CDM) model. In addition to gravitational
+interactions, dark matter (DM) particles can also have sizable self-
+interactions that allow them to scatter off with each other. Such self-
+interactions are ubiquitous when dark matter is part of so-called
+“dark sector”, which consists new particles that mediated interac-
+tions between dark matter-ordinary matter and/or dark matter-dark
+matter. The SIDM is developed in part to explain discrepancies be-
+tween predictions of the standard ΛCDM model and observations
+⋆E-mail:shengqiy@lanl.gov
+† E-mail:fangzhou.jiang@pku.edu.cn
+at ∼kpc scales. More generally speaking, the study of SIDM builds
+a bridge between astrophysics and particle physics, where the na-
+ture of dark matter and dark sectors can be probed from astrophysi-
+cal observations. Besides the simplest elastic velocity-independent
+SIDM, astrophysical observations have also been used to explore
+a wide range of well-motivated SIDM models such as the Yukawa
+SIDM (Feng et al. 2009; Loeb & Weiner 2011; Tulin et al. 2013),
+the resonant SIDM (Chu et al. 2019, 2020; Tsai et al. 2022), the
+dissipative SIDM (Boddy et al. 2016; Essig et al. 2019), the multi-
+component inelastic SIDM (Schutz & Slatyer 2015; Blennow et al.
+2017; Huo et al. 2020), and the non-abelian SIDM (Boddy et al.
+2014; Hochberg et al. 2014, 2015).
+For a self-gravitating system such as a SIDM halo, the be-
+haviour of SIDM is similar to that of stars in baryonic self-
+gravitating systems such as the globular clusters (Lynden-Bell &
+Wood 1968) in which stars undergo strong gravitational scatter-
+© 2023 The Authors
+arXiv:2305.05067v3  [astro-ph.CO]  7 Aug 2024
+
+2
+S. Yang et al.
+ing events. Since particles with higher energies (larger orbits) have
+lower velocities (temperature), self-gravitating systems show neg-
+ative specific heat: hot regions lose heat and become hotter, while
+cold regions gain heat and get even cooler. As a result, a SIDM halo
+will never achieve thermal equilibrium. Instead, the halo will go
+through gravothermal collapse, where the density and temperature
+of the isothermal cored region at the halo center keep increasing un-
+til gravothermal catastrophe. This unique feature of core formation
+and core collapse provides one possible explanation for the diverse
+rotation curves observed among galaxies with similar maximum cir-
+cular velocity (Oman et al. 2015; Sameie et al. 2020; Kaplinghat
+et al. 2020; Correa 2021; see Tulin & Yu (2018) and Adhikari et al.
+(2022) for a detailed review).
+One of the major questions regarding SIDM that must be
+probed with astrophysical observations is the velocity dependence
+of the SIDM cross section. This is because different velocity scales
+correspond to different energy scales of the self-interactions for a
+fixed dark matter particle mass. Similar to the collider program,
+probing the behaviours of self-interactions at multiple energy scales
+could help us understand the underlying models of particle dark
+matter that yield self-interaction. If self-interaction is the cause of
+ΛCDM-observation discrepancies at small scales, current obser-
+vations prefer that the SIDM cross section decrease with increas-
+ing particle relative velocities (Kaplinghat et al. 2016; Elbert et al.
+2018; Sagunski et al. 2021; Correa 2021; Andrade et al. 2022).
+Two scattering cases that naturally motivate velocity dependent self-
+scattering cross sections have been considered in the literature. In
+the scenario where the two scattering particles are asymmetric and
+distinguishable χ¯χ →χ¯χ, only the t-channel contributes to the
+scattering amplitude. Assuming that the dark matter particle χ is
+coupled with a gauge Boson ϕ with a coupling strength gχ, the inter-
+action Lagrangian is igχ ¯χγµχϕµ. In the perturbative Born regime
+αχmχ/mϕ ≪1 the differential cross section in the center of mo-
+mentum frame is (see Yang & Yu (2022) for the derivation):
+dσ
+d cos θ =
+σ0ω4
+2[ω2 + v2
+12 sin2(θ/2)]2 .
+(1)
+Here mχ and mϕ are the dark matter particle and mediator par-
+ticle masses, v12 is the relative velocity between the two initial
+scattering particles, αχ = g2
+χ/(4π), σ0 = 4πα2
+χ/(m2
+χω4), and
+ω = cmϕ/mχ. This process is analogous to Rutherford scattering
+in nuclear physics.
+In the scenario where the two scattering dark matter particles
+are indistinguishable χχ →χχ, both the t-channel and u-channel
+should be considered for the scattering amplitude calculation. This
+process is analog to Møller scattering in the nuclear physics. In the
+Born regime the center of momentum differential cross section is
+(Yang & Yu 2022):
+dσ
+d cos θ = σ0ω4[(3 cos2 θ + 1)v4
+12 + 4v2
+12ω2 + 4ω4]
+(sin2 θv4
+12 + 4v2
+12ω2 + 4ω4)2
+.
+(2)
+Since SIDM was firstly proposed by Spergel & Steinhardt
+(2000), various numerical (e.g. Burkert (2000); Kochanek & White
+(2000); Yoshida et al. (2000); Dav´e et al. (2001); Col´ın et al. (2002);
+Vogelsberger et al. (2012); Zavala et al. (2013); Rocha et al. (2013);
+Peter et al. (2013); Vogelsberger et al. (2014); Fry et al. (2015);
+Elbert et al. (2015); Dooley et al. (2016); Zeng et al. (2022)) and
+semi-analytic (e.g. Balberg et al. (2002); Koda & Shapiro (2011);
+Kaplinghat et al. (2014); Pollack et al. (2015); Kaplinghat et al.
+(2016); Essig et al. (2019); Nishikawa et al. (2020)) tools have been
+developed to quantitatively model the evolution of halos in SIDM
+models. Among those, the one-dimensional fluid formalism cap-
+tures SIDM halo gravothermal evolution with a set of coupled par-
+tial differential equations (PDEs). It is suitable for describing iso-
+lated and spherically symmetric SIDM halo evolution, and has been
+shown to provide a good description of results of idealised SIDM
+N-Body simulations (e.g. Koda & Shapiro 2011; Essig et al. 2019;
+Yang et al. 2022). Another advantage is that the fluid formalism can
+be organized into a scale-free format, so that one set of fluid so-
+lutions can be re-scaled for halos with arbitrary masses and scales.
+While being much more computationally efficient than N-body sim-
+ulation, the fluid formalism is too expensive for exploring the con-
+tinuous SIDM cross section parameter space. Yang et al. (2022)
+(hereafter Yang2022) showed that due to the degeneracy between
+the SIDM halo thermal conductivity and evolution time, an approx-
+imate one-to-one time mapping exists among fluid solutions under
+different cross section models. Through a non-linear stretching of
+the halo evolution time axis, a gravothermal fluid solution derived
+under a constant SIDM cross section can be mapped to solutions
+for arbitrary velocity dependent cross section models with high ac-
+curacy. Such a mapping method further boosts the computational
+efficiency of the gravothermal fluid formalism and facilitates a thor-
+ough exploration of the SIDM cross section parameter space. This
+approximate universality for the gravothermal fluid solutions is also
+discussed in Outmezguine et al. (2022) and Yang & Yu (2022).
+Another widely adopted semi-analytic SIDM halo evolution
+model is the isothermal Jeans approach. Unlike the gravothermal
+fluid formalism that numerically solves the halo heat conduction
+process, this approach solves the SIDM halo isothermal core with
+the Jeans-Poisson equation and stitches the cored profile smoothly
+onto the CDM profile in the halo outskirts. Although it is solving the
+SIDM halo density profiles in a less “first-principles” manner, the
+isothermal Jeans model is more computationally efficient than the
+fluid formalism, and the model predictions are in surprisingly good
+agreement with multiple cosmological SIDM simulations (Robert-
+son et al. 2021; Jiang et al. 2022). Jiang et al. (2022) provides the
+hypothesis that although the isothermal method does not explicitly
+model the impacts of cosmological mass accretion and mergers on
+the SIDM halo evolution, the fact that it uses the CDM halo dis-
+tribution as a boundary condition has implicitly accounted for the
+halo mass assembling history. This may explain why the isothermal
+model better reproduces SIDM cosmological simulations than the
+gravothermal fluid formalism.
+In this work we combine the fast mapping method proposed by
+Yang2022 with SPARC (Spitzer Photometry & Accurate Rotation
+Curves) galaxies (Lelli et al. 2016) and brightest cluster galaxies
+(BCGs) DM distribution measurements (Newman et al. 2013) to
+jointly fit for angular averaged cross sections under the Rutherford
+and Møller scatterings. Yang & Yu (2022) show through N-body
+simulations that the viscosity cross section:
+σV = 3
+2
+Z
+d cos θ sin2 θ
+dσ
+d cos θ ,
+(3)
+is a good approximation to the results of angular-dependent cross
+section models for a halo of M200 ≈107M⊙and c200 ≈20. More
+systematic simulation tests are needed to quantify the generality and
+limitation of this conclusion (Fischer et al. 2024). Nevertheless, in
+this work we will consider viscosity cross section:
+σV = 6σ0ω6
+v6
+12
+
+2 + v2
+12
+ω2
+
+ln
+
+1 + v2
+12
+ω2
+
+−2v2
+12
+ω2
+
+,
+(4)
+MNRAS 000, 1–15 (2023)
+
+SIDM cross section
+3
+for Rutherford scattering, and
+σV =
+3σ0ω8
+v8
+12 + 2v6
+12ω2
+
+2
+
+5 + 5v2
+12
+ω2 + v4
+12
+ω4
+
+ln
+
+1 + v2
+12
+ω2
+
+−5
+2v2
+12
+ω2 + v4
+12
+ω4
+
+,
+(5)
+for Møller scattering. With very different DM halo scales and cen-
+tral velocity dispersion, the SPARC galaxies and BCGs may be able
+to break the σ0 −ω degeneracy. To avoid uncertainties contributed
+by the baryonic effects, we select 7 galaxies and 2 BCGs with small
+baryonic components such that the baryonic gravitational potential
+at the halo center has negligible impact to the halo gravothermal
+evolution. We compare the SIDM cross section fitting results con-
+strained through the gravothermal fluid formalism and the isother-
+mal Jeans model, and study how different are these two SIDM mod-
+els quantitatively.
+The plan of this paper is as follows. We review the gravother-
+mal fluid formalism and isothermal Jeans model in Section 2. Here
+we will extend the isothermal method, which is usually assumed to
+be only valid for describing the SIDM halo core formation process
+under constant cross section, to the full halo evolution process under
+arbitrary velocity dependent cross section models. In Section 3 we
+introduce data and data selection criterion used for SIDM cross sec-
+tion model constrain. We introduce the cross section model fitting
+strategy in Section 4, and present the best-fit results in Section 5.
+We finally conclude in Section 6. Throughout this work we assume
+cosmological parameters Ωm = 0.307, Ωb = 0.048, ΩΛ = 0.693,
+σ8 = 0.829, ns = 0.96, and h = 0.678 (Planck Collaboration
+et al. 2014; Klypin et al. 2016).
+2
+GRAVOTHERMAL AND ISOTHERMAL MODELS
+In this section we briefly review the gravothermal fluid formalism
+and the isothermal Jeans model. We refer readers to Balberg et al.
+(2002), Essig et al. (2019), and Yang2022 for more detailed review
+about the gravothermal model, and Kaplinghat et al. (2014), and
+Jiang et al. (2022) for detailed isothermal Jeans model review.
+2.1
+Gravothermal fluid formalism
+The gravothermal fluid formalism describes an isolated, spherically
+symmetric, and non-rotating SIDM halo with the following coupled
+PDEs:
+∂M
+∂r = 4πr2ρ,
+(6)
+∂(ρv2
+rms)
+∂r
+= −G(M + Mb)ρ
+r2
+,
+(7)
+L
+4πr2 = −κ∂T
+∂r ,
+(8)
+ρv2
+rms
+γ −1
+ ∂
+∂t
+
+M
+ln v2
+rms
+ργ−1 = −
+1
+4πr2
+∂L
+∂r .
+(9)
+Here M(r) and Mb(r) denote the DM and baryonic enclosed mass
+at radius less than r, respectively, ρ(r), vrms(r), L(r), κ(r), and
+T(r) = mχv2
+rms(r)/kB correspond to SIDM halo density, 1D root-
+mean-square (rms) velocity averaged over the Maxwell-Boltzmann
+(MB) distribution, luminosity, thermal conductivity, and tempera-
+ture at radius r, respectively. kB is the Boltzmann constant. vrms is
+identical to the 1D velocity dispersion since the halo center is as-
+sumed to be at rest. Throughout this work we assume that the DM
+particles act as monotonic ideal gas (γ = 5/3).
+Two scales characterize the heat conduction caused by DM par-
+ticle elastic self-scattering: the particle orbital scale height H =
+p
+v2rms/(4πGρ) and mean free path λ = mχ/(ρσ). In the short-
+mean-free-path (smfp) limit λ ≪H, DM particles behave like
+an ideal gas with heat conductivity κsmfp = 2.1vrmskB/σ. On
+the other hand, λ ≫H in low density and low cross section
+systems. In such a long-mean-free-path (lmfp) regime DM par-
+ticles can orbit for multiple times before experiencing an elastic
+scattering event. It is conventional to define the heat conductivity
+κlmfp = 0.27βnv3
+rmsσkB/(Gmχ), and the total heat conductivity
+κ = (κ−1
+smfp + κ−1
+lmfp)−1. Here β is a scaling parameter of order
+O(1) that cannot be derived from first-principles. The value of β
+is usually determined through calibrating fluid solutions to N-Body
+simulations, and is found to be varying in range 0.5−1.5 (e.g. Essig
+et al. 2019; Yang et al. 2022; Outmezguine et al. 2022).
+Assuming an NFW SIDM halo initial condition ρ(r)
+=
+ρs/(r/rs)/(1+r/rs)2, Eq 6-9 can be re-written into scale-free for-
+mat with ˆx = x/x0. Here x is any physical quantity in the PDEs,
+and x0 is the corresponding unit variable:
+∂ˆ
+M
+∂ˆr = ˆρˆr2 ,
+∂(ˆρˆv2
+rms)
+∂ˆr
+= −( ˆ
+M + ˆ
+Mb)ˆρ
+ˆr2
+,
+ˆL
+ˆr2 = −ˆκ∂ˆv2
+rms
+∂ˆr
+,
+ˆρˆv2
+rms
+ ∂
+∂ˆt
+
+ˆ
+M
+ln ˆv3
+rms
+ˆρ
+= −1
+ˆr2
+∂ˆL
+∂ˆr .
+(10)
+The unit variables are:
+r0 = rs , ρ0 = ρs , M0 = 4πr3
+s ρs ,
+vrms,0 =
+p
+4πGρsrs , t0 = 1/
+p
+4πGρs ,
+L0 = (4π)5/2G3/2ρ5/2
+s
+r5
+s , (σ/mχ)0 = 1/(ρsrs) .
+(11)
+It can be shown that ˆκlmfp = 0.27 × 4πβˆρˆv3
+rms(\
+σ/mχ) and
+ˆκsmfp = 2.1ˆvrms/(\
+σ/mχ).
+Since ∂ˆL/∂ˆr determines the halo evolution rate, it is easy to
+show that β \
+(σ/mχ)ˆt are degenerate in the lmfp regime and con-
+stant SIDM cross section case. The lmfp gravothermal fluid solu-
+tion derived under a certain cross section \
+(σ/mχ) and β value can
+therefore be mapped into solutions under other constant cross sec-
+tions and β parameters through linearly stretching the time axis.
+Yang2022 proves that such a gravothermal solution universality per-
+sists for velocity dependent cross section models. This is because at
+every instance the halo evolution can be captured approximately by
+a characteristic cross section:
+ σ
+mχ
+
+c
+= ⟨v1v2v3
+12σ(v12)/mχ⟩
+⟨v1v2v3
+12⟩
+,
+(12)
+which is radius independent. Here v1, v2, and v12 are velocities of
+two scattering dark matter particles and their relative velocities. ⟨⟩
+denotes an integration of the bracketed quantity over a MB velocity
+distribution, which is characterized by temperature T at the halo
+center. Since (σ/mχ)c is still time dependent, the one-on-one time
+mapping relation between gravothermal fluid solution with constant
+and arbitrary velocity dependent cross section models is non-linear.
+MNRAS 000, 1–15 (2023)
+
+4
+S. Yang et al.
+2.2
+Isothermal model
+Unlike the gravothermal fluid formalism that numerically solves the
+entire SIDM halo evolution process over a sequence of time steps,
+the isothermal Jeans model starts by analytically solving for the
+isothermal cored profile through the Jeans equation Eq 7 and Pois-
+son equation:
+1
+r2
+d
+dr
+
+r2 dΦ
+dr
+
+= 4πG(ρ + ρb) .
+(13)
+Here ρb is some parameterized baryon density profile such as the
+Hernquist, and is usually assumed to be static. The density and ve-
+locity dispersion of the cored region {ρc, vrms,c} are then adjusted
+such that the cored density profile joins smoothly onto the CDM
+halo outskirts at a characteristic radius r1, outside of which SIDM
+particles have, on average, experienced less than one collision:
+4
+√π ρ(r1)vrms(r1) σ
+mχ = 1
+t .
+(14)
+In Eq 14 σ and t are degenerate. Now consider a velocity dependent
+cross section model—r1 should be estimated through:
+4
+π ρ(r1)vrms(r1)
+Z t
+0
+ σ
+mχ
+
+c
+(t′)dt′ = 1 .
+(15)
+We can move ρ(r1)vrms(r1) outside the time integration here be-
+cause at r ≥r1 the halo density and velocity dispersion radial pro-
+files remain unchanged from the NFW initial condition, i.e. they
+do not evolve with time due to a lack of DM self-interactions. The
+thermal averaged cross section (σ/mχ)c is defined in Eq 12. Here
+we have implicitly assumed that the gravothermal and isothermal
+method share a similar universality in halo evolution. More specifi-
+cally, Eq 12 is derived from the thermal average of heat flux defined
+in the gravothermal formalism. It is impossible to derive (σ/mχ)c
+for the isothermal model in a self-consistent way since the isother-
+mal model does not involving solving for the heat flux through
+the halo. Here, based on the similarity between these two meth-
+ods, we assume (σ/mχ)c suggested by the gravothermal formal-
+ism also applies to the isothermal model. Eq 15 shows that for a
+SIDM halo with fixed CDM boundary condition and static baryon
+distribution, the isothermal solution is determined solely by the in-
+tegral
+R r
+0 (σ/mχ)c(t′)dt′. Once a set of isothermal solutions is de-
+rived over a sequence of finely gridded halo evolution time t un-
+der a constant SIDM cross section σ/mχ, given a velocity depen-
+dent SIDM cross section model one can compute (σ/mχ)c during
+each time step dt, and rescale the time interval into dt′ such that
+(σ/mχ)dt = (σ/mχ)c(t′)dt′, thus deriving the isothermal solu-
+tions under arbitrary velocity dependent cross section models. In
+other words, the time mapping method introduced by Yang2022 is
+also applicable to the isothermal solutions.
+We compare the scale-free DM-only halo central density evo-
+lution given by the gravothermal and isothermal models in Figure 1,
+together with idealized SIDM N-Body and cosmological simulation
+results. Throughout this work we will assume that halos show NFW
+density profiles under the CDM scenario, that is, we will always
+assume a NFW profile as the initial (boundary) condition for the
+gravothermal (isothermal) model. The cyan band in Figure 1 shows
+the maximum, median, and minimum halo central density versus
+evolution time for 10 idealized N-Body realizations of a SIDM halo
+of mass M200 = 1010.5M⊙, concentration c200 = 10, and parti-
+cle number 106 (Mace et al. 2024). The gravothermal solution is
+in excellent agreement with this set of idealized N-Body simulation
+results with β = 1.2. On the other hand, the isothermal solutions
+are in better agreement with cosmological SIDM simulation results
+(Elbert et al. 2015).
+Figure 1 shows that during the SIDM halo core formation pro-
+cess where the halo central density decreases with time, there are
+two sets of {ρc, vrms,c} that stitch the isothermal Jeans solution
+smoothly to the NFW outskirts at r1. The lower density solution
+(yellow curve) is treated as the valid modeling result, while the
+higher density solution (red curve) is usually discarded since its
+physical meaning is unclear. As the halo evolution time increases,
+these two isothermal solutions get closer to each other, and finally
+merge at tmerge. At t > tmerge there is no {ρc, vrms,c} that stitches
+the isothermal cored profile with the NFW outskirt, and the isother-
+mal Jeans model is generally thought to be no longer applicable.
+We hypothesize the high density solutions provide the halo density
+profiles in the core-collapsing process. Specifically, we generalize
+Eq 14 into:
+4
+√π ρ(r1)vrms(r1) σ
+mχ = max
+1
+t ,
+1
+tcoll −t
+
+.
+(16)
+Here tcoll is the time when the SIDM halo collapses. When t <
+tcoll/2 = tmerge, Eq 16 reduces to Eq 14. The SIDM halo distri-
+butions at r > r1 should be identical to NFW because DM parti-
+cles self-scatter is statistically unimportant at the halo outskirt. On
+the other hand, at t > tcoll/2 the halo density profile at a certain
+radius will show negligible time evolution if the DM particle self-
+interaction probability is less than 1 during the rest of the halo life-
+time tcoll −t. We notice that at t > tcoll/2 it is no longer exact
+to describe the instantaneous halo outskirt distribution as NFW be-
+cause DM particle self-scattering was statistically important in the
+past and had altered the halo density and velocity dispersion profile
+shapes. However, NFW is still a good approximation at large radii.
+In Figure 2 we compare the scale-free halo density profiles and ve-
+locity dispersion radial profiles in the NFW initial conditions, at
+the instant of maximum core radius, and deep into the core collaps-
+ing phase given by the gravothermal and isothermal models. Here
+we have assumed that the halo is DM-only (Mb = ρb = 0) and
+the cross section is constant. For both the gravothermal and isother-
+mal solutions, the halo velocity dispersion profiles are very close,
+although not identical, to the NFW profile at ˆr ≳1.8. We have
+checked that for the DM-only case, we can only find numerically
+stable high density solutions if ˆr1 ≳1.8. The gravothermal solu-
+tion velocity dispersion at ˆr ≥1.8 is only different from the NFW
+profile by less than 3% at core collapse, therefore it is a good ap-
+proximation to stitch the isothermal cored profile to the NFW pro-
+file at t > tmerge for modeling the SIDM halo evolution. Since
+it is the rest of the halo lifetime tcoll −t that matters during the
+halo core collapsing phase, one will need to mirror the high density
+solution according to tmerge to derive the halo density profiles at
+t > tmerge (blue dashed curve in Figure 1). The isothermal model
+can be played back in time because there is no such a notion of
+“the arrow of time”. The evolution could back played from the tcoll
+to an earlier time and the same formalism to compute the density
+profile applies. Note that this is different from the fluid formalism,
+where the entropy (ln(v2
+rms/ργ−1)) is moving toward an ever larger
+value as time evolves. Therefore, the fluid formalism has the “ar-
+row of time”. In Figure 1 we present the gravothermal solution for
+β = 0.5, which collapses at the same time as the extended isother-
+mal solution, to better compare the time evolution between these
+two methods.
+Figure 1 also shows that the halo central densities given by the
+DM-only gravothermal and isothermal models differ by a factor of
+∼2 at the instant when the halo central density reaches minimum.
+MNRAS 000, 1–15 (2023)
+
+SIDM cross section
+5
+This difference is caused by the fact that the gravothermal fluid for-
+malism treats the NFW profile as the initial condition at t = 0,
+while the isothermal model treats the NFW profile as a boundary
+condition at r = r1. From a more quantitative view, the SIDM
+halo core size r1 first increases and then decreases with time in both
+gravothermal and isothermal models. In the gravothermal fluid for-
+malism the halo core extends during the core formation process,
+and contracts immediately after the instance when the halo central
+density reaches its minimum. In the isothermal model, however, the
+halo core size keeps increasing for a while after the halo central den-
+sity reaches its minimum. In other words, there is a slight mismatch
+between the halo central density contraction and core size contrac-
+tion in the isothermal model. We present the scale-free isothermal
+solutions at the minimum halo central density instance and the max-
+imum cored instance in Figure 2 right panel. This slight mismatch
+leads to the major difference between the gravothermal and isother-
+mal solutions. It is unclear whether this mismatch is physical or a
+coincidence. Another difference is that a greater radial range of the
+gravothermal density profile is altered by the DM self-interaction
+and becomes different from NFW as the halo evolution time in-
+creases. However, the isothermal profiles are only different from the
+NFW at r < r1 by construction. We compare the gravothermal and
+isothermal density profile slopes at the bottom row of Figure 2 to
+highlight their slight differences. Besides the above two points, the
+gravothermal and isothermal solutions are very similar to each other
+throughout the halo evolution.
+The middle right panel of Figure 2 shows that the SIDM halo
+velocity dispersion radial profile at r ≤r1 is not strictly a constant.
+This is because the isothermal model iteratively solves for a trial
+solution of the Jeans-Poisson equation for the inner halo until the
+inner-halo’s SIDM profile “stitches” smoothly to the outer bound-
+ary condition at r1 set by the CDM profile. Here, “stitch” refers to
+minimizing the difference between the outer CDM profile and the
+inner SIDM profile in density and enclosed mass (Kaplinghat et al.
+2014, 2016; Robertson et al. 2021). This minimization process has
+some tolerance, where the objective function is a combination of
+the relative differences in mass and density, but has no criteria on
+the velocity dispersion profile. Hence, there is no guarantee in the
+stitching process that the original assumption of a constant velocity
+dispersion must strictly hold. With these caveats acknowledged, we
+note that the profile within r1 is still highly isothermal—the only ex-
+ception is for the last 10 percent of the radius range near r1, where
+the smooth asymptotic behavior imposed by the “stitching” is ex-
+pected.
+3
+DATA
+DM distribution measurements for systems of at least two very dif-
+ferent scales are required to constrain the two parameter cross sec-
+tion models Eq 4 and Eq 5. In this work we select isolated and
+baryon-poor systems among 175 SPARC galaxies (Lelli et al. 2016)
+and 7 BCGs (Newman et al. 2013) for joint SIDM cross section anal-
+ysis. SPARC provides a representative sample of disk galaxies in the
+nearby Universe, with DM halo mass distribution peaks at M200 =
+1010 −1012M⊙. Assuming each SPARC galaxy host halo is de-
+scribed by an NFW density profile, the distribution of the maximum
+velocity dispersion peaks at 30−100 km/s. The BCG halo mass dis-
+tribution covers a much higher range M200 = 1014.5 −1015.4M⊙,
+corresponding to NFW maximum velocity dispersion of 600−1000
+km/s. We do not include bright Milky Way dwarf spheroidal galax-
+ies in the data set in order to avoid modeling tidal effects.
+100
+101
+102
+( /m)t 
+100
+101
+102
+103
+c
+tmerge
+tcoll
+gravothermal (
+= 1.2)
+gravothermal (
+= 0.5)
+isothermal low-density
+isothermal high-density
+isothermal high-density, mirror
+idealized sim: Mace2024
+cosmological sim: Pippin
+Figure 1. Scale-free SIDM halo central density versus halo evolution
+time comparison between the gravothermal fluid formalism, the isothermal
+model, and numerical simulations (Elbert et al. 2015; Mace et al. 2024). The
+yellow and red curves show the low and high density isothermal solutions,
+merging at tmerge. Flipping the high density solution according to tmerge
+gives the isothermal solutions during the core collapse stage, which is shown
+by the blue dashed curve.
+The recent study of Zhong et al. (2023) adds various static
+gravitational potentials contributed by the baryonic component to
+the halo center and shows that the gravothermal solution is in good
+agreement with N-Body simulations for isolated SIDM halos with
+central baryons after β calibration. Jiang et al. (2022) shows that
+although the isothermal Jeans model does not account for cos-
+mological mass accretion and merger, it is in excellent agreement
+with cosmological DM-only SIDM simulation (Elbert et al. 2015)
+and cosmological zoom-in simulations (Sameie et al. 2021). These
+works provide evidence that the halo adiabatic contraction and time
+variation of the baryonic component gravitational potential may
+cause only limited impact on the SIDM halo gravothermal evolu-
+tion, and therefore do not significantly undermine the reliability of
+the gravothermal and isothermal models. Nevertheless, in this work
+we still limit our data set to systems with small baryonic compo-
+nents. As such, our results are conservative with regard to possi-
+ble baryonic effects. Also, the strength of time mapping method of
+Yang2022 adopted in this work is that the gravothermal and isother-
+mal models can be written into a scale-free format, so that the mod-
+eling results can be quickly rescaled for halos with arbitrary NFW
+parameters {ρs, rs} and SIDM cross sections. This is true for the
+DM-only case. However, the presence of baryons brings additional
+scales into the problem. Consider, for example, the gravothermal
+fluid formalism. The SPARC galaxy rotation curves are mostly mea-
+sured at r < rs, where the NFW initial conditions are degenerate
+in the combination ρsrs. By fitting gravothermal solution derived
+from a fixed ˆ
+Mb(ˆr) profile, the physical baryon enclosed mass pro-
+file Mb = 4πρsr3
+s ˆ
+Mb varies when the {ρs, rs} parameter space is
+explored. Through limiting the dataset to baryon-poor systems, we
+can partially avoid this inconsistency because the baryonic grav-
+itational potential itself has negligible impact on the gravothermal
+solutions. This is less of a problem among BCGs, for which the DM
+distributions are measured over a much greater radial extent r > rs.
+At large radii the halo NFW initial conditions are degenerate in the
+combination ρsr3
+s , leaving Mb invariant under the {ρs, rs} varia-
+tion.
+To select baryon-poor galaxies from the 175 SPARC samples,
+we first fit the mapped gravothermal fluid solutions to the SPARC
+MNRAS 000, 1–15 (2023)
+
+6
+S. Yang et al.
+10
+5
+10
+3
+10
+1
+101
+103
+r = 1.8
+Gravothermal Solutions
+NFW
+maximum core
+core collapse
+0.1
+0.2
+0.3
+0.4
+vrms
+10
+2
+10
+1
+100
+101
+102
+r
+3.0
+2.5
+2.0
+1.5
+1.0
+0.5
+0.0
+dlog /dlogr
+10
+5
+10
+3
+10
+1
+101
+103
+r = 1.8
+Isothermal Solutions
+NFW
+lowest central density
+maximum core
+core collapse
+0.1
+0.2
+0.3
+0.4
+vrms
+10
+2
+10
+1
+100
+101
+102
+r
+3.0
+2.5
+2.0
+1.5
+1.0
+0.5
+0.0
+dlog /dlogr
+Figure 2. Scale-free SIDM halo density profiles (top row), velocity dispersion radial profiles (middle row), and the density profile slope (bottom row) at the
+initial condition (red), maximum cored instance (yellow dashdot), and deep core collapse stage (blue dotted) given by the gravothermal fluid formalism (left
+column) and isothermal model (right column). The halo density profiles and velocity dispersion profiles are always close to the NFW initial condition at ˆr ≳1.8,
+marked by the black dashed vertical line. The halo maximum cored instance is slightly delayed from the lowest central density instance (green dashed line) for
+the isothermal solutions, while those two instances are identical for the gravothermal solutions.
+DM rotation curves following method introduced in Yang2022 to
+constrain the NFW parameters of each galaxy. In this step we as-
+sume a halo evolution time t = 10 Gyr and β = 0.5. Due to
+the β(σ/mχ)t degeneracy in Eq 9 in the lmfp regime, the specific
+choices of t and β values only influence the constraints obtained on
+the cross section, σ0/mχ, and have no impact on the {ρs, rs} con-
+straints for each galaxy. Since our model contains 4 free parameters
+{σ0/mχ, ω, ρs, rs}, we consider only systems with non-negative
+DM rotation curves measured in at least 5 radial bins. This selec-
+tion criterion reduces the sample size from 175 to 142. With the
+best fit {ρs, rs} of each galaxy, we then add baryonic enclosed mass
+to the scale-free Jeans equation. We estimate the enclosed bary-
+onic mass as a function of radius Mb(r) for each SPARC galaxy
+through linearly interpolating the Mb given by the gas, disk, and
+bulge rotation curves: Mb(rRC) = [v2
+gas(rRC) + v2
+disk(rRC) +
+v2
+bulge(rRC)]rRC/G. Here rRC denotes the rotation curve radial
+bins. We then re-solve the gravothermal fluid formalism for all the
+142 galaxies at fixed β and constant SIDM cross section, and com-
+pare the halo central density time evolution to the DM-only fluid so-
+lutions. The comparison results are presented in Figure 3 upper left
+panel. We show the scale-free halo central density time evolution
+ˆρc(β \
+(σ/mχ)ˆt) given by the gravothermal fluid formalism without
+any baryonic component ( ˆ
+Mb = 0) as the black dashed curve, while
+the fluid solutions for the 142 SPARC galaxies with different discs
+are shown as red dotted lines. We find 20 SPARC galaxies contain-
+ing sufficiently small discs such that their fluid solutions are not sig-
+nificantly altered by the baryonic gravitational potential 1. Finally,
+we exclude all SPARC galaxies with best fit rs > 100 kpc from the
+data set. This is because we have assumed zero baryon density be-
+yond the range for which the rotation curve is measured. The scale-
+free baryon enclosed mass ˆ
+Mb can therefore be small if rs is much
+greater than the outer extent of the rotation curve. There are 7 galax-
+ies that satisfy all the above selection criterion: D564-8, NGC3741,
+F568-V1, UGC00731, UGC07608, F563-1, and UGC05764. The
+1 We define systems with a small baryonic component as those with
+gravothermal solutions with collapse time, maximum cored instance, min-
+imum halo central density, and the first time step dˆt1 less than 15%, 10%,
+60%, and 200% different than those of the DM-only gravothermal solution.
+MNRAS 000, 1–15 (2023)
+
+SIDM cross section
+7
+100
+101
+102
+c
+SPARC
+Gravothermal solutions
+10
+1
+100
+101
+102
+( /m)t
+100
+101
+102
+c
+BCG
+100
+101
+102
+c
+SPARC
+Isothermal solutions
+10
+1
+100
+101
+102
+( /m)t
+100
+101
+102
+c
+BCG
+Figure 3. Scale-free halo central density versus evolution time relation with (red dotted) and without (black dashed) the presence of a baryonic gravitational
+potential at the halo center. Halo central density evolution is highlighted in blue for the selected baryon-poor systems. Upper left: Fluid solutions for 142 SPARC
+galaxies. Bottom left: Fluid solutions for 7 BCGs. The second column shows isothermal solutions for the selected SPARC galaxies and the 7 BCGs.
+selected baryon-poor galaxies are highlighted in blue in the fig-
+ure. We notice that this selection could, in principle, leave us with
+a SPARC galaxy sample that is somehow biased in the formation
+processes. For example, it is possible that the selected systems are
+baryon-poor because they formed much later than most of the galax-
+ies of the similar mass. If this is the case, we will be systemati-
+cally overestimating the halo evolution time and underestimating
+the SIDM cross sections for the selected SPARC galaxies.
+We adopt best fit {ρs, rs} values and dPIE baryonic density
+profiles reported in Newman et al. (2013) to derive fluid solutions
+with baryonic gravitational potentials for 7 BCGs. We find that 2
+BCGs with the greatest rs (A2667 and A2390) show fluid solutions
+similar to the no-baryon case. The ˆρc(β \
+(σ/mχ)ˆt) comparisons are
+presented in Figure 3 bottom left panel.
+In this work we use the publicly available isothermal model
+Jiang et al. (2022) for isothermal solution derivations. We fit the
+baryon rotation curve for all SPARC galaxies and BCGs with the
+Hernquist profile ρb(r) = Mbrs,b/(2πr)/(r + rs,b)3. Here Mb
+is the total baryon mass. To ensure physically meaningful fitting re-
+sults for SPARC galaxies, we set Mb upper bound as the maximum
+value between 0.1M200 and the maximum baryonic mass suggested
+by the rotation curve at the maximum radial bin. We compare the
+best fit Hernquist profile with measurements for the selected SPARC
+galaxies and all BCGs in Appendix A. Together with the best fit
+{ρs, rs} parameters derived previously, we are able to solve for the
+isothermal profiles for the selected systems over a grid of halo evo-
+lution times. As discussed in Section 2, we mirror the high den-
+sity isothermal solutions according to tmerge and obtain the halo
+information during core collapse. Figure 3 second column shows
+comparisons among isothermal solutions with and without a static
+baryon gravitational potential present at the halo center. The top
+row presents isothermal solutions for the 7 selected SPARC galax-
+ies, while the bottom row corresponds to the 7 BCGs. We find the
+presence of a baryonic component does not significantly alter the
+isothermal solutions for the selected galaxies and BCGs.
+It is challenging to provide a quantitative selection criterion
+of the baryon-poor systems without solving the gravothermal fluid
+formalism numerically. However, we do notice that a less massive
+or more extended baryonic distribution results in less impact on the
+gravothermal solution. To illustrate this, we present Mb/M200 ver-
+sus re/r200 for the 142 SPARC galaxies (red points) and 7 BCGs
+(blue points) in Figure 4. Here Mb and rs,b are the best fit Hern-
+quist parameters. re = 1.815rs,b is the effective radius, and M200
+and r200 are the best fit DM halo virial mass and radius, defined
+with density contrast ∆vir = 200 with respect to the critical den-
+sity. Figure 4 shows that at fixed re/r200, the selected baryon-poor
+systems tend to show the lowest Mb/M200. On the other hand,
+at fixed Mb/M200 the baryon-poor systems tend to host extended
+baryon distributions, showing some of the highest re/r200. There
+are SPARC galaxies with best fit Mb > M200 and re > r200. Those
+are galaxies where the measured total rotation curves are always
+dominated by the baryonic component. None of those DM deficient
+galaxies will be used for SIDM cross section constraints.
+4
+METHOD
+We fit the gravothermal fluid and isothermal solutions including the
+contribution of baryons to the gravitational potential (as derived in
+Section 3) to the SPARC rotation curves and BCG line-of-sight ve-
+locity dispersion measurements for the selected 9 baryon-poor sys-
+MNRAS 000, 1–15 (2023)
+
+8
+S. Yang et al.
+2
+1
+0
+1
+2
+log(re/r200)
+4
+2
+0
+2
+4
+6
+8
+10
+log(Mb/M200)
+SPARC galaxy
+baryon-poor galaxy
+BCG
+baryon-poor BCG
+Figure 4. Best-fit baryon versus DM mass ratios and scale ratios for all
+SPARC galaxies and BCGs, as well as the selected baryon-poor systems.
+Less massive or more extended baryonic components have less influence on
+the SIDM halo evolution, therefore the selected systems are found at the bot-
+tom of the Mb/M200 versus re/r200 band.
+tems. We explain how we model the BCG line-of-sight velocity dis-
+persion and the observational effects in Appendix B. For all selected
+SPARC samples we solve the fluid formalism numerically with 150
+log radial bins distributed uniformly in the range −2 ≤log ˆr ≤32,
+while for galaxy clusters we grid the halo into 180 radial bins in
+range −3 ≤log ˆr ≤3. The time step is adaptively chosen such
+that the specific energy ˆu = 3ˆv2
+rms/2 changes by no more than
+0.1% among all the radial bins. We have tested that moving the
+inner boundary from log ˆr = −2 to log ˆr = −3 has negligible
+impact on the gravothermal solutions, but only reduces the time
+steps and slows down the halo evolution simulation process. We
+choose a wider radial binning range for BCGs so that the gravother-
+mal solution radial extent covers all line-of-sight velocity disper-
+sion data points. We solve the isothermal model over a sequence of
+halo evolution times such that the halo central velocity dispersion
+do not vary by more than 10% over two adjacent time steps. All
+gravothermal and isothermal solutions are derived with a constant
+cross section model. We then apply the mapping method proposed
+by Yang2022 for estimating the gravothermal/isothermal solutions
+under arbitrary cross section models (Eq 4-5) and halo evolution
+time t.
+In principle the fits with either the gravothermal (isothermal)
+model for each SPARC galaxy should be processed over a 6 (5)-
+dimensional parameter space. For the gravothermal model the pa-
+rameter space is {ρs, rs, σ0/mχ, ω, β, t}, while for the isother-
+mal model the parameter space is {ρs, rs, σ0/mχ, ω, t}. When we
+fit SIDM models to the BCG cluster measurements we also con-
+sider variation of the stellar orbital anisotropy ϵ, which brings an
+additional free parameter. At each point in the multi-dimensional
+parameter space we can compute the rotation curve or line-of-
+sight velocity dispersion radial profile from the mapped gravother-
+mal/isothermal solution of each system. We thus perform a Monte
+Carlo Markov Chain (MCMC) analysis to derive constraints on
+cross section model parameters with EMCEE (Foreman-Mackey
+et al. 2013). For all SPARC galaxies we set flat priors for parameters
+{ρs, rs, σ0/mχ, ω, β} as specified in Table 1. For galaxy clusters
+we use the same flat priors for σ0/mχ, ω, and β, but adopt epsilon-
+skew-normal (ESN) priors for r200, c200, and M200 reported in
+2 In this work log denotes a base-10 logarithm.
+log σ0/m/[cm2/g]
+(-2.4, 4.0)
+log ω/[km/s]
+(0.0, 4.0)
+log ρs/[M⊙/kpc3]
+(3.0, 8.0)
+log rs/[kpc]
+(-1.0, 4.0)
+β
+(0.5, 1.5)
+Table 1. Summary of uniform prior bounds used in SIDM cross section
+model fittings with the SPARC galaxies. Parameter β is only used for SIDM
+cross section fittings with the gravothermal solutions.
+Newman et al. (2013) to constrain ρs and rs. We set a flat prior
+−0.2 ≤ϵ ≤0.2 for the stellar velocity dispersion anisotropy,
+which is suggested by individual galaxy measurements (Newman
+et al. 2013). We notice that the gravothermal and isothermal solu-
+tions for all SPARC galaxies and clusters are derived under fixed
+{ρs, rs}, but we treat {ρs, rs} as free parameters for SIDM cross
+section fits. This is not self-consistent because varying {ρs, rs} ef-
+fectively alters the baryonic gravitational potential in Eq 7. As dis-
+cussed in Section 2, our method is justified because we have se-
+lected only baryon-poor systems. Altering or even completely ig-
+noring the baryonic component in the selected systems has lim-
+ited impact on the SIDM cross section fitting results. We therefore
+treat {ρs, rs} as free parameters to avoid underestimating uncertain-
+ties in the parameters of the cross section model. The cross sec-
+tion model parameter σ0/mχ is degenerate with the halo evolution
+time. Given the halo mass M200 at the observed redshift, we use the
+semi-analytic model Galacticus (Benson 2012) to generate 1000
+extended Press–Schechter based merger trees (Press & Schechter
+1974; Bond et al. 1991; Bower 1991; Lacey & Cole 1994; Parkin-
+son et al. 2008) with mass resolution of 10−3M200. We then define
+the halo evolution time t as the time for the main progenitor to grow
+from M200/2 to M200. We fit the halo evolution time distribution
+with a kernel-density estimate (KDE) using Gaussian kernels, and
+use the KDE probability distribution function (PDF) as the prior
+for the halo evolution time. The KDE PDFs of t for the 7 selected
+SPARC galaxies and all BCGs are presented in Figure 5. The halo
+evolution time PDFs for SPARC galaxies and BCGs peak at 9–11
+Gyr and 2–4 Gyr, respectively. This simply reflects the hierarchi-
+cal structure formation of the Universe, where larger astronomical
+objects tend to form later. We find increasing the EPS merger tree
+sample volume or mass resolution has negligible impact on the sim-
+ulated PDF of t.
+Although each system shows different scales and evolution
+times, the aim of this work is to find SIDM cross section mod-
+els Eq 4-5 that explain the DM density radial profiles for all sys-
+tems. Taking the gravothermal fit as an example, a joint MCMC fit
+should contain in total 4 × 7 + 5 × 2 + 2 = 40 free parameters.
+Here 4 × 7 refers to the unique θ = {ρs, rs, β, t} parameters for
+each of the 7 selected SPARC galaxies. 5 × 2 stands for the unique
+θ = {ρs, rs, β, t, ϵ} parameters for the 2 selected galaxy clusters. 2
+corresponds to the cross section model parameter {σ0/mχ, ω} that
+should be shared by all the SIDM halos. Since SPARC galaxies and
+galaxy clusters are independent astronomical objects, we can write
+the likelihood function as:
+L(Xi=1∼9|σ0/mχ, ω, θi=1∼9) =
+9
+Y
+i=1
+L(Xi|σ0/mχ, θi) .
+(17)
+Here Xi is the rotation curve or line-of-sight velocity dispersion ra-
+dial profile measurement data for the ith selected system. It is easy
+to show that the marginalized likelihood L(Xi=1∼9|σ0/mχ, ω)
+given by a 40 parameter MCMC fit for all systems is identical to
+MNRAS 000, 1–15 (2023)
+
+SIDM cross section
+9
+0
+2
+4
+6
+8
+10
+12
+14
+time [Gyr]
+0.0
+0.1
+0.2
+0.3
+0.4
+0.5
+PDF
+BCG
+SPARC
+D564-8
+NGC3741
+F568-V1
+UGC00731
+UGC07608
+F563-1
+UGC05764
+MS2137
+A963
+A383
+A611
+A2537
+A2667
+Figure 5. Halo evolution time PDFs for 7 baryon-poor SPARC galaxies and
+all BCGs. The histograms show PDFs of t estimated by Galacticus, while
+the dashed curves show the best fit Gaussian KDEs, which are adopted as
+halo evolution time priors for the MCMC fits.
+the product of marginalized likelihood L(Xi|σ0/mχ, ω) given by
+the MCMC fit for each system:
+L(Xi=1∼9|σ0/mχ, ω)
+=
+Z
+i=1∼9
+p(θi)dθiL(Xi=1∼9|σ0/mχ, ω, θi=1∼9)
+=
+9
+Y
+i=1
+Z
+p(θi)dθiL(Xi|σ0/mχ, ω, θi)
+=
+9
+Y
+i=1
+L(Xi|σ0/mχ, ω) .
+(18)
+Here p(θi) is the posterior of parameter x for the ith selected sys-
+tem. We assume Gaussian likelihood for each selected system, as-
+suming the measured galaxy rotation curve or line-of-sight velocity
+dispersion data points among different radial bins are uncorrelated.
+This assumption is probably not fully accurate for the SPARC galax-
+ies where the points may be correlated due to the beam-smearing
+effects. An improved analysis could attempt to estimate the correla-
+tion matrix of the rotation curve data points and further compute a
+more accurate likelihood.
+5
+RESULTS
+Results for σ0/mχ −ω fitting marginalized over all the halo spe-
+cific parameters constrained jointly by the 9 selected systems are
+presented in the first column of Figure 6 for the Rutherford scatter-
+ing case and Figure 7 for the Møller scattering case. In Figure 6-7,
+the top row shows constraints derived from the gravothermal so-
+lutions, while the bottom row show constraints from the isother-
+mal model. In each panel, the SIDM cross section model parame-
+ter space favored by the 7 SPARC galaxies is presented in the “L”-
+shaped grey band, turning at characteristic velocity ω ∼100 km/s.
+This “L”-shaped parameter degeneracy is caused by the asymptotic
+features of Eq 4-5. Taking the cross section model for Rutherford
+scattering Eq 4 as an example, at low relative velocity v12 ≪ω,
+σV
+→σ0, while at high relative velocity v12 ≫ω, σV
+→
+12σ0ω4 ln(v12/ω)/v4
+12. Since the central velocity dispersions of
+the selected SPARC galaxies are of order ∼100 km/s, σ0/mχ is
+degenerate with ∼ω4 when ω ≪100 km/s. On the other hand,
+the posterior of σ0/mχ becomes insensitive to ω variations for
+ω ≫100 km/s. Similarly, the parameter constrained by the selected
+2 BCGs also show this “L”-shaped degeneracy, although turning at
+a larger characteristic velocity ω ∼1000 km/s, as shown in the red
+2D posterior. However, since DM density radial profiles of the 2
+selected BCGs are consistent with NFW, corresponding to a negli-
+gible SIDM cross section, the BCGs contribute only an upper limit
+on the SIDM cross section. The above discussion also applies to the
+Møller scattering cross section model Eq 5, although at v12 ≪ω,
+σV →0.5σ0. This factor of 2 difference is caused by the fact that
+the two particles involved in the Møller scattering process are in-
+distinguishable, and a scattering angle of θ or π −θ are identical
+events. This slightly different asymptotic behavior causes Møller
+scattering constraints on σ0/mχ to be greater than those derived
+under the Rutherford scatter by a factor of 2 at large ω. At ω ≳1000
+km/s, the constrained cross section models are essentially velocity
+independent, i.e. σ = σ0, for all the selected galaxies and BCGs.
+The constant cross section constraints are broadly in agreement with
+those reported by other works in the literature : galaxies with lower
+characteristic velocities show SIDM cross sections of ∼1 cm2/g,
+while clusters generally show smaller cross sections ∼0.1 cm2/g
+(Kaplinghat et al. 2016; Elbert et al. 2018; Sagunski et al. 2021; Cor-
+rea 2021; Andrade et al. 2022). The SIDM model parameter space
+constrained jointly by the 7 SPARC galaxies and 2 BCGs is pre-
+sented in the blue posterior. Although current data cannot strongly
+constrain the SIDM cross section model, we are nevertheless able
+to extract a best fit {σ0/mχ, ω} relation for Rutherford scattering
+model:
+log
+ σ0/mχ
+[cm2/g]
+
+=
+2.42
+log(ω/[km/s])
+1.70
+0.648
++
+log(ω/[km/s])
+1.70
+5.17 −0.799 ,
+(19)
+with 1σ scatter of ∼0.4 dex and log(ω/[km/s]) ≤2.9 1σ upper
+bound through the gravothermal fluid method.
+The best fit {σ0/mχ, ω} relation for Rutherford scatterings
+constrained by the isothermal model is:
+log
+ σ0/mχ
+[cm2/g]
+
+=
+1.80
+log(ω/[km/s])
+1.85
+0.981
++
+log(ω/[km/s])
+1.85
+6.48 −0.260 ,
+(20)
+with ∼0.3 dex of 1σ scatter and log(ω/[km/s]) ≤3.2 at 68%
+confidence level. We show the best fit {σ0/mχ, ω} double power-
+law relation and its scatter at 68% confidence levels as the yellow
+solid and dashed curves in each panel.
+The best fit {σ0/mχ, ω} relation for Møller scattering con-
+strained by the gravothermal fluid formalism is:
+log
+ σ0/mχ
+[cm2/g]
+
+=
+2.57
+log(ω/[km/s])
+1.60
+0.498
++
+log(ω/[km/s])
+1.60
+4.43 −0.606 ,
+(21)
+MNRAS 000, 1–15 (2023)
+
+10
+S. Yang et al.
+gravothermal soln
+isothermal soln
+Rutherford
+−0.6 ± 0.4 , 3.1 ± 0.6
+−0.2+0.4
+−0.3 , 3.0+0.6
+−0.4
+Møller
+−0.4 ± 0.4 , 3.1+0.7
+−0.5
+0.1 ± 0.3 , 3.0+0.5
+−0.4
+Table 2. Best fit SIDM cross section model parameters constrained by 7
+galaxies and 6 BCGs with different halo evolution models. The first (sec-
+ond) value of each cell specifies the 1σ constraints for σ0/mχ/[cm2/g]
+(ω/[km/s]).
+with 1σ scatter of ∼0.35 dex and log(ω/[km/s]) ≤3.1 1σ up-
+per bound. Møller scattering cross section model constrained by the
+isothermal method is:
+log
+ σ0/mχ
+[cm2/g]
+
+=
+1.76
+log(ω/[km/s])
+1.74
+0.845
++
+log(ω/[km/s])
+1.74
+5.85 + 0.00972 ,
+(22)
+with 1σ scatter of ∼0.3 dex and log(ω/[km/s]) ≤3.4 1σ upper
+bound. This degenerate model constraint will provide quantitative
+guidance for upcoming SIDM simulations and lensing survey fore-
+casts (e.g. Nadler et al. 2020; Gilman et al. 2021; Zeng et al. 2022).
+The SIDM cross section constraints derived from the isothermal ap-
+proach tend to be tighter than those derived from the gravothermal
+model. This is because the gravothermal fits contain an additional
+free parameter 0.5 ≤β ≤1.5, which is degenerate with the cross
+section. Overall, the SIDM cross section constraints provided by the
+gravothermal and isothermal models are consistent within 1σ con-
+fidence level, but σ0/mχ preferred by the gravothermal solutions
+are smaller than those constrained by the isothermal solutions by a
+factor of ∼3.
+We notice that the target selection criterion introduced in Sec-
+tion 3 might be too conservative. Our goal is to select systems in
+which the baryon gravitational potential does not alter the SIDM
+halo gravothermal evolution significantly. However, the specific def-
+inition of what constitutes a ‘baryon-poor’ object in this context
+requires further study and calibration using cosmological simula-
+tions3. Moreover, the main motivation for us to select baryon-poor
+system is to limit the impacts of the varying baryonic potential dur-
+ing the MCMC fits, which is less of a problem for the BCGs due to
+the large radial extend of the measurements. If we loosen the BCG
+selection criterion such that we include all galaxy clusters measured
+in Newman et al. (2013) besides A2537 for SIDM cross section
+model constraint, we find the joint posterior presented in Figure 6-7
+second column. We exclude A2537 here because this BCG is likely
+disturbed and shows a multi-component structure. We find MS2137,
+A963, and A383 show dark matter density profiles with cored re-
+gions at the halo center, therefore ruling out CDM and contributing
+a lower SIDM cross section limit. This larger BCG measurement
+data set helps to pin down the SIDM cross section model with best
+fit parameters summarized in Table 2.
+In Figure 8 and Figure 9 we show example comparisons be-
+tween the best fit model predictions and observations, although
+there is no single best fit SIDM cross section model preferred
+by the selected 9 baryon-poor systems. Specifically, we select
+3 For example, it may be possible to use simulations to determine a criterion
+on the mass of baryons, or their gravitational potential at some characteristic
+radius (e.g. rs) which ensures that the gravothermal solution remains within
+some small window around the baryon-free solution.
+log σ0/mχ
+log ω
+7 galaxies, 2 BCGs, gravothermal soln
+-0.13/-0.11
+2.0/2.2
+7 galaxies, 6 BCGs, gravothermal soln
+-0.62/-0.36
+3.1/3.1
+7 galaxies, 2 BCGs, isothermal soln
+-0.024/0.20
+2.5/2.5
+7 galaxies, 6 BCGs, isothermal soln
+-0.17/0.11
+3.0/3.0
+Table 3. Example best fit SIDM cross section model parameters derived
+from different observational data sets and SIDM halo evolution models.
+The first/second value in each cell corresponds to example best fit result
+under Rutherford/Møller scattering. σ0/mχ is in units of cm2/g, while ω
+is in units of km/s. Since the selected 2 baryon-poor BCGs cannot break
+the σ0/mχ −ω degeneracy, there is no single best fit SIDM cross section
+model constrained by the 7 SPARC galaxies and 2 BCGs.
+{log σ0/m, log ω} in the parameter space that corresponds to the
+maximum likelihood in the galaxy-BCG joint fits for each of the four
+cases presented in Figure 6-7. We summarize the selected best fit
+{log σ0/m, log ω} combinations in Table 3, but we emphasize that
+those are not the only best fit SIDM cross section models preferred
+by the selected 7 galaxies and 2 BCGs. In Figure 8 (Figure 9) we
+compare the measured SPARC rotation curves (BCGs line-of-sight
+velocity dispersion radial profiles) with the example best fit results.
+The halo evolution time t, β parameter for the gravothermal model,
+ρs and rs of each system are set as the best fit values marginalized
+over the fixed {log σ0/m, log ω}. We confirm in Figure 8 that those
+example best fit SIDM cross section models can reproduce all of the
+SPARC rotation curves well. Figure 9 shows that the example best
+fit cross section models presented in red and magenta curves better
+reproduce the measured line-of-sight velocity dispersion for BCG
+A2667 and A2390 than the dashed models. However, the blue and
+cyan models better describe the projected velocity dispersion mea-
+surements for the other four BCGs, especially for BCG A383. As
+we have discussed in Section 3, we prefer to remain conservative
+about the baryonic effects in MS2137, A963, A383, and A611, that
+could significantly alter the halo gravothermal evolution. Therefore,
+in this work we do not claim the more stringent fit presented by the
+dashed curves as reliable.
+6
+CONCLUSION AND DISCUSSION
+In this work we constrain physically motivated SIDM cross section
+models (Eq 4-5) through fitting gravothermal fluid and isothermal
+solutions to DM halo profile measurements. To break the degener-
+acy of the two free parameters {σ0/mχ, ω} introduced by Eq 4-5,
+we constrain the model with DM profile measurements from two
+classes of astrophysical systems that show very different central ve-
+locity dispersion: galaxies and BCGs. We select 7 SPARC galaxies
+and 2 BCGs that are isolated and baryon-poor, so that tidal effects
+and the gravitational potential of the baryonic component make neg-
+ligible impact on the SIDM halo gravothermal evolution.
+For each system we perform MCMC parameter fits for the
+gravothermal and isothermal solutions to account for SIDM cross
+section model uncertainties contributed by possible ρs, rs, β, ϵ and
+halo evolution time variations. The efficiency of the gravothermal
+fluid formalism is optimized through a mapping method proposed
+by Yang2022, so that the gravothermal solutions can be rapidly es-
+timated in the continuous multi-dimensional parameter space. The
+isothermal method is usually believed to be only valid for describ-
+ing SIDM halo evolution during its core formation stage under a
+constant cross section. In this work we prove that the high density
+isothermal solutions describe the SIDM halo distribution during its
+core collapse phase. We also prove that the mapping method intro-
+MNRAS 000, 1–15 (2023)
+
+SIDM cross section
+11
+Figure 6. SIDM cross section fitting results for model Eq 4 at 68% and 95% confidence levels. The first (second) row show constraints derived from the
+gravothermal (isothermal) model. In each panel, the grey posterior is contributed by 7 SPARC galaxies. The red posterior is contributed by BCGs. The blue
+contours show galaxy-BCG joint constraints. In the first column, the BCG constraints are only provided by the baryon-poor A2667 and A2390, while for the
+second column the BCG constraints are provided by 6 relaxed galaxy clusters. Yellow solid and dashed curves in the first column show the best fit double power
+law log σ0/m −log ω relation and its 1σ uncertainty, as summarized in Eq 19-20.
+duced in Yang2022 is applicable to the isothermal model, assuming
+the isothermal and gravothermal solutions share similar evolution
+universality. We are therefore able to extend the isothermal model
+to the full SIDM halo evolution process under arbitrary velocity de-
+pendent cross section models.
+We find the two selected BCGs show DM density profiles con-
+sistent with NFW, resulting in failure to fully break the σ0/mχ −ω
+parameter degeneracy, instead resulting only in an SIDM cross sec-
+tion upper limit. Combining the BGCs with the low-mass galaxy
+rotation curves, We report the degenerate best fit relations, ω upper
+bounds, and 1σ scatters for the gravothermal and isothermal fits.
+The isothermal constraints are slightly tighter than the gravother-
+mal constraints since the gravothermal fits contain an additional free
+parameter 0.5 ≤β ≤1.5. SIDM cross sections preferred by the
+gravothermal and isothermal solutions are in agreement with each
+other at the 1σ confidence level, but the constraints provided by the
+isothermal model are tighter than the gravothermal constraints by
+a factor of ∼3. These degenerate best fit results will be useful for
+upcoming SIDM simulations and survey forecasts. More stringent
+cross section constraints may be achieved with current DM distri-
+bution measurements if detailed fluid formalism versus idealized
+SIDM simulation calibration is performed, accounting for the pres-
+ence of large baryonic components that can significantly alter the
+SIDM halo evolution.
+In this work we do not quantify the influences of the mass-to-
+light ratio parameter γ∗on the SIDM cross section constraints. A
+larger γ∗corresponds to a deeper baryonic gravitational potential
+well and, therefore, larger baryonic effect uncertainties. It will also
+make our MCMC fitting strategy less self-consistent, as discussed in
+Section 3. If we were to introduce γ∗as an additional free parameter
+in the MCMC fitting process for the gravothermal fluid formalism in
+a self-consistent way, it would require re-solving the gravothermal
+PDEs every time a new γ∗is proposed by the MCMC algorithm.
+This breaks the advantage of the gravothermal solution mapping
+method used in this work and will be too computationally expensive.
+It is also challenging to solve the extended isothermal model intro-
+duced in Section 2.2 with varying γ∗in every MCMC step since we
+would need to find the low-density solution, high-density solution,
+and tmerge simultaneously. Solving for these at every MCMC step
+would significantly slow down the fitting process. A more practical
+way to achieve this would be to create an isothermal solution lookup
+table for a range of baryonic profiles, and we will explore this option
+in future work. Qualitatively, for a fixed total radial mass profile for
+a given system, a larger γ∗generally corresponds to a more cored
+halo and a larger SIDM cross section. We have tested that adopting
+MNRAS 000, 1–15 (2023)
+
+12
+S. Yang et al.
+Figure 7. This figure is similar to Figure 6, but show SIDM cross section fitting results for model Eq 5 at 68% and 95% confidence levels.
+Figure 8. Comparison between SPARC rotation curves (Lelli et al. 2016) and the example best-fit gravothermal solutions among the 7 selected baryon-poor
+galaxies. The example best-fit SIDM cross section models are specified in Table 3. The best-fit SIDM cross section models derived from different data sets and
+different SIDM halo evolution models describe all the SPARC rotation curves well.
+MNRAS 000, 1–15 (2023)
+
+SIDM cross section
+13
+Figure 9. Comparison between BCG line-of-sight velocity dispersion measurements (Newman et al. 2013) and the best-fit gravothermal solutions among 6
+relaxed BCGs. The best-fit curve notations are identical with Figure 8. SIDM cross section model constrained by 7 SPARC galaxies and 2 BCGs (presented in
+red and magenta curves) describe measurements for A2667 and A2390 better than the blue and cyan models, which are constrained jointly by 7 galaxies and
+6 BCGs. However, the blue and cyan models reproduce measurements for other BCGs, especially A383, better than models presented by the red and magenta
+curves. Since baryonic components in the other 4 BCGs can significantly alter the halo gravothermal evolution, in this work we do not claim the more stringent
+dashed best fit results as reliable.
+baryonic component density profiles to be 1σ larger or smaller than
+the bestfit values for all BCGs can influence the upper bound of the
+SIDM cross section constraints by a factor of 3 to 4.
+7
+ACKNOWLEDGEMENTS
+We thank Andrew Newman for instructions about modeling the ob-
+servational effects in the BCG line-of-sight velocity dispersion pro-
+files. We thank Haibo Yu and Daneng Yang for useful discussions.
+This work was supported in part by the NASA Astrophysics The-
+ory Program, under grant 80NSSC18K1014. MSF is funded by the
+Deutsche Forschungsgemeinschaft (DFG, German Research Foun-
+dation) under Germany’s Excellence Strategy – EXC-2094 “Ori-
+gins” – 390783311.
+DATA AVAILABILITY
+The data used to support the findings of this study are available from
+the corresponding author upon request.
+APPENDIX A: HERNQUIST FITS FOR BARYONIC
+COMPONENTS AMONG THE 9 SELECTED SYSTEMS
+In this appendix we compare the best fit Hernquist profiles with
+SPARC baryonic rotation curves vb,cir(r) and the best fit BCG
+luminosity tracer dPIE profiles for the selected 7 galaxies and 7
+BCGs. Figure A1 compares the measured baryonic enclosed mass
+Mb(< r) = v2
+b,cirr/G (black dots) with the best fit Hernquist pro-
+file (red dashed). Figure A2 presents comparison between the dPIE
+profiles for the BCG stellar mass distribution fitted by Newman et al.
+(2013) (black solid) with the best fit Hernquist profile (red dashed).
+The best fit Hernquist profile parameters for each system are speci-
+fied in the corresponding panel.
+APPENDIX B: LINE-OF-SIGHT VELOCITY DISPERSION
+In this appendix we explain the method used to model the observa-
+tional effects in the line-of-sight velocity dispersion measurements.
+We also refer readers to Sand et al. (2004) for a similar discussion.
+At each point in the multi-dimensional parameter space for the
+gravothermal or isothermal model fitting, we can derive the stellar
+1D velocity dispersion radial profile vrms,b(r) through the mapping
+method Yang2022 and the following Jeans equation:
+∂(ρbv2
+rms,b)
+∂r
+= −G(M + Mb)ρb
+r2
+−2ϵρbv2
+rms,b
+r
+.
+(B1)
+Here ρb is the stellar dPIE density profile fit by Newman et al.
+(2013), and ϵ is the stellar orbital anisotropy. The projected velocity
+dispersion without observational effects σp(r) is (Valli & Yu 2018):
+Σb(r)σ2
+p(r) = 2
+Z ∞
+r
+r′dr′
+√
+r′2 −r2 (1 −ϵ r2
+r′2 )ρb(r′)v2
+rms,b(r′) .
+(B2)
+Here Σb is the surface density profile of the stellar tracers, derived
+from ρb via an Abel transform:
+Σb(r) = 2
+Z ∞
+r
+ρb(r′)r′dr′
+√
+r′2 −r2 .
+(B3)
+Before comparing σp(r) given by the gravothermal or isother-
+mal model with measurements, we need to account for two obser-
+vational effects. The first effect is astronomical seeing caused by
+turbulence in the Earth’s atmosphere, which blurs the BCG images.
+The second factor is that BCG spectra are measured through a slit
+with finite width, so the radial binning is not strictly defined in a
+spherical coordinate. To model the above two observational effects,
+MNRAS 000, 1–15 (2023)
+
+14
+S. Yang et al.
+Figure A1. Comparison between the measured baryonic enclosed mass and the best fit Hernquist profile for the 7 baryon-poor SPARC galaxies. The measure-
+ments are presented by black scatters, while the best fit results are shown by the red dashed curves.
+Figure A2. Comparison between the best fit dPIE profile and Hernquist profile for 7 BCGs. The dPIE profiles are shown in black solid curves, while the best
+fit Hernquist profiles are shown by red dashed curves.
+we assign I(r)σ2
+p(r) over a 1000 × 1000 2D grid extending over
+the interval −100 ≤x/[kpc] ≤100 and 100 ≤y/[kpc] ≤100.
+Here r =
+p
+x2 + y2. I(R) is the BCG dPIE surface brightness
+profile. We convolve the I(r)σ2
+p(r) 2D image with a Gaussian
+seeing point-spread function. The Gaussian kernel full-width-half
+maximum for each BCG is provided by Newman et al. (2013).
+We then mask out the I(r)σ2
+p(r) signal at y ≥dAθ/2 and mea-
+sure the binned ⟨Iσ2
+p⟩(r) along the x axis. Here dA is the BCG
+angular diameter distance, and θ is the slit width. We repeat the
+above calculation to model ⟨σ2
+p⟩(r). Finally we estimate the line-
+of-sight velocity dispersion radial profile with observational effects
+as σ2
+los =
+p
+⟨Iσ2p⟩/⟨σ2p⟩.

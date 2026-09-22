@@ -1,0 +1,2816 @@
+Feeding the Void: Co-evolution of the SIDM-seeded Black Hole and the dark halo after core-collapse
+Zhichao Carton Zeng1,∗Annika H. G. Peter2,3,4, Louis E. Strigari1, Andrew Benson5, Xiaolong Du5,6, and Charlie Mace2,3
+1Department of Physics and Astronomy,
+Mitchell Institute for Fundamental Physics and Astronomy,
+Texas A&M University, College Station, Texas 77843, USA
+2Department of Physics, The Ohio State University,
+191 W. Woodruff Ave., Columbus OH 43210, USA
+3Center for Cosmology and Astroparticle Physics,
+The Ohio State University, 191 W. Woodruff Ave.,
+Columbus OH 43210, USA
+4Department of Astronomy, The Ohio State University,
+140 W. 18th Ave., Columbus OH 43210, USA
+5 Carnegie Observatories, 813 Santa Barbara Street,
+Pasadena CA 91101, USA
+6 Department of Physics and Astronomy,
+University of California, Los Angeles, CA 90095, USA
+(Dated: September 22, 2026)
+While the gravothermal collapse of self-interacting dark matter (SIDM) halos provides a compelling mech-
+anism for seeding supermassive black holes (BHs), the post-collapse macroscopic co-evolution of the BH and
+its host halo remains largely unexplored. In this paper, we introduce a novel N-body framework to dynamically
+model the dark matter accretion onto the central BH. By bracketing the accretion rate with two complementary
+phenomenological schemes—a ‘multi-round core-collapse’ scenario and a ‘continuous accretion’ scenario—we
+establish bounds on the BH mass growth trajectory. We find that the BH mass reaches 5%−12% of the total halo
+mass within ≲2 Gyr post-collapse. Concurrently, this sustained mass depletion drives a ‘gravothermal supply
+chain’ that forces outer dark matter inward, severely depleting the inner halo density (≲2𝑟𝑠). This unique struc-
+tural imprint qualitatively matches the recently detected anomaly in the strong lens JVAS B1938+666 (detection
+V), where the best-fit lens model consists of an unresolved central point mass and a shallow, uniform-surface-
+density extended disk, offering a distinct observational signature for SIDM-seeded BHs.
+I.
+INTRODUCTION
+Self-interacting
+dark
+matter
+(SIDM),
+an
+alternative
+paradigm that allows dark matter particles to have collisions,
+has attracted significant recent interest. It provides a com-
+pelling framework for resolving various small-scale observa-
+tional anomalies that appear incompatible with standard Cold
+Dark Matter (CDM) predictions. These anomalies include the
+unexpectedly large structural diversity in dwarf galaxy rota-
+tion curves and mass-size relations [1–8], ultra-concentrated
+subhalo perturbers in strong lensing systems [9–13], excess
+galaxy-galaxy lensing signals induced by low-mass substruc-
+tures [14–16], and dynamical perturbations to stellar streams
+by dense, dark substructures [17–20].
+SIDM naturally ad-
+dresses these discrepancies because the central density distri-
+bution of SIDM halos undergoes a distinct two-phase evolu-
+tionary pathway. Initially, frequent scatterings among SIDM
+particles drive rapid thermalization in the inner halo within a
+short time (≲1 Gyr), forming a nearly constant density core
+that is shallower than its CDM counterpart. Subsequently, on
+a much longer timescale (∼O(102) times the core-formation
+timescale), a temperature gradient between the hot core and
+the cooler outer halo drives a slow but relentless outward heat
+flux. Due to the negative heat capacity of self-gravitating sys-
+tems, this energy loss forces the central dark matter to contract
+∗E-mail: zczeng@tamu.edu
+and heat up. This rising central temperature further steepens
+the temperature gradient, creating a positive feedback loop.
+This self-accelerating cycle eventually drives the inner halo
+into a gravothermal runaway state known as ‘core-collapse’
+or ‘gravothermal catastrophe’, during which the central core
+becomes increasingly denser, smaller, and hotter. This unique
+core-collapse mechanism can naturally produce a central den-
+sity much higher than that of CDM halos, thus alleviating the
+aforementioned small-scale anomalies.
+Despite this well-established evolutionary track, the ulti-
+mate physical fate of this violent runaway core-collapse pro-
+cess remains a critical open question. At the computational
+limits of both traditional N-body simulations [21–30] and
+gravothermal fluid frameworks [31–36], it is widely agreed
+that the central density of the dark halo does increase dramati-
+cally during core-collapse. However, owing to the fundamen-
+tal limitations of these macroscopic numerical techniques, they
+cannot directly resolve the ultimate final state; naive mathe-
+matical extrapolations merely point toward a singularity-like
+state. Drawing upon early studies of relativistic star clusters,
+[37] qualitatively proposed that a radial relativistic instability
+would inevitably trigger the formation of a central seed black
+hole (BH) when the core’s 1D velocity dispersion approaches
+the velocity threshold of ∼𝑐/3. [38] later quantified this dy-
+namical instability scenario by solving the general relativistic
+equilibrium equations.
+They demonstrated that as the col-
+lapsing SIDM particles become increasingly relativistic, the
+actual adiabatic index 𝛾of the SIDM gas steadily decreases
+arXiv:2609.22758v1  [astro-ph.CO]  19 Sep 2026
+
+2
+from 5/3. Simultaneously, the critical adiabatic index 𝛾𝑐𝑟rises
+above the Newtonian limit of 4/3 because, in general relativity,
+the intense thermal pressure not only counters gravity but also
+acts as an additional gravitational source term. [38] showed
+that when the 3D velocity dispersion of the SIDM particles
+reaches ∼0.57𝑐(equivalent to a 1D dispersion of ∼0.33𝑐),
+Chandrasekhar’s instability criterion 𝛾< 𝛾𝑐𝑟[39] is met. At
+this juncture, hydrostatic pressure can no longer balance self-
+gravity, triggering a dynamical collapse that inevitably births
+a seed black hole.
+A lingering question that remains insufficiently studied is the
+mass of the SIDM-seeded BH. Specifically, the determination
+of this mass can be decoupled into two consecutive phases:
+(a) what is the initial microscopic seed mass formed directly
+by the relativistic instability, and (b) how does this initial seed
+grow, and what is its macroscopic mass at the end of the
+rapid core-collapse phase? Addressing (a), [40] developed a
+scaling framework across the late, unorganized stages of core-
+collapse, while [41] went beyond the hydrostatic equilibrium
+approximation by directly incorporating general relativistic ef-
+fects into the gravothermal equations and numerically evolv-
+ing the system until an apparent horizon forms. Both methods
+independently agree on an initial BH seed mass of merely
+O(10−8) of the halo mass. To address (b), [42] provided an
+estimate of O(10−2) halo mass based on the phenomenologi-
+cal observation of late-time gravothermal fluid evolution. They
+found that within a certain enclosed mass, the inner density
+increases, physically resembling a dense central core rapidly
+contracting and effectively decoupling from the rest of the dark
+halo. [42] showed that this characteristic enclosed mass co-
+incides with the short-mean-free-path (SMFP) region of the
+halo. Consequently, this SMFP mass has been widely adopted
+as the macroscopic prediction for the SIDM-seeded BH mass.
+However, the exact link between the physically rigorous micro-
+scopic seed (a) and the phenomenological macroscopic SMFP
+estimate (b) has only recently begun to be explored. For in-
+stance, recent efforts by [43] have attempted to bridge the gap
+from O(10−8) to O(10−2) halo mass by modeling the com-
+bined accretion of baryonic gas and dark matter. Complement-
+ing this, very recent work by [44] moved beyond the traditional
+quasi-static gravothermal approximations. By employing ad-
+vanced computational fluid dynamics (CFD) techniques to ex-
+plicitly resolve the extreme non-equilibrium hydrodynamics,
+they demonstrate that purely dark matter-driven accretion onto
+a central BH seed can be exceptionally rapid during the first
+few Myr, before locally saturating due to the regulation by
+SIDM heat transport.
+Even if the BH successfully grows to the SMFP mass scale,
+another question highly relevant to observational scales re-
+mains unanswered: does this SMFP estimate (O(10−2) halo
+mass) reflect the ‘ultimate’ BH mass after O(1) Gyrs of evo-
+lution? This question is particularly pressing given the recent,
+unexpected discoveries of the JWST Little Red Dots (LRDs)
+[45–48], which point to an unusual abundance of supermassive
+black holes at high redshifts 𝑧≳5. Exploring the post-SMFP
+evolution, a recent proof-of-concept study [49] modeled the
+uncapped Eddington accretion of gas on top of the SMFP BH
+mass. Their statistical models demonstrated that if such long-
+term gas accretion is efficient, the abundance of LRDs could
+indeed be naturally explained by SIDM-seeded BHs.
+However, one crucial aspect remains largely unexplored in
+the macroscopic BH-halo co-evolution: does the surrounding
+SIDM continue to feed the BH post-collapse, and if so, how
+does this sustained accretion back-react on the macroscopic
+structure of the host halo, potentially leaving unique observa-
+tional imprints? Addressing this question directly, however,
+is obstructed by a mismatch of length and time scales. The
+physical scales of accretion, the Schwarzschild radius and the
+Bondi radius of the seed BH, lie many orders of magnitude
+below what N-body simulations can resolve, even though N-
+body remains the most faithful tool available for following the
+gravothermal collapse and evolution of SIDM halos. The tem-
+poral scales are similarly mismatched: DM accretion onto the
+BH proceeds on ∼Myr timescales [44], far shorter than both the
+snapshot cadence of a halo-scale simulation and the Gyr-scale
+timescales that govern the halo’s evolution. We therefore need
+a phenomenological compromise that circumvents the unre-
+solved accretion scales rather than resolving them directly.
+In this work, we tackle this problem by introducing a
+novel N-body framework to dynamically model the post-core-
+collapse co-evolution of the SIDM halo and the central BH.
+We first propose a ‘multi-round core-collapse’ scenario: after
+converting the inner DM region into a central BH at the on-
+set of primary core-collapse, the simulation is resumed. We
+find that the halo repeatedly undergoes gravothermal rebuild-
+ing and reaches the core-collapse density threshold again. By
+iteratively repeating this cycle—terminating the simulation,
+updating the BH mass with newly condensed DM, and resum-
+ing the simulation—we establish a BH mass growth trajectory
+that serves as a lower bound, since active DM accretion is
+restricted solely to discrete core-collapse events. As a com-
+plementary approach, we simulate a ‘continuous-accretion’
+scenario where the BH accretes individual DM particles on-
+the-fly as they cross the designated central boundary. Since
+this continuous depletion bypasses the gravothermal bottle-
+neck and inherently overestimates the accretion rate, it serves
+as an upper bound on the BH mass. We systematically test
+and provide recommended numerical recipes for two key pa-
+rameters governing both methods: ˜𝜌𝑐𝑐, the predefined density
+threshold for core-collapse, and 𝐾𝑛thres, the Knudsen number
+threshold defining the central region for DM-to-BH conver-
+sion. Using the best-converged parameter values, our frame-
+work brackets the final BH mass to 5% −12% of the total halo
+mass after ≲2 Gyr of post-collapse evolution.
+Concurrently, regarding the structural evolution of the halo,
+the conversion of central DM into the BH creates a profound
+pressure deficit.
+This forces the outer DM to migrate in-
+ward to replenish the central void. This process establishes a
+‘gravothermal supply chain’: the extended halo continuously
+feeds the inner core, which in turn feeds the BH. Consequently,
+the DM density within the inner ≲2𝑟𝑠region is severely de-
+pleted, dropping by ≳1 dex compared to its CDM counterpart,
+falling even significantly below the density of a standard SIDM
+core. Remarkably, this physical picture qualitatively agrees
+with the recent strong-lensing anomaly JVAS B1938+666 (de-
+tection V) reported by [13], where the best-fit lens model for
+
+3
+the dark subhalo perturber consists of an unresolved central
+point mass surrounded by a shallow, uniform-surface-density
+extended disk.
+This work is organized as follows: In Sec. II, we detail
+our two phenomenological methods for modeling the post-
+core-collapse evolution of the SIDM halo-BH system using
+N-body simulations. In Sec. III, we present the primary core-
+collapse simulation from the initial NFW halo to the onset of
+gravothermal runaway, establishing the initial conditions for
+our subsequent BH seeding and accretion models.
+In Sec.
+IV, we present our results on the BH mass growth trajecto-
+ries, including extensive convergence tests over key numerical
+parameters.
+We also provide a comprehensive comparison
+and review of recent literature regarding SIDM-seeded BH
+formation scenarios. In Sec. V, we investigate the detailed
+structural and kinematic evolution of the host dark halo during
+this post-collapse phase, with a particular focus on the density
+profiles and velocity anisotropy. Finally, in Sec. VI, we sum-
+marize our main findings, discuss the limitations of the current
+framework, and outline potential pathways for future work.
+II.
+METHODS
+In this section, we present our numerical framework for
+modeling the gravothermal collapse of an SIDM halo and the
+subsequent mass growth of the central BH. Our methodology
+consists of two main components: first, a primary DM-only
+N-body simulation to track the halo’s evolution up to the onset
+of core collapse; and second, the implementation of two dis-
+tinct simulation-based accretion schemes, ‘multi-round core-
+collapse’ and ‘black hole continuous accretion’, which are
+specifically designed to bracket the lower and upper bounds of
+the BH’s mass growth trajectory.
+We first perform a DM-only simulation of an isolated SIDM
+halo until core collapse. Following the setup in [24], we model
+a typical bright dwarf halo initialized with a spherically sym-
+metric Navarro-Frenk-White (NFW) profile using the N-body
+initial condition generator SpherIC. The halo has an initial
+virial mass of 𝑀200𝑐= 3.02 × 1010𝑀⊙, a virial radius of
+𝑟200𝑐= 37.32 kpc, and a scale radius of 𝑟𝑠= 5.12 kpc. Follow-
+ing previous works [25, 26, 28] on SIDM numerical artifacts
+and their recommended choice of N-body parameters for the
+convergence against these artifacts, we choose a DM particle
+mass of 𝑚𝑝= 5×104𝑀⊙, such that the number of DM particles
+in this target halo is 𝑁𝑝= 8.5×105 (including the exponentially
+truncated profile beyond 𝑟200𝑐). The corresponding softening
+length of DM particles is thus set to be 0.055 kpc, follow-
+ing the recipe in [50]; and the softening length of the black
+hole particle is set to a much smaller value of 0.001 kpc in
+subsequent simulations, to mock a macroscopic black hole in
+reality. We note that our resolution configuration has been val-
+idated for SIDM core-collapse convergence in previous studies
+with similar halo masses and cross sections (e.g., [28]), which
+demonstrated that the primary core-collapse phase is well re-
+solved with 𝑁𝑝∼105–106 particles. Nevertheless, we caution
+that the per-particle Knudsen-number estimation and the early
+BH seed mass may still be subject to resolution-dependent
+systematics at the current particle number. Because this pa-
+per serves as an initial demonstrative study focusing on the
+physics and mechanisms of post-core-collapse evolution, we
+restrict our analysis to this single idealized halo.
+The simulation is carried out in an isolated environment
+using Arepo [51], equipped with an established SIDM mod-
+ule [52–54].
+To ensure that the gravothermal catastrophe
+occurs within a Hubble time, we adopt a constant, velocity-
+independent SIDM cross section of 100 cm2/g throughout this
+work. While incorporating a velocity-dependent cross section
+is a more realistic and widely favored approach, since it allows
+models to preserve desirable diversity features in low-mass
+systems [23, 24, 35, 55, 56] while simultaneously evading
+stringent cluster-scale constraints [57–65], our constant cross-
+section choice simplifies the numerical modeling. Because
+our analysis focuses only on the evolution of a single, isolated
+halo in this demonstrative study, this simplification is physi-
+cally justified. In this context, the constant value effectively
+acts as a velocity-averaged proxy evaluated at the characteris-
+tic velocity scale of the halo, representing a discrete slice of a
+broader velocity-dependent SIDM model.
+Following the methodology from our previous works [22–
+24], we track the progress of core collapse by evaluating the
+halo’s central density, 𝜌cen50, at every timestep, defined as the
+mean density of the 50 densest particles. We define a core-
+collapse threshold, ˜𝜌𝑐𝑐, as the ratio between the instantaneous
+central density 𝜌cen50(𝑡) and its initial value 𝜌cen50(𝑡= 0).
+Once this ratio reaches a pre-assigned value, the N-body sim-
+ulation is terminated to allow for follow-up analysis and treat-
+ment of the black hole seed. Terminating the N-body simula-
+tion at this stage is physically and computationally necessary.
+First, as the core density increases drastically, the timestep
+required to accurately resolve SIDM scattering probabilities
+becomes prohibitively small. Second, as the central region
+enters the short-mean-free-path (SMFP) regime, the discrete
+particle noise inherent to the N-body approach makes the re-
+sults physically questionable.
+In our previous studies focusing on SIDM subhalos [22–
+24], we utilized fixed collapse thresholds of ˜𝜌𝑐𝑐being 5, 10
+or 100. Because gravothermal collapse is a runaway process,
+the exact threshold has a negligible effect on the overall core-
+collapse timescale.
+Instead, it primarily served as a safety
+margin to ensure the collapsing core was dense enough to
+survive from subhalo-host interactions [22–24]. In the cur-
+rent work, however, our primary objective is to explore the
+formation of a central massive black hole via core collapse
+and its subsequent mass growth through accretion. Here, the
+threshold parameter ˜𝜌𝑐𝑐becomes a key physical variable, as
+the density at termination directly dictates the mass of the
+initial black hole seed in our model. Consequently, we sys-
+tematically compare three threshold choices throughout this
+work:
+˜𝜌𝑐𝑐= [10, 30, 100]. While a larger ˜𝜌𝑐𝑐pushes the
+halo deeper into the core-collapse stage (at the expense of sig-
+nificantly higher computational cost), this manual threshold
+choice should not physically alter the final black hole mass
+after a prolonged period of accretion. Therefore, a robust nu-
+merical prescription must demonstrate convergence over ˜𝜌𝑐𝑐,
+ensuring that the long-term evolution of the black hole mass,
+
+4
+𝑀BH(𝑡), is independent of the exact termination threshold for
+core-collapse.
+We refer to the initial phase of evolving the dark-matter-
+only NFW halo until the onset of core-collapse as the ‘primary
+core-collapse simulation’. Upon terminating this primary sim-
+ulation, we convert the DM particles within the collapsed inner
+region into a single massive black hole (BH) particle, repre-
+senting the initial BH seed, while leaving the remaining DM
+particles unaffected. Defining this “collapsed inner region” is a
+critical physical variable, as it strictly determines the initial BH
+seed mass and influences its subsequent evolution. To quan-
+tify this dependency, we employ the Knudsen number, 𝐾𝑛,
+to determine the conversion boundary. The Knudsen number,
+𝐾𝑛≡𝜆/𝐻, is defined as the ratio of the self-interaction mean
+free path, 𝜆= 1/𝑛𝜎(where 𝑛is the particle number density
+and 𝜎the interaction cross section), to the gravitational scale
+height, 𝐻=
+√︁
+𝜎2𝑣/4𝜋𝐺𝜌with 𝜎𝑣denoting the 1D velocity
+dispersion and 𝜌the DM mass density. The condition 𝐾𝑛< 1
+marks the short-mean-free-path (SMFP) regime in the halo
+center, where heat conduction transitions to being dominated
+by local fluid-like collisions. The mass enclosed within this
+SMFP core is conventionally used as an estimator for the fi-
+nal black hole mass by SIDM core collapse [37, 42]. In this
+work, we test a series of 𝐾𝑛thresholds [0.05, 0.1, 0.3, 1.0,
+2.0] to define the initial region for DM-to-BH conversion. By
+implementing follow-up mass accretion onto the BH, we sys-
+tematically validate the robustness of this estimator and ensure
+numerical convergence.
+Upon DM-to-BH conversion, we replace the selected DM
+particles with a single BH particle placed at the halo cen-
+ter with zero initial velocity. Because our initial condition is
+spherically symmetric and the isolated halo carries zero net an-
+gular momentum, the BH particle remains at rest at the center
+throughout the simulation to within numerical precision. We
+re-center the BH particle to the halo center and set its velocity
+to zero only at simulation stop/restart boundaries—namely,
+at the initial DM-to-BH conversion and, in the multi-round
+scheme, after each discrete core-collapse round before the sim-
+ulation is resumed. In the continuous-accretion scheme, the
+BH particle is fixed in place after the initial seeding; subse-
+quent on-the-fly DM particle absorption (mass set to zero and
+transferred to the BH) does not trigger additional re-centering
+or velocity resets.
+To model the post-core-collapse evolution after 𝜌cen50
+reaches the thresholds ˜𝜌𝑐𝑐, along with the subsequent DM
+accretion onto the newly formed SMBH, we deploy two dis-
+tinct simulation methods. We refer to these as ‘multi-round
+core-collapse’ and ‘black hole continuous accretion’, which
+are detailed below.
+Before detailing the two schemes, we stress that the 𝐾𝑛-
+defined boundary is a fluid-scale proxy for the feeding region,
+not a physical accretion mechanism. A DM particle is only
+truly captured once its orbit is comparable to the innermost sta-
+ble circular orbit (ISCO, a few Schwarzschild radii), a scale far
+below both our softening length and the 𝐾𝑛boundary, and even
+below the Bondi accretion radius (∼10−4𝑟𝑠; [43]). We there-
+fore do not resolve the final capture; instead, the two schemes
+below bracket the range of plausible macroscopic feeding rates
+at the resolvable fluid scale, with the microphysical capture left
+for future work.
+Lower Bound: Multi-round Core-collapse. The ‘multi-
+round core-collapse’ approach iteratively repeats the core-
+collapse simulation: in each round, the DM halo is evolved
+with a central BH particle until the central density again
+reaches the ˜𝜌𝑐𝑐threshold. At that point, the DM particles
+newly condensed within the 𝐾𝑛-defined boundary are absorbed
+into the BH, discretely updating its mass at the end of that
+cycle.
+This methodology generates a sequence of discrete
+simulations and mirrors the primary DM-to-BH conversion:
+once the initially collapsed region is converted into a seed BH,
+the remaining halo is an SIDM system whose center is dom-
+inated by the BH potential; the still-dense DM immediately
+outside the converted region is then expected to re-collapse on
+a short timescale—further accelerated by the deepened cen-
+tral potential—and reproduce the SMFP conditions associated
+with the initial BH growth.
+Previous analytical and fluid studies provide additional mo-
+tivation for this closure: they indicate that the first post-seeding
+episode can rapidly connect a microscopic relativistic seed to
+the conventional ∼1%𝑀halo SMFP mass scale [42–44, 66].
+Each subsequent multi-round collapse regenerates the same
+essential prerequisite—a connected, dense SMFP region—
+now surrounding an already massive central BH with a deeper
+gravitational potential. We therefore treat the eventual con-
+sumption of this rebuilt region using the same 𝐾𝑛criterion as
+in the primary conversion, as an effective description of the
+BH accreting its surrounding SIDM. The cycles are repeated
+for a total post-primary evolution time of 2 Gyr, or until the
+depleted halo can no longer form a central region satisfying
+the assigned 𝐾𝑛thres conversion criterion.
+Because this method restricts mass updates to the end of
+each discrete collapse cycle and prohibits continuous, on-the-
+fly DM accretion, the resulting mass trajectory serves as an
+effective lower bound on the BH’s growth history. This bound
+is not mathematically rigorous, as two approximations act in
+opposite directions. The instantaneous DM-to-BH conversion
+of each rebuilt SMFP region tends to overestimate the ac-
+cretion rate, whereas withholding all accretion until the ˜𝜌𝑐𝑐
+threshold is reached tends to underestimate it. As estimated
+in Sec. IV B, the characteristic core-consumption time is O(1)
+Myr, far shorter than the ∼100 Myr gravothermal rebuild-
+ing time between successive rounds. This separation makes
+the instantaneous timing approximation subdominant on the
+halo-evolution timescale. Together with previous evidence for
+efficient consumption of the initial SMFP core, it motivates
+our expectation that the net effect is a slight underestimate.
+Nevertheless, because the horizon-scale capture efficiency and
+phase-space evolution of the rebuilt cores remain unresolved,
+we regard the multi-round trajectory as a physically motivated,
+but non-rigorous, effective lower bound.
+Upper Bound: Black Hole Continuous Accretion.
+In
+contrast, the ‘black hole continuous accretion’ approach treats
+the DM accretion onto the existing central BH (formed dur-
+ing the primary core-collapse simulation) as a continuous,
+on-the-fly process. It represents the opposite extreme of the
+multi-round scheme: instead of pacing accretion by discrete
+
+5
+collapse episodes, it effectively assumes the central feeding
+region is replenished instantaneously, so the accretion rate is
+limited only by how rapidly individual particles cross the 𝐾𝑛
+boundary, which is the maximum conceivable feeding rate. To
+ensure consistency across methods, we employ the same 𝐾𝑛
+thresholds to evaluate which particles are accreted by the cen-
+tral BH at every timestep. For each SIDM particle, its local 𝐾𝑛
+value is calculated using the 1D velocity dispersion, 𝜎𝑣, and
+the SIDM density 𝜌, in its immediate proximity. If a particle’s
+𝐾𝑛drops below the assigned threshold, its mass is transferred
+to the BH by setting the particle’s mass to zero and adding one
+unit of DM particle mass to the central BH. Consequently, the
+BH mass is dynamically updated at every timestep. To ensure
+a fair comparison, these continuous-accretion simulations are
+also evolved for a total post-primary duration of 2 Gyr.
+Because it equates the local SMFP criterion (𝐾𝑛< 𝐾𝑛thres)
+with actual accretion onto the BH, this method inherently over-
+estimates the DM accretion rate. This single approximation
+admits two complementary descriptions of the same source of
+error. Macroscopically, 𝐾𝑛is evaluated on a per-particle ba-
+sis, ignoring whether the entire central halo has re-entered
+a runaway core-collapse stage, equivalently bypassing the
+gravothermal rebuilding that genuinely funnels material onto
+the BH (quantified in Sec. IV B). Microscopically, the same
+gap appears as a length-scale mismatch: the resolution-limited
+region over which 𝐾𝑛is evaluated (≳0.05 kpc ∼10−2𝑟𝑠) lies
+far outside the physical Bondi accretion radius (∼10−4𝑟𝑠; see
+[43]), so a particle satisfying the SMFP criterion is still far
+from being captured. Therefore, we posit that this continuous
+accretion scenario establishes a loose upper bound on the BH
+mass growth trajectory.
+III.
+PRIMARY CORE COLLAPSE SIMULATION
+In this section, we present the results from the primary core-
+collapse simulation, which is the evolution of the initial NFW
+dark halo up to the onset of gravothermal runaway. This phase
+determines both the core-collapse time and the structural state
+of the halo at the moment of BH seeding, which serves as the
+common initial condition for the two post-collapse accretion
+schemes introduced in the previous section.
+Fig. 1 illustrates the evolution of the primary core-collapse
+simulation, spanning from the initial NFW halo to the final
+collapse stages just before termination for DM-to-BH conver-
+sion, across different central density thresholds ˜𝜌𝑐𝑐. Fig. 1a
+presents the density profiles as a function of radius, 𝜌(𝑟)–𝑟,
+representing the standard Eulerian perspective. In all three
+˜𝜌𝑐𝑐scenarios, the central density rises significantly above
+the initial NFW profile.
+As expected, configurations with
+a larger ˜𝜌𝑐𝑐(corresponding to later stages of core collapse)
+exhibit higher central densities and correspondingly smaller
+core radii. In contrast, Fig. 1b displays the same core-collapse
+density profiles as a function of the enclosed mass, 𝑀(< 𝑟).
+This Lagrangian-like representation is achieved by applying
+fixed mass binning at each snapshot: we sort the DM parti-
+cles by their distance to the halo center and group them into
+pre-assigned bins containing a fixed number of particles. This
+10
+2
+10
+1
+100
+101
+102
+radius r [kpc]
+104
+106
+108
+1010
+(r) [M /kpc3]
+kn = 0.05
+kn = 0.10
+kn = 0.30
+kn = 1
+kn = 2
+soft = 0.055 kpc
+3 soft
+Initial Condition
+cc = 10
+cc = 30
+cc = 100
+(a)
+106
+107
+108
+109
+1010
+enclosed mass ( < r) [M ]
+104
+106
+108
+1010
+(r) [M /kpc3]
+kn = 0.05
+kn = 0.10
+kn = 0.30
+kn = 1
+kn = 2
+soft = 0.055 kpc
+3 soft
+Initial Condition
+cc = 10
+cc = 30
+cc = 100
+(b)
+106
+107
+108
+109
+1010
+enclosed mass ( < r) [M ]
+10
+2
+10
+1
+100
+101
+102
+103
+104
+Kn
+Initial Condition
+cc = 10
+cc = 30
+cc = 100
+(c)
+FIG. 1: Structural profiles of the isolated SIDM halo during
+the primary core-collapse phase (evolving from an initial
+NFW configuration to deep core-collapse). (a) Density 𝜌vs.
+radius 𝑟; (b) 𝜌vs. enclosed mass 𝑀(< 𝑟); (c) Knudsen
+number 𝐾𝑛vs. 𝑀(< 𝑟). The grey solid line is the initial NFW
+profile; black, red, and olive mark the core-collapsed states
+˜𝜌𝑐𝑐= 10, 30, 100. The grey horizontal dashed lines in panel
+(c) mark the 𝐾𝑛= 0.05, 0.1, 0.3, 1, 2 thresholds evaluated for
+the central DM-to-BH mass conversion. The grey vertical
+dashed lines in panels (a) and (b) show the corresponding
+conversion boundaries, computed from the deepest
+core-collapse state ( ˜𝜌𝑐𝑐= 100); for the shallower states the
+same 𝐾𝑛thresholds would map to different enclosed masses.
+Black dashed lines mark the softening length 𝜖soft = 0.055
+kpc and 3𝜖, the conventional ‘trustworthy-region’ estimate.
+
+6
+ensures that each mass bin accurately captures the innermost
+mass fractions (e.g., the innermost 107𝑀⊙of DM out of the
+entire 3 × 1010𝑀⊙halo). The signature of core collapse is
+clearly preserved in this 𝜌–𝑀plane, where the central density
+substantially exceeds the initial NFW central density and scales
+monotonically with ˜𝜌𝑐𝑐. Compared to the standard 𝜌–𝑟view,
+the 𝜌–𝑀representation offers a distinct visualization advan-
+tage: because the enclosed mass scales as 𝑚∼𝑟3 in the inner
+region, the structural features of the deep core are effectively
+‘zoomed in’. Furthermore, employing mass bins in practice
+mitigates the numerical artifacts associated with fixed radial
+binning. During the early core-expansion phase, finely spaced
+radial bins suffer from severe particle-discreteness noise (or
+even empty bins) at very small radii; conversely, coarse radial
+bins fail to resolve the extreme central densities during the run-
+away collapse stage. Fixed mass binning naturally provides an
+adaptive spatial resolution. We are thus motivated to primarily
+utilize mass bins rather than radial bins throughout the remain-
+der of this paper, a choice that parallels the Lagrangian fluid
+approach employed in previous semi-analytical works (e.g.,
+[42]).
+Fig. 1c illustrates the evolution of the Knudsen number,
+𝐾𝑛, as a function of the enclosed mass, 𝑀(< 𝑟). The horizon-
+tal dashed lines correspond to our selected threshold values,
+𝐾𝑛thres ∈[0.05, 0.1, 0.3, 1.0, 2.0], which serve to bound the
+central region designated for DM-to-BH conversion. Previous
+theoretical studies [37, 42, 43] commonly adopt 𝐾𝑛thres ∼1
+to semi-quantitatively estimate the total DM mass that even-
+tually ends up in the BH. As shown in Fig. 1c, the signature
+of deep core collapse, which is characterized by an extremely
+dense, dynamically thermalized central core, becomes most
+prominent and stable at 𝐾𝑛≲0.3. This physical behavior nat-
+urally motivates us to systematically test the convergence of
+the DM-to-BH conversion process across this broad range of
+𝐾𝑛thres values. We note that visible fluctuations persist at the
+innermost radii of the 𝐾𝑛curves, even though our use of fixed
+mass bins substantially mitigates the discrete particle noise,
+which we argue is a numerical artifact intrinsic to the particle
+nature of N-body simulations. Consequently, the measured
+𝐾𝑛profiles are not strictly monotonic and may cross a given
+horizontal 𝐾𝑛thres line multiple times in the innermost halo.
+This poses a practical challenge for defining a unique mass
+boundary. Fortunately, as shown in Fig. 1c, the 𝜌𝑐𝑐curves
+in the 𝐾𝑛–mass plane flatten below our chosen 𝐾𝑛thres values
+throughout the core in most cases, so that the crossing occurs
+smoothly at the largest crossing point. We therefore define
+the boundary as the largest enclosed mass 𝑀(< 𝑟) for which
+𝐾𝑛(𝑀) < 𝐾𝑛thres. This choice yields a mass envelope that
+effectively smooths over local fluctuations (evident in Fig. 1c)
+and thus provides a robust conversion boundary.
+IV.
+MASS GROWTH OF SIDM SEEDED BLACK HOLE
+In this section, we analyze the mass growth history of the
+central BH formed via SIDM core collapse, as illustrated in
+Fig. 2. We employ both accretion methods detailed in the pre-
+vious section and examine the numerical convergence across
+the parameter space of { ˜𝜌𝑐𝑐, 𝐾𝑛thres}.
+Figures 2a through
+2e compare the two accretion methods, multi-round collapse
+(dots) and continuous accretion (solid lines), across the three
+density thresholds ˜𝜌𝑐𝑐= [10, 30, 100].
+Each figure corre-
+sponds to a specific Knudsen number threshold for DM-to-BH
+conversion, 𝐾𝑛thres ∈[0.05, 0.1, 0.3, 1.0, 2.0]. In these pan-
+els, the first (leftmost) dot of the multi-round scenario—or
+equivalently, the starting point of the continuous accretion
+curve—represents the formation mass and time of the initial
+BH seed, after which the two methods bifurcate.
+A.
+The initial conversion to BH
+As established, a lower density threshold ˜𝜌𝑐𝑐is always
+reached earlier, guaranteeing an earlier formation time for the
+BH seed in all scenarios. Consequently, because the halo is in-
+tercepted at an earlier stage of collapse, one naturally expects
+a smaller initial BH seed mass, as fewer DM particles have
+condensed into the SMFP core. This expected mass hierarchy
+is clearly visible in Figs. 2a and 2b (where 𝐾𝑛thres ≲0.1).
+However, while the chronological ordering of formation times
+remains strictly preserved, this mass hierarchy weakens in Figs.
+2c and 2d, and reverses in Fig. 2e (𝐾𝑛thres = 2.0). Here, the
+deeply collapsed ˜𝜌𝑐𝑐= 100 case paradoxically produces a
+smaller initial seed than the lower-threshold cases. This mass
+reversal can be traced back to the 𝐾𝑛–𝑀profiles in Fig. 1c:
+the curves intersect at 𝐾𝑛≳0.3. For the deepest collapse
+stage ˜𝜌𝑐𝑐= 100, the extremely dense thermalized core be-
+comes spatially so compact that its outer envelope actually
+exhibits a lower density (and thus a higher 𝐾𝑛) at a given en-
+closed mass than the less-evolved halos. This crossing implies
+that a threshold of 𝐾𝑛≳0.3 is too large to cleanly isolate
+the collapsing core when the halo center is deep into the core-
+collapsed stage. While our goal is to demonstrate numerical
+convergence over the artificial choice of ˜𝜌𝑐𝑐, this convergence
+must emerge from the long-term accretion history. Artificially
+forcing the initial seed masses to overlap by adopting an overly
+large 𝐾𝑛thres only leads to non-convergence in the subsequent
+accretion phase, as demonstrated below.
+B.
+The subsequent BH mass updates
+Once the DM mass within the 𝐾𝑛thres boundary is converted
+into the initial BH seed, the divergence between the two meth-
+ods, ‘multi-round collapse’ and ‘continuous accretion’, starts
+to be established. In the multi-round collapse scenario, we
+iteratively repeat the core-collapse cycle: terminating the sim-
+ulation upon reaching ˜𝜌𝑐𝑐, converting the newly condensed
+central DM into a discrete BH mass increment, and resum-
+ing the simulation with the updated DM profile and BH mass
+until the collapse threshold is reached again. Consequently,
+in Fig. 2f, each dot represents the completion of one such
+subsequent collapse round. As shown in Figs. 2a through 2e,
+two prominent features emerge during the subsequent core-
+collapse iterations for any given {𝐾𝑛thres, ˜𝜌𝑐𝑐} combination:
+the time interval between successive collapse events gradu-
+
+7
+6.0
+6.5
+7.0
+7.5
+8.0
+8.5
+Time [Gyr]
+107
+108
+109
+1010
+MBH[M ]
+Knthres = 0.05
+MBH/Mhalo
+multi-round collapse
+continuous accretion
+cc = 10
+cc = 30
+cc = 100
+10
+3
+10
+2
+10
+1
+(a)
+6.0
+6.5
+7.0
+7.5
+8.0
+8.5
+Time [Gyr]
+107
+108
+109
+1010
+MBH[M ]
+Knthres = 0.10
+MBH/Mhalo
+multi-round collapse
+continuous accretion
+cc = 10
+cc = 30
+cc = 100
+10
+3
+10
+2
+10
+1
+(b)
+6.0
+6.5
+7.0
+7.5
+8.0
+8.5
+Time [Gyr]
+107
+108
+109
+1010
+MBH[M ]
+Knthres = 0.30
+MBH/Mhalo
+multi-round collapse
+continuous accretion
+cc = 10
+cc = 30
+cc = 100
+10
+3
+10
+2
+10
+1
+(c)
+6.0
+6.5
+7.0
+7.5
+8.0
+8.5
+Time [Gyr]
+107
+108
+109
+1010
+MBH[M ]
+Knthres = 1.00
+MBH/Mhalo
+multi-round collapse
+continuous accretion
+cc = 10
+cc = 30
+cc = 100
+10
+3
+10
+2
+10
+1
+(d)
+6.0
+6.5
+7.0
+7.5
+8.0
+8.5
+Time [Gyr]
+107
+108
+109
+1010
+MBH[M ]
+Knthres = 2.00
+MBH/Mhalo
+multi-round collapse
+continuous accretion
+cc = 10
+cc = 30
+cc = 100
+10
+3
+10
+2
+10
+1
+(e)
+6.0
+6.5
+7.0
+7.5
+8.0
+8.5
+Time [Gyr]
+107
+108
+109
+1010
+MBH[M ]
+MBH/Mhalo
+Knthres = 0.05
+Knthres = 0.10
+Knthres = 0.30
+Knthres = 1.00
+Knthres = 2.00
+cc = 10
+cc = 30
+cc = 100
+10
+3
+10
+2
+10
+1
+(f)
+FIG. 2: Mass growth trajectories of the SIDM-seeded central black hole under different accretion schemes and numerical
+thresholds. Panels (a)–(e) illustrate the evolution across different Knudsen thresholds, 𝐾𝑛thres = 0.05, 0.1, 0.3, 1, 2, which define
+the spatial boundary for DM-to-BH conversion. Scatter points track the BH mass in the multi-round core-collapse scenario;
+here, each marker represents a discrete simulation that corresponds to a gravothermal rebuilding cycle and the subsequent mass
+update. In contrast, solid curves denote the on-the-fly BH mass growth under the continuous-accretion scenario. The color
+coding distinguishes the manually assigned core-collapse thresholds ˜𝜌𝑐𝑐. The shaded horizontal bands (5%–12% halo mass)
+indicate our bounded estimate for the final BH mass achieved purely through DM accretion. Panel (f) compiles the multi-round
+mass trajectories across all 𝐾𝑛thres values to demonstrate the asymptotic numerical convergence.
+
+8
+ally lengthens, and the incremental BH mass gained in each
+round gradually decreases. This slow-down occurs because
+each accretion event gradually depletes the reservoir of DM
+available in the dense inner halo, subsequently weakening the
+gravothermal process and delaying the next collapse. A simi-
+lar logic governs the comparison among different ˜𝜌𝑐𝑐cases for
+a fixed 𝐾𝑛thres: scenarios with a smaller ˜𝜌𝑐𝑐exhibit a higher
+frequency of accretion events, but each event yields a relatively
+smaller mass increment Δ𝑀BH, simply because the less strin-
+gent density threshold is more rapidly and frequently reached.
+Moreover, because a larger ˜𝜌𝑐𝑐imposes a more stringent cri-
+terion for both triggering core collapse and executing mass
+updates, these larger ˜𝜌𝑐𝑐scenarios consistently yield a slower
+overall BH mass growth history compared to their lower ˜𝜌𝑐𝑐
+counterparts.
+As introduced in Sec. II, the instantaneous DM-to-BH con-
+version at each collapse event is a phenomenological ideal-
+ization; it is nonetheless justified a posteriori by the separa-
+tion of timescales between the microphysical accretion and
+the macroscopic refueling, which we now quantify. The DM
+is not absorbed truly instantaneously, but on a microphysical
+accretion timescale that can be estimated to order of mag-
+nitude from the Bondi rate at our macroscopic seed mass.
+Taking the typical seed masses and per-round increments from
+Fig. 2 (several ×108 𝑀⊙and ≲108 𝑀⊙, respectively), the
+core velocity dispersion 𝜎𝑣∼120–150 km s−1, and the SMFP
+core density implied by 𝐾𝑛thres = 0.05, the Bondi rate is
+¤𝑀∼102 𝑀⊙yr−1, so each accretion interval is completed
+within 𝑡acc = Δ𝑀BH/ ¤𝑀∼O(1) Myr. This is roughly two
+orders of magnitude shorter than the ∼100 Myr gravothermal
+rebuilding that refuels the core between rounds, so the instan-
+taneous treatment is adequate on the timescales of interest.
+This estimate is independently corroborated by the spherically
+symmetric fluid simulations of [44], which resolve the micro-
+physical accretion directly and likewise find the central DM to
+be consumed on Myr timescales.
+In the continuous accretion scenario, the discrete ‘cadence’
+of events is naturally absent. Nevertheless, a similar overarch-
+ing trend remains: at any given time, 𝑡, on the simulation time-
+line, the smaller ˜𝜌𝑐𝑐case always maintains a larger 𝑀BH(𝑡),
+driven by the ‘head start’ effect of its earlier initial formation.
+Furthermore, the continuous accretion approach consistently
+produces a higher 𝑀BH(𝑡) trajectory than the multi-round sce-
+nario across all tested parameters. This monotonic ordering is
+consistent with our bracketing methodology laid out in Sec. II:
+the multi-round scheme restricts accretion to discrete core-
+collapse events, whereas the continuous scheme bypasses the
+gravothermal rebuilding delay. We therefore regard the two
+trajectories as delineating a plausible range of BH mass growth
+histories, within which the true evolution is expected to lie.
+C.
+The numerical convergence
+As discussed in the methods section, the numerical parame-
+ters { ˜𝜌𝑐𝑐, 𝐾𝑛thres} are not derived from first principles and thus
+carry the potential to introduce numerical artifacts. Therefore,
+a primary goal of this study is to identify an optimal parameter
+set that minimizes these artifacts before drawing robust con-
+clusions regarding the BH mass growth history. While we cau-
+tion the readers that numerical convergence does not always
+guarantee physical correctness, physical correctness strictly
+requires numerical convergence. Thus, establishing this con-
+vergence is crucial for extracting the most reliable results from
+our numerical framework. Observing Figs. 2a through 2e, the
+convergence of the multi-round approach across the discrete
+density thresholds ˜𝜌𝑐𝑐∈[10, 30, 100] noticeably improves as
+𝐾𝑛thres decreases, achieving excellent visual convergence at
+𝐾𝑛thres = 0.05. This indicates that at 𝐾𝑛thres = 0.05, the long-
+term BH mass trajectory becomes effectively independent of
+the artificial termination threshold ˜𝜌𝑐𝑐.
+Simultaneously, at
+𝐾𝑛thres = 0.05, the artificial ‘head start’ effect inherent to the
+continuous accretion scenario is minimized because the initial
+BH seed mass is less severely overestimated. This configura-
+tion therefore yields the lowest upper-bound BH mass among
+all 𝐾𝑛thres variations, while also demonstrating rapid conver-
+gence. Consequently, we identify the region bounded by these
+two accretion methods at 𝐾𝑛thres = 0.05, spanning approxi-
+mately 5% to 12% of the halo mass (represented by the gray
+horizontal bands in Figs. 2a to 2e), as the robust prediction for
+the final BH mass driven purely by DM accretion. The relevant
+timescale for the initial BH seed to grow to such macroscopic
+masses is approximately 1–1.5 Gyr.
+Having established convergence over ˜𝜌𝑐𝑐at a fixed 𝐾𝑛thres,
+we must also evaluate convergence over 𝐾𝑛thres at a fixed ˜𝜌𝑐𝑐.
+The goal is to determine an optimal ˜𝜌𝑐𝑐value to recommend
+for future studies. In other words, we investigate whether a
+specific ˜𝜌𝑐𝑐can enforce convergence across different 𝐾𝑛thres
+choices, or at least exhibit asymptotic signs of converging
+towards the smaller 𝐾𝑛thres results. To this end, Fig. 2f com-
+piles all multi-round collapse trajectories spanning the entire
+{ ˜𝜌𝑐𝑐, 𝐾𝑛thres} parameter space.
+As ˜𝜌𝑐𝑐increases from 10
+(black points) to 100 (olive points), the overall spread of the
+BH mass growth curves narrows significantly. However, ab-
+solute convergence across all 𝐾𝑛thres values is not yet fully
+realized even at the highest threshold tested 𝜌𝑐𝑐= 100. For in-
+stance, the final BH masses for the { ˜𝜌𝑐𝑐= 100, 𝐾𝑛thres = 0.05}
+and { ˜𝜌𝑐𝑐= 100, 𝐾𝑛thres = 0.1} cases are 1.53 × 109𝑀⊙and
+1.91 × 109𝑀⊙respectively, leaving a residual discrepancy of
+≲20%. Pushing to thresholds higher than ˜𝜌𝑐𝑐= 100 is com-
+putationally prohibitive and physically questionable: the ex-
+treme central densities demand impractically small timesteps
+to resolve SIDM scattering probabilities, and the severe fluid-
+like nature of the deep SMFP core invalidates the discrete
+N-body approach.
+Given this convergence analysis, we conclude that 𝐾𝑛thres =
+0.05 constitutes the most robust numerical choice for defin-
+ing the DM-to-BH conversion boundary in our framework.
+Although convergence over ˜𝜌𝑐𝑐remains asymptotic rather
+than absolute, larger ˜𝜌𝑐𝑐thresholds capture the halo in a
+more deeply evolved core-collapse stage. Therefore, we con-
+sider them physically more reliable and recommend adopting
+˜𝜌𝑐𝑐= 100 for future isolated SIDM core-collapse simulations.
+
+9
+0.050.1
+0.3
+1
+2
+0.01
+0.001
+Knthres
+107
+108
+109
+1010
+MBH[M ]
+MBH/Mhalo
+multi-round sims.
+fitting: M0 + A Kn
+cc = 10
+cc = 30
+cc = 100
+10
+3
+10
+2
+10
+1
+(a)
+0.050.1
+0.3
+1
+2
+0.01
+0.001
+Knthres
+107
+108
+109
+1010
+MBH[M ]
+MBH/Mhalo
+conti. accretion sims.
+fitting: M0 + A Kn
+cc = 10
+cc = 30
+cc = 100
+10
+3
+10
+2
+10
+1
+(b)
+FIG. 3: Final black hole mass as a function of the adopted
+threshold 𝐾𝑛thres for the multi-round (upper) and
+continuous-accretion (lower) scenarios, for tested
+core-collapse density thresholds 𝜌𝑐𝑐. Simulation results are
+shown as dots, while fits of the form 𝑀BH = 𝑀0 + 𝐴𝐾𝑛𝛼are
+shown as dashed lines, used to extrapolate to smaller 𝐾𝑛thres.
+D.
+Extrapolating to smaller 𝐾𝑛thres
+Having established convergence over ˜𝜌𝑐𝑐at fixed 𝐾𝑛thres and
+identified 𝐾𝑛thres = 0.05 as the most robust choice, a natural
+follow-up is whether the results remain stable if the threshold
+could be pushed even lower. However, our current approach
+is severely limited at resolving smaller scales, both because
+of the prohibitive computational cost and the unavoidable dis-
+crete noise when approaching more fluid-like regime. These
+prevent us from directly resolving 𝐾𝑛thres < 0.05. To probe
+this regime, we instead fit the measured 𝑀BH–𝐾𝑛thres relations
+and extrapolate, as shown in Fig. 3.
+In Fig. 3, the raw data reproduce the convergence behav-
+ior established above: the multi-round final masses across
+the three ˜𝜌𝑐𝑐thresholds converge as 𝐾𝑛thres decreases toward
+0.05, while the continuous-accretion masses show no sign of
+plateauing. To push beyond the directly resolvable range, we
+fit the 𝑀BH–𝐾𝑛thres relation with 𝑀BH = 𝑀0 + 𝐴𝐾𝑛𝛼in both
+panels. Given only five data points per fit and three free pa-
+6.5
+7.0
+7.5
+8.0
+Time [Gyr]
+107
+108
+109
+1010
+MBH [M ]
+MBH/Mhalo
+Knthres = 0.05
+conti. accretion (SIDM)
+conti. accretion (CDM)
+cc = 10
+cc = 30
+cc = 100
+cc = 10
+cc = 30
+cc = 100
+10
+3
+10
+2
+10
+1
+(a)
+6.5
+7.0
+7.5
+8.0
+Time [Gyr]
+107
+108
+109
+1010
+MBH [M ]
+MBH/Mhalo
+Knthres = 0.10
+conti. accretion (SIDM)
+conti. accretion (CDM)
+cc = 10
+cc = 30
+cc = 100
+cc = 10
+cc = 30
+cc = 100
+10
+3
+10
+2
+10
+1
+(b)
+FIG. 4: Comparison of the BH mass growth trajectories
+between the SIDM (thin solid lines) and CDM (thick solid
+lines) control models in the continuous-accretion scenario.
+This comparison isolates the enhancement in DM accretion
+driven by SIDM gravothermal dynamics, as opposed to the
+purely gravitational feeding of CDM.
+rameters, these fits should be read as qualitative rather than
+quantitative; nevertheless, they still yield useful insight. This
+fit reproduces the convergence near 𝐾𝑛thres = 0.05, where
+the three fitted curves nearly intersect; when extrapolated to
+smaller 𝐾𝑛thres, however, they separate again, with 𝑀0 span-
+ning ∼1.5%–3% of the halo mass—only modestly below the
+established ∼5% lower bound. Given the low statistics of
+these fits, this re-separation should not be over-interpreted.
+In contrast, the continuous-accretion final masses decrease
+monotonically with 𝐾𝑛thres (𝑀0 →0), consistent with our
+reading of those results as a loose, unconverged upper bound.
+This contrast reinforces our conclusion that the multi-round
+estimate is the more robust one.
+E.
+SIDM vs. CDM in continuous accretion
+In the preceding sections, we established the dynamics of
+subsequent DM accretion onto the initial BH seeded by the
+
+10
+primary core collapse. For consistency, both the multi-round
+core-collapse and continuous accretion scenarios maintained
+the same constant SIDM cross section throughout the entire
+evolution. However, this raises an important physical question:
+is the rapid BH mass growth driven solely by the deep central
+gravitational potential, or is it significantly fueled and acceler-
+ated by ongoing SIDM scatterings? This distinction is partic-
+ularly crucial for realistic velocity-dependent SIDM models,
+where the extreme velocity dispersion near the massive BH
+would naturally suppress the cross section to near-zero. To
+investigate this limit, we perform a control simulation using
+the continuous accretion method: after the primary DM-to-
+BH conversion, we resume the simulation with the central BH
+intact, but explicitly turn off DM self-interactions, effectively
+treating the remainder of the halo as collisionless CDM. To
+ensure a fair comparison, we enforce the exact same 𝐾𝑛thres
+accretion criteria for this now-effectively-CDM halo. In this
+setup, the nominal cross section of 𝜎/𝑚= 100 cm2/g is used
+purely as a mathematical proxy to evaluate the local 𝐾𝑛condi-
+tion, without participating in the actual dynamical evolution.
+This approach allows us to test the purely gravitational base-
+line of our continuous accretion mechanism, thereby isolating
+and highlighting the specific enhancement provided by self-
+interactions. Note that this CDM control test can only be con-
+ducted within the continuous accretion framework; the multi-
+round approach inherently relies on successive gravothermal
+core collapse, which requires self-interactions to occur.
+We present the results of this comparison in Fig. 4, fo-
+cusing on our two best-converged threshold configurations:
+𝐾𝑛thres = 0.05 and 𝐾𝑛thres = 0.1. In both cases, the collision-
+less CDM scenario yields significantly less BH mass growth
+than the fully interacting SIDM scenario, trailing by approx-
+imately a factor of two. This confirms that while the deep
+central potential alone drives substantial accretion, SIDM-
+driven gravothermal dynamics plays a crucial role in efficiently
+gathering outer halo materials to feed the central BH. Fur-
+thermore, comparing the CDM accretion histories between
+𝐾𝑛thres = 0.05 and 𝐾𝑛thres = 0.1 reveals that an overestimated
+initial BH seed mass persistently leads to an inflated final BH
+mass, independent of the underlying SIDM physics. This re-
+inforces our earlier conclusion: employing a strict, convergent
+𝐾𝑛thres is a necessity for accurately modeling subsequent BH
+mass growth in this and future works.
+We stress that for the CDM cases, this 𝐾𝑛-proxy criterion
+does not reproduce true collisionless accretion. A CDM parti-
+cle, unlike SIDM cases which are more fluid-like in the SMFP
+limit, can be captured only if its orbit carries it within the
+innermost stable circular orbit (ISCO, a few Schwarzschild
+radii), some six orders of magnitude inside the ∼0.2 kpc
+boundary set by 𝐾𝑛thres = 0.05. The CDM control therefore
+overestimates purely gravitational feeding and should be read
+as an upper bound; correspondingly, the factor-of-two SIDM
+enhancement in Fig. 4 is a conservative lower limit on the true
+SIDM–CDM contrast.
+6.0
+6.5
+7.0
+7.5
+8.0
+8.5
+Time [Gyr]
+107
+108
+109
+1010
+MBH[M ]
+MBH/Mhalo
+fgas = 3%
+cc = 10
+cc = 30
+cc = 100
+SIDM only
+Edd. gas only
+Edd. gas + SIDM
+SIDM only
+Edd. gas only
+Edd. gas + SIDM
+10
+3
+10
+2
+10
+1
+(a)
+6.0
+6.5
+7.0
+7.5
+8.0
+8.5
+Time [Gyr]
+107
+108
+109
+1010
+MBH[M ]
+MBH/Mhalo
+fgas = 10%
+cc = 10
+cc = 30
+cc = 100
+SIDM only
+Edd. gas only
+Edd. gas + SIDM
+SIDM only
+Edd. gas only
+Edd. gas + SIDM
+10
+3
+10
+2
+10
+1
+(b)
+FIG. 5: Mass growth trajectories of the central black hole,
+incorporating both DM accretion from the multi-round
+scenario and a first-order estimate of baryonic accretion.
+Three evolutionary tracks are compared: pure SIDM
+accretion (scatter points), pure baryonic accretion (dashed
+lines), and the combined co-evolution driven by both SIDM
+and baryonic accretion (solid lines). Baryonic growth is
+modeled by the minimum of the Eddington and Bondi
+accretion rates of gas, though we find the Eddington limit
+consistently dominates. We evaluate total available gas
+reservoirs of 𝑓gas = 3% and 𝑓gas = 10% for gas-poor and
+gas-rich systems, assuming a fiducial Eddington accretion
+efficiency of 𝑓Edd = 0.2. Driven by rapid gas depletion, the
+final BH mass can be approximated as a simple linear
+superposition of the pure DM baseline and the total available
+gas mass.
+F.
+Including Eddington accretion of baryons
+Thus far, our discussion has focused on the mass growth of
+the central BH formed via SIDM core collapse, considering
+only the accretion of DM. However, baryonic accretion consti-
+tutes another crucial ingredient. For instance, [49] employed
+purely Eddington-limited baryonic accretion to model the sub-
+
+11
+sequent growth of an initial SIDM-seeded BH (assumed to be
+∼1% of the halo mass). Similarly, [43] utilized early-time
+Eddington gas accretion to grow a microscopic O(1)𝑀⊙seed,
+which is triggered directly by the relativistic instability [40],
+up to O(104)𝑀⊙. Building upon our converged results for
+DM-driven BH growth, we now incorporate a first-order toy
+model to estimate the complementary mass growth contributed
+by baryonic accretion.
+For illustrative purposes, we introduce a reasonable simpli-
+fication: modeling the baryon-fed growth as accretion from a
+single gas reservoir subject to both Eddington and Bondi lim-
+its. Stellar mass and other baryonic channels are not explicitly
+included. We model this gas reservoir as a uniform-density
+sphere with a radius of 0.37 kpc (corresponding to the half-
+light radius of the host halo’s galaxy utilized in [24]) and a
+total mass of 𝑓gas × 𝑀200𝑐, where the gas mass fraction 𝑓gas
+serves as a free parameter. Here 𝑓gas should be interpreted as
+the total gas budget accumulated over the halo’s cosmic life,
+i.e., a late-time, low-redshift value, rather than the instanta-
+neous gas content at any single epoch. Our fiducial choices
+of 3% and 10% are thus representative of the gas fractions
+retained by low-redshift dwarfs, whereas a value closer to the
+cosmic baryon fraction would apply at the high redshifts of the
+LRD population [49]. Following [43], we evaluate two dis-
+tinct limits for baryonic accretion: the radiation pressure limit
+(Eddington) and the hydrodynamic feeding limit (Bondi). The
+Eddington accretion rate is given by
+𝑑𝑀Edd
+𝑑𝑡
+= 1 −𝜖
+𝜖
+𝑓Edd
+4𝜋𝐺𝑀BH
+𝑐(𝜎radiation/𝑚) ,
+(1)
+where we adopt a standard radiative efficiency of 𝜖= 0.1, a
+fiducial accretion efficiency of 𝑓Edd = 0.2 following the setup
+of [49] (with the maximal case 𝑓Edd = 1 explored as an extreme
+upper limit in the appendix), and the Thomson scattering cross
+section 𝜎radiation/𝑚= 0.4 cm2/g. The Bondi accretion rate is
+given by
+𝑑𝑀Bon
+𝑑𝑡
+= 4𝜋𝜆𝑠
+𝐺2𝑀2
+BH
+𝑣3
+sound
+𝜌gas,
+(2)
+where 𝜆𝑠= 0.25 is an O(1) accretion eigenvalue, and 𝑣sound
+is the sound speed of the gas [67]:
+𝑣sound =
+√︄
+𝛾𝑘𝐵𝑇vir
+𝜇𝑚𝑝
+.
+(3)
+Here, 𝑘𝐵is the Boltzmann constant, 𝑚𝑝is the proton mass,
+𝛾= 5/3 is the adiabatic index for a monatomic gas, and 𝜇is the
+mean molecular weight. Assuming a fully ionized primordial
+gas, we set 𝜇= 0.6. The virial temperature, 𝑇vir, assuming an
+isothermal sphere, is given by:
+𝑇vir = 1
+3
+𝜇𝑚𝑝
+𝑘𝐵
+𝐺𝑀200𝑐
+𝑟200𝑐
+.
+(4)
+Note that while our Eddington accretion prescription follows
+the standard setup, our application of the Bondi formula differs
+from that of [43]. Specifically, [43] employed a dark Bondi
+accretion scheme to model the influx of SIDM particles onto
+the central BH, whereas we utilize the standard Bondi formula
+to model the accretion of baryonic gas.
+Because both the
+Eddington and Bondi rates represent physical upper limits on
+gas accretion, the effective baryonic accretion rate is governed
+by the minimum of the two, capped by the remaining gas mass:
+Δ𝑀BH−gas = min( ¤𝑀Bon Δ𝑡,
+¤𝑀Edd Δ𝑡, 𝑚gas(𝑡)),
+(5)
+where Δ𝑡is the discrete mass-update interval—one multi-
+round core-collapse cycle—and 𝑚gas(𝑡) is the gas mass re-
+maining at the start of that interval. At the conclusion of each
+cycle, we update the BH mass and deduct the accreted incre-
+ment Δ𝑀BH−gas from the remaining gas reservoir (and also
+re-calculate the gas density in Eqn. 2). The explicit inclusion
+of the available gas mass, 𝑚gas(𝑡) introduces a key physical
+difference from the analytical Eddington modeling in [43]. In
+their framework, a simple unconstrained exponential growth
+is sufficient because the initial seed is microscopic and gas
+depletion is negligible in the early stages. In our scenario,
+however, as we will demonstrate below, the finite gas reser-
+voir eventually becomes the fundamental limiting factor for
+baryonic accretion.
+The corresponding mass growth of the BH via baryonic
+accretion is shown in Fig. 5. In this analysis, we examine
+two scenarios. First, the initial central BH—seeded by the
+primary core-collapse simulation—grows exclusively by ac-
+creting gas, without any further accretion of SIDM. This is
+achieved by updating the BH mass using only the 𝑑𝑀BH−gas
+component at the end of each discrete simulation round. The
+results of this gas-only scenario are represented by the dashed
+lines in Fig. 5. Because we empirically find that the Edding-
+ton limit is consistently more stringent than the Bondi limit
+in Eqn. 5, Eddington radiation pressure effectively becomes
+the sole limiting mechanism on gas accretion. Thus, we de-
+note this baryonic channel as ‘Edd. gas’ in the figure legends.
+Second, we incorporate both DM and baryonic accretion. To
+achieve this within our multi-round collapse framework, we
+compute the differential between adjacent 𝑀BH(𝑡) data points
+from the DM-only simulations. This naturally yields the ef-
+fective DM accretion increment, 𝑑𝑀BH−DM, across each dis-
+crete interval bounded by the resumption and termination of
+the multi-round simulations. We then evaluate the total mass
+increment 𝑑𝑀BH = 𝑑𝑀BH−gas + 𝑑𝑀BH−DM at each discrete
+mass-update interval, feeding the updated BH mass back into
+Eqn. 5 to simultaneously track both the DM and baryonic con-
+tributions. The resulting mass growth trajectories are shown
+as solid lines in Fig. 5. We note a methodological caveat: be-
+cause the 𝑑𝑀BH−DM increments are extracted from pure DM-
+only simulations, our post-processing approach incorporates
+the boosted gas accretion due to the underlying DM accretion,
+but neglects the reciprocal feedback. In reality, the rapid BH
+mass gain from gas accretion would deepen the central poten-
+tial, potentially accelerating the gravothermal collapse and the
+subsequent DM accretion. Nevertheless, we argue that this
+
+12
+missing positive feedback does not severely compromise our
+toy model estimation. As evident in Fig. 5, the gas accretion
+saturates very rapidly, limiting the time window over which
+this bias accumulates.
+Fig. 5 displays two panels corresponding to a relatively gas-
+poor ( 𝑓gas = 3%) and a gas-rich ( 𝑓gas = 10%) scenario. In both
+cases, the Eddington-only curves saturate at 𝑀BH,ini + 𝑀gas,
+fundamentally capped by the total available gas reservoir. In
+contrast, the combined Eddington+SIDM curves saturate at
+𝑀BH,DMO + 𝑀gas, where 𝑀BH,DMO represents the final BH
+mass achieved via SIDM-only accretion described in previous
+sections. This indicates that, to a first approximation, the fi-
+nal BH mass can be treated as the linear superposition of the
+SIDM-only theoretical limit and the total available gas mass.
+This rapid saturation mechanism is driven by the rapid ini-
+tial growth of the BH when Eddington accretion is activated,
+as we can also see from the steep slopes of Eddington cases
+in Fig. 5. The early-time competition between gas and DM
+accretion is governed by an interplay between the initial BH
+mass ( ¤𝑀Edd ∝𝑀BH) and the local DM density. For a shal-
+lower collapse ( ˜𝜌𝑐𝑐= 10), the smaller initial BH seed yields
+a lower Eddington rate, while the surrounding DM envelope
+retains a relatively high density, allowing DM accretion to
+initially dominate (black curves). Conversely, for deeper col-
+lapse stages ( ˜𝜌𝑐𝑐≥30) the larger initial BH seed exponentially
+boosts the Eddington rate. Simultaneously, because the core
+is heavily depleted into the BH, the local DM density in the
+immediate envelope drops, suppressing early DM accretion.
+Coupled with the macroscopic bottleneck of gravothermal re-
+building (the DM reservoir effect), the continuous Eddington
+gas accretion easily outpaces the delayed DM feeding in these
+deeply collapsed scenarios, rapidly consuming the available
+baryon reservoir.
+This result qualitatively validates the purely baryonic ap-
+proach explored in [49], whose Eddington-based gas growth
+prescription we also follow, albeit with an explicit cap on the
+available gas reservoir. However, our analysis highlights that
+neglecting the DM-contributed mass growth can lead to a sig-
+nificant underestimation of the final BH mass, typically by sev-
+eral tens of percent, and up to a factor of two, depending on the
+halo’s gas fraction and SIDM cross section. More importantly,
+this toy model illustrates a synergistic picture: while baryonic
+accretion is a crucial ingredient for early rapid growth, the
+purely DM-driven mass limit serves as the underlying baseline.
+Fortunately, because the gas reservoir is rapidly consumed, the
+final BH mass can be conveniently approximated by a simple
+linear superposition of the two components. We emphasize
+that this additive + 𝑓gas contribution is a supply-limited upper
+bound, rather than a rate-limited one: the central BH is such
+an efficient accretor that gas arriving near the center is readily
+captured, so the realized mass is expected to lie close to this
+bound rather than far below it. Two neglected effects act on the
+trajectory without altering this endpoint. First, in reality the
+gas is fed into the halo gradually over cosmic time rather than
+being available from the outset; this slows the early growth
+and flattens the curves in Fig. 5, but leaves the final BH mass
+unchanged, since the total budget is the same. Second, gas
+outflow and feedback would expel a fraction of the reservoir
+from the halo, lowering the endpoint itself; quantifying this
+is beyond the scope of this work and constitutes the primary
+uncertainty on the baryonic contribution. This additive prop-
+erty greatly simplifies future theoretical modeling, making it
+straightforward to adjust 𝑓gas and compare with high redshift
+supermassive black holes.
+G.
+Comparison with other works
+In this section, we compare our results on SIDM-formed
+BHs with other relevant works, providing a conceptual sum-
+mary of contemporary progress on this front. Fig. 6 presents
+a schematic overview of these works, illustrating their key
+mechanisms, approaches, and the resulting SIDM-BH mass
+scales. To keep the comparison focused, Fig. 6 is restricted to
+elastic SIDM models; related but distinct channels, such as the
+gravothermal collapse of (ultra-)strongly self-interacting dark
+matter (uSIDM) [68–70], or dissipative (and atomic) dark mat-
+ter [71–73], are not included.
+The theoretical foundation for forming a BH via SIDM
+core collapse stems from the gravothermal catastrophe, where
+the central core achieves increasingly higher densities while
+shrinking in size [37]. As observed in semi-analytical fluid
+models [42] (see their Fig. 1) and our N-body analysis (Fig. 1b),
+the central density rises rapidly across the late-collapse stages
+(from ˜𝜌𝑐𝑐= 10 to ˜𝜌𝑐𝑐= 100). At the same time, the 𝜌–𝑀
+and 𝐾𝑛–𝑀profiles of these different stages—although dis-
+tinct within the central core—cross at nearly the same en-
+closed mass, slightly outside the core. The physical picture
+of this phenomenon is a uniform-density sphere in the central
+halo that rapidly shrinks in size, effectively detaching from the
+surrounding halo. Consequently, this characteristic “crossing
+mass” envelope, which lies just inside the nominal 𝐾𝑛< 1
+boundary (in our case at 𝐾𝑛≈0.3) and is conventionally la-
+beled as the SMFP mass, has historically been used as a first-
+order estimate for the phenomenological mass of the resulting
+supermassive BH. This corresponds to the orange points in
+Fig. 6. Notably, [42] found that the inclusion of a baryonic
+potential not only shortens the core-collapse timescale but also
+significantly affects this SMFP BH mass estimate. This aspect
+has not been extensively studied and represents a potentially
+major systematic uncertainty in SIDM BH research, which we
+will discuss in more detail alongside other variables in Sec. VI.
+While this phenomenological SMFP estimate provides a
+reasonable order-of-magnitude approximation, it does not cap-
+ture the full physical picture. It leaves at least two fundamen-
+tal questions unanswered: (a) how does the BH grow from
+the initial true seed—formed via relativistic instability during
+the gravothermal runaway process—up to this ∼1% halo mass
+level? and (b) is this ∼1% halo mass scale the end of the story,
+leaving the BH and the remaining halo in peaceful coexistence,
+or will the system continue to evolve?
+To answer question (a), we must first establish a rigorous
+understanding of the seed mass from a relativistic perspec-
+tive, determining the true foundational mass for subsequent
+macroscopic accretion and evolution. By establishing scaling
+relations between different phases of late core-collapse and the
+
+13
+10
+8
+10
+6
+10
+4
+10
+2
+100
+MBH / Mhalo
+Relativistic instability
+& BH seed
+SMFP gravothermal core
+Halo-scale accretion
+DM+baryon pot.
+DM only
+Feng+ 2021
+(SMFP estimate)
+Gad-Nasr+ 2024
+(SMFP scaling)
+BH mass function
+Jiang+ 2025
+(SMFP seed + uncapped Eddington growth)
+Eddington baryons
+dark Bondi
+Feng+ 2025
+heat-regulated, saturates at 1% Mhalo
+Meng+ 2026
+(non-equilibrium fluid dynamics)
+Gu+ 2026
+(GR horizon seed)
+Gu+ 2026b
+(super-Bondi accretion)
+DM accretion
+Edd. baryons
+This work
+Kn = 0.05,
+cc = 10
+Kn = 0.05,
+cc = 30
+Kn = 0.05,
+cc = 100
+FIG. 6: A schematic overview comparing contemporary theoretical works for SIDM-seeded black holes with our macroscopic
+co-evolution results in this work. For each referenced study, we illustrate the predicted BH mass scales along the BH growth
+trajectory, highlighting the physical mechanisms focused on and the key approaches employed. The references listed here are
+(top to bottom): Feng+ 2021 [42], Gad-Nasr+ 2024 [40], Jiang+ 2025 [49], Feng+ 2025 [43], Meng+ 2026 [44], and Gu+
+2026a,b [41, 66].
+deeply SMFP stage, [40] (green block in Fig. 6) bridged the
+gap to find the relevant mass at the onset of relativistic instabil-
+ity (core speed ∼𝑐/3). They found a microscopic seed mass in
+the range of O(10−9) ∼O(10−8) of the halo mass (i.e., stellar-
+mass seed BHs), depending on the cross-section models. Tak-
+ing another rigorous approach, [41] (blue in Fig. 6) explicitly
+incorporated general relativistic calculations into the late-time
+core-collapse evolution. Building upon and going beyond the
+quasi-equilibrium treatment in [38], [41] introduced an SIDM
+heat-flux term into the energy-momentum tensor using the
+Misner-Sharp formalism to compute the non-equilibrium evo-
+lution. With this framework, they demonstrated that intense
+outward heat flux drives significant mass outflow during the
+final plunge, arriving at an apparent horizon BH seed mass
+of merely O(10−8) of the halo mass. The next critical ques-
+tion is how this microscopic O(10−8)𝑀halo seed grows into a
+macroscopic O(10−2)𝑀halo supermassive BH. [43] (brown ar-
+row in Fig. 6) demonstrates this through a two-phase accretion
+relay. Following the formation of the relativistic seed, bary-
+onic Eddington accretion dominates the first phase, lifting the
+BH mass to ∼10−5𝑀halo. Once the BH reaches this threshold,
+dark Bondi accretion takes over. Because the Bondi rate scales
+as 𝑑𝑀Bon/𝑑𝑡∝𝑀2
+BH, it drives explosive growth in the second
+phase, rapidly increasing the BH mass to the ∼1% halo mass
+scale. Complementing this analytical picture, recent fluid cal-
+culations by [44] explicitly resolved the non-equilibrium fluid
+dynamics of this feeding process.
+They demonstrated that
+SIDM heat conduction effectively regulates the extreme ac-
+cretion compared to the adiabatic dark Bondi limit, causing
+the BH mass growth to saturate at this ∼10−2𝑀halo scale over
+Myr timescales. Phenomenologically, this plateau (e.g., Fig.
+2 of [44]) marks the rapid consumption and exhaustion of the
+initial SMFP core.
+To answer question (b), [49] takes the 1%𝑀halo SMFP mass
+as the starting point for subsequent Eddington gas accretion.
+Byfeedingthis growthrecipeinto semi-analyticalmergertrees,
+they established the predicted BH mass function at high red-
+shifts 𝑧≳5. Their results successfully match the observed
+abundance of the JWST Little Red Dots. However, the Ed-
+dington accretion modeling in [49] does not explicitly impose
+a strict upper bound on the available gas budget, hence the
+open-ended purple arrow in Fig. 6. While their study focuses
+on the high-redshift Universe, where the limited cosmic time
+window might seemingly alleviate the issue of over-accretion,
+the exponential nature of Eddington growth from an already
+massive seed (e.g., 10−2𝑀halo) can still rapidly exhaust the
+baryon budget.
+In this work, we address question (b) with a global N-body
+framework that tracks the post-core-collapse accretion of in-
+dividual DM particles onto the BH, rather than relying on
+
+14
+analytical estimates of the SMFP mass. The key distinction
+from previous work lies in how the DM fuel supply is treated.
+[43] assumed a constant background DM density at the SMFP
+core level, so their analytical dark Bondi accretion proceeds
+at a fixed density and runs away explosively. [44], in contrast,
+simulates only the local core region and reaches a saturation
+wall once their finite initial core is consumed. Both describe
+a single accretion episode with no replenishment of the fuel.
+Our N-body scheme, by contrast, continuously rebuilds the
+core through multi-round gravothermal collapse: the accre-
+tion rapidly drains the inner DM density on ∼Myr timescales,
+but each rebuilding cycle restores the fuel supply on ∼100
+Myr timescales. Adopting a stringent threshold 𝐾𝑛= 0.05,
+we obtain a converged long-term DM-accreted mass of ∼5%–
+12% 𝑀halo that is insensitive to the precise core-collapse crite-
+rion and systematically exceeds the ∼1% single-episode limit.
+Including a capped gas reservoir then yields a final composite
+BH mass of 5%–12% + 𝑓gas of the host halo mass, providing
+a self-consistent basis for predicting SIDM-seeded BH mass
+functions.
+The most closely related work to our approach is the very
+recent [66], which extends the Misner–Sharp framework of
+[41] past horizon formation to follow the seed’s subsequent
+dark-matter accretion over a full halo. Their treatment is com-
+plementary to ours in one important respect: by evolving a
+true apparent horizon as an absorbing inner boundary, they
+self-consistently resolve the innermost capture that our 𝐾𝑛-
+based continuous-accretion (upper bound) scheme can only
+approximate from a larger, 𝐾𝑛-based capture boundary. In the
+regime where their fluid treatment remains valid, they find a
+super-Bondi inflow that drains the envelope and grows the seed
+to of order ten percent of the halo mass, qualitatively consis-
+tent with our ∼5%–12% 𝑀halo estimate and similarly leaving a
+depleted inner halo of the kind we quantify in Sec. V; extrapo-
+lated beyond this regime, their solution would consume nearly
+the entire halo. However, as [66] pointed out, this rests on the
+gravothermal fluid closure and its local-thermal-equilibrium
+assumption—an inherent limitation of the gravothermal-fluid
+approach in general—which is not necessarily valid once the
+inner halo is nearly depleted. Notably, unlike the LMFP col-
+lapse phase of standard gravothermal approach, which is cal-
+ibrated against N-body simulations [21, 29], the super-Bondi
+phase has no such calibration yet.
+Our N-body treatment,
+which explicitly resolves the discrete gravothermal rebuilding,
+should therefore yield the more conservative long-term BH
+mass by accretion of DM.
+V.
+EVOLUTION OF THE DARK MATTER HALO BEFORE
+AND AFTER BLACK HOLE FORMATION
+In the previous section, we focused on a detailed analysis
+of the BH mass growth trajectory. We now turn our attention
+to the dark matter halo component, examining its structural
+evolution both leading up to the primary core-collapse and
+following the DM-to-BH conversion. To deliver a compre-
+hensive physical picture, we focus on two primary aspects:
+in Sec. V A, we analyze the density evolution, utilizing both
+the central density 𝜌cen50 as a tracer of core-collapse and the
+halo-wide density profiles; and in Sec. V B, we investigate
+the radial velocity and velocity anisotropy. The overarching
+goal is to provide a detailed dynamical investigation into how
+the halo behaves as it approaches primary core-collapse, dur-
+ing the iterative DM-to-BH conversion, and eventually after
+∼10% of its total mass has been accreted by the central BH.
+A.
+Density Evolution
+1.
+The central density 𝜌cen50
+We first present the evolution of the central density 𝜌cen50
+in Fig. 7, which serves as the primary tracer for the SIDM
+core-collapse process and the behavior of DM particles in the
+innermost halo before and after BH formation.
+Figure 7a
+displays 𝜌cen50 during the primary simulation. Starting from
+the initial NFW distribution, the halo rapidly forms a density
+core within the first Gyr and subsequently enters the rapid
+core-collapse stage at ∼6 Gyr. This exhibits the well-known
+self-similar gravothermal evolution of an isolated SIDM halo,
+which follows a nearly universal trajectory1. As shown in Fig.
+7a, the evolutionary tracks of 𝜌cen50 for different ˜𝜌𝑐𝑐cases
+are identical up to their respective termination points. This is
+expected, as they represent the same halo simulated with an
+identical SIDM cross section of 100 cm2/g, differing only in
+the chosen core-collapse termination criterion, marked by the
+vertical dashed lines.
+In Fig. 7b, we plot 𝜌cen50 as a function of time for the multi-
+round simulations, where the DM enclosed within the best
+converged 𝐾𝑛= 0.05 boundary is iteratively converted into the
+central BH. As depicted, the central DM density experiences
+a sharp reset every time it hits the corresponding ˜𝜌𝑐𝑐thresh-
+old, triggering the simulation’s termination and subsequent
+DM-to-BH conversion. Notably, the time intervals between
+these resets—which essentially represent the manual removal
+of the local SMFP core (as defined by the 𝐾𝑛threshold)—
+gradually lengthen over time. This physically reflects the dark
+matter reservoir depletion discussed in previous sections: as
+increasing amounts of DM are accreted by the BH, the rem-
+nant DM density in the inner halo steadily drops (as will be
+detailed soon in the discussion of Fig. 8). Consequently, the
+halo requires increasingly longer macroscopic timescales to
+undergo gravothermal rebuilding and trigger the next round of
+core-collapse.
+For comparison, we show the post-primary 𝜌cen50 evolu-
+tion for the continuous-accretion scenario in Fig. 7c. Here,
+the central DM density declines monotonically without re-
+covery. This clearly demonstrates that by instantaneously re-
+moving DM particles based solely on their local 𝐾𝑛values,
+the continuous-accretion scheme bypasses the macroscopic
+1 We note that the inclusion of a baryonic potential can break this self-
+similarity; for instance, [74] demonstrated that Milky Way-mass systems
+can bypass the core-expansion phase and enter early core-collapse directly,
+with the central DM density growing monotonically more cuspy.
+
+15
+0
+2
+4
+6
+time [Gyr]
+10
+1
+100
+101
+102
+cen50/
+cen50, t = 0
+primary simulation
+cc = 10
+cc = 30
+cc = 100
+(a)
+6.0
+6.5
+7.0
+7.5
+8.0
+8.5
+time [Gyr]
+100
+101
+102
+cen50/
+cen50, t = 0
+multi-round, Knthres = 0.05
+(b)
+6.0
+6.5
+7.0
+7.5
+8.0
+8.5
+time [Gyr]
+10
+1
+100
+cen50/
+cen50, t = 0
+continuous accretion, Knthres = 0.05
+continuous-kn (SIDM)
+continuous-cdm (CDM)
+(c)
+FIG. 7: Time evolution of the innermost DM density 𝜌cen50 across two evolutionary phases: (a) the primary simulation up to the
+initial core-collapse; post-primary evolution under (b) the multi-round scenario and (c) the continuous-accretion scenario. The
+color coding distinguishes the core-collapse density thresholds ˜𝜌𝑐𝑐. Vertical dashed lines denote the corresponding
+core-collapse times of the primary simulation. In panel (b), 𝜌cen50 repeatedly hits the ˜𝜌𝑐𝑐ceiling followed by sharp drops,
+visually capturing the iterative gravothermal rebuilding cycles caused by discrete BH mass conversions. Panel (c) contrasts this
+with the continuous-accretion scenario and a collisionless CDM control, demonstrating the overestimated BH mass growth in
+this scenario.
+gravothermal rebuilding bottleneck. Thus, it strictly overesti-
+mates the DM accretion rate, reaffirming that this continuous
+method should only serve as an upper-bound estimate for BH
+mass growth.
+2.
+Density profiles
+In Fig. 8, we turn our attention to the detailed temporal evo-
+lution of the DM density distributions during the post-primary
+core-collapse era. In Figs. 8a and 8b, we present the den-
+sity profiles in the 𝜌−𝑀(< 𝑟) and 𝜌−𝑟planes, respectively,
+utilizing our best-converged { ˜𝜌𝑐𝑐= 100, 𝐾𝑛thres = 0.05} con-
+figuration as an illustrative example. In each panel, alongside
+the primary simulation, we show three subsequent multi-round
+iterations: indexed as LastRound/4 (orange), LastRound/2
+(cyan), and LastRound −1 (purple), where LastRound de-
+notes the final index and thus the total number of subsequent
+simulations run in this multi-round approach (see Sec. II for
+the termination criterion of the multi-round runs). For each
+selected round, we display both the initial (dashed lines) and
+final (solid lines) snapshots. These three rounds are chosen
+to demonstrate two complementary points. First, within each
+round the dashed-to-solid transition shows the gravothermal
+rebuilding cycle: the void left by the previous conversion is
+re-filled and re-collapses. Second, across successive rounds
+(smaller to larger indexed) the cumulative depletion of the in-
+ner halo becomes evident, as more DM material is irreversibly
+lost to the BH.
+We identify several prominent features in Figs. 8a and 8b:
+(a) At the onset of each post-primary round (dashed lines), the
+innermost density bins exhibit a sharp drop compared to the
+surrounding DM distribution. This results from the instanta-
+neous removal of the densest SMFP DM material at the end
+of the previous round, effectively creating a central void; (b)
+Starting from these initial configurations, the halo evolves via
+SIDM scatterings until core-collapse is triggered again (solid
+lines). During this rebuilding phase, the density 𝜌at larger
+radii (or larger enclosed masses 𝑀(< 𝑟)) decreases as mate-
+rial flows inward to replenish the previously depleted central
+void.
+(c) As the multi-round sequence progresses, despite
+the innermost region repeatedly reaching high densities via
+gravothermal collapse, the overall macroscopic DM density
+within ∼2𝑟𝑠(enclosing ∼30%𝑀200𝑐) suffers a severe reduc-
+tion. This density drops by as much as ≳1 dex compared to the
+CDM counterpart (grey dashed lines), even falling far below
+the level of the initial SIDM core-formation phase. We can
+summarize this macroscopic structural evolution as a contin-
+uous supply chain: the extended DM halo continuously feeds
+the central core, which in turn continuously feeds the central
+BH. Consequently, if an SIDM-seeded BH is to grow to ∼10%
+of the halo mass, the inevitable structural cost is a severely
+depleted inner halo (≲2𝑟𝑠) with densities much lower than
+CDM predictions.
+Notably, a recent strong lensing study [13, 75] reported an
+unprecedented halo density distribution in detection V2 of the
+lens system JVAS B1938+666 that remarkably mirrors this
+picture: an unresolved central point-mass surrounded by an
+extended, constant-surface-density region that is significantly
+less concentrated than CDM expectations. By explicitly track-
+ing the post-collapse BH feeding and the resulting gravother-
+mal depletion, our multi-round evolutionary framework pro-
+vides a natural, self-consistent physical explanation for their
+findings. To facilitate a direct comparison with the uncommon
+lens perturber (detection V) discovered in [13], Fig. 9 presents
+our halo’s 2D enclosed cylindrical mass 𝑀2𝐷(< 𝑅) as a func-
+tion of projected radius 𝑅2𝐷, plotted alongside their best-fit
+Uniform Disk plus Point Mass (UD+PM) model. Although
+2 Throughout this work, “detection V” refers to the newly detected substruc-
+ture V of the JVAS B1938+666 lens system (mass ∼106 𝑀⊙), not the
+earlier-discovered and more widely studied substructure A [76] of the same
+lens system (mass ∼109 𝑀⊙).
+
+16
+106
+107
+108
+109
+1010
+M( < r) [M
+]
+105
+106
+107
+108
+109
+1010
+1011
+  [M
+/kpc3]
+multi-round, Knthres = 0.05, 
+cc = 100
+first snapshot
+primary core-formation
+last snapshot
+primary simulation
+LastRound/4
+LastRound/2
+LastRound
+1
+primary simulation
+LastRound/4
+LastRound/2
+LastRound
+1
+(a)
+10
+1
+100
+101
+r [kpc]
+105
+106
+107
+108
+109
+1010
+1011
+  [M
+/kpc3]
+rs
+multi-round, Knthres = 0.05, 
+cc = 100
+first snapshot
+primary core-formation
+last snapshot
+primary simulation
+LastRound/4
+LastRound/2
+LastRound
+1
+primary simulation
+LastRound/4
+LastRound/2
+LastRound
+1
+(b)
+106
+107
+108
+109
+1010
+M( < r) [M
+]
+105
+106
+107
+108
+109
+1010
+1011
+  [M
+/kpc3]
+continuous accretion, Knthres = 0.05, 
+cc = 100
+first snapshot
+primary core-formation
+last snapshot
+primary
+conti. accretion SIDM
+conti. accretion CDM
+primary
+conti. accretion SIDM
+conti. accretion CDM
+(c)
+10
+1
+100
+101
+r [kpc]
+105
+106
+107
+108
+109
+1010
+1011
+  [M
+/kpc3]
+rs
+continuous accretion, Knthres = 0.05, 
+cc = 100
+first snapshot
+primary core-formation
+last snapshot
+primary
+conti. accretion SIDM
+conti. accretion CDM
+primary
+conti. accretion SIDM
+conti. accretion CDM
+(d)
+FIG. 8: Density profiles of the DM halo in our best-converged configuration ({𝐾𝑛thres = 0.05, ˜𝜌𝑐𝑐= 100}). Panels (a) and (b)
+present the multi-round scenario viewed in the Lagrangian-like 𝜌−𝑀(< 𝑟) and Eulerian 𝜌−𝑟planes respectively; panels (c)
+and (d) display the continuous-accretion scenario in the same two parameter spaces. In (a) and (b), we show three representative
+discrete rounds of simulations following the primary simulation (grey), indexed by LastRound/4 (orange), LastRound/2 (cyan),
+and LastRound −1 (purple). Within each selected round, the first snapshot (dashed lines) and the final snapshot (solid lines) are
+plotted to demonstrate the gravothermal rebuilding cycle. In (c) and (d), we show the continuous-accretion scenario for both the
+CDM (blue) and SIDM (green) models, comparing the immediate post-seeding state (dashed lines) against the final state (solid
+lines) after 2 Gyr of on-the-fly DM accretion onto the existing BH (solid lines). This set of plots visually encapsulates the
+macroscopic supply chain of post-primary evolution: the outer halo feeds the inner halo, and the inner halo feeds the BH. This
+set also highlights the fundamental difference between the multi-round and continuous-accretion scenarios: the former properly
+accounts for gravothermal rebuilding as the key process, while the latter bypasses it, artificially overestimating both the BH
+mass growth and the resulting central halo density depletion.
+an exact one-to-one mass scaling is precluded by the vast dif-
+ference in system masses (a 1.8 × 106𝑀⊙subhalo in [13] vs.
+the 3 × 1010𝑀⊙isolated halo in this work), the morphological
+similarity between the two enclosed mass profiles is striking.
+We note that a recent study [77] utilizing 1D gravothermal
+fluid simulations showed that the primary core-collapse phase
+of an SIDM halo can transiently produce a dense secondary
+core that approximates the central compactness of this per-
+turber. However, as such an ultra-dense fluid core is expected
+to eventually trigger relativistic instability and form a seed
+BH, exploring the long-term, post-collapse macro-structure
+becomes essential. When compared with the standard NFW
+profile, the SIDM core, and the highly concentrated SIDM pri-
+mary core-collapse phase, our post-primary framework, which
+explicitly accounts for the central BH’s accretion of surround-
+ing SMFP dark matter, is the most natural scenario that durably
+reproduces the extended, flattened density plateau favored by
+the lensing data. Note that we adopt the ˜𝜌𝑐𝑐= 10 case for this
+illustration: at 𝐾𝑛thres = 0.05 the multi-round trajectory is well
+converged across ˜𝜌𝑐𝑐, so the late-round morphology is insen-
+sitive to this choice, while the smaller initial seed by ˜𝜌𝑐𝑐= 10
+cleanly separates the early rounds from the late rounds, most
+clearly displaying the full evolutionary sequence.
+For comparison, the corresponding post-collapse density
+
+17
+10
+1
+100
+101
+102
+R2D [kpc]
+106
+107
+108
+109
+1010
+1011
+M2D( < R)  [M
+] (incl. BH)
+rs
+r200c
+multi-round, Knthres = 0.05, 
+cc = 10
+NFW
+SIDM core
+primary core-collapse
+primary simulation
+FirstRound
+LastRound/4
+LastRound
+1
+10
+2
+10
+1
+R2D [kpc]
+106
+M2D( < R) [M
+]
+Vegetti et al. 2026
+primary simulation
+FirstRound
+LastRound/4
+LastRound
+1
+FIG. 9: Projected 2D enclosed mass profiles 𝑀2𝐷(< 𝑅2𝐷) of the isolated halo across distinct evolutionary phases: NFW, SIDM
+core, SIDM primary core-collapse, and our post-primary multi-round evolution. These are presented for a qualitative
+morphological comparison with the anomalous strong lensing substructure, detection V of JVAS B1938+666, recently
+discovered by Vegetti et al. 2026 [13]. Their best-fit lens model, comprising an unresolved point mass and a uniform 2D disk
+(UD+PM), appears to be best mirrored by our multi-round results in late rounds of simulations.
+evolution under the continuous-accretion scenario is presented
+in Figs. 8c and 8d. We observe that the DM density depletion
+remains most prominent within the inner ∼2𝑟𝑠region, but
+with a significantly larger magnitude compared to the multi-
+round scenario.
+Because the continuous-accretion scheme
+intrinsically overestimates the DM accretion rate onto the BH,
+this exacerbated drop should be viewed as an upper bound on
+the severity of the central density depletion (equivalently, a
+lower bound on the residual central density).
+B.
+Velocity and anisotropy
+We now turn our attention to the evolution of the DM kine-
+matics, examining the periods both before and after the DM-
+to-BH conversion. To robustly characterize the overall veloc-
+ity distribution, we focus on two complementary kinematic
+indicators: the mean radial velocity ⟨𝑣𝑟⟩(Fig.
+10), which
+traces the instantaneous macroscopic bulk flow of mass; and
+the velocity anisotropy parameter 𝛽≡1 −𝜎2
+𝑣𝑡/(2𝜎2
+𝑣𝑟) (Fig.
+11). Our kinematic analysis tracks two representative subsets
+of particles: the innermost 𝑁in particles (solid lines) and the
+𝑁200𝑐particles located closest to the halo virial radius 𝑟200𝑐
+(dashed lines). To strike a balance between mitigating Pois-
+son noise and ensuring that these subsets genuinely reflect the
+local physics of their respective regions (e.g., 𝑁in strictly trac-
+ing the physical density core shown in Fig. 8a), we select
+𝑁in = 4000, 𝑁200𝑐= 30000.
+During the primary simulation, one would theoretically ex-
+pect the innermost halo to exhibit a positive ⟨𝑣𝑟⟩during the
+core-expansion phase and a negative ⟨𝑣𝑟⟩during the runaway
+core-collapse phase.
+However, as seen in Fig.
+10a, these
+macroscopic radial flows are not clearly resolved in our data.
+This limitation is primarily driven by the particle discreteness
+noise in the deep core, limited by 𝑁in. For instance, given
+a core-expansion timescale of ∼0.5–1 Gyr (Fig. 7a) and a
+physical core radius of ∼1 kpc (Fig. 8b), the expected macro-
+scopic radial bulk velocity is only on the order of ∼1–2 km/s.
+This weak signal is entirely submerged beneath the local fluc-
+tuations of the 𝑁in = 4000 particles. Capturing these sub-kpc
+kinematics would require significantly higher mass resolution
+to suppress the noise. Conversely, at the halo boundary (dashed
+lines) where the much larger particle sample of 𝑁200𝑐= 30000
+effectively beats down the noise, we observe a clear outward
+
+18
+0
+1
+2
+3
+4
+5
+6
+time [Gyr]
+8
+6
+4
+2
+0
+2
+4
+6
+8
+vr [km/s]
+primary simulation
+cc = 10
+cc = 30
+cc = 100
+CDM
+inner
+r200c
+Poisson error (inner)
+(a)
+6.0
+6.5
+7.0
+7.5
+8.0
+8.5
+time [Gyr]
+8
+6
+4
+2
+0
+2
+4
+6
+8
+vr [km/s]
+multi-round, Knthres = 0.05
+cc = 10
+cc = 30
+cc = 100
+inner
+r200c
+Poisson error (inner)
+(b)
+0
+1
+2
+3
+4
+5
+6
+7
+8
+time [Gyr]
+8
+6
+4
+2
+0
+2
+4
+6
+8
+vr [km/s]
+Knthres = 0.05
+cc = 10
+cc = 30
+cc = 100
+inner
+r200c
+Poisson error (inner)
+(c)
+6.0
+6.5
+7.0
+7.5
+8.0
+8.5
+time [Gyr]
+8
+6
+4
+2
+0
+2
+4
+6
+8
+vr [km/s]
+continuous accretion, Knthres = 0.05
+cc = 10
+cc = 30
+cc = 100
+inner
+r200c
+Poisson error (inner)
+(d)
+FIG. 10: Time evolution of the mean radial bulk velocity ⟨𝑣𝑟⟩for the isolated SIDM halo, evaluated at both the deep core (solid
+lines; tracked via the innermost 𝑁in = 4000 particles) and the halo periphery (dashed lines; tracked via the 𝑁200𝑐= 30000
+particles closest to the virial radius 𝑟200𝑐). Panels (a)–(d) demonstrate the kinematics across distinct evolutionary phases or
+approaches: (a) the primary simulation up to initial core-collapse; (b) the post-primary evolution under the multi-round
+scenario; (c) the combined, long-term trajectory of both the primary and multi-round phases; and (d) the post-primary evolution
+under the continuous-accretion scenario. This kinematic diagnosis reveals the underlying macroscopic mass flows: an outward
+flux at the boundary driven by central gravothermal heating, and a post-primary-core-collapse, inward flow in the core to
+replenish the severe pressure deficit induced by central BH accretion. The shaded gray band marks the ±1𝜎Poisson uncertainty
+of the innermost-particle subset, centered on zero.
+radial bulk motion of DM particles. The amplitude of such
+outward motion steadily increases over time, driven by the
+continuous outward heat and mass transfer induced by central
+SIDM scattering.
+During the post-primary evolution, both the multi-round
+(Fig. 10b) and continuous-accretion (Fig. 10d) approaches
+exhibit consistent kinematic trends: (a) At the halo’s outer
+boundary 𝑟200𝑐, the outward bulk velocity ⟨𝑣𝑟⟩continues to
+grow at an accelerated rate compared to the primary core-
+collapse phase (see Fig. 10c). This acceleration persists until
+⟨𝑣𝑟⟩hits a peak when the DM pool in the halo center begins
+to gradually deplete. As the central density drops, the out-
+ward heat and mass flux driven by SIDM scatterings naturally
+weakens. Consequently, ⟨𝑣𝑟⟩decreases but maintains a posi-
+tive value, indicating that a macroscopic radially outward bulk
+motion is sustained. (b) Conversely, in the halo center, the
+instantaneous conversion of DM into incremental BH mass
+effectively creates a void in the halo center and shuts down
+the pressure term of SIDM. Driven by this gradient, the sur-
+rounding inner DM acquires a net radially inward bulk motion
+to replenish the void. In the multi-round scenario, this inward
+flow is iteratively triggered and reset, becoming less prominent
+over time as the macroscopic rebuilding cadence slows down.
+Turning to the velocity anisotropy parameter 𝛽in the pri-
+mary simulation (Fig. 11a), it is important to first note that
+our halos are initialized with an isotropic velocity distribu-
+tion (initial 𝛽= 0). For the collisionless CDM companion,
+𝛽trivially remains zero at all radii because the halo remains
+in dynamical equilibrium. For the SIDM halo, however, the
+inner particles (solid lines) maintain a nearly constant 𝛽≈0
+
+19
+throughout the primary simulation for a fundamentally differ-
+ent reason. This is because frequent, isotropic SIDM collisions
+within the dense core rapidly thermalize the orbits, actively
+erasing any kinematically induced anisotropy. In contrast, for
+the outer particles near 𝑟200𝑐, the anisotropy 𝛽builds up as the
+halo approaches core-collapse (≳5 Gyr). This rise is a con-
+sequence of the gravothermally induced outward mass flux, in
+correspondence with the outward radial bulk motion in Fig.
+10a, which preferentially populates radial orbits. Because the
+collision rate in the dilute outer halo is too low to isotropize
+these orbits, the radial anisotropy continuously accumulates.
+Turning to the post-primary evolution, the anisotropy 𝛽at
+𝑟200𝑐exhibits an accelerated increase. Consistent with the am-
+plified outward bulk motion ⟨𝑣𝑟⟩(Fig. 10c), this rise is driven
+by the enhanced, continuous mass outflux in this post-primary
+stage. More intriguingly, in the halo center, 𝛽increases to
+become positive, indicating a preference for radial orbits. Mir-
+roring the inward bulk flow seen in the ⟨𝑣𝑟⟩panel (Fig. 10c),
+this central anisotropy is another kinematic response to the
+pressure deficit created by the void.
+The fact that 𝛽is no
+longer trivially 0 in the halo center may imply that local ther-
+malization is incomplete during the time window between suc-
+cessive mass conversions. This may hint that the multi-round
+core-collapse is strongly driven by the dynamical infall of DM
+replenishing the void, rather than being a purely gravothermal
+evolution. Whether this subtle, dynamically driven deviation
+from perfect thermalization could alter the BH mass accre-
+tion increments at the microphysical scale remains an open
+question for future studies.
+In summary, our kinematic analysis at both the inner and
+outer halo radii reveals the macroscopic bulk radial flow and
+the dynamical establishment of velocity anisotropy from an ini-
+tially strictly isotropic distribution. For the outer halo (𝑟200𝑐)
+the net radially outward bulk motion and the gradual buildup
+of positive anisotropy 𝛽> 0 during core-collapse align with
+recent findings by [78]. Utilizing a Direct Simulation Monte
+Carlo (DSMC) framework, they demonstrated that the velocity
+distribution in the intermediate mean free path (IMFP) regime
+naturally develops a positive radial preference due to outward
+heat flux. Conversely, during the post-primary core-collapse
+phase, we observe a net inward radial flow and a non-trivial
+positive 𝛽in the halo center as matter falls in to replenish the
+central void. These dynamically induced anisotropies high-
+light a critical limitation of traditional gravothermal fluid mod-
+els [31–33, 40], which inherently assume velocity isotropy.
+Applied to our post-primary evolution, this suggests that the
+inward-falling, incompletely thermalized DM would system-
+atically delay subsequent core-collapse events. Therefore, the
+isotropic gravothermal fluid framework may overestimate the
+rebuilding efficiency of the core and the subsequent core-
+collapse, which highlights the necessity of N-body (or other
+new SIDM approaches) for accurately modeling post-collapse
+SIDM-BH co-evolution.
+VI.
+SUMMARY AND DISCUSSION
+In this work, we investigate the post-core-collapse evolu-
+tion of an isolated SIDM system, focusing on the macroscopic
+co-evolution of the SIDM-seeded BH and its host dark mat-
+ter halo. We first evolve an initially NFW dark halo to the
+core-collapse stage using N-body simulations (denoted as the
+primary simulation), and then convert the collapsed central
+DM particles into a massive black hole particle. To model
+subsequent accretion, we employ two complementary DM-
+to-BH conversion schemes: (a) the multi-round core-collapse
+scenario, in which accretion is restricted to discrete events trig-
+gered only when the runaway core-collapse criterion is met,
+thereby accounting for the gravothermal-rebuilding delay and
+providing a lower bound on BH growth; and (b) the continuous-
+accretion scenario, in which the BH accretes DM on the fly
+and bypasses the macroscopic rebuilding bottleneck entirely,
+providing an upper bound. A central focus of our study is
+to establish numerical convergence over two key artificial pa-
+rameters in these approaches: the core-collapse threshold ˜𝜌𝑐𝑐
+(the ratio between the halo’s instantaneous central density and
+its initial NFW state value); and the spatial boundary defin-
+ing the ‘central DM region’ available for conversion, param-
+eterized by the standard Knudsen number threshold 𝐾𝑛thres.
+Through systematic convergence tests, we demonstrate that at
+𝐾𝑛thres = 0.05, the manually assigned core-collapse thresholds
+( ˜𝜌𝑐𝑐= 10, 30, 100) asymptotically converge toward a com-
+mon, threshold-independent BH mass growth trajectory. We
+thus recommend this setup for future studies. As a result, we
+provide a dynamically bounded estimate for the final SIDM-
+formed central BH, converging to a mass range of 5% −12%
+of the halo mass 𝑀200𝑐when considering only DM accretion.
+We further provide a first-order estimate of the baryon contri-
+bution via combined Eddington and Bondi accretion. Because
+exponential baryonic accretion rapidly depletes the finite gas
+reservoir, the ultimate BH mass can be treated as a simple
+linear superposition of the initial gas mass fraction 𝑓gas onto
+the 5%–12%𝑀200𝑐baseline.
+Our approach complements, rather than competes with, ex-
+isting studies. Compared to other related works [38, 40–43, 49]
+on SIDM-seeded supermassive black holes, our study does not
+delve into the microscopic physics or the exact onset of rela-
+tivistic instability that triggers initial BH formation. Instead,
+taking the successful formation of such a BH seed as a given
+baseline, our work serves as a first self-consistent and quanti-
+tative description of how the BH and its host halo dynamically
+co-evolve on macroscopic timescales.
+Beyond the BH mass trajectory, we investigate the struc-
+tural evolution of the surrounding dark matter halo during this
+extended accretion phase. We demonstrate that gravothermal
+dynamics establish a continuous supply chain: the inner halo
+≲2𝑟𝑠continuously channels material to rebuild the collapsing
+SMFP core, which is subsequently consumed by the central
+BH. Consequently, the macroscopic DM density within this
+∼2𝑟𝑠region suffers a severe depletion, dropping by ≳1 dex
+compared to its CDM counterpart. This severe post-collapse
+depletion provides a plausible theoretical explanation for the
+anomalous subhalo density distribution of detection V in the
+
+20
+0
+1
+2
+3
+4
+5
+6
+time [Gyr]
+0.05
+0.00
+0.05
+0.10
+0.15
+0.20
+0.25
+1
+2
+vt/(2
+2
+vr)
+primary simulation
+cc = 10
+cc = 30
+cc = 100
+CDM
+inner
+r200c
+Poisson error (inner)
+(a)
+6.0
+6.5
+7.0
+7.5
+8.0
+8.5
+time [Gyr]
+0.05
+0.00
+0.05
+0.10
+0.15
+0.20
+0.25
+1
+2
+vt/(2
+2
+vr)
+multi-round, Knthres = 0.05
+cc = 10
+cc = 30
+cc = 100
+inner
+r200c
+Poisson error (inner)
+(b)
+0
+1
+2
+3
+4
+5
+6
+7
+8
+time [Gyr]
+0.05
+0.00
+0.05
+0.10
+0.15
+0.20
+0.25
+1
+2
+vt/(2
+2
+vr)
+Knthres = 0.05
+cc = 10
+cc = 30
+cc = 100
+inner
+r200c
+Poisson error (inner)
+(c)
+6.0
+6.5
+7.0
+7.5
+8.0
+8.5
+time [Gyr]
+0.05
+0.00
+0.05
+0.10
+0.15
+0.20
+0.25
+1
+2
+vt/(2
+2
+vr)
+continuous accretion, Knthres = 0.05
+cc = 10
+cc = 30
+cc = 100
+inner
+r200c
+Poisson error (inner)
+(d)
+FIG. 11: Time evolution of the velocity anisotropy 𝛽, evaluated across the same phases and radial shells as in Fig. 10. Despite
+an initially isotropic state 𝛽= 0, a positive radial anisotropy 𝛽> 0 gradually emerges at the periphery during and after primary
+core-collapse. In the post-primary phases, this radial preference also emerges in the deep core. In both regions, this
+dynamically induced anisotropy acts as a kinematic footprint of incomplete local thermalization. The shaded gray band marks
+the ±1𝜎Poisson uncertainty of the innermost-particle subset, centered on zero.
+strong lensing system JVAS B1938+666 [13]. Their best-fit
+lens model, an unresolved central point mass surrounded by
+an extended, constant-surface-density plateau that is signifi-
+cantly less concentrated than CDM expectations, qualitatively
+matches our physical picture of an SIDM-seeded BH and its
+exhausted dark matter reservoir (see Fig. 9).
+Furthermore, we analyze the kinematic evolution of the halo,
+evaluating the macroscopic radial flow and velocity anisotropy
+at both the deep core and the halo periphery. Throughout both
+the primary core-collapse and post-primary phases, the pe-
+riphery (𝑟200𝑐) establishes a radially outward bulk flow, driven
+by the continuous outward heat and mass transfer induced by
+central SIDM scatterings. Conversely, during the post-primary
+phase, the deep core develops a dynamically triggered inward
+mass flux. This inflow is driven by the thermal pressure deficit
+in the halo center since the central BH continuously accretes,
+forcing outer DM to fall inward to replenish the void. Trac-
+ing the velocity anisotropy 𝛽from an initially isotropic state
+𝛽= 0, we find diverging kinematic features. During the pri-
+mary collapse, the inner halo maintains 𝛽≈0 due to rapid
+collisional thermalization, despite the drastic structural evolu-
+tion; whereas the dilute outer halo establishes a positive radial
+anisotropy 𝛽> 0 because the local collision rate is insuffi-
+cient to fully isotropize the outward flux. Crucially, during the
+post-primary phase, the deep core also establishes a non-trivial
+positive 𝛽> 0. This central anisotropy suggests incomplete
+thermalization even in the deep core, such that the rapid dy-
+namical infall of DM to feed the central void outpaces local
+collisional relaxation.
+Below, we outline the current limitations of our framework
+and highlight possible pathways for future exploration:
+• Angular momentum and the innermost capture: Our
+𝐾𝑛-based conversion is a fluid-scale feeding criterion
+and should not be read as resolving the final, sub-
+resolution capture onto the BH; whether an individual
+particle is accreted still depends, microscopically, on its
+angular momentum. However, the classical loss-cone
+argument for collisionless particles—which constructs
+orbits from angular-momentum conservation on individ-
+ual particles—does not directly apply, because frequent
+
+21
+self-scatterings in the collapsing core continuously ex-
+change angular momentum between particles. This is
+made clear in Fig. 14: individual particles cross into the
+SMFP core only after a final scattering event that bi-
+ases them onto near-radial, low-angular-momentum or-
+bits. Self-scattering as an angular-momentum transport
+mechanism has been discussed in [42], which showed
+that SIDM viscosity rapidly dissipates the angular-
+momentum remnant of a collapsing core; we note, how-
+ever, that their analysis concerns the dissipation of a
+bulk spin, whereas our halos are initialized with zero
+net angular momentum, so only the microscopic scatter-
+ing channel is directly shared. Whether self-scattering
+is sufficient to bring individual particles below the ISCO
+capture condition at the unresolved innermost scale is
+not covered in this work and remains to be carefully
+studied in the future.
+• Expanding to a broader parameter space: In this first,
+demonstrative study, we restricted our BH-halo co-
+evolution analysis to a single isolated halo. This choice
+was driven by the severe computational demands of the
+N-body framework, which requires executing and sys-
+tematically evaluating a vast number of discrete sim-
+ulations to establish numerical convergence.
+Having
+asymptotically achieved this convergence, we are now
+positioned to expand our framework across a broader pa-
+rameter space. Our future works will systematically vary
+the initial halo mass, concentration, and SIDM cross
+section models to assess the universality of the 5%–
+12%𝑀200𝑐mass bounds derived here. While traditional
+gravothermal fluid models predict a strict self-similarity
+for SIDM halo evolution [32, 34, 35, 40, 79], our find-
+ings of the dynamically induced anisotropy indicate that
+such strictly isotropic, equilibrium-based self-similarity
+may partially break down in the post-collapse regime.
+Therefore, dedicated N-body simulations or other ad-
+vanced kinetic treatments would be indispensable for
+validating the self-similarity in post-collapse regimes.
+• The gravitational influence of the baryonic potential:
+To account for baryonic mass growth, we incorporated
+a first-order estimate by dynamically updating the Ed-
+dington and Bondi accretion rates at the end of each
+discrete DM accretion cycle. However, the true inter-
+play between baryons and SIDM is more complex. Set-
+ting aside the intricacies of baryonic feedback processes
+is known to drastically accelerate the SIDM gravother-
+mal core-collapse [32, 36, 42, 74]. Furthermore, semi-
+analytical fluid models [42] have demonstrated that the
+inclusion of a compact baryon potential can significantly
+suppress the theoretical SMFP core mass, reducing it
+from ∼4% to ∼0.2% of the total halo mass. It re-
+mains an open and critical question whether our N-body
+co-evolution framework will exhibit a similarly propor-
+tional suppression in the final BH mass bound when the
+central baryonic potential is explicitly included.
+• Subhalos, satellite galaxies, and dwarf AGNs: While
+this proof-of-concept study focuses on an isolated
+halo, much of the contemporary interest in the SIDM
+paradigm is driven by observed anomalies in low-mass
+systems.
+These include the diversity of dwarf satel-
+lite galaxies [2–8, 55, 80], substructure strong lensing
+[11–16, 23, 56, 81–90], and dark substructures’ pertur-
+bations to stellar streams [17, 18, 20, 91].
+Previous
+theoretical studies on the evolution of SIDM subha-
+los and satellite galaxies [22–24, 92–96] have demon-
+strated that the interplay between a subhalo’s internal
+gravothermal evolution and environmental interactions
+with the host halo introduces significant diversity into
+its evolutionary trajectory. While this diversity provides
+a plausible solution to the aforementioned small-scale
+anomalies, it severely complicates universal theoreti-
+cal scaling relations. Therefore, extending our macro-
+scopic co-evolution framework to subhalo environments
+is essential. It remains an open question whether the
+central density depletion driven by BH feeding—an in-
+evitable consequence of the core-collapse seeding sce-
+nario demonstrated here—will compromise or uniquely
+preserve previous SIDM solutions to these small-scale
+problems. On the other hand, recent observations of
+AGNs in dwarf systems [97–100] offer new observa-
+tional counterparts to this BH formation scenario, com-
+plementing the traditional high-redshift, massive halo
+hosts invoked for Little Red Dots [42, 45, 49, 70, 73].
+• Empirical modeling of the core-collapsed state: Recent
+efforts [35, 101–105, Whisnant et al. in prep.] have
+sought to empirically model and fit the density profiles
+of core-collapsed SIDMhalos, which laysthe foundation
+for matching with observations such as dwarf kinemat-
+ics and substructure lensing.
+However, these current
+fitting templates all assume a dense, steeply cuspy fi-
+nal state in the halo center.
+Our results demonstrate
+that if gravothermal collapse successfully seeds a cen-
+tral massive BH, the ensuing macroscopic supply chain
+will almost inevitably cause a severe density depletion in
+the inner halo, rendering the widely assumed ultra-dense
+and cuspy core-collapsed state a mere transient phase.
+Consequently, we suggest that future phenomenolog-
+ical fitting frameworks incorporate this BH-DM co-
+evolution.
+• Can core-collapse halt itself before BH formation? For
+simplicity of modeling, we chose a constant cross sec-
+tion of 100 cm2/g in this demonstrative study. However,
+cross sections ≳O(1) cm2/g are strongly disfavored by
+observations on cluster scales, where characteristic ve-
+locities reach ≳1000 km/s [55, 57, 58, 60, 61, 106].
+Conversely, resolving the small-scale anomalies via
+core-collapse in dwarf-sized systems within a Hubble
+time generally requires much larger cross sections of
+O(100) cm2/g [23, 24, 32]. A natural solution to recon-
+cile these mass-scale discrepancies is to invoke velocity-
+dependent cross sections that monotonically decrease
+at higher velocities. From a particle physics perspec-
+tive, such velocity dependence is highly motivated by
+light-mediator models; for instance, DM self-scattering
+
+22
+through a dark Yukawa potential naturally transitions
+into a Rutherford-like regime at high velocities, yield-
+ing a steep 𝜎/𝑚∝𝑣−4 scaling [55, 107, 108]. This
+strong velocity dependence, however, poses a poten-
+tial challenge to the very foundation of the BH seed-
+ing scenario. As gravothermal collapse proceeds, the
+central velocity dispersion increases dramatically, even-
+tually approaching the relativistic threshold of ∼𝑐/3
+required to trigger the relativistic instability required for
+seeding BH [38, 40, 42]. In a velocity-dependent model,
+the local scattering cross section would plummet as the
+particles heat up.
+This raises a critical question: in
+certain regions of the SIDM parameter space, could the
+plunging cross section bottleneck the heat transfer, ef-
+fectively halting or “locking” the core-collapse process?
+If BH formation is indeed prevented, the ultimate fate
+of such a stalled halo remains unclear, with perhaps a
+highly dense, hot quasi-equilibrium state. We argue that
+investigating the late-stage thermodynamics of velocity-
+dependent SIDM represents a crucial frontier for future
+theoretical efforts (Zeng et al. in prep.). Likewise, our
+use of 𝐾𝑛as a tracer of the core-collapse depth relies
+on the inverse scaling 𝐾𝑛∝𝜎−1, which guarantees a
+monotonic relation only for a constant cross section. In
+certain velocity-dependent or resonant [84, 109] models,
+where 𝜎(𝑣) varies steeply or exhibits peaks in the 𝜎–𝑣
+plane, this monotonicity is lost and 𝐾𝑛may no longer
+be a reliable metric for how deep the core-collapse state
+is. A more suitable metric would need to be devised for
+such models in future work.
+• Positive vs.
+negative heat capacity across scales.
+The BH growth problem is intrinsically multiscale.
+In the BH-dominated micro-regime, the system effec-
+tively possesses a positive heat capacity: recent high-
+resolution fluid simulations [44] show that SIDM heat
+conduction puffs up the inner layers and causes the local
+accretion flow to self-regulate, saturating at ∼1%𝑀halo
+over Myr timescales. This supports our phenomeno-
+logical DM-to-BH conversion—not as a model of the
+unresolved feeding flow, but as an effective represen-
+tation of its net outcome after a single core-collapse
+episode. The surrounding SIDM halo, by contrast, is
+a self-gravitating, negative-heat-capacity system whose
+gravothermal evolution persistently transports mass and
+energy inward over Gyr timescales.
+The local con-
+duction therefore governs how efficiently the BH con-
+sumes each delivery, while the halo-scale gravother-
+mal evolution determines how rapidly that reservoir
+is replenished—a supply-chain effect beyond fixed-
+boundary fluid simulations that eventually drives the BH
+mass to ∼5%–12% 𝑀halo. A complete theory will re-
+quire hybrid schemes that couple the local, conduction-
+regulated feeding flow with this global gravothermal
+supply chain, bridging these positive and negative heat
+capacity regimes.
+• Knudsen number for SIDM vs.
+baryons.
+Our con-
+version criterion is built on the SIDM Knudsen num-
+ber 𝐾𝑛≡𝜆/𝐻= 𝑡sca/𝑡dyn, the ratio of the scatter-
+ing timescale to the dynamical timescale.
+This two-
+timescale structure is not unique to SIDM: it is also the
+collisionality diagnostic of baryonic accretion, where
+one can define 𝐾𝑛≡𝜆/𝐿from the Coulomb mean free
+path relative to the system size and treat the plasma as
+collisionless when 𝐾𝑛≳1 [110]. The baryonic ana-
+logue of our threshold is thus the ratio of the Coulomb
+collision time to the accretion (infall) time. An order-of-
+magnitude estimate gives 𝑡𝑝𝑝/𝑡𝑎∼O(104) for protons
+and 𝑡𝑒𝑒/𝑡𝑎∼O(1) for electrons [111], a four-dex gap
+reflecting the proton-electron mass ratio and the two-
+temperature nature of the plasma [110]. These numbers
+are not directly comparable to our 𝐾𝑛thres = 0.05: the
+SIDM and electromagnetic cross sections have unre-
+lated physical origins, and the baryons have radiative
+cooling while SIDM does not. The meaningful analogy
+therefore lies only in the shared two-timescale struc-
+ture. The crucial distinction is functional: in SIDM,
+self-scattering is the sole energy-transport channel, so
+𝐾𝑛directly tracks the core-collapse depth and hence
+the DM-to-BH conversion rate; in baryonic accretion,
+the inflow is instead regulated by angular-momentum
+transport, so its Knudsen number controls only thermal-
+ization and radiative efficiency. Our criterion is there-
+fore a DM-specific proxy, and a baryonic analogue that
+directly uses 𝐾𝑛would be inappropriate.
+• The unresolved dark matter spike: Our N-body frame-
+work cannot resolve the immediate vicinity of a central
+massive BH, where a density spike is expected to form
+even in standard CDM [112–115]. In our simulations
+this region is represented by a single unresolved massive
+particle, embedded in a surrounding DM halo whose
+density is eventually substantially reduced. This does
+not necessarily conflict with the spike prediction: rather,
+the spike forms on scales below our resolution and is in-
+distinguishable from the unresolved point mass in our
+results. The physics of such spikes and cusps has been
+studied in weakly collisional (cored, 𝐾𝑛≫1) SIDM,
+where conduction-fluid models predict a power-law cusp
+around the central BH [116–118]. A more complete
+multi-scale picture would then be ‘inner halo →spike
+→BH’, of which we resolve the outer, gravothermal
+link, while [116–118] model the innermost, weakly-
+collisional link.
+In summary, this work serves as a first quantitative, self-
+consistent framework to model the post-core-collapse co-
+evolution of the SIDM halo and its central black hole. By
+establishing bracketed mass growth trajectories for the SIDM-
+seeded BH, we illustrate how gravothermal dynamics drive a
+continuous macroscopic supply chain that substantially alters
+the inner host halo. The resulting central density depletion
+offers a natural physical interpretation for the anomalous sub-
+structure (detection V) recently detected in the strong lensing
+system JVAS B1938+666 [13]. Ultimately, our findings sug-
+gest that integrating this BH-halo co-evolution is a vital com-
+ponent for making physically consistent predictions of SIDM
+
+23
+core-collapse states and accurately interpreting observational
+data.
+ACKNOWLEDGMENTS
+We thank Kimberly Boddy, Hai-Bo Yu, Fangzhou Jiang,
+Frank van den Bosch and Shashank Dattathri for useful dis-
+cussion.
+The simulations in this work were mostly conducted on the
+Grace Cluster of High Performance Research Computing at
+the Texas A&M University, while some early stage simulations
+were conducted at Ohio Supercomputer Center [119].
+Appendix A: Supplementary figures
+In this appendix, we provide supplementary figures to the
+main manuscript:
+• Figs. 12 and 13 extend the structural evolution anal-
+ysis of Fig. 8 to other tested core-collapse thresholds
+˜𝜌𝑐𝑐= 10 and 30. These results are visually converged,
+confirming that the severe gravothermal depletion of
+DM in the inner halo is a highly robust macroscopic
+consequence.
+• Fig. 14 traces the orbital trajectories of individual DM
+particles. This simple demonstration suggests that parti-
+cles plunge into the deep SMFP core-collapse region —
+and thus cross the BH accretion boundary — because of
+a final scattering event that strongly biases them toward
+radial orbits.
