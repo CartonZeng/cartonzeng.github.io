@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /data/
+Disallow: /scripts/
 
 Sitemap: https://cartonzeng.github.io/sitemap.xml
