@@ -3,7 +3,7 @@
 
     python scripts/generate_wordcloud.py
 
-Corpus: the fourteen papers listed in the CV. Full text is read from
+Corpus: the fifteen papers listed in the CV. Full text is read from
 ``data/fulltext/<arxiv-id>.txt`` (PDF text with the references section
 stripped), falling back to ``data/abstracts/<arxiv-id>.txt`` and finally the
 hard-coded title below when the full text has not been collected.
@@ -38,6 +38,8 @@ OTHER_WEIGHT = 1
 
 PAPERS = [
     # (arxiv id, first author?, title)
+    ("2609.22758", True, "Feeding the Void: co-evolution of the SIDM-seeded black hole "
+                         "and the dark halo after core-collapse"),
     ("2604.08647", True, "Bypassed core formation in Milky Way-mass SIDM halos: "
                          "implications for the Local Group past-pericenter scenario"),
     ("2412.14621", True, "Diversity and universality: evolution of dwarf galaxies "
@@ -133,6 +135,7 @@ PRE_REPLACE = [
     (r"milky way-mass", "milky way"),
     (r"dark matter-only", "dark matter"),
     (r"dark-matter", "dark matter"),
+    (r"sidm-seeded", "sidm"),           # "SIDM-seeded black hole" → sidm + black hole
 ]
 
 # Rendering only; counting is done on the normalised form.
@@ -237,6 +240,8 @@ REVIEWED_OUT = {
     "universality",       # title phrasing, vague standalone
     "bypassed",           # title phrasing; "core formation" carries the topic
     "past-pericenter",    # too narrow without its sentence
+    "feeding", "void",    # title phrasing of "Feeding the Void"
+    "co-evolution",       # title phrasing; "black hole" / "halo" carry the topic
     "sensitivity", "variation", "calibrating", "convergence",
     "quantitative", "constrained", "mapping", "constant",
     "enhanced", "solution",
