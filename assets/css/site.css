@@ -282,7 +282,7 @@ main { padding: 2.5rem 0 4rem; }
      ongoing tints, so completed work reads as the most saturated card. */
   fill: rgba(186, 12, 47, 0.15);
   stroke: var(--blue-muted);
-  stroke-width: 3.5;
+  stroke-width: 5;
   transition: fill .15s ease, stroke-width .15s ease;
 }
 
@@ -292,8 +292,8 @@ main { padding: 2.5rem 0 4rem; }
 .rm-node--dashed rect {
   fill: #f8e3e7;
   stroke: var(--blue-muted);
-  stroke-width: 3.5;
-  stroke-dasharray: 6 5;
+  stroke-width: 5;
+  stroke-dasharray: 7 5;
 }
 .rm-node--dashed text { font-family: var(--sans); fill: var(--ink-muted); font-weight: 500; }
 .rm-node--dashed.rm-node--hydro rect { fill: rgba(0, 188, 212, 0.15); }
@@ -329,7 +329,7 @@ main { padding: 2.5rem 0 4rem; }
 .rm-node .rm-meta { font-weight: 400; fill: #1a56db; letter-spacing: .02em; }
 .rm-node .rm-blurb { font-weight: 400; fill: var(--ink-muted); }
 .rm-node { cursor: pointer; }
-.rm-node:hover rect { fill: rgba(186, 12, 47, 0.22); stroke-width: 4.5; }
+.rm-node:hover rect { fill: rgba(186, 12, 47, 0.22); stroke-width: 6.5; }
 .rm-node:focus-visible rect { outline: 2px solid var(--blue); outline-offset: 3px; }
 
 .rm-edge { fill: none; stroke: var(--ink-faint); stroke-width: 3.5; }
@@ -339,8 +339,8 @@ main { padding: 2.5rem 0 4rem; }
 .roadmap-legend {
   display: flex;
   flex-direction: column;
-  gap: .75rem;
-  font-size: 1.35rem;
+  gap: .9rem;
+  font-size: 1.6rem;
   color: var(--ink-muted);
   margin-top: .5rem;
   margin-left: 14rem;
@@ -348,15 +348,15 @@ main { padding: 2.5rem 0 4rem; }
 
 .roadmap-legend__row {
   display: flex;
-  gap: 1.5rem;
+  gap: 1.75rem;
   flex-wrap: wrap;
   align-items: center;
 }
 
-.roadmap-legend span { display: inline-flex; align-items: center; gap: .45rem; }
+.roadmap-legend span { display: inline-flex; align-items: center; gap: .55rem; }
 
-.legend-swatch { width: 30px; height: 17px; border: 1.5px solid var(--blue-muted); border-radius: 2px; background: #fff; }
-.legend-swatch--ongoing { border-style: dashed; }
+.legend-swatch { width: 40px; height: 22px; border: 2.5px solid var(--blue-muted); border-radius: 2px; background: #fff; }
+.legend-swatch--ongoing { border-style: dashed; border-width: 2.5px; }
 .legend-swatch--future { border: none; background: #e6e6e9; }
 .legend-swatch--hydro { border: none; background: rgba(0, 188, 212, 0.15); }
 .legend-swatch--dmstars { border: none; background: #f8e3e7; }
